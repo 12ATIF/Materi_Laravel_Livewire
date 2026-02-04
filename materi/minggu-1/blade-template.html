@@ -1,0 +1,205 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blade Template - Minggu 1 | Livewire SMK</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../../css/style.css">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="../../index.html" class="navbar-logo">
+                <svg viewBox="0 0 50 50" fill="none">
+                    <rect width="50" height="50" rx="12" fill="url(#g)" />
+                    <path d="M15 35V15L25 25L35 15V35" stroke="#fff" stroke-width="3" />
+                    <defs>
+                        <linearGradient id="g" x1="0" y1="0" x2="50" y2="50">
+                            <stop stop-color="#10B981" />
+                            <stop offset="1" stop-color="#3B82F6" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <span>Livewire SMK</span>
+            </a>
+            <ul class="navbar-menu">
+                <li><a href="../../index.html">Beranda</a></li>
+                <li><a href="../../silabus.html">Silabus</a></li>
+                <li><a href="#" class="active">Materi</a></li>
+                <li><a href="../../demo.html">Demo</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="content-layout">
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <div class="sidebar-title">📗 Minggu 1</div>
+                <ul class="sidebar-nav">
+                    <li><a href="pengenalan-laravel.html">Pengenalan Laravel</a></li>
+                    <li><a href="mvc-sederhana.html">MVC Sederhana</a></li>
+                    <li><a href="instalasi-laravel.html">Instalasi Laravel</a></li>
+                    <li><a href="autentikasi.html">🔐 Autentikasi</a></li>
+                    <li><a href="blade-template.html" class="active">Blade Template</a></li>
+                    <li><a href="pengenalan-livewire.html">Pengenalan Livewire</a></li>
+                    <li><a href="struktur-component.html">Struktur Component</a></li>
+                </ul>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="content-header">
+                <h1 class="content-title">1.4 Blade Template</h1>
+                <div class="content-meta">
+                    <span>📗 Minggu 1</span>
+                    <span>⏱️ 25 menit</span>
+                </div>
+            </div>
+
+            <div class="objectives">
+                <h3>🎯 Tujuan Belajar</h3>
+                <ul>
+                    <li>Memahami Blade sebagai template engine Laravel</li>
+                    <li>Menampilkan variabel dengan {{ }}</li>
+                    <li>Menggunakan @if, @foreach, dan @extends</li>
+                </ul>
+            </div>
+
+            <h2>Apa itu Blade?</h2>
+            <p>Blade adalah template engine bawaan Laravel. Dengan Blade, kamu bisa:</p>
+            <ul>
+                <li>Menampilkan data PHP dalam HTML dengan mudah</li>
+                <li>Menggunakan kondisi dan perulangan</li>
+                <li>Membuat layout yang reusable</li>
+            </ul>
+
+            <h2>Menampilkan Variabel</h2>
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">welcome.blade.php</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-comment">&lt;!-- Tampilkan variabel --&gt;</span>
+<span class="code-tag">&lt;h1&gt;</span>Halo, {{ $nama }}<span class="code-tag">&lt;/h1&gt;</span>
+
+<span class="code-comment">&lt;!-- Tampilkan dengan default value --&gt;</span>
+<span class="code-tag">&lt;p&gt;</span>{{ $email ?? 'Tidak ada email' }}<span class="code-tag">&lt;/p&gt;</span></pre>
+                </div>
+            </div>
+
+            <h2>Kondisi @if</h2>
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">profile.blade.php</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-keyword">@if</span>($isAdmin)
+    <span class="code-tag">&lt;span&gt;</span>Kamu adalah Admin<span class="code-tag">&lt;/span&gt;</span>
+<span class="code-keyword">@else</span>
+    <span class="code-tag">&lt;span&gt;</span>Kamu adalah User biasa<span class="code-tag">&lt;/span&gt;</span>
+<span class="code-keyword">@endif</span></pre>
+                </div>
+            </div>
+
+            <h2>Perulangan @foreach</h2>
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">books.blade.php</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-tag">&lt;ul&gt;</span>
+<span class="code-keyword">@foreach</span>($books as $book)
+    <span class="code-tag">&lt;li&gt;</span>{{ $book->title }} - {{ $book->author }}<span class="code-tag">&lt;/li&gt;</span>
+<span class="code-keyword">@endforeach</span>
+<span class="code-tag">&lt;/ul&gt;</span></pre>
+                </div>
+            </div>
+
+            <h2>Layout dengan @extends</h2>
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">layouts/app.blade.php</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-tag">&lt;html&gt;</span>
+<span class="code-tag">&lt;head&gt;</span>
+    <span class="code-tag">&lt;title&gt;</span>@yield('title')<span class="code-tag">&lt;/title&gt;</span>
+<span class="code-tag">&lt;/head&gt;</span>
+<span class="code-tag">&lt;body&gt;</span>
+    @yield('content')
+<span class="code-tag">&lt;/body&gt;</span>
+<span class="code-tag">&lt;/html&gt;</span></pre>
+                </div>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">home.blade.php</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-keyword">@extends</span>('layouts.app')
+
+<span class="code-keyword">@section</span>('title', 'Halaman Home')
+
+<span class="code-keyword">@section</span>('content')
+    <span class="code-tag">&lt;h1&gt;</span>Selamat Datang!<span class="code-tag">&lt;/h1&gt;</span>
+<span class="code-keyword">@endsection</span></pre>
+                </div>
+            </div>
+
+            <div class="alert alert-tip">
+                <span class="alert-icon">💡</span>
+                <div>
+                    <h4>Tips</h4>
+                    <p>Gunakan layout untuk bagian yang sama di semua halaman (navbar, footer). Hemat kode!</p>
+                </div>
+            </div>
+
+            <h2>📝 Latihan</h2>
+            <ol>
+                <li>Buat view baru <code>siswa.blade.php</code></li>
+                <li>Tampilkan daftar nama siswa dengan @foreach</li>
+                <li>Tambahkan kondisi: jika tidak ada siswa, tampilkan "Data kosong"</li>
+            </ol>
+
+            <div class="content-nav">
+                <a href="instalasi-laravel.html" class="nav-btn">
+                    <div>
+                        <div class="nav-btn-label">Sebelumnya</div>
+                        <div class="nav-btn-title">← Instalasi Laravel</div>
+                    </div>
+                </a>
+                <a href="pengenalan-livewire.html" class="nav-btn">
+                    <div>
+                        <div class="nav-btn-label">Selanjutnya</div>
+                        <div class="nav-btn-title">Pengenalan Livewire →</div>
+                    </div>
+                </a>
+            </div>
+        </main>
+    </div>
+    <script src="../../js/app.js"></script>
+</body>
+
+</html>

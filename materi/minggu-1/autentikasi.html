@@ -1,0 +1,1027 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autentikasi (Login & Register) - Minggu 1 | Livewire SMK</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../../css/style.css">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="../../index.html" class="navbar-logo">
+                <svg viewBox="0 0 50 50" fill="none">
+                    <rect width="50" height="50" rx="12" fill="url(#g)" />
+                    <path d="M15 35V15L25 25L35 15V35" stroke="#fff" stroke-width="3" />
+                    <defs>
+                        <linearGradient id="g" x1="0" y1="0" x2="50" y2="50">
+                            <stop stop-color="#10B981" />
+                            <stop offset="1" stop-color="#3B82F6" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <span>Livewire SMK</span>
+            </a>
+            <ul class="navbar-menu">
+                <li><a href="../../index.html">Beranda</a></li>
+                <li><a href="../../silabus.html">Silabus</a></li>
+                <li><a href="autentikasi.html" class="active">Materi</a></li>
+                <li><a href="../../demo.html">Demo</a></li>
+            </ul>
+            <button class="navbar-toggle"><span>☰</span></button>
+        </div>
+    </nav>
+
+    <div class="content-layout">
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <div class="sidebar-title">📗 Minggu 1</div>
+                <ul class="sidebar-nav">
+                    <li><a href="pengenalan-laravel.html">Pengenalan Laravel</a></li>
+                    <li><a href="mvc-sederhana.html">MVC Sederhana</a></li>
+                    <li><a href="instalasi-laravel.html">Instalasi Laravel</a></li>
+                    <li><a href="autentikasi.html" class="active">🔐 Autentikasi</a></li>
+                    <li><a href="blade-template.html">Blade Template</a></li>
+                    <li><a href="pengenalan-livewire.html">Pengenalan Livewire</a></li>
+                    <li><a href="struktur-component.html">Struktur Component</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-title">📘 Minggu 2</div>
+                <ul class="sidebar-nav">
+                    <li><a href="../minggu-2/wire-model.html">wire:model</a></li>
+                    <li><a href="../minggu-2/wire-click.html">wire:click</a></li>
+                    <li><a href="../minggu-2/validasi.html">Validasi</a></li>
+                    <li><a href="../minggu-2/crud-sederhana.html">CRUD Sederhana</a></li>
+                    <li><a href="../minggu-2/database-eloquent.html">Database & Eloquent</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-title">📕 Minggu 3</div>
+                <ul class="sidebar-nav">
+                    <li><a href="../minggu-3/upload-file.html">Upload File</a></li>
+                    <li><a href="../minggu-3/pagination-search.html">Pagination & Search</a></li>
+                    <li><a href="../minggu-3/komponen-reusable.html">Komponen Reusable</a></li>
+                    <li><a href="../minggu-3/tampilan-dinamis.html">Tampilan Dinamis</a></li>
+                    </ul>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="content-header">
+                <div class="content-breadcrumb">
+                    <a href="../../index.html">Beranda</a> / <a href="../../silabus.html">Silabus</a> / Minggu 1 /
+                    Autentikasi
+                </div>
+                <h1 class="content-title">🔐 Autentikasi (Login & Register)</h1>
+                <div class="content-meta">
+                    <span>📗 Minggu 1</span>
+                    <span>⏱️ 60 menit</span>
+                    <span>💻 Praktik</span>
+                </div>
+            </div>
+
+            <div class="objectives">
+                <h3>🎯 Tujuan Belajar</h3>
+                <ul>
+                    <li>Memahami konsep autentikasi (login & register)</li>
+                    <li>Menggunakan Laravel Breeze untuk autentikasi</li>
+                    <li>Memahami middleware untuk proteksi halaman</li>
+                    <li>Mengetahui cara hash password dengan aman</li>
+                    <li><strong>Memahami konsep Role (peran user)</strong></li>
+                </ul>
+            </div>
+
+            <!-- APA ITU AUTENTIKASI -->
+            <section id="pengertian">
+                <h2>🤔 Apa itu Autentikasi?</h2>
+                <p><strong>Autentikasi</strong> adalah proses memastikan bahwa <em>pengguna adalah siapa yang mereka
+                        klaim</em>.</p>
+
+                <div class="diagram-flow">
+                    <div class="flow-item">👤 User</div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-item">📝 Input Email & Password</div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-item highlight">✅ Verifikasi</div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-item">🏠 Masuk Aplikasi</div>
+                </div>
+
+                <div class="info-card tip">
+                    <div class="card-icon">💡</div>
+                    <div class="card-body">
+                        <h4>Analogi Sederhana</h4>
+                        <p>Bayangkan kamu mau masuk gedung kantor. <strong>Satpam</strong> akan minta kamu tunjukkan
+                            <strong>kartu ID</strong>. Jika cocok, kamu boleh masuk. Itulah autentikasi!
+                        </p>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 2rem;">📊 Jenis-jenis Proses Auth</h3>
+                <div class="features-grid">
+                    <div class="process-card">
+                        <div class="process-icon">📝</div>
+                        <h4>Register</h4>
+                        <p>Daftar akun baru dengan nama, email, password</p>
+                    </div>
+                    <div class="process-card">
+                        <div class="process-icon">🔑</div>
+                        <h4>Login</h4>
+                        <p>Masuk dengan email & password yang sudah terdaftar</p>
+                    </div>
+                    <div class="process-card">
+                        <div class="process-icon">🚪</div>
+                        <h4>Logout</h4>
+                        <p>Keluar dari aplikasi, hapus session</p>
+                    </div>
+                    <div class="process-card">
+                        <div class="process-icon">🔄</div>
+                        <h4>Reset Password</h4>
+                        <p>Ganti password jika lupa</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- LARAVEL BREEZE -->
+            <section id="breeze" style="margin-top: 3rem;">
+                <h2>⚡ Laravel Breeze</h2>
+                <p>Kabar baiknya: <strong>Laravel sudah menyediakan sistem autentikasi yang siap pakai!</strong> Namanya
+                    <strong>Laravel Breeze</strong>.
+                </p>
+
+                <div class="info-card note">
+                    <div class="card-icon">📌</div>
+                    <div class="card-body">
+                        <h4>Apa yang Diberikan Breeze?</h4>
+                        <p>Login, Register, Reset Password, Email Verification, dan tampilan yang sudah jadi menggunakan
+                            Tailwind CSS. Kita tinggal install dan pakai!</p>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 2rem;">🔧 Cara Install Laravel Breeze</h3>
+
+                <div class="step-box">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h4>Buat Project Laravel Baru (atau gunakan yang ada)</h4>
+                        <div class="code-block" style="margin-top: 1rem;">
+                            <div class="code-header">
+                                <span class="code-filename">Terminal</span>
+                                <button class="code-copy" onclick="copyCode(this)">Salin</button>
+                            </div>
+                            <div class="code-body">
+                                <pre>composer create-project laravel/laravel my-app
+cd my-app</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step-box">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h4>Install Package Breeze</h4>
+                        <div class="code-block" style="margin-top: 1rem;">
+                            <div class="code-header">
+                                <span class="code-filename">Terminal</span>
+                                <button class="code-copy" onclick="copyCode(this)">Salin</button>
+                            </div>
+                            <div class="code-body">
+                                <pre>composer require laravel/breeze --dev</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step-box">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h4>Generate File Autentikasi</h4>
+                        <p>Pilih <strong>Blade with Alpine</strong> untuk project sederhana:</p>
+                        <div class="code-block" style="margin-top: 1rem;">
+                            <div class="code-header">
+                                <span class="code-filename">Terminal</span>
+                                <button class="code-copy" onclick="copyCode(this)">Salin</button>
+                            </div>
+                            <div class="code-body">
+                                <pre>php artisan breeze:install blade</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step-box">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h4>Install Dependencies & Migrate</h4>
+                        <div class="code-block" style="margin-top: 1rem;">
+                            <div class="code-header">
+                                <span class="code-filename">Terminal</span>
+                                <button class="code-copy" onclick="copyCode(this)">Salin</button>
+                            </div>
+                            <div class="code-body">
+                                <pre>npm install
+npm run build
+php artisan migrate</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-card tip">
+                    <div class="card-icon">🎉</div>
+                    <div class="card-body">
+                        <h4>Selesai!</h4>
+                        <p>Sekarang buka <code>/register</code> untuk daftar akun baru dan <code>/login</code> untuk
+                            masuk.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ALUR REGISTER -->
+            <section id="register" style="margin-top: 3rem;">
+                <h2>📝 Alur Register (Daftar)</h2>
+                <p>Ketika user mendaftar akun baru:</p>
+
+                <div class="diagram-flow">
+                    <div class="flow-item">📝 Isi Form</div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-item">✅ Validasi</div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-item highlight">🔒 Hash Password</div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-item">💾 Simpan ke DB</div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-item">🔑 Auto Login</div>
+                </div>
+
+                <h3 style="margin-top: 2rem;">📖 Penjelasan Kode Register</h3>
+                <p>File: <code>app/Http/Controllers/Auth/RegisteredUserController.php</code></p>
+
+                <div class="code-explain">
+                    <div class="code-explain-header">🔍 Fungsi store() - Proses Pendaftaran</div>
+                    <div class="code-line">
+                        <code>$request->validate([...]);</code>
+                    </div>
+                    <div class="code-meaning">
+                        <span class="code-meaning-icon">✅</span>
+                        <span><strong>Validasi input:</strong> Cek nama wajib diisi, email harus valid dan unik,
+                            password minimal 8 karakter.</span>
+                    </div>
+                    <div class="code-line">
+                        <code>'email' => ['required', 'unique:'.User::class]</code>
+                    </div>
+                    <div class="code-meaning">
+                        <span class="code-meaning-icon">📧</span>
+                        <span><strong>unique:</strong> Email tidak boleh sama dengan yang sudah terdaftar di tabel
+                            users.</span>
+                    </div>
+                    <div class="code-line">
+                        <code>'password' => Hash::make($request->password)</code>
+                    </div>
+                    <div class="code-meaning">
+                        <span class="code-meaning-icon">🔒</span>
+                        <span><strong>Hash::make():</strong> Mengenkripsi password sebelum disimpan. Password asli TIDAK
+                            pernah disimpan!</span>
+                    </div>
+                    <div class="code-line">
+                        <code>Auth::login($user);</code>
+                    </div>
+                    <div class="code-meaning">
+                        <span class="code-meaning-icon">🔑</span>
+                        <span><strong>Auto Login:</strong> Setelah daftar, user langsung masuk tanpa perlu login
+                            manual.</span>
+                    </div>
+                </div>
+
+                <div class="info-card warning">
+                    <div class="card-icon">⚠️</div>
+                    <div class="card-body">
+                        <h4>JANGAN PERNAH Simpan Password Langsung!</h4>
+                        <p>Selalu gunakan <code>Hash::make()</code> untuk enkripsi password. Jika database bocor,
+                            password tetap aman karena sudah terenkripsi.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ALUR LOGIN -->
+            <section id="login" style="margin-top: 3rem;">
+                <h2>🔑 Alur Login (Masuk)</h2>
+                <p>Ketika user login:</p>
+
+                <div class="diagram-flow">
+                    <div class="flow-item">📝 Input Email & Pass</div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-item">🔍 Cari User di DB</div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-item highlight">🔐 Cocokkan Hash</div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-item">📦 Buat Session</div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-item">🏠 Redirect</div>
+                </div>
+
+                <h3 style="margin-top: 2rem;">📖 Penjelasan Kode Login</h3>
+                <p>File: <code>app/Http/Controllers/Auth/AuthenticatedSessionController.php</code></p>
+
+                <div class="code-explain">
+                    <div class="code-explain-header">🔍 Fungsi store() - Proses Login</div>
+                    <div class="code-line">
+                        <code>$request->authenticate();</code>
+                    </div>
+                    <div class="code-meaning">
+                        <span class="code-meaning-icon">🔐</span>
+                        <span><strong>authenticate():</strong> Cek email & password. Jika cocok, lanjut. Jika tidak,
+                            tampilkan error.</span>
+                    </div>
+                    <div class="code-line">
+                        <code>$request->session()->regenerate();</code>
+                    </div>
+                    <div class="code-meaning">
+                        <span class="code-meaning-icon">🔄</span>
+                        <span><strong>regenerate():</strong> Buat session ID baru untuk keamanan (mencegah session
+                            fixation attack).</span>
+                    </div>
+                    <div class="code-line">
+                        <code>return redirect()->intended(route('dashboard'));</code>
+                    </div>
+                    <div class="code-meaning">
+                        <span class="code-meaning-icon">🏠</span>
+                        <span><strong>intended():</strong> Redirect ke halaman yang ingin diakses sebelumnya, atau ke
+                            dashboard jika tidak ada.</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- MIDDLEWARE -->
+            <section id="middleware" style="margin-top: 3rem;">
+                <h2>🛡️ Middleware: Proteksi Halaman</h2>
+                <p><strong>Middleware</strong> adalah "penjaga gerbang" yang memeriksa setiap request sebelum diproses.
+                </p>
+
+                <div class="diagram-flow">
+                    <div class="flow-item">👤 Request</div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-item highlight">🛡️ Middleware</div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-item">❓ Sudah Login?</div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-item">✅ / ❌</div>
+                </div>
+
+                <h3 style="margin-top: 2rem;">🔒 Middleware <code>auth</code></h3>
+                <p>Gunakan middleware <code>auth</code> untuk melindungi halaman agar hanya bisa diakses user yang sudah
+                    login:</p>
+
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-filename">routes/web.php</span>
+                        <button class="code-copy" onclick="copyCode(this)">Salin</button>
+                    </div>
+                    <div class="code-body">
+                        <pre><span class="code-comment">// Route yang TIDAK dilindungi (siapa saja bisa akses)</span>
+Route::get('/', function () {
+    return view('welcome');
+});
+
+<span class="code-comment">// Route yang DILINDUNGI (harus login dulu)</span>
+Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    });
+    
+    Route::get('/books', BooksIndex::class)->name('books');
+    Route::get('/loans', LoansIndex::class)->name('loans');
+});</pre>
+                    </div>
+                </div>
+
+                <div class="code-explain">
+                    <div class="code-explain-header">🔍 Penjelasan Middleware</div>
+                    <div class="code-line">
+                        <code>Route::middleware('auth')->group(function () {...});</code>
+                    </div>
+                    <div class="code-meaning">
+                        <span class="code-meaning-icon">🛡️</span>
+                        <span>Semua route di dalam <code>group()</code> ini akan dicek dulu: <strong>"Apakah user sudah
+                                login?"</strong></span>
+                    </div>
+                    <div class="code-meaning">
+                        <span class="code-meaning-icon">✅</span>
+                        <span><strong>Jika sudah login:</strong> Lanjutkan ke halaman yang diminta.</span>
+                    </div>
+                    <div class="code-meaning">
+                        <span class="code-meaning-icon">❌</span>
+                        <span><strong>Jika belum login:</strong> Redirect ke halaman <code>/login</code> secara
+                            otomatis.</span>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 2rem;">👤 Middleware <code>guest</code></h3>
+                <p>Kebalikan dari <code>auth</code>. Halaman hanya bisa diakses jika <strong>belum login</strong>:</p>
+
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-filename">routes/auth.php</span>
+                        <button class="code-copy" onclick="copyCode(this)">Salin</button>
+                    </div>
+                    <div class="code-body">
+                        <pre><span class="code-comment">// Halaman login & register hanya untuk guest (belum login)</span>
+Route::middleware('guest')->group(function () {
+    Route::get('/login', [AuthController::class, 'create']);
+    Route::get('/register', [RegisterController::class, 'create']);
+});</pre>
+                    </div>
+                </div>
+
+                <div class="info-card tip">
+                    <div class="card-icon">💡</div>
+                    <div class="card-body">
+                        <h4>Kenapa Pakai Guest?</h4>
+                        <p>User yang sudah login tidak perlu lihat halaman login lagi. Jika mereka akses
+                            <code>/login</code>, akan otomatis diarahkan ke dashboard.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- LOGOUT -->
+            <section id="logout" style="margin-top: 3rem;">
+                <h2>🚪 Logout (Keluar)</h2>
+                <p>Proses logout menghapus session user:</p>
+
+                <div class="code-explain">
+                    <div class="code-explain-header">🔍 Fungsi destroy() - Proses Logout</div>
+                    <div class="code-line">
+                        <code>Auth::guard('web')->logout();</code>
+                    </div>
+                    <div class="code-meaning">
+                        <span class="code-meaning-icon">🚪</span>
+                        <span><strong>logout():</strong> Hapus data user dari session. User tidak lagi dianggap
+                            login.</span>
+                    </div>
+                    <div class="code-line">
+                        <code>$request->session()->invalidate();</code>
+                    </div>
+                    <div class="code-meaning">
+                        <span class="code-meaning-icon">🗑️</span>
+                        <span><strong>invalidate():</strong> Hapus seluruh data session saat ini.</span>
+                    </div>
+                    <div class="code-line">
+                        <code>$request->session()->regenerateToken();</code>
+                    </div>
+                    <div class="code-meaning">
+                        <span class="code-meaning-icon">🔄</span>
+                        <span><strong>regenerateToken():</strong> Buat CSRF token baru untuk keamanan.</span>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 2rem;">🔘 Tombol Logout di View</h3>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-filename">resources/views/layouts/app.blade.php</span>
+                        <button class="code-copy" onclick="copyCode(this)">Salin</button>
+                    </div>
+                    <div class="code-body">
+                        <pre>&lt;form method="POST" action="{{ route('logout') }}"&gt;
+    @csrf
+    &lt;button type="submit"&gt;Logout&lt;/button&gt;
+&lt;/form&gt;</pre>
+                    </div>
+                </div>
+
+                <div class="info-card note">
+                    <div class="card-icon">📌</div>
+                    <div class="card-body">
+                        <h4>Kenapa Pakai Form POST?</h4>
+                        <p>Logout harus menggunakan method <strong>POST</strong> (bukan link GET) untuk keamanan. Ini
+                            mencegah serangan CSRF dan accidentally logout.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- MENGAKSES DATA USER -->
+            <section id="user-data" style="margin-top: 3rem;">
+                <h2>👤 Mengakses Data User yang Login</h2>
+                <p>Setelah login, kamu bisa akses data user yang sedang login:</p>
+
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-filename">Di Controller atau Component</span>
+                        <button class="code-copy" onclick="copyCode(this)">Salin</button>
+                    </div>
+                    <div class="code-body">
+                        <pre><span class="code-comment">// Ambil user yang sedang login</span>
+$user = Auth::user();
+
+<span class="code-comment">// Atau singkatnya:</span>
+$user = auth()->user();
+
+<span class="code-comment">// Akses properti user</span>
+$nama = auth()->user()->name;
+$email = auth()->user()->email;
+$id = auth()->id(); <span class="code-comment">// Ambil ID saja</span></pre>
+                    </div>
+                </div>
+
+                <div class="code-block" style="margin-top: 1rem;">
+                    <div class="code-header">
+                        <span class="code-filename">Di Blade View</span>
+                        <button class="code-copy" onclick="copyCode(this)">Salin</button>
+                    </div>
+                    <div class="code-body">
+                        <pre>&lt;p&gt;Halo, {{ auth()->user()->name }}!&lt;/p&gt;
+
+@auth
+    &lt;!-- Tampil jika sudah login --&gt;
+    &lt;p&gt;Kamu sudah login sebagai {{ auth()->user()->email }}&lt;/p&gt;
+@endauth
+
+@guest
+    &lt;!-- Tampil jika belum login --&gt;
+    &lt;a href="/login"&gt;Silakan login&lt;/a&gt;
+@endguest</pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ROLE-BASED AUTHENTICATION -->
+            <section id="role" style="margin-top: 3rem;">
+                <h2>👑 Role-Based Authentication (Peran User)</h2>
+                <p>Dalam aplikasi nyata, tidak semua user punya akses yang sama. Ada yang jadi <strong>Admin</strong>,
+                    ada yang jadi <strong>User biasa</strong>. Inilah yang disebut <strong>Role</strong>.</p>
+
+                <div class="info-card tip">
+                    <div class="card-icon">💡</div>
+                    <div class="card-body">
+                        <h4>Analogi Role</h4>
+                        <p>Bayangkan sekolah: <strong>Kepala Sekolah</strong> bisa akses semua ruangan,
+                            <strong>Guru</strong> bisa akses ruang guru dan kelas, <strong>Siswa</strong> hanya bisa
+                            akses kelas dan kantin. Itu konsep Role!
+                        </p>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 2rem;">📊 Contoh Role dalam Aplikasi</h3>
+                <div class="features-grid">
+                    <div class="process-card">
+                        <div class="process-icon">👑</div>
+                        <h4>Admin</h4>
+                        <p>Bisa kelola semua data, hapus user, lihat laporan</p>
+                    </div>
+                    <div class="process-card">
+                        <div class="process-icon">📚</div>
+                        <h4>Petugas</h4>
+                        <p>Bisa kelola buku, peminjaman, pengembalian</p>
+                    </div>
+                    <div class="process-card">
+                        <div class="process-icon">👤</div>
+                        <h4>Member</h4>
+                        <p>Hanya bisa pinjam dan kembalikan buku</p>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 2rem;">🗄️ Menambahkan Kolom Role di Database</h3>
+                <p>Pertama, tambahkan kolom <code>role</code> di tabel users:</p>
+
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-filename">Migration: add_role_to_users_table.php</span>
+                        <button class="code-copy" onclick="copyCode(this)">Salin</button>
+                    </div>
+                    <div class="code-body">
+                        <pre><span class="code-comment">// Buat migration baru</span>
+php artisan make:migration add_role_to_users_table
+
+<span class="code-comment">// Isi migration:</span>
+public function up()
+{
+    Schema::table('users', function (Blueprint $table) {
+        $table->string('role')->default('member');
+    });
+}</pre>
+                    </div>
+                </div>
+
+                <div class="code-explain">
+                    <div class="code-explain-header">🔍 Penjelasan</div>
+                    <div class="code-line">
+                        <code>$table->string('role')->default('member');</code>
+                    </div>
+                    <div class="code-meaning">
+                        <span class="code-meaning-icon">👤</span>
+                        <span>Menambah kolom <strong>role</strong> bertipe string. Default-nya adalah 'member' jika
+                            tidak diisi saat register.</span>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 2rem;">📦 Update Model User</h3>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-filename">app/Models/User.php</span>
+                        <button class="code-copy" onclick="copyCode(this)">Salin</button>
+                    </div>
+                    <div class="code-body">
+                        <pre>class User extends Authenticatable
+{
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+        'role', <span class="code-comment">// Tambahkan role ke fillable</span>
+    ];
+
+    <span class="code-comment">// Helper method untuk cek role</span>
+    public function isAdmin()
+    {
+        return $this->role === 'admin';
+    }
+
+    public function isPetugas()
+    {
+        return $this->role === 'petugas';
+    }
+
+    public function isMember()
+    {
+        return $this->role === 'member';
+    }
+}</pre>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 2rem;">🛡️ Proteksi Route Berdasarkan Role</h3>
+                <p>Gunakan middleware untuk membatasi akses berdasarkan role:</p>
+
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-filename">routes/web.php</span>
+                        <button class="code-copy" onclick="copyCode(this)">Salin</button>
+                    </div>
+                    <div class="code-body">
+                        <pre><span class="code-comment">// Halaman untuk SEMUA user yang sudah login</span>
+Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    });
+});
+
+<span class="code-comment">// Halaman KHUSUS Admin</span>
+Route::middleware('auth')->group(function () {
+    Route::get('/admin/users', function () {
+        <span class="code-comment">// Cek role dulu</span>
+        if (!auth()->user()->isAdmin()) {
+            abort(403, 'Akses Ditolak!');
+        }
+        return view('admin.users');
+    });
+});</pre>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 2rem;">🎨 Tampilan Berbeda untuk Role</h3>
+                <p>Di Blade, kita bisa tampilkan menu berbeda sesuai role:</p>
+
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-filename">resources/views/layouts/navigation.blade.php</span>
+                        <button class="code-copy" onclick="copyCode(this)">Salin</button>
+                    </div>
+                    <div class="code-body">
+                        <pre>&lt;nav&gt;
+    &lt;!-- Menu untuk semua user --&gt;
+    &lt;a href="/dashboard"&gt;Dashboard&lt;/a&gt;
+    
+    @if(auth()->user()->isAdmin())
+        &lt;!-- Menu HANYA untuk Admin --&gt;
+        &lt;a href="/admin/users"&gt;👑 Kelola User&lt;/a&gt;
+        &lt;a href="/admin/settings"&gt;⚙️ Pengaturan&lt;/a&gt;
+    @endif
+    
+    @if(auth()->user()->isPetugas() || auth()->user()->isAdmin())
+        &lt;!-- Menu untuk Petugas DAN Admin --&gt;
+        &lt;a href="/books"&gt;📚 Kelola Buku&lt;/a&gt;
+        &lt;a href="/loans"&gt;📝 Peminjaman&lt;/a&gt;
+    @endif
+    
+    @if(auth()->user()->isMember())
+        &lt;!-- Menu HANYA untuk Member --&gt;
+        &lt;a href="/my-loans"&gt;📖 Buku Pinjaman Saya&lt;/a&gt;
+    @endif
+&lt;/nav&gt;</pre>
+                    </div>
+                </div>
+
+                <div class="code-explain">
+                    <div class="code-explain-header">🔍 Cara Kerja @if dengan Role</div>
+                    <div class="code-meaning">
+                        <span class="code-meaning-icon">👑</span>
+                        <span><strong>Admin</strong> melihat: Dashboard, Kelola User, Pengaturan, Kelola Buku,
+                            Peminjaman</span>
+                    </div>
+                    <div class="code-meaning">
+                        <span class="code-meaning-icon">📚</span>
+                        <span><strong>Petugas</strong> melihat: Dashboard, Kelola Buku, Peminjaman</span>
+                    </div>
+                    <div class="code-meaning">
+                        <span class="code-meaning-icon">👤</span>
+                        <span><strong>Member</strong> melihat: Dashboard, Buku Pinjaman Saya</span>
+                    </div>
+                </div>
+
+                <div class="info-card warning">
+                    <div class="card-icon">⚠️</div>
+                    <div class="card-body">
+                        <h4>Keamanan Penting!</h4>
+                        <p>Jangan hanya sembunyikan menu di tampilan! Selalu cek role juga di
+                            <strong>route/controller</strong>. User bisa saja mengetik URL langsung di browser.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- FUNGSI BERBEDA ADMIN VS USER -->
+            <section id="fungsi-role" style="margin-top: 3rem;">
+                <h2>⚙️ Contoh Fungsi Berbeda: Admin vs User</h2>
+                <p>Berikut adalah contoh nyata bagaimana <strong>Admin</strong> dan <strong>User biasa</strong> memiliki
+                    akses dan fungsi yang berbeda dalam satu aplikasi:</p>
+
+                <h3 style="margin-top: 2rem;">📊 Tabel Perbandingan Hak Akses</h3>
+                <div class="db-diagram">
+                    <table style="width:100%;border-collapse:collapse;margin:1rem 0;">
+                        <thead>
+                            <tr style="background:linear-gradient(135deg,#10B981,#3B82F6);color:#fff;">
+                                <th style="padding:1rem;text-align:left;border:1px solid #374151;">Fitur</th>
+                                <th style="padding:1rem;text-align:center;border:1px solid #374151;">👑 Admin</th>
+                                <th style="padding:1rem;text-align:center;border:1px solid #374151;">👤 User</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="background:#1F2937;">
+                                <td style="padding:0.75rem;border:1px solid #374151;">Lihat Dashboard</td>
+                                <td style="padding:0.75rem;text-align:center;border:1px solid #374151;">✅</td>
+                                <td style="padding:0.75rem;text-align:center;border:1px solid #374151;">✅</td>
+                            </tr>
+                            <tr style="background:#111827;">
+                                <td style="padding:0.75rem;border:1px solid #374151;">Lihat Daftar Buku</td>
+                                <td style="padding:0.75rem;text-align:center;border:1px solid #374151;">✅</td>
+                                <td style="padding:0.75rem;text-align:center;border:1px solid #374151;">✅</td>
+                            </tr>
+                            <tr style="background:#1F2937;">
+                                <td style="padding:0.75rem;border:1px solid #374151;">Pinjam Buku</td>
+                                <td style="padding:0.75rem;text-align:center;border:1px solid #374151;">✅</td>
+                                <td style="padding:0.75rem;text-align:center;border:1px solid #374151;">✅</td>
+                            </tr>
+                            <tr style="background:#111827;">
+                                <td style="padding:0.75rem;border:1px solid #374151;"><strong>Tambah Buku Baru</strong>
+                                </td>
+                                <td style="padding:0.75rem;text-align:center;border:1px solid #374151;">✅</td>
+                                <td style="padding:0.75rem;text-align:center;border:1px solid #374151;">❌</td>
+                            </tr>
+                            <tr style="background:#1F2937;">
+                                <td style="padding:0.75rem;border:1px solid #374151;"><strong>Edit/Hapus Buku</strong>
+                                </td>
+                                <td style="padding:0.75rem;text-align:center;border:1px solid #374151;">✅</td>
+                                <td style="padding:0.75rem;text-align:center;border:1px solid #374151;">❌</td>
+                            </tr>
+                            <tr style="background:#111827;">
+                                <td style="padding:0.75rem;border:1px solid #374151;"><strong>Kelola Semua User</strong>
+                                </td>
+                                <td style="padding:0.75rem;text-align:center;border:1px solid #374151;">✅</td>
+                                <td style="padding:0.75rem;text-align:center;border:1px solid #374151;">❌</td>
+                            </tr>
+                            <tr style="background:#1F2937;">
+                                <td style="padding:0.75rem;border:1px solid #374151;"><strong>Lihat Semua
+                                        Peminjaman</strong></td>
+                                <td style="padding:0.75rem;text-align:center;border:1px solid #374151;">✅</td>
+                                <td style="padding:0.75rem;text-align:center;border:1px solid #374151;">❌ (hanya
+                                    miliknya)</td>
+                            </tr>
+                            <tr style="background:#111827;">
+                                <td style="padding:0.75rem;border:1px solid #374151;"><strong>Hapus User Lain</strong>
+                                </td>
+                                <td style="padding:0.75rem;text-align:center;border:1px solid #374151;">✅</td>
+                                <td style="padding:0.75rem;text-align:center;border:1px solid #374151;">❌</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3 style="margin-top: 2rem;">📝 Contoh: Livewire Component dengan Role</h3>
+                <p>Ini contoh Component Livewire yang menampilkan tombol berbeda berdasarkan role:</p>
+
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-filename">app/Livewire/Books/Index.php</span>
+                        <button class="code-copy" onclick="copyCode(this)">Salin</button>
+                    </div>
+                    <div class="code-body">
+                        <pre>class Index extends Component
+{
+    public function render()
+    {
+        return view('livewire.books.index', [
+            'books' => Book::all(),
+            <span class="code-comment">// Kirim info apakah user adalah admin</span>
+            'isAdmin' => auth()->user()->isAdmin(),
+        ]);
+    }
+
+    <span class="code-comment">// Fungsi hapus HANYA bisa dipanggil admin</span>
+    public function delete($id)
+    {
+        <span class="code-comment">// Cek role dulu!</span>
+        if (!auth()->user()->isAdmin()) {
+            session()->flash('error', 'Anda tidak punya akses!');
+            return;
+        }
+
+        Book::find($id)->delete();
+        session()->flash('message', 'Buku berhasil dihapus!');
+    }
+}</pre>
+                    </div>
+                </div>
+
+                <div class="code-explain">
+                    <div class="code-explain-header">🔍 Penjelasan Kode</div>
+                    <div class="code-line">
+                        <code>'isAdmin' => auth()->user()->isAdmin()</code>
+                    </div>
+                    <div class="code-meaning">
+                        <span class="code-meaning-icon">📤</span>
+                        <span>Kirim data ke view apakah user adalah admin, untuk mengontrol tampilan tombol.</span>
+                    </div>
+                    <div class="code-line">
+                        <code>if (!auth()->user()->isAdmin()) { return; }</code>
+                    </div>
+                    <div class="code-meaning">
+                        <span class="code-meaning-icon">🛡️</span>
+                        <span><strong>Double Protection:</strong> Meski tombol disembunyikan, tetap cek role di fungsi.
+                            Ini penting untuk keamanan!</span>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 2rem;">🎨 Tampilan Berbeda di Blade</h3>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-filename">resources/views/livewire/books/index.blade.php</span>
+                        <button class="code-copy" onclick="copyCode(this)">Salin</button>
+                    </div>
+                    <div class="code-body">
+                        <pre>&lt;div&gt;
+    &lt;h1&gt;Daftar Buku&lt;/h1&gt;
+    
+    @if($isAdmin)
+        &lt;!-- Tombol tambah HANYA muncul untuk Admin --&gt;
+        &lt;button wire:click="openModal" class="btn-primary"&gt;
+            ➕ Tambah Buku Baru
+        &lt;/button&gt;
+    @endif
+
+    &lt;table&gt;
+        @foreach($books as $book)
+        &lt;tr&gt;
+            &lt;td&gt;{{ $book-&gt;judul }}&lt;/td&gt;
+            &lt;td&gt;{{ $book-&gt;penulis }}&lt;/td&gt;
+            &lt;td&gt;
+                @if($isAdmin)
+                    &lt;!-- Tombol edit/hapus HANYA untuk Admin --&gt;
+                    &lt;button wire:click="edit({{ $book-&gt;id }})"&gt;✏️ Edit&lt;/button&gt;
+                    &lt;button wire:click="delete({{ $book-&gt;id }})"&gt;🗑️ Hapus&lt;/button&gt;
+                @else
+                    &lt;!-- User biasa hanya bisa lihat detail --&gt;
+                    &lt;a href="/books/{{ $book-&gt;id }}"&gt;👁️ Lihat Detail&lt;/a&gt;
+                @endif
+            &lt;/td&gt;
+        &lt;/tr&gt;
+        @endforeach
+    &lt;/table&gt;
+&lt;/div&gt;</pre>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 2rem;">🔄 Alur Lengkap: Admin vs User</h3>
+                <div class="diagram-flow">
+                    <div class="flow-item">👤 User Login</div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-item highlight">🔍 Cek Role</div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-item">📱 Tampilan Sesuai Role</div>
+                </div>
+
+                <div class="features-grid" style="margin-top: 2rem;">
+                    <div class="process-card" style="border: 2px solid #10B981;">
+                        <div class="process-icon">👑</div>
+                        <h4>Admin</h4>
+                        <ul style="text-align:left;font-size:0.9rem;color:#9CA3AF;">
+                            <li>✅ Lihat semua menu</li>
+                            <li>✅ CRUD buku lengkap</li>
+                            <li>✅ Kelola user</li>
+                            <li>✅ Lihat semua peminjaman</li>
+                            <li>✅ Akses pengaturan</li>
+                        </ul>
+                    </div>
+                    <div class="process-card" style="border: 2px solid #3B82F6;">
+                        <div class="process-icon">👤</div>
+                        <h4>User Biasa</h4>
+                        <ul style="text-align:left;font-size:0.9rem;color:#9CA3AF;">
+                            <li>✅ Lihat daftar buku</li>
+                            <li>✅ Pinjam buku</li>
+                            <li>✅ Lihat pinjaman sendiri</li>
+                            <li>❌ Tidak bisa edit/hapus</li>
+                            <li>❌ Tidak bisa kelola user</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="info-card tip">
+                    <div class="card-icon">💡</div>
+                    <div class="card-body">
+                        <h4>Tips: Gunakan Middleware Khusus Role</h4>
+                        <p>Untuk project besar, buat middleware khusus seperti <code>admin</code> agar tidak perlu cek
+                            manual di setiap controller. Contoh:
+                            <code>Route::middleware(['auth', 'admin'])->group(...)</code></p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- RINGKASAN -->
+            <div class="summary-box">
+                <h3>📝 Ringkasan</h3>
+                <ul>
+                    <li><strong>Autentikasi</strong> = memastikan identitas user (login/register)</li>
+                    <li><strong>Laravel Breeze</strong> = package siap pakai untuk auth</li>
+                    <li><strong>Hash::make()</strong> = enkripsi password sebelum simpan</li>
+                    <li><strong>Middleware auth</strong> = proteksi halaman untuk user login</li>
+                    <li><strong>Middleware guest</strong> = halaman untuk user yang belum login</li>
+                    <li><strong>auth()->user()</strong> = akses data user yang sedang login</li>
+                    <li><strong>Role</strong> = peran user (admin, petugas, member) untuk membatasi akses</li>
+                </ul>
+            </div>
+
+            <!-- LATIHAN -->
+            <section id="latihan" style="margin-top: 2rem;">
+                <h2>📝 Latihan</h2>
+                <ol>
+                    <li>Install Laravel Breeze di project baru</li>
+                    <li>Coba daftar akun dan login</li>
+                    <li>Buat halaman baru yang hanya bisa diakses setelah login</li>
+                    <li>Tampilkan nama user yang login di navbar</li>
+                    <li><strong>Tambahkan kolom role dan buat 2 akun dengan role berbeda</strong></li>
+                    <li><strong>Buat halaman khusus admin yang tidak bisa diakses member</strong></li>
+                </ol>
+            </section>
+
+            <div class="content-nav">
+                <a href="instalasi-laravel.html" class="nav-btn">
+                    <span>←</span>
+                    <div>
+                        <div class="nav-btn-label">Sebelumnya</div>
+                        <div class="nav-btn-title">Instalasi Laravel</div>
+                    </div>
+                </a>
+                <a href="blade-template.html" class="nav-btn">
+                    <div>
+                        <div class="nav-btn-label">Selanjutnya</div>
+                        <div class="nav-btn-title">Blade Template →</div>
+                    </div>
+                </a>
+            </div>
+        </main>
+    </div>
+
+    <!-- Mobile Sidebar Toggle -->
+    <button class="sidebar-toggle-mobile" onclick="toggleSidebar()">📚</button>
+
+    <script src="../../js/app.js"></script>
+    <script>
+        function copyCode(button) {
+            const codeBlock = button.closest('.code-block');
+            const code = codeBlock.querySelector('pre').innerText;
+            navigator.clipboard.writeText(code).then(() => {
+                button.textContent = 'Tersalin!';
+                button.style.background = 'var(--primary)';
+                button.style.color = 'white';
+                setTimeout(() => {
+                    button.textContent = 'Salin';
+                    button.style.background = '';
+                    button.style.color = '';
+                }, 2000);
+            });
+        }
+
+        function toggleSidebar() {
+            document.querySelector('.sidebar').classList.toggle('active');
+        }
+    </script>
+</body>
+
+</html>

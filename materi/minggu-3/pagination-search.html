@@ -1,0 +1,222 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagination & Search - Minggu 3 | Livewire SMK</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../../css/style.css">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="../../index.html" class="navbar-logo">
+                <svg viewBox="0 0 50 50" fill="none">
+                    <rect width="50" height="50" rx="12" fill="url(#g)" />
+                    <path d="M15 35V15L25 25L35 15V35" stroke="#fff" stroke-width="3" />
+                    <defs>
+                        <linearGradient id="g" x1="0" y1="0" x2="50" y2="50">
+                            <stop stop-color="#10B981" />
+                            <stop offset="1" stop-color="#3B82F6" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <span>Livewire SMK</span>
+            </a>
+            <ul class="navbar-menu">
+                <li><a href="../../index.html">Beranda</a></li>
+                <li><a href="../../silabus.html">Silabus</a></li>
+                <li><a href="#" class="active">Materi</a></li>
+                <li><a href="../../demo.html">Demo</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="content-layout">
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <div class="sidebar-title">📗 Minggu 1</div>
+                <ul class="sidebar-nav">
+                    <li><a href="../minggu-1/pengenalan-laravel.html">Pengenalan Laravel</a></li>
+                    <li><a href="../minggu-1/mvc-sederhana.html">MVC Sederhana</a></li>
+                    <li><a href="../minggu-1/instalasi-laravel.html">Instalasi Laravel</a></li>
+                    <li><a href="../minggu-1/autentikasi.html">🔐 Autentikasi</a></li>
+                    <li><a href="../minggu-1/blade-template.html">Blade Template</a></li>
+                    <li><a href="../minggu-1/pengenalan-livewire.html">Pengenalan Livewire</a></li>
+                    <li><a href="../minggu-1/struktur-component.html">Struktur Component</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-title">📘 Minggu 2</div>
+                <ul class="sidebar-nav">
+                    <li><a href="../minggu-2/wire-model.html">wire:model</a></li>
+                    <li><a href="../minggu-2/wire-click.html">wire:click</a></li>
+                    <li><a href="../minggu-2/validasi.html">Validasi</a></li>
+                    <li><a href="../minggu-2/crud-sederhana.html">CRUD Sederhana</a></li>
+                    <li><a href="../minggu-2/database-eloquent.html">Database & Eloquent</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-title">📕 Minggu 3</div>
+                <ul class="sidebar-nav">
+                    <li><a href="upload-file.html">Upload File</a></li>
+                    <li><a href="pagination-search.html" class="active">Pagination & Search</a></li>
+                    <li><a href="komponen-reusable.html">Komponen Reusable</a></li>
+                    <li><a href="tampilan-dinamis.html">Tampilan Dinamis</a></li>
+                    <li><a href="project-elibrary.html">📚 Tutorial E-Library</a></li>
+                </ul>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="content-header">
+                <h1 class="content-title">3.2 Pagination & Search</h1>
+                <div class="content-meta">
+                    <span>📕 Minggu 3</span>
+                    <span>⏱️ 25 menit</span>
+                </div>
+            </div>
+
+            <div class="objectives">
+                <h3>🎯 Tujuan Belajar</h3>
+                <ul>
+                    <li>Menampilkan data dengan pagination</li>
+                    <li>Membuat live search tanpa refresh</li>
+                    <li>Kombinasi search + pagination</li>
+                </ul>
+            </div>
+
+            <h2>1. Pagination</h2>
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">BookList.php</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-keyword">use</span> Livewire\WithPagination;
+
+<span class="code-keyword">class</span> <span class="code-class">BookList</span> <span class="code-keyword">extends</span> Component
+{
+    <span class="code-keyword">use</span> WithPagination;
+    
+    <span class="code-keyword">public function</span> <span class="code-function">render</span>()
+    {
+        <span class="code-keyword">return</span> view(<span class="code-string">'livewire.book-list'</span>, [
+            <span class="code-string">'books'</span> => Book::paginate(10)
+        ]);
+    }
+}</pre>
+                </div>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">book-list.blade.php</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-keyword">@foreach</span>($books as $book)
+    <span class="code-tag">&lt;div&gt;</span>{{ $book->title }}<span class="code-tag">&lt;/div&gt;</span>
+<span class="code-keyword">@endforeach</span>
+
+<span class="code-comment">&lt;!-- Pagination links --&gt;</span>
+{{ $books->links() }}</pre>
+                </div>
+            </div>
+
+            <h2>2. Live Search</h2>
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">BookList.php</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-keyword">use</span> Livewire\WithPagination;
+
+<span class="code-keyword">class</span> <span class="code-class">BookList</span> <span class="code-keyword">extends</span> Component
+{
+    <span class="code-keyword">use</span> WithPagination;
+    
+    <span class="code-keyword">public</span> $search = <span class="code-string">''</span>;
+    
+    <span class="code-comment">// Reset ke halaman 1 saat search berubah</span>
+    <span class="code-keyword">public function</span> <span class="code-function">updatingSearch</span>()
+    {
+        $this->resetPage();
+    }
+    
+    <span class="code-keyword">public function</span> <span class="code-function">render</span>()
+    {
+        <span class="code-keyword">return</span> view(<span class="code-string">'livewire.book-list'</span>, [
+            <span class="code-string">'books'</span> => Book::where(<span class="code-string">'title'</span>, <span class="code-string">'like'</span>, <span class="code-string">'%'</span>.$this->search.<span class="code-string">'%'</span>)
+                          ->paginate(10)
+        ]);
+    }
+}</pre>
+                </div>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">book-list.blade.php</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-comment">&lt;!-- Search input --&gt;</span>
+<span class="code-tag">&lt;input</span> <span class="code-attr">type</span>=<span class="code-string">"text"</span> 
+       <span class="code-attr">wire:model.live.debounce.300ms</span>=<span class="code-string">"search"</span>
+       <span class="code-attr">placeholder</span>=<span class="code-string">"Cari buku..."</span><span class="code-tag">&gt;</span>
+
+<span class="code-comment">&lt;!-- Results --&gt;</span>
+<span class="code-keyword">@forelse</span>($books as $book)
+    <span class="code-tag">&lt;div&gt;</span>{{ $book->title }}<span class="code-tag">&lt;/div&gt;</span>
+<span class="code-keyword">@empty</span>
+    <span class="code-tag">&lt;p&gt;</span>Tidak ada buku ditemukan.<span class="code-tag">&lt;/p&gt;</span>
+<span class="code-keyword">@endforelse</span>
+
+{{ $books->links() }}</pre>
+                </div>
+            </div>
+
+            <div class="alert alert-tip">
+                <span class="alert-icon">💡</span>
+                <div>
+                    <h4>Debounce</h4>
+                    <p><code>debounce.300ms</code> = tunggu 300ms setelah user berhenti mengetik baru kirim request.
+                        Hemat server!</p>
+                </div>
+            </div>
+
+            <div class="content-nav">
+                <a href="upload-file.html" class="nav-btn">
+                    <div>
+                        <div class="nav-btn-label">Sebelumnya</div>
+                        <div class="nav-btn-title">← Upload File</div>
+                    </div>
+                </a>
+                <a href="komponen-reusable.html" class="nav-btn">
+                    <div>
+                        <div class="nav-btn-label">Selanjutnya</div>
+                        <div class="nav-btn-title">Komponen Reusable →</div>
+                    </div>
+                </a>
+            </div>
+        </main>
+    </div>
+    <script src="../../js/app.js"></script>
+</body>
+
+</html>

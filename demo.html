@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo Livewire - Belajar Laravel Livewire SMK</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="index.html" class="navbar-logo">
+                <svg viewBox="0 0 50 50" fill="none">
+                    <rect width="50" height="50" rx="12" fill="url(#g)" />
+                    <path d="M15 35V15L25 25L35 15V35" stroke="#fff" stroke-width="3" />
+                    <defs>
+                        <linearGradient id="g" x1="0" y1="0" x2="50" y2="50">
+                            <stop stop-color="#10B981" />
+                            <stop offset="1" stop-color="#3B82F6" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <span>Livewire SMK</span>
+            </a>
+            <ul class="navbar-menu">
+                <li><a href="index.html">Beranda</a></li>
+                <li><a href="silabus.html">Silabus</a></li>
+                <li><a href="materi/minggu-1/pengenalan-laravel.html">Materi</a></li>
+                <li><a href="demo.html" class="active">Demo</a></li>
+            </ul>
+            <button class="navbar-toggle"><span>☰</span></button>
+        </div>
+    </nav>
+
+    <section style="padding:8rem 2rem 4rem;background:linear-gradient(135deg,#1F2937,#111827);text-align:center;">
+        <h1 style="color:#fff;font-size:2.5rem;margin-bottom:1rem;">🧪 Demo Interaktif Livewire</h1>
+        <p style="color:#9CA3AF;max-width:600px;margin:0 auto;">Coba sendiri fitur-fitur Livewire tanpa perlu setup
+            apapun!</p>
+    </section>
+
+    <section style="padding:4rem 2rem;background:#fff;">
+        <div class="section-container">
+
+            <!-- Counter Demo -->
+            <div class="demo-container" style="margin-bottom:3rem;">
+                <h2 style="margin-bottom:0.5rem;">🔢 Counter - wire:click</h2>
+                <p style="color:#6B7280;margin-bottom:1.5rem;">Contoh sederhana bagaimana Livewire menangani event klik
+                    tanpa JavaScript.</p>
+
+                <div class="demo-preview">
+                    <div class="demo-counter">
+                        <button class="demo-counter-btn minus">−</button>
+                        <span class="demo-counter-value">0</span>
+                        <button class="demo-counter-btn plus">+</button>
+                    </div>
+                </div>
+
+                <div class="code-block" style="margin-top:1.5rem;">
+                    <div class="code-header">
+                        <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                                class="code-dot"></span></div>
+                        <span class="code-filename">Counter.php</span>
+                        <button class="code-copy">Salin</button>
+                    </div>
+                    <div class="code-body">
+                        <pre><span class="code-keyword">class</span> <span class="code-class">Counter</span> <span class="code-keyword">extends</span> Component
+{
+    <span class="code-keyword">public</span> <span class="code-variable">int</span> $count = <span class="code-string">0</span>;
+    
+    <span class="code-keyword">public function</span> <span class="code-function">increment</span>()
+    {
+        $this->count++;
+    }
+    
+    <span class="code-keyword">public function</span> <span class="code-function">decrement</span>()
+    {
+        $this->count--;
+    }
+}</pre>
+                    </div>
+                </div>
+
+                <div class="code-block">
+                    <div class="code-header">
+                        <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                                class="code-dot"></span></div>
+                        <span class="code-filename">counter.blade.php</span>
+                        <button class="code-copy">Salin</button>
+                    </div>
+                    <div class="code-body">
+                        <pre><span class="code-tag">&lt;div&gt;</span>
+    <span class="code-tag">&lt;button</span> <span class="code-attr">wire:click</span>=<span class="code-string">"decrement"</span><span class="code-tag">&gt;</span>−<span class="code-tag">&lt;/button&gt;</span>
+    <span class="code-tag">&lt;span&gt;</span>{{ $count }}<span class="code-tag">&lt;/span&gt;</span>
+    <span class="code-tag">&lt;button</span> <span class="code-attr">wire:click</span>=<span class="code-string">"increment"</span><span class="code-tag">&gt;</span>+<span class="code-tag">&lt;/button&gt;</span>
+<span class="code-tag">&lt;/div&gt;</span></pre>
+                    </div>
+                </div>
+
+                <div class="alert alert-tip">
+                    <span class="alert-icon">💡</span>
+                    <div>
+                        <h4>Bagaimana cara kerjanya?</h4>
+                        <p>Saat tombol diklik, Livewire mengirim request ke server, menjalankan method PHP, lalu update
+                            tampilan. Semua terjadi tanpa reload halaman!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Form Validation Demo -->
+            <div class="demo-container" style="margin-bottom:3rem;">
+                <h2 style="margin-bottom:0.5rem;">📝 Form Validation - wire:model</h2>
+                <p style="color:#6B7280;margin-bottom:1.5rem;">Validasi real-time saat user mengetik. Error muncul
+                    langsung!</p>
+
+                <div class="demo-preview">
+                    <div class="demo-form">
+                        <div class="form-group">
+                            <label class="form-label">Nama</label>
+                            <input type="text" class="form-input" data-field="name" placeholder="Masukkan nama...">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-input" data-field="email" placeholder="contoh@email.com">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Password</label>
+                            <input type="password" class="form-input" data-field="password"
+                                placeholder="Minimal 6 karakter">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="code-block" style="margin-top:1.5rem;">
+                    <div class="code-header">
+                        <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                                class="code-dot"></span></div>
+                        <span class="code-filename">RegisterForm.php</span>
+                        <button class="code-copy">Salin</button>
+                    </div>
+                    <div class="code-body">
+                        <pre><span class="code-keyword">class</span> <span class="code-class">RegisterForm</span> <span class="code-keyword">extends</span> Component
+{
+    <span class="code-keyword">public</span> $name = <span class="code-string">''</span>;
+    <span class="code-keyword">public</span> $email = <span class="code-string">''</span>;
+    <span class="code-keyword">public</span> $password = <span class="code-string">''</span>;
+    
+    <span class="code-keyword">protected</span> $rules = [
+        <span class="code-string">'name'</span> => <span class="code-string">'required|min:3'</span>,
+        <span class="code-string">'email'</span> => <span class="code-string">'required|email'</span>,
+        <span class="code-string">'password'</span> => <span class="code-string">'required|min:6'</span>,
+    ];
+    
+    <span class="code-keyword">public function</span> <span class="code-function">updated</span>($field)
+    {
+        $this->validateOnly($field);
+    }
+}</pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Live Search Demo -->
+            <div class="demo-container">
+                <h2 style="margin-bottom:0.5rem;">🔍 Live Search</h2>
+                <p style="color:#6B7280;margin-bottom:1.5rem;">Cari data tanpa refresh. Hasil muncul saat mengetik!</p>
+
+                <div class="demo-preview demo-search">
+                    <input type="text" class="form-input search-input"
+                        placeholder="Cari buku... (coba: Laravel, PHP, Clean)">
+                    <div class="search-results" style="margin-top:1rem;text-align:left;">
+                        <div class="search-hint" style="color:#9CA3AF;text-align:center;">Ketik untuk mencari buku...
+                        </div>
+                    </div>
+                </div>
+
+                <div class="code-block" style="margin-top:1.5rem;">
+                    <div class="code-header">
+                        <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                                class="code-dot"></span></div>
+                        <span class="code-filename">search.blade.php</span>
+                        <button class="code-copy">Salin</button>
+                    </div>
+                    <div class="code-body">
+                        <pre><span class="code-tag">&lt;input</span> <span class="code-attr">type</span>=<span class="code-string">"text"</span>
+       <span class="code-attr">wire:model.live.debounce.300ms</span>=<span class="code-string">"search"</span>
+       <span class="code-attr">placeholder</span>=<span class="code-string">"Cari buku..."</span><span class="code-tag">&gt;</span>
+
+@foreach($books as $book)
+    <span class="code-tag">&lt;div&gt;</span>{{ $book->title }}<span class="code-tag">&lt;/div&gt;</span>
+@endforeach</pre>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section style="padding:4rem 2rem;background:#F9FAFB;text-align:center;">
+        <h2>Siap praktik langsung? 🚀</h2>
+        <p style="color:#6B7280;margin-bottom:2rem;">Pelajari step-by-step di materi lengkap kami!</p>
+        <a href="materi/minggu-2/wire-model.html" class="btn btn-primary">📚 Pelajari wire:model</a>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-bottom">
+            <p>© 2024 Livewire SMK</p>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+    <style>
+        .search-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: #fff;
+            border-radius: 10px;
+            margin-bottom: 0.5rem;
+            border: 1px solid #E5E7EB;
+        }
+
+        .search-title {
+            font-weight: 600;
+            color: #1F2937;
+        }
+
+        .search-author {
+            font-size: 0.875rem;
+            color: #6B7280;
+        }
+
+        .search-item mark {
+            background: #FEF3C7;
+            padding: 0 2px;
+            border-radius: 2px;
+        }
+
+        .search-loading,
+        .search-empty {
+            padding: 2rem;
+            color: #6B7280;
+            text-align: center;
+        }
+    </style>
+</body>
+
+</html>

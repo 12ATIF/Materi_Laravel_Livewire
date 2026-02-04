@@ -1,0 +1,212 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload File - Minggu 3 | Livewire SMK</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../../css/style.css">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="../../index.html" class="navbar-logo">
+                <svg viewBox="0 0 50 50" fill="none">
+                    <rect width="50" height="50" rx="12" fill="url(#g)" />
+                    <path d="M15 35V15L25 25L35 15V35" stroke="#fff" stroke-width="3" />
+                    <defs>
+                        <linearGradient id="g" x1="0" y1="0" x2="50" y2="50">
+                            <stop stop-color="#10B981" />
+                            <stop offset="1" stop-color="#3B82F6" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <span>Livewire SMK</span>
+            </a>
+            <ul class="navbar-menu">
+                <li><a href="../../index.html">Beranda</a></li>
+                <li><a href="../../silabus.html">Silabus</a></li>
+                <li><a href="#" class="active">Materi</a></li>
+                <li><a href="../../demo.html">Demo</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="content-layout">
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <div class="sidebar-title">📗 Minggu 1</div>
+                <ul class="sidebar-nav">
+                    <li><a href="../minggu-1/pengenalan-laravel.html">Pengenalan Laravel</a></li>
+                    <li><a href="../minggu-1/mvc-sederhana.html">MVC Sederhana</a></li>
+                    <li><a href="../minggu-1/instalasi-laravel.html">Instalasi Laravel</a></li>
+                    <li><a href="../minggu-1/autentikasi.html">🔐 Autentikasi</a></li>
+                    <li><a href="../minggu-1/blade-template.html">Blade Template</a></li>
+                    <li><a href="../minggu-1/pengenalan-livewire.html">Pengenalan Livewire</a></li>
+                    <li><a href="../minggu-1/struktur-component.html">Struktur Component</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-title">📘 Minggu 2</div>
+                <ul class="sidebar-nav">
+                    <li><a href="../minggu-2/wire-model.html">wire:model</a></li>
+                    <li><a href="../minggu-2/wire-click.html">wire:click</a></li>
+                    <li><a href="../minggu-2/validasi.html">Validasi</a></li>
+                    <li><a href="../minggu-2/crud-sederhana.html">CRUD Sederhana</a></li>
+                    <li><a href="../minggu-2/database-eloquent.html">Database & Eloquent</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-title">📕 Minggu 3</div>
+                <ul class="sidebar-nav">
+                    <li><a href="upload-file.html" class="active">Upload File</a></li>
+                    <li><a href="pagination-search.html">Pagination & Search</a></li>
+                    <li><a href="komponen-reusable.html">Komponen Reusable</a></li>
+                    <li><a href="tampilan-dinamis.html">Tampilan Dinamis</a></li>
+                    <li><a href="project-elibrary.html">📚 Tutorial E-Library</a></li>
+                </ul>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="content-header">
+                <h1 class="content-title">3.1 Upload File Livewire</h1>
+                <div class="content-meta">
+                    <span>📕 Minggu 3</span>
+                    <span>⏱️ 25 menit</span>
+                </div>
+            </div>
+
+            <div class="objectives">
+                <h3>🎯 Tujuan Belajar</h3>
+                <ul>
+                    <li>Upload gambar dengan Livewire</li>
+                    <li>Preview gambar sebelum simpan</li>
+                    <li>Validasi file (tipe, ukuran)</li>
+                </ul>
+            </div>
+
+            <h2>1. Setup Component</h2>
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">UploadCover.php</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-keyword">use</span> Livewire\WithFileUploads;
+
+<span class="code-keyword">class</span> <span class="code-class">UploadCover</span> <span class="code-keyword">extends</span> Component
+{
+    <span class="code-keyword">use</span> WithFileUploads;
+    
+    <span class="code-keyword">public</span> $cover;
+    
+    <span class="code-keyword">protected</span> $rules = [
+        <span class="code-string">'cover'</span> => <span class="code-string">'image|max:2048'</span>, <span class="code-comment">// Max 2MB</span>
+    ];
+    
+    <span class="code-keyword">public function</span> <span class="code-function">save</span>()
+    {
+        $this->validate();
+        
+        $path = $this->cover->store(<span class="code-string">'covers'</span>, <span class="code-string">'public'</span>);
+        
+        <span class="code-comment">// Simpan $path ke database</span>
+        session()->flash(<span class="code-string">'success'</span>, <span class="code-string">'Cover berhasil diupload!'</span>);
+    }
+}</pre>
+                </div>
+            </div>
+
+            <h2>2. Blade dengan Preview</h2>
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">upload-cover.blade.php</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-tag">&lt;form</span> <span class="code-attr">wire:submit</span>=<span class="code-string">"save"</span><span class="code-tag">&gt;</span>
+    <span class="code-comment">&lt;!-- Input file --&gt;</span>
+    <span class="code-tag">&lt;input</span> <span class="code-attr">type</span>=<span class="code-string">"file"</span> <span class="code-attr">wire:model</span>=<span class="code-string">"cover"</span><span class="code-tag">&gt;</span>
+    
+    <span class="code-comment">&lt;!-- Loading state --&gt;</span>
+    <span class="code-tag">&lt;div</span> <span class="code-attr">wire:loading</span> <span class="code-attr">wire:target</span>=<span class="code-string">"cover"</span><span class="code-tag">&gt;</span>
+        Mengupload...
+    <span class="code-tag">&lt;/div&gt;</span>
+    
+    <span class="code-comment">&lt;!-- Preview gambar --&gt;</span>
+    <span class="code-keyword">@if</span>($cover)
+        <span class="code-tag">&lt;img</span> <span class="code-attr">src</span>=<span class="code-string">"{{ $cover->temporaryUrl() }}"</span> <span class="code-attr">width</span>=<span class="code-string">"200"</span><span class="code-tag">&gt;</span>
+    <span class="code-keyword">@endif</span>
+    
+    <span class="code-comment">&lt;!-- Error message --&gt;</span>
+    <span class="code-keyword">@error</span>('cover') 
+        <span class="code-tag">&lt;span</span> <span class="code-attr">class</span>=<span class="code-string">"error"</span><span class="code-tag">&gt;</span>{{ $message }}<span class="code-tag">&lt;/span&gt;</span>
+    <span class="code-keyword">@enderror</span>
+    
+    <span class="code-tag">&lt;button</span> <span class="code-attr">type</span>=<span class="code-string">"submit"</span><span class="code-tag">&gt;</span>Simpan<span class="code-tag">&lt;/button&gt;</span>
+<span class="code-tag">&lt;/form&gt;</span></pre>
+                </div>
+            </div>
+
+            <div class="alert alert-warning">
+                <span class="alert-icon">⚠️</span>
+                <div>
+                    <h4>Jangan lupa!</h4>
+                    <p>Jalankan <code>php artisan storage:link</code> supaya file bisa diakses dari public folder.</p>
+                </div>
+            </div>
+
+            <h2>Validation Rules untuk File</h2>
+            <table style="width:100%;border-collapse:collapse;margin:1.5rem 0;">
+                <tr style="background:#F3F4F6;">
+                    <th style="padding:1rem;text-align:left;border:1px solid #E5E7EB;">Rule</th>
+                    <th style="padding:1rem;text-align:left;border:1px solid #E5E7EB;">Fungsi</th>
+                </tr>
+                <tr>
+                    <td style="padding:1rem;border:1px solid #E5E7EB;"><code>image</code></td>
+                    <td style="padding:1rem;border:1px solid #E5E7EB;">Harus gambar (jpg, png, gif, dll)</td>
+                </tr>
+                <tr>
+                    <td style="padding:1rem;border:1px solid #E5E7EB;"><code>max:2048</code></td>
+                    <td style="padding:1rem;border:1px solid #E5E7EB;">Max 2MB (dalam KB)</td>
+                </tr>
+                <tr>
+                    <td style="padding:1rem;border:1px solid #E5E7EB;"><code>mimes:jpg,png</code></td>
+                    <td style="padding:1rem;border:1px solid #E5E7EB;">Hanya jpg dan png</td>
+                </tr>
+                <tr>
+                    <td style="padding:1rem;border:1px solid #E5E7EB;"><code>dimensions:min_width=100</code></td>
+                    <td style="padding:1rem;border:1px solid #E5E7EB;">Min lebar 100px</td>
+                </tr>
+            </table>
+
+            <div class="content-nav">
+                <a href="../minggu-2/database-eloquent.html" class="nav-btn">
+                    <div>
+                        <div class="nav-btn-label">Sebelumnya</div>
+                        <div class="nav-btn-title">← Database & Eloquent</div>
+                    </div>
+                </a>
+                <a href="pagination-search.html" class="nav-btn">
+                    <div>
+                        <div class="nav-btn-label">Selanjutnya</div>
+                        <div class="nav-btn-title">Pagination & Search →</div>
+                    </div>
+                </a>
+            </div>
+        </main>
+    </div>
+    <script src="../../js/app.js"></script>
+</body>
+
+</html>

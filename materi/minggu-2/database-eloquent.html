@@ -1,0 +1,219 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Database & Eloquent - Minggu 2 | Livewire SMK</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../../css/style.css">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="../../index.html" class="navbar-logo">
+                <svg viewBox="0 0 50 50" fill="none">
+                    <rect width="50" height="50" rx="12" fill="url(#g)" />
+                    <path d="M15 35V15L25 25L35 15V35" stroke="#fff" stroke-width="3" />
+                    <defs>
+                        <linearGradient id="g" x1="0" y1="0" x2="50" y2="50">
+                            <stop stop-color="#10B981" />
+                            <stop offset="1" stop-color="#3B82F6" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <span>Livewire SMK</span>
+            </a>
+            <ul class="navbar-menu">
+                <li><a href="../../index.html">Beranda</a></li>
+                <li><a href="../../silabus.html">Silabus</a></li>
+                <li><a href="#" class="active">Materi</a></li>
+                <li><a href="../../demo.html">Demo</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="content-layout">
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <div class="sidebar-title">📗 Minggu 1</div>
+                <ul class="sidebar-nav">
+                    <li><a href="../minggu-1/pengenalan-laravel.html">Pengenalan Laravel</a></li>
+                    <li><a href="../minggu-1/mvc-sederhana.html">MVC Sederhana</a></li>
+                    <li><a href="../minggu-1/instalasi-laravel.html">Instalasi Laravel</a></li>
+                    <li><a href="../minggu-1/autentikasi.html">🔐 Autentikasi</a></li>
+                    <li><a href="../minggu-1/blade-template.html">Blade Template</a></li>
+                    <li><a href="../minggu-1/pengenalan-livewire.html">Pengenalan Livewire</a></li>
+                    <li><a href="../minggu-1/struktur-component.html">Struktur Component</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-title">📘 Minggu 2</div>
+                <ul class="sidebar-nav">
+                    <li><a href="wire-model.html">wire:model</a></li>
+                    <li><a href="wire-click.html">wire:click</a></li>
+                    <li><a href="validasi.html">Validasi</a></li>
+                    <li><a href="crud-sederhana.html">CRUD Sederhana</a></li>
+                    <li><a href="database-eloquent.html" class="active">Database & Eloquent</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-title">📕 Minggu 3</div>
+                <ul class="sidebar-nav">
+                    <li><a href="../minggu-3/upload-file.html">Upload File</a></li>
+                </ul>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="content-header">
+                <h1 class="content-title">2.5 Database & Eloquent</h1>
+                <div class="content-meta">
+                    <span>📘 Minggu 2</span>
+                    <span>⏱️ 30 menit</span>
+                </div>
+            </div>
+
+            <div class="objectives">
+                <h3>🎯 Tujuan Belajar</h3>
+                <ul>
+                    <li>Membuat migration untuk tabel database</li>
+                    <li>Menggunakan Eloquent ORM untuk CRUD</li>
+                    <li>Menghubungkan Livewire dengan database</li>
+                </ul>
+            </div>
+
+            <h2>1. Buat Migration</h2>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-filename">Terminal</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre>php artisan make:model Todo -m</pre>
+                </div>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">create_todos_table.php</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre>Schema::create(<span class="code-string">'todos'</span>, <span class="code-keyword">function</span> (Blueprint $table) {
+    $table->id();
+    $table->string(<span class="code-string">'task'</span>);
+    $table->boolean(<span class="code-string">'is_done'</span>)->default(<span class="code-keyword">false</span>);
+    $table->timestamps();
+});</pre>
+                </div>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header"><span class="code-filename">Terminal</span></div>
+                <div class="code-body">
+                    <pre>php artisan migrate</pre>
+                </div>
+            </div>
+
+            <h2>2. Setup Model</h2>
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">app/Models/Todo.php</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-keyword">class</span> <span class="code-class">Todo</span> <span class="code-keyword">extends</span> Model
+{
+    <span class="code-keyword">protected</span> $fillable = [<span class="code-string">'task'</span>, <span class="code-string">'is_done'</span>];
+}</pre>
+                </div>
+            </div>
+
+            <h2>3. CRUD dengan Eloquent</h2>
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">TodoList.php (Livewire)</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-keyword">use</span> App\Models\Todo;
+
+<span class="code-keyword">class</span> <span class="code-class">TodoList</span> <span class="code-keyword">extends</span> Component
+{
+    <span class="code-keyword">public</span> $task = <span class="code-string">''</span>;
+    
+    <span class="code-comment">// READ - Ambil semua data</span>
+    <span class="code-keyword">public function</span> <span class="code-function">render</span>()
+    {
+        <span class="code-keyword">return</span> view(<span class="code-string">'livewire.todo-list'</span>, [
+            <span class="code-string">'todos'</span> => Todo::latest()->get()
+        ]);
+    }
+    
+    <span class="code-comment">// CREATE - Simpan data baru</span>
+    <span class="code-keyword">public function</span> <span class="code-function">addTodo</span>()
+    {
+        Todo::create([<span class="code-string">'task'</span> => $this->task]);
+        $this->task = <span class="code-string">''</span>;
+    }
+    
+    <span class="code-comment">// UPDATE - Ubah status</span>
+    <span class="code-keyword">public function</span> <span class="code-function">toggleTodo</span>($id)
+    {
+        $todo = Todo::find($id);
+        $todo->update([<span class="code-string">'is_done'</span> => !$todo->is_done]);
+    }
+    
+    <span class="code-comment">// DELETE - Hapus data</span>
+    <span class="code-keyword">public function</span> <span class="code-function">deleteTodo</span>($id)
+    {
+        Todo::find($id)->delete();
+    }
+}</pre>
+                </div>
+            </div>
+
+            <div class="alert alert-tip">
+                <span class="alert-icon">💡</span>
+                <div>
+                    <h4>Eloquent Cheat Sheet</h4>
+                    <p><code>Model::all()</code> = Ambil semua<br>
+                        <code>Model::find($id)</code> = Cari by ID<br>
+                        <code>Model::create([])</code> = Buat baru<br>
+                        <code>$model->update([])</code> = Update<br>
+                        <code>$model->delete()</code> = Hapus
+                    </p>
+                </div>
+            </div>
+
+            <div class="content-nav">
+                <a href="crud-sederhana.html" class="nav-btn">
+                    <div>
+                        <div class="nav-btn-label">Sebelumnya</div>
+                        <div class="nav-btn-title">← CRUD Sederhana</div>
+                    </div>
+                </a>
+                <a href="../minggu-3/upload-file.html" class="nav-btn">
+                    <div>
+                        <div class="nav-btn-label">Minggu 3</div>
+                        <div class="nav-btn-title">Upload File →</div>
+                    </div>
+                </a>
+            </div>
+        </main>
+    </div>
+    <script src="../../js/app.js"></script>
+</body>
+
+</html>

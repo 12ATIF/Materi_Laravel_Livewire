@@ -1,0 +1,205 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRUD Sederhana - Minggu 2 | Livewire SMK</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../../css/style.css">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="../../index.html" class="navbar-logo">
+                <svg viewBox="0 0 50 50" fill="none">
+                    <rect width="50" height="50" rx="12" fill="url(#g)" />
+                    <path d="M15 35V15L25 25L35 15V35" stroke="#fff" stroke-width="3" />
+                    <defs>
+                        <linearGradient id="g" x1="0" y1="0" x2="50" y2="50">
+                            <stop stop-color="#10B981" />
+                            <stop offset="1" stop-color="#3B82F6" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <span>Livewire SMK</span>
+            </a>
+            <ul class="navbar-menu">
+                <li><a href="../../index.html">Beranda</a></li>
+                <li><a href="../../silabus.html">Silabus</a></li>
+                <li><a href="#" class="active">Materi</a></li>
+                <li><a href="../../demo.html">Demo</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="content-layout">
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <div class="sidebar-title">📗 Minggu 1</div>
+                <ul class="sidebar-nav">
+                    <li><a href="../minggu-1/pengenalan-laravel.html">Pengenalan Laravel</a></li>
+                    <li><a href="../minggu-1/mvc-sederhana.html">MVC Sederhana</a></li>
+                    <li><a href="../minggu-1/instalasi-laravel.html">Instalasi Laravel</a></li>
+                    <li><a href="../minggu-1/autentikasi.html">🔐 Autentikasi</a></li>
+                    <li><a href="../minggu-1/blade-template.html">Blade Template</a></li>
+                    <li><a href="../minggu-1/pengenalan-livewire.html">Pengenalan Livewire</a></li>
+                    <li><a href="../minggu-1/struktur-component.html">Struktur Component</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-title">📘 Minggu 2</div>
+                <ul class="sidebar-nav">
+                    <li><a href="wire-model.html">wire:model</a></li>
+                    <li><a href="wire-click.html">wire:click</a></li>
+                    <li><a href="validasi.html">Validasi</a></li>
+                    <li><a href="crud-sederhana.html" class="active">CRUD Sederhana</a></li>
+                    <li><a href="database-eloquent.html">Database & Eloquent</a></li>
+                </ul>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="content-header">
+                <h1 class="content-title">2.4 CRUD Sederhana</h1>
+                <div class="content-meta">
+                    <span>📘 Minggu 2</span>
+                    <span>⏱️ 35 menit</span>
+                    <span>🔧 Praktik</span>
+                </div>
+            </div>
+
+            <div class="objectives">
+                <h3>🎯 Tujuan Belajar</h3>
+                <ul>
+                    <li>Memahami konsep CRUD (Create, Read, Update, Delete)</li>
+                    <li>Membuat to-do list sederhana dengan Livewire</li>
+                </ul>
+            </div>
+
+            <h2>Apa itu CRUD?</h2>
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin:1.5rem 0;">
+                <div style="padding:1rem;background:#D1FAE5;border-radius:12px;text-align:center;">
+                    <div style="font-size:1.5rem;">➕</div>
+                    <strong style="color:#059669;">Create</strong>
+                    <p style="font-size:0.8rem;margin:0.5rem 0 0;">Tambah data</p>
+                </div>
+                <div style="padding:1rem;background:#DBEAFE;border-radius:12px;text-align:center;">
+                    <div style="font-size:1.5rem;">👁️</div>
+                    <strong style="color:#2563EB;">Read</strong>
+                    <p style="font-size:0.8rem;margin:0.5rem 0 0;">Baca data</p>
+                </div>
+                <div style="padding:1rem;background:#FEF3C7;border-radius:12px;text-align:center;">
+                    <div style="font-size:1.5rem;">✏️</div>
+                    <strong style="color:#D97706;">Update</strong>
+                    <p style="font-size:0.8rem;margin:0.5rem 0 0;">Ubah data</p>
+                </div>
+                <div style="padding:1rem;background:#FEE2E2;border-radius:12px;text-align:center;">
+                    <div style="font-size:1.5rem;">🗑️</div>
+                    <strong style="color:#DC2626;">Delete</strong>
+                    <p style="font-size:0.8rem;margin:0.5rem 0 0;">Hapus data</p>
+                </div>
+            </div>
+
+            <h2>Contoh: To-Do List</h2>
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">TodoList.php</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-keyword">class</span> <span class="code-class">TodoList</span> <span class="code-keyword">extends</span> Component
+{
+    <span class="code-keyword">public</span> $todos = [];
+    <span class="code-keyword">public</span> $newTodo = <span class="code-string">''</span>;
+    
+    <span class="code-comment">// CREATE</span>
+    <span class="code-keyword">public function</span> <span class="code-function">addTodo</span>()
+    {
+        $this->todos[] = [
+            <span class="code-string">'text'</span> => $this->newTodo,
+            <span class="code-string">'done'</span> => <span class="code-keyword">false</span>
+        ];
+        $this->newTodo = <span class="code-string">''</span>;
+    }
+    
+    <span class="code-comment">// UPDATE</span>
+    <span class="code-keyword">public function</span> <span class="code-function">toggleTodo</span>($index)
+    {
+        $this->todos[$index][<span class="code-string">'done'</span>] = !$this->todos[$index][<span class="code-string">'done'</span>];
+    }
+    
+    <span class="code-comment">// DELETE</span>
+    <span class="code-keyword">public function</span> <span class="code-function">removeTodo</span>($index)
+    {
+        unset($this->todos[$index]);
+        $this->todos = array_values($this->todos);
+    }
+}</pre>
+                </div>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">todo-list.blade.php</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-tag">&lt;div&gt;</span>
+    <span class="code-comment">&lt;!-- Form tambah --&gt;</span>
+    <span class="code-tag">&lt;form</span> <span class="code-attr">wire:submit</span>=<span class="code-string">"addTodo"</span><span class="code-tag">&gt;</span>
+        <span class="code-tag">&lt;input</span> <span class="code-attr">wire:model</span>=<span class="code-string">"newTodo"</span> <span class="code-attr">placeholder</span>=<span class="code-string">"Tugas baru..."</span><span class="code-tag">&gt;</span>
+        <span class="code-tag">&lt;button&gt;</span>Tambah<span class="code-tag">&lt;/button&gt;</span>
+    <span class="code-tag">&lt;/form&gt;</span>
+    
+    <span class="code-comment">&lt;!-- List todos --&gt;</span>
+    <span class="code-keyword">@foreach</span>($todos as $index => $todo)
+        <span class="code-tag">&lt;div&gt;</span>
+            <span class="code-tag">&lt;input</span> <span class="code-attr">type</span>=<span class="code-string">"checkbox"</span> 
+                   <span class="code-attr">wire:click</span>=<span class="code-string">"toggleTodo({{ $index }})"</span>
+                   {{ $todo[<span class="code-string">'done'</span>] ? <span class="code-string">'checked'</span> : <span class="code-string">''</span> }}<span class="code-tag">&gt;</span>
+            <span class="code-tag">&lt;span&gt;</span>{{ $todo[<span class="code-string">'text'</span>] }}<span class="code-tag">&lt;/span&gt;</span>
+            <span class="code-tag">&lt;button</span> <span class="code-attr">wire:click</span>=<span class="code-string">"removeTodo({{ $index }})"</span><span class="code-tag">&gt;</span>🗑️<span class="code-tag">&lt;/button&gt;</span>
+        <span class="code-tag">&lt;/div&gt;</span>
+    <span class="code-keyword">@endforeach</span>
+<span class="code-tag">&lt;/div&gt;</span></pre>
+                </div>
+            </div>
+
+            <div class="alert alert-info">
+                <span class="alert-icon">📌</span>
+                <div>
+                    <h4>Catatan</h4>
+                    <p>Contoh di atas menyimpan data di property (hilang saat refresh). Di materi selanjutnya, kita akan
+                        simpan ke database!</p>
+                </div>
+            </div>
+
+            <div class="content-nav">
+                <a href="validasi.html" class="nav-btn">
+                    <div>
+                        <div class="nav-btn-label">Sebelumnya</div>
+                        <div class="nav-btn-title">← Validasi</div>
+                    </div>
+                </a>
+                <a href="database-eloquent.html" class="nav-btn">
+                    <div>
+                        <div class="nav-btn-label">Selanjutnya</div>
+                        <div class="nav-btn-title">Database & Eloquent →</div>
+                    </div>
+                </a>
+            </div>
+        </main>
+    </div>
+    <script src="../../js/app.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,210 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validasi Livewire - Minggu 2 | Livewire SMK</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../../css/style.css">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="../../index.html" class="navbar-logo">
+                <svg viewBox="0 0 50 50" fill="none">
+                    <rect width="50" height="50" rx="12" fill="url(#g)" />
+                    <path d="M15 35V15L25 25L35 15V35" stroke="#fff" stroke-width="3" />
+                    <defs>
+                        <linearGradient id="g" x1="0" y1="0" x2="50" y2="50">
+                            <stop stop-color="#10B981" />
+                            <stop offset="1" stop-color="#3B82F6" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <span>Livewire SMK</span>
+            </a>
+            <ul class="navbar-menu">
+                <li><a href="../../index.html">Beranda</a></li>
+                <li><a href="../../silabus.html">Silabus</a></li>
+                <li><a href="#" class="active">Materi</a></li>
+                <li><a href="../../demo.html">Demo</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="content-layout">
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <div class="sidebar-title">📗 Minggu 1</div>
+                <ul class="sidebar-nav">
+                    <li><a href="../minggu-1/pengenalan-laravel.html">Pengenalan Laravel</a></li>
+                    <li><a href="../minggu-1/mvc-sederhana.html">MVC Sederhana</a></li>
+                    <li><a href="../minggu-1/instalasi-laravel.html">Instalasi Laravel</a></li>
+                    <li><a href="../minggu-1/autentikasi.html">🔐 Autentikasi</a></li>
+                    <li><a href="../minggu-1/blade-template.html">Blade Template</a></li>
+                    <li><a href="../minggu-1/pengenalan-livewire.html">Pengenalan Livewire</a></li>
+                    <li><a href="../minggu-1/struktur-component.html">Struktur Component</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-title">📘 Minggu 2</div>
+                <ul class="sidebar-nav">
+                    <li><a href="wire-model.html">wire:model</a></li>
+                    <li><a href="wire-click.html">wire:click</a></li>
+                    <li><a href="validasi.html" class="active">Validasi</a></li>
+                    <li><a href="crud-sederhana.html">CRUD Sederhana</a></li>
+                    <li><a href="database-eloquent.html">Database & Eloquent</a></li>
+                </ul>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="content-header">
+                <h1 class="content-title">2.3 Validasi Livewire</h1>
+                <div class="content-meta">
+                    <span>📘 Minggu 2</span>
+                    <span>⏱️ 25 menit</span>
+                </div>
+            </div>
+
+            <div class="objectives">
+                <h3>🎯 Tujuan Belajar</h3>
+                <ul>
+                    <li>Membuat validasi form dengan Livewire</li>
+                    <li>Menampilkan pesan error real-time</li>
+                    <li>Menggunakan rules validation Laravel</li>
+                </ul>
+            </div>
+
+            <h2>Validasi Dasar</h2>
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">ContactForm.php</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-keyword">class</span> <span class="code-class">ContactForm</span> <span class="code-keyword">extends</span> Component
+{
+    <span class="code-keyword">public</span> $name = <span class="code-string">''</span>;
+    <span class="code-keyword">public</span> $email = <span class="code-string">''</span>;
+    <span class="code-keyword">public</span> $message = <span class="code-string">''</span>;
+    
+    <span class="code-keyword">protected</span> $rules = [
+        <span class="code-string">'name'</span> => <span class="code-string">'required|min:3'</span>,
+        <span class="code-string">'email'</span> => <span class="code-string">'required|email'</span>,
+        <span class="code-string">'message'</span> => <span class="code-string">'required|min:10'</span>,
+    ];
+    
+    <span class="code-keyword">public function</span> <span class="code-function">submit</span>()
+    {
+        $this->validate();
+        
+        <span class="code-comment">// Proses data...</span>
+        session()->flash(<span class="code-string">'success'</span>, <span class="code-string">'Pesan terkirim!'</span>);
+    }
+}</pre>
+                </div>
+            </div>
+
+            <h2>Validasi Real-Time</h2>
+            <p>Dengan method <code>updated()</code>, error muncul saat user mengetik:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">ContactForm.php</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-keyword">public function</span> <span class="code-function">updated</span>($propertyName)
+{
+    $this->validateOnly($propertyName);
+}</pre>
+                </div>
+            </div>
+
+            <h2>Menampilkan Error di Blade</h2>
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">contact-form.blade.php</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-tag">&lt;form</span> <span class="code-attr">wire:submit</span>=<span class="code-string">"submit"</span><span class="code-tag">&gt;</span>
+    <span class="code-tag">&lt;div&gt;</span>
+        <span class="code-tag">&lt;input</span> <span class="code-attr">wire:model.live</span>=<span class="code-string">"name"</span> <span class="code-attr">placeholder</span>=<span class="code-string">"Nama"</span><span class="code-tag">&gt;</span>
+        <span class="code-keyword">@error</span>('name') 
+            <span class="code-tag">&lt;span</span> <span class="code-attr">class</span>=<span class="code-string">"error"</span><span class="code-tag">&gt;</span>{{ $message }}<span class="code-tag">&lt;/span&gt;</span>
+        <span class="code-keyword">@enderror</span>
+    <span class="code-tag">&lt;/div&gt;</span>
+    
+    <span class="code-tag">&lt;div&gt;</span>
+        <span class="code-tag">&lt;input</span> <span class="code-attr">wire:model.live</span>=<span class="code-string">"email"</span> <span class="code-attr">placeholder</span>=<span class="code-string">"Email"</span><span class="code-tag">&gt;</span>
+        <span class="code-keyword">@error</span>('email') 
+            <span class="code-tag">&lt;span</span> <span class="code-attr">class</span>=<span class="code-string">"error"</span><span class="code-tag">&gt;</span>{{ $message }}<span class="code-tag">&lt;/span&gt;</span>
+        <span class="code-keyword">@enderror</span>
+    <span class="code-tag">&lt;/div&gt;</span>
+    
+    <span class="code-tag">&lt;button</span> <span class="code-attr">type</span>=<span class="code-string">"submit"</span><span class="code-tag">&gt;</span>Kirim<span class="code-tag">&lt;/button&gt;</span>
+<span class="code-tag">&lt;/form&gt;</span></pre>
+                </div>
+            </div>
+
+            <h2>Rules Populer</h2>
+            <table style="width:100%;border-collapse:collapse;margin:1.5rem 0;">
+                <tr style="background:#F3F4F6;">
+                    <th style="padding:1rem;text-align:left;border:1px solid #E5E7EB;">Rule</th>
+                    <th style="padding:1rem;text-align:left;border:1px solid #E5E7EB;">Fungsi</th>
+                </tr>
+                <tr>
+                    <td style="padding:1rem;border:1px solid #E5E7EB;"><code>required</code></td>
+                    <td style="padding:1rem;border:1px solid #E5E7EB;">Wajib diisi</td>
+                </tr>
+                <tr>
+                    <td style="padding:1rem;border:1px solid #E5E7EB;"><code>email</code></td>
+                    <td style="padding:1rem;border:1px solid #E5E7EB;">Format email valid</td>
+                </tr>
+                <tr>
+                    <td style="padding:1rem;border:1px solid #E5E7EB;"><code>min:3</code></td>
+                    <td style="padding:1rem;border:1px solid #E5E7EB;">Minimal 3 karakter</td>
+                </tr>
+                <tr>
+                    <td style="padding:1rem;border:1px solid #E5E7EB;"><code>max:255</code></td>
+                    <td style="padding:1rem;border:1px solid #E5E7EB;">Maksimal 255 karakter</td>
+                </tr>
+                <tr>
+                    <td style="padding:1rem;border:1px solid #E5E7EB;"><code>unique:users,email</code></td>
+                    <td style="padding:1rem;border:1px solid #E5E7EB;">Email unik di tabel users</td>
+                </tr>
+            </table>
+
+            <div class="content-nav">
+                <a href="wire-click.html" class="nav-btn">
+                    <div>
+                        <div class="nav-btn-label">Sebelumnya</div>
+                        <div class="nav-btn-title">← wire:click</div>
+                    </div>
+                </a>
+                <a href="crud-sederhana.html" class="nav-btn">
+                    <div>
+                        <div class="nav-btn-label">Selanjutnya</div>
+                        <div class="nav-btn-title">CRUD Sederhana →</div>
+                    </div>
+                </a>
+            </div>
+        </main>
+    </div>
+    <script src="../../js/app.js"></script>
+</body>
+
+</html>

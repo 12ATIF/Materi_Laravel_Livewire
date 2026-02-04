@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Belajar Web Dinamis dengan Laravel Livewire untuk siswa SMK. Tanpa banyak JavaScript, full interaktif!">
+    <title>Belajar Laravel Livewire untuk SMK | Web Dinamis Modern</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap"
+        rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="index.html" class="navbar-logo">
+                <svg viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="50" height="50" rx="12" fill="url(#grad1)" />
+                    <path d="M15 35V15L25 25L35 15V35" stroke="white" stroke-width="3" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    <defs>
+                        <linearGradient id="grad1" x1="0" y1="0" x2="50" y2="50">
+                            <stop offset="0%" stop-color="#10B981" />
+                            <stop offset="100%" stop-color="#3B82F6" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <span>Livewire SMK</span>
+            </a>
+
+            <ul class="navbar-menu">
+                <li><a href="index.html" class="active">Beranda</a></li>
+                <li><a href="silabus.html">Silabus</a></li>
+                <li><a href="materi/minggu-1/pengenalan-laravel.html">Materi</a></li>
+                <li><a href="demo.html">Demo</a></li>
+
+            </ul>
+
+            <button class="navbar-toggle" aria-label="Toggle menu">
+                <span>☰</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1>
+                    Belajar <span>Web Dinamis</span><br>
+                    Laravel Livewire untuk SMK
+                </h1>
+                <p>
+                    Tanpa banyak JavaScript, full interaktif! Pelajari cara membuat
+                    website dinamis modern dalam 3 minggu. Cocok untuk pemula total.
+                </p>
+                <div class="hero-buttons">
+                    <a href="silabus.html" class="btn btn-primary">
+                        🎓 Mulai Belajar
+                    </a>
+                    <a href="#features" class="btn btn-secondary">
+                        📋 Lihat Silabus
+                    </a>
+                </div>
+
+                <div class="stats-bar">
+                    <div class="stat-item">
+                        <div class="stat-number">3</div>
+                        <div class="stat-label">Minggu</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">16</div>
+                        <div class="stat-label">Materi</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">1</div>
+                        <div class="stat-label">Project</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hero-visual">
+                <svg class="hero-illustration" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Browser Window -->
+                    <rect x="50" y="30" width="300" height="200" rx="12" fill="#1F2937" />
+                    <rect x="50" y="30" width="300" height="30" rx="12" fill="#374151" />
+                    <circle cx="70" cy="45" r="6" fill="#FF5F56" />
+                    <circle cx="90" cy="45" r="6" fill="#FFBD2E" />
+                    <circle cx="110" cy="45" r="6" fill="#27CA40" />
+
+                    <!-- Code Lines -->
+                    <rect x="70" y="80" width="80" height="8" rx="4" fill="#C792EA" />
+                    <rect x="160" y="80" width="60" height="8" rx="4" fill="#82AAFF" />
+                    <rect x="70" y="100" width="40" height="8" rx="4" fill="#F78C6C" />
+                    <rect x="120" y="100" width="100" height="8" rx="4" fill="#C3E88D" />
+                    <rect x="70" y="120" width="60" height="8" rx="4" fill="#89DDFF" />
+                    <rect x="140" y="120" width="80" height="8" rx="4" fill="#FFCB6B" />
+
+                    <!-- Component Box -->
+                    <rect x="70" y="150" width="120" height="60" rx="8" fill="#10B981" fill-opacity="0.2"
+                        stroke="#10B981" stroke-width="2" />
+                    <text x="95" y="185" fill="#10B981" font-size="12" font-family="Inter">Livewire</text>
+
+                    <!-- Arrow -->
+                    <path d="M200 180 L240 180" stroke="#3B82F6" stroke-width="3" stroke-linecap="round" />
+                    <path d="M235 175 L245 180 L235 185" stroke="#3B82F6" stroke-width="3" stroke-linecap="round"
+                        stroke-linejoin="round" />
+
+                    <!-- Preview Box -->
+                    <rect x="250" y="150" width="80" height="60" rx="8" fill="#3B82F6" fill-opacity="0.2"
+                        stroke="#3B82F6" stroke-width="2" />
+                    <text x="265" y="185" fill="#3B82F6" font-size="12" font-family="Inter">Preview</text>
+
+                    <!-- Floating Elements -->
+                    <circle cx="30" cy="100" r="15" fill="#10B981" fill-opacity="0.3">
+                        <animate attributeName="cy" values="100;80;100" dur="3s" repeatCount="indefinite" />
+                    </circle>
+                    <circle cx="380" cy="150" r="20" fill="#3B82F6" fill-opacity="0.3">
+                        <animate attributeName="cy" values="150;170;150" dur="4s" repeatCount="indefinite" />
+                    </circle>
+                    <rect x="20" y="200" width="30" height="30" rx="6" fill="#FB70A9" fill-opacity="0.3">
+                        <animate attributeName="y" values="200;220;200" dur="3.5s" repeatCount="indefinite" />
+                    </rect>
+
+                    <!-- Laravel Logo Simplified -->
+                    <path d="M360 60 L380 80 L360 100 L340 80 Z" fill="#FF2D20" fill-opacity="0.8">
+                        <animate attributeName="opacity" values="0.8;0.4;0.8" dur="2s" repeatCount="indefinite" />
+                    </path>
+                </svg>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="section-container">
+            <div class="section-header">
+                <h2>Kenapa Belajar <span class="text-gradient">Livewire</span>?</h2>
+                <p>Framework modern untuk membuat website interaktif tanpa ribet JavaScript</p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🚀</div>
+                    <h3>Tanpa Ribet JavaScript</h3>
+                    <p>Buat fitur interaktif seperti form, search, dan CRUD hanya dengan PHP. Tidak perlu belajar React,
+                        Vue, atau JavaScript kompleks!</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3>Real-time & Reaktif</h3>
+                    <p>Update halaman secara otomatis tanpa refresh. Seperti aplikasi mobile, tapi ini website!</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📚</div>
+                    <h3>Step-by-Step Learning</h3>
+                    <p>Materi disusun bertahap dari dasar sampai mahir. Cocok untuk pemula total yang baru kenal
+                        Laravel.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Project Nyata</h3>
+                    <p>Langsung praktik bikin aplikasi CRUD Library lengkap dengan upload file, search, dan pagination!
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Silabus Preview -->
+    <section class="silabus" id="silabus">
+        <div class="section-container">
+            <div class="section-header">
+                <h2>📅 Silabus <span class="text-gradient">3 Minggu</span></h2>
+                <p>Kurikulum terstruktur dari nol sampai bisa bikin CRUD lengkap</p>
+            </div>
+
+            <div class="week-cards">
+                <!-- Week 1 -->
+                <div class="week-card">
+                    <div class="week-header">
+                        <div class="week-number">📗 Minggu 1</div>
+                        <div class="week-title">Dasar Laravel & Livewire</div>
+                    </div>
+                    <div class="week-content">
+                        <ul class="materi-list">
+                            <li class="materi-item"><a href="materi/minggu-1/pengenalan-laravel.html">Pengenalan
+                                    Laravel</a></li>
+                            <li class="materi-item"><a href="materi/minggu-1/mvc-sederhana.html">MVC Sederhana</a></li>
+                            <li class="materi-item"><a href="materi/minggu-1/instalasi-laravel.html">Instalasi
+                                    Laravel</a></li>
+                            <li class="materi-item"><a href="materi/minggu-1/blade-template.html">Blade Template</a>
+                            </li>
+                            <li class="materi-item"><a href="materi/minggu-1/pengenalan-livewire.html">Pengenalan
+                                    Livewire</a></li>
+                            <li class="materi-item"><a href="materi/minggu-1/struktur-component.html">Struktur
+                                    Component</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Week 2 -->
+                <div class="week-card">
+                    <div class="week-header">
+                        <div class="week-number">📘 Minggu 2</div>
+                        <div class="week-title">Livewire Interaktif</div>
+                    </div>
+                    <div class="week-content">
+                        <ul class="materi-list">
+                            <li class="materi-item"><a href="materi/minggu-2/wire-model.html">Binding Data
+                                    (wire:model)</a></li>
+                            <li class="materi-item"><a href="materi/minggu-2/wire-click.html">Event (wire:click)</a>
+                            </li>
+                            <li class="materi-item"><a href="materi/minggu-2/validasi.html">Validasi Livewire</a></li>
+                            <li class="materi-item"><a href="materi/minggu-2/crud-sederhana.html">CRUD Sederhana</a>
+                            </li>
+                            <li class="materi-item"><a href="materi/minggu-2/database-eloquent.html">Database &
+                                    Eloquent</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Week 3 -->
+                <div class="week-card">
+                    <div class="week-header">
+                        <div class="week-number">📕 Minggu 3</div>
+                        <div class="week-title">Fitur Lanjutan</div>
+                    </div>
+                    <div class="week-content">
+                        <ul class="materi-list">
+                            <li class="materi-item"><a href="materi/minggu-3/upload-file.html">Upload File Livewire</a>
+                            </li>
+                            <li class="materi-item"><a href="materi/minggu-3/pagination-search.html">Pagination &
+                                    Search</a></li>
+                            <li class="materi-item"><a href="materi/minggu-3/komponen-reusable.html">Komponen
+                                    Reusable</a></li>
+                            <li class="materi-item"><a href="materi/minggu-3/tampilan-dinamis.html">Tampilan Dinamis</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section style="padding: 6rem 2rem; background: linear-gradient(135deg, #10B981 0%, #3B82F6 100%);">
+        <div class="section-container" style="text-align: center;">
+            <h2 style="color: white; font-size: 2.5rem; margin-bottom: 1rem;">Siap Mulai Belajar? 🚀</h2>
+            <p
+                style="color: rgba(255,255,255,0.9); font-size: 1.25rem; margin-bottom: 2rem; max-width: 600px; margin-left: auto; margin-right: auto;">
+                Dalam 3 minggu, kamu akan bisa membuat aplikasi web dinamis dengan Laravel Livewire!
+            </p>
+            <a href="materi/minggu-1/pengenalan-laravel.html" class="btn"
+                style="background: white; color: #10B981; font-size: 1.125rem; padding: 1.25rem 2.5rem;">
+                🎓 Mulai dari Materi Pertama
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h4>🎓 Livewire SMK</h4>
+                <p style="color: #9CA3AF; line-height: 1.7;">
+                    Platform pembelajaran Laravel Livewire untuk siswa SMK. Dibuat dengan ❤️ untuk generasi developer
+                    Indonesia.
+                </p>
+            </div>
+
+            <div class="footer-section">
+                <h4>📚 Materi</h4>
+                <ul>
+                    <li><a href="materi/minggu-1/pengenalan-laravel.html">Minggu 1: Dasar</a></li>
+                    <li><a href="materi/minggu-2/wire-model.html">Minggu 2: Interaktif</a></li>
+                    <li><a href="materi/minggu-3/upload-file.html">Minggu 3: Project</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>🔗 Link</h4>
+                <ul>
+                    <li><a href="silabus.html">Silabus Lengkap</a></li>
+                    <li><a href="demo.html">Demo Livewire</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>📖 Dokumentasi</h4>
+                <ul>
+                    <li><a href="https://laravel.com/docs" target="_blank">Laravel Docs</a></li>
+                    <li><a href="https://livewire.laravel.com" target="_blank">Livewire Docs</a></li>
+                    <li><a href="https://tailwindcss.com" target="_blank">Tailwind CSS</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2024 Livewire SMK. Materi pembelajaran untuk siswa SMK Indonesia.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/app.js"></script>
+</body>
+
+</html>
