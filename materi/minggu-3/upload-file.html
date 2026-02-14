@@ -31,12 +31,12 @@
             <ul class="navbar-menu">
                 <li><a href="../../index.html">Beranda</a></li>
                 <li><a href="../../silabus.html">Silabus</a></li>
-                <li><a href="#" class="active">Materi</a></li>
+                <li><a href="../minggu-1/pengenalan-laravel.html" class="active">Materi</a></li>
                 <li><a href="../../demo.html">Demo</a></li>
             </ul>
+            <button class="navbar-toggle" aria-label="Toggle menu"><span>☰</span></button>
         </div>
     </nav>
-
     <div class="content-layout">
         <aside class="sidebar">
             <div class="sidebar-section">
@@ -45,10 +45,10 @@
                     <li><a href="../minggu-1/pengenalan-laravel.html">Pengenalan Laravel</a></li>
                     <li><a href="../minggu-1/mvc-sederhana.html">MVC Sederhana</a></li>
                     <li><a href="../minggu-1/instalasi-laravel.html">Instalasi Laravel</a></li>
-                    <li><a href="../minggu-1/autentikasi.html">🔐 Autentikasi</a></li>
                     <li><a href="../minggu-1/blade-template.html">Blade Template</a></li>
                     <li><a href="../minggu-1/pengenalan-livewire.html">Pengenalan Livewire</a></li>
                     <li><a href="../minggu-1/struktur-component.html">Struktur Component</a></li>
+                    <li><a href="../minggu-1/autentikasi.html">🔐 Autentikasi</a></li>
                 </ul>
             </div>
             <div class="sidebar-section">
@@ -56,9 +56,9 @@
                 <ul class="sidebar-nav">
                     <li><a href="../minggu-2/wire-model.html">wire:model</a></li>
                     <li><a href="../minggu-2/wire-click.html">wire:click</a></li>
+                    <li><a href="../minggu-2/database-eloquent.html">Database & Eloquent</a></li>
                     <li><a href="../minggu-2/validasi.html">Validasi</a></li>
                     <li><a href="../minggu-2/crud-sederhana.html">CRUD Sederhana</a></li>
-                    <li><a href="../minggu-2/database-eloquent.html">Database & Eloquent</a></li>
                 </ul>
             </div>
             <div class="sidebar-section">
@@ -72,129 +72,331 @@
                 </ul>
             </div>
         </aside>
-
         <main class="main-content">
             <div class="content-header">
-                <h1 class="content-title">3.1 Upload File Livewire</h1>
+                <div class="content-breadcrumb">
+                    <a href="../../index.html">Beranda</a> / <a href="../../silabus.html">Silabus</a> / Minggu 3 /
+                    Upload File
+                </div>
+                <h1 class="content-title">3.1 Upload File dengan Livewire</h1>
                 <div class="content-meta">
                     <span>📕 Minggu 3</span>
-                    <span>⏱️ 25 menit</span>
+                    <span>⏱️ 30 menit</span>
+                    <span>🔧 Teori + Praktik</span>
                 </div>
+            </div>
+
+            <div class="prerequisites">
+                <h3>📌 Prasyarat</h3>
+                <ul>
+                    <li>Sudah paham <a href="../minggu-2/wire-model.html">wire:model</a> dan <a
+                            href="../minggu-2/validasi.html">Validasi</a></li>
+                    <li>Sudah bisa buat <a href="../minggu-2/crud-sederhana.html">CRUD Sederhana</a></li>
+                </ul>
             </div>
 
             <div class="objectives">
                 <h3>🎯 Tujuan Belajar</h3>
                 <ul>
-                    <li>Upload gambar dengan Livewire</li>
-                    <li>Preview gambar sebelum simpan</li>
-                    <li>Validasi file (tipe, ukuran)</li>
+                    <li>Upload <strong>gambar/file</strong> menggunakan <code>WithFileUploads</code></li>
+                    <li>Menampilkan <strong>preview</strong> sebelum disimpan</li>
+                    <li>Validasi file (tipe, ukuran) & <strong>loading state</strong></li>
+                    <li>Menyimpan path file ke <strong>database</strong></li>
                 </ul>
             </div>
 
-            <h2>1. Setup Component</h2>
+            <h2>🤔 Kenapa Upload File Itu Spesial?</h2>
+
+            <div class="alert alert-tip">
+                <span class="alert-icon">📦</span>
+                <div>
+                    <h4>Analogi: Kirim SMS vs Kirim Paket</h4>
+                    <ul style="margin-top:0.5rem;">
+                        <li>📱 <strong>Input teks</strong> (wire:model) = kirim SMS → kecil, langsung sampai</li>
+                        <li>📦 <strong>Upload file</strong> = kirim paket → perlu waktu, ada batas berat, perlu dicek
+                        </li>
+                        <li>🏪 <strong>storage/</strong> = gudang penyimpanan paket</li>
+                        <li>🔗 <strong>storage:link</strong> = pintu masuk agar paket bisa diakses publik</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:1.5rem 0;">
+                <div style="padding:1rem;background:#DBEAFE;border-radius:12px;text-align:center;">
+                    <div style="font-size:1.5rem;">1️⃣</div>
+                    <strong style="color:#2563EB;">User pilih file</strong>
+                    <p style="font-size:0.85rem;margin:0.5rem 0 0;">Upload ke folder <code>tmp</code></p>
+                </div>
+                <div style="padding:1rem;background:#FEF3C7;border-radius:12px;text-align:center;">
+                    <div style="font-size:1.5rem;">2️⃣</div>
+                    <strong style="color:#D97706;">Preview muncul</strong>
+                    <p style="font-size:0.85rem;margin:0.5rem 0 0;"><code>temporaryUrl()</code></p>
+                </div>
+                <div style="padding:1rem;background:#D1FAE5;border-radius:12px;text-align:center;">
+                    <div style="font-size:1.5rem;">3️⃣</div>
+                    <strong style="color:#059669;">Simpan permanen</strong>
+                    <p style="font-size:0.85rem;margin:0.5rem 0 0;"><code>store()</code> → <code>storage/</code></p>
+                </div>
+            </div>
+
+            <h2>🔨 Step 1: Class PHP</h2>
+
             <div class="code-block">
                 <div class="code-header">
                     <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
                             class="code-dot"></span></div>
-                    <span class="code-filename">UploadCover.php</span>
+                    <span class="code-filename">app/Livewire/UploadCover.php</span>
                     <button class="code-copy">Salin</button>
                 </div>
                 <div class="code-body">
-                    <pre><span class="code-keyword">use</span> Livewire\WithFileUploads;
+                    <pre><span class="code-keyword">use</span> Livewire\Component;
+<span class="code-keyword">use</span> Livewire\WithFileUploads;  <span class="code-comment">// ← import trait</span>
+<span class="code-keyword">use</span> App\Models\Book;
 
 <span class="code-keyword">class</span> <span class="code-class">UploadCover</span> <span class="code-keyword">extends</span> Component
 {
-    <span class="code-keyword">use</span> WithFileUploads;
-    
-    <span class="code-keyword">public</span> $cover;
-    
-    <span class="code-keyword">protected</span> $rules = [
-        <span class="code-string">'cover'</span> => <span class="code-string">'image|max:2048'</span>, <span class="code-comment">// Max 2MB</span>
+    <span class="code-keyword">use</span> WithFileUploads;  <span class="code-comment">// ← aktifkan di dalam class</span>
+
+    <span class="code-keyword">public</span> <span class="code-variable">$cover</span>;
+    <span class="code-keyword">public</span> <span class="code-variable">$title</span> = <span class="code-string">''</span>;
+
+    <span class="code-keyword">protected</span> <span class="code-variable">$rules</span> = [
+        <span class="code-string">'title'</span> => <span class="code-string">'required|min:3'</span>,
+        <span class="code-string">'cover'</span> => <span class="code-string">'required|image|max:2048'</span>,  <span class="code-comment">// Max 2MB</span>
     ];
-    
+
+    <span class="code-keyword">protected</span> <span class="code-variable">$messages</span> = [
+        <span class="code-string">'cover.required'</span> => <span class="code-string">'Cover wajib diupload.'</span>,
+        <span class="code-string">'cover.image'</span>    => <span class="code-string">'File harus gambar (JPG/PNG/GIF).'</span>,
+        <span class="code-string">'cover.max'</span>      => <span class="code-string">'Ukuran maksimal 2MB.'</span>,
+    ];
+
     <span class="code-keyword">public function</span> <span class="code-function">save</span>()
     {
-        $this->validate();
-        
-        $path = $this->cover->store(<span class="code-string">'covers'</span>, <span class="code-string">'public'</span>);
-        
-        <span class="code-comment">// Simpan $path ke database</span>
-        session()->flash(<span class="code-string">'success'</span>, <span class="code-string">'Cover berhasil diupload!'</span>);
+        <span class="code-variable">$this</span>->validate();
+
+        <span class="code-comment">// ① Simpan file ke storage/app/public/covers</span>
+        <span class="code-variable">$path</span> = <span class="code-variable">$this</span>->cover->store(<span class="code-string">'covers'</span>, <span class="code-string">'public'</span>);
+
+        <span class="code-comment">// ② Simpan path ke database</span>
+        Book::create([
+            <span class="code-string">'title'</span> => <span class="code-variable">$this</span>->title,
+            <span class="code-string">'cover_path'</span> => <span class="code-variable">$path</span>,
+        ]);
+
+        <span class="code-variable">$this</span>->reset([<span class="code-string">'title'</span>, <span class="code-string">'cover'</span>]);
+        session()->flash(<span class="code-string">'success'</span>, <span class="code-string">'✅ Buku berhasil disimpan!'</span>);
     }
 }</pre>
                 </div>
             </div>
 
-            <h2>2. Blade dengan Preview</h2>
+            <div class="alert alert-info">
+                <span class="alert-icon">🔍</span>
+                <div>
+                    <h4>Cara Kerja store()</h4>
+                    <ul>
+                        <li><code>'covers'</code> = subfolder (disimpan di <code>storage/app/public/covers/</code>)</li>
+                        <li><code>'public'</code> = disk agar bisa diakses browser</li>
+                        <li>Return: path seperti <code>covers/abc123.jpg</code> (nama otomatis random)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h2>🔨 Step 2: View dengan Preview & Loading</h2>
+
             <div class="code-block">
                 <div class="code-header">
                     <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
                             class="code-dot"></span></div>
-                    <span class="code-filename">upload-cover.blade.php</span>
+                    <span class="code-filename">resources/views/livewire/upload-cover.blade.php</span>
                     <button class="code-copy">Salin</button>
                 </div>
                 <div class="code-body">
-                    <pre><span class="code-tag">&lt;form</span> <span class="code-attr">wire:submit</span>=<span class="code-string">"save"</span><span class="code-tag">&gt;</span>
-    <span class="code-comment">&lt;!-- Input file --&gt;</span>
-    <span class="code-tag">&lt;input</span> <span class="code-attr">type</span>=<span class="code-string">"file"</span> <span class="code-attr">wire:model</span>=<span class="code-string">"cover"</span><span class="code-tag">&gt;</span>
-    
-    <span class="code-comment">&lt;!-- Loading state --&gt;</span>
-    <span class="code-tag">&lt;div</span> <span class="code-attr">wire:loading</span> <span class="code-attr">wire:target</span>=<span class="code-string">"cover"</span><span class="code-tag">&gt;</span>
-        Mengupload...
-    <span class="code-tag">&lt;/div&gt;</span>
-    
-    <span class="code-comment">&lt;!-- Preview gambar --&gt;</span>
-    <span class="code-keyword">@if</span>($cover)
-        <span class="code-tag">&lt;img</span> <span class="code-attr">src</span>=<span class="code-string">"{{ $cover->temporaryUrl() }}"</span> <span class="code-attr">width</span>=<span class="code-string">"200"</span><span class="code-tag">&gt;</span>
+                    <pre><span class="code-tag">&lt;div&gt;</span>
+    <span class="code-keyword">@if</span>(session()->has(<span class="code-string">'success'</span>))
+        <span class="code-tag">&lt;div style="padding:1rem;background:#D1FAE5;color:#059669;border-radius:8px"&gt;</span>
+            {{ session(<span class="code-string">'success'</span>) }}
+        <span class="code-tag">&lt;/div&gt;</span>
     <span class="code-keyword">@endif</span>
-    
-    <span class="code-comment">&lt;!-- Error message --&gt;</span>
-    <span class="code-keyword">@error</span>('cover') 
-        <span class="code-tag">&lt;span</span> <span class="code-attr">class</span>=<span class="code-string">"error"</span><span class="code-tag">&gt;</span>{{ $message }}<span class="code-tag">&lt;/span&gt;</span>
-    <span class="code-keyword">@enderror</span>
-    
-    <span class="code-tag">&lt;button</span> <span class="code-attr">type</span>=<span class="code-string">"submit"</span><span class="code-tag">&gt;</span>Simpan<span class="code-tag">&lt;/button&gt;</span>
-<span class="code-tag">&lt;/form&gt;</span></pre>
+
+    <span class="code-tag">&lt;form</span> <span class="code-attribute">wire:submit</span>=<span class="code-string">"save"</span><span class="code-tag">&gt;</span>
+        <span class="code-tag">&lt;div style="margin-bottom:1rem"&gt;</span>
+            <span class="code-tag">&lt;label&gt;</span>Judul Buku<span class="code-tag">&lt;/label&gt;</span>
+            <span class="code-tag">&lt;input</span> <span class="code-attribute">wire:model</span>=<span class="code-string">"title"</span><span class="code-tag">&gt;</span>
+            <span class="code-keyword">@error</span>(<span class="code-string">'title'</span>) <span class="code-tag">&lt;span style="color:red;font-size:0.85rem"&gt;</span>{{ <span class="code-variable">$message</span> }}<span class="code-tag">&lt;/span&gt;</span> <span class="code-keyword">@enderror</span>
+        <span class="code-tag">&lt;/div&gt;</span>
+
+        <span class="code-tag">&lt;div style="margin-bottom:1rem"&gt;</span>
+            <span class="code-tag">&lt;label&gt;</span>Cover<span class="code-tag">&lt;/label&gt;</span>
+            <span class="code-tag">&lt;input</span> <span class="code-attribute">type</span>=<span class="code-string">"file"</span> <span class="code-attribute">wire:model</span>=<span class="code-string">"cover"</span> <span class="code-attribute">accept</span>=<span class="code-string">"image/*"</span><span class="code-tag">&gt;</span>
+
+            <span class="code-comment">&lt;!-- Loading saat upload --&gt;</span>
+            <span class="code-tag">&lt;div</span> <span class="code-attribute">wire:loading</span> <span class="code-attribute">wire:target</span>=<span class="code-string">"cover"</span> <span class="code-attribute">style</span>=<span class="code-string">"color:#3B82F6;font-size:0.85rem"</span><span class="code-tag">&gt;</span>
+                ⏳ Mengupload...
+            <span class="code-tag">&lt;/div&gt;</span>
+
+            <span class="code-keyword">@error</span>(<span class="code-string">'cover'</span>) <span class="code-tag">&lt;span style="color:red;font-size:0.85rem"&gt;</span>⚠️ {{ <span class="code-variable">$message</span> }}<span class="code-tag">&lt;/span&gt;</span> <span class="code-keyword">@enderror</span>
+        <span class="code-tag">&lt;/div&gt;</span>
+
+        <span class="code-comment">&lt;!-- Preview gambar --&gt;</span>
+        <span class="code-keyword">@if</span>(<span class="code-variable">$cover</span>)
+            <span class="code-tag">&lt;img</span> <span class="code-attribute">src</span>=<span class="code-string">"{{ $cover->temporaryUrl() }}"</span>
+                 <span class="code-attribute">style</span>=<span class="code-string">"width:200px;border-radius:8px;margin-bottom:1rem"</span><span class="code-tag">&gt;</span>
+        <span class="code-keyword">@endif</span>
+
+        <span class="code-tag">&lt;button</span> <span class="code-attribute">type</span>=<span class="code-string">"submit"</span><span class="code-tag">&gt;</span>
+            <span class="code-tag">&lt;span</span> <span class="code-attribute">wire:loading.remove</span> <span class="code-attribute">wire:target</span>=<span class="code-string">"save"</span><span class="code-tag">&gt;</span>💾 Simpan<span class="code-tag">&lt;/span&gt;</span>
+            <span class="code-tag">&lt;span</span> <span class="code-attribute">wire:loading</span> <span class="code-attribute">wire:target</span>=<span class="code-string">"save"</span><span class="code-tag">&gt;</span>⏳ Menyimpan...<span class="code-tag">&lt;/span&gt;</span>
+        <span class="code-tag">&lt;/button&gt;</span>
+    <span class="code-tag">&lt;/form&gt;</span>
+<span class="code-tag">&lt;/div&gt;</span></pre>
                 </div>
             </div>
 
             <div class="alert alert-warning">
                 <span class="alert-icon">⚠️</span>
                 <div>
-                    <h4>Jangan lupa!</h4>
-                    <p>Jalankan <code>php artisan storage:link</code> supaya file bisa diakses dari public folder.</p>
+                    <h4>Wajib: Jalankan storage:link</h4>
+                    <p>Agar gambar bisa diakses browser: <code>php artisan storage:link</code></p>
+                    <p style="margin-top:0.5rem;">Lalu tampilkan:
+                        <code>&lt;img src="{{ asset('storage/' . $book->cover_path) }}"&gt;</code>
+                    </p>
                 </div>
             </div>
 
-            <h2>Validation Rules untuk File</h2>
-            <table style="width:100%;border-collapse:collapse;margin:1.5rem 0;">
-                <tr style="background:#F3F4F6;">
-                    <th style="padding:1rem;text-align:left;border:1px solid #E5E7EB;">Rule</th>
-                    <th style="padding:1rem;text-align:left;border:1px solid #E5E7EB;">Fungsi</th>
+            <h2>📚 Validation Rules untuk File</h2>
+
+            <table class="comparison-table">
+                <tr>
+                    <th>Rule</th>
+                    <th>Fungsi</th>
+                    <th>Contoh</th>
                 </tr>
                 <tr>
-                    <td style="padding:1rem;border:1px solid #E5E7EB;"><code>image</code></td>
-                    <td style="padding:1rem;border:1px solid #E5E7EB;">Harus gambar (jpg, png, gif, dll)</td>
+                    <td><code>image</code></td>
+                    <td>Harus gambar (jpg, png, gif, webp)</td>
+                    <td><code>'cover' => 'image'</code></td>
                 </tr>
                 <tr>
-                    <td style="padding:1rem;border:1px solid #E5E7EB;"><code>max:2048</code></td>
-                    <td style="padding:1rem;border:1px solid #E5E7EB;">Max 2MB (dalam KB)</td>
+                    <td><code>mimes:jpg,png</code></td>
+                    <td>Hanya ekstensi tertentu</td>
+                    <td><code>'file' => 'mimes:pdf,doc'</code></td>
                 </tr>
                 <tr>
-                    <td style="padding:1rem;border:1px solid #E5E7EB;"><code>mimes:jpg,png</code></td>
-                    <td style="padding:1rem;border:1px solid #E5E7EB;">Hanya jpg dan png</td>
+                    <td><code>max:2048</code></td>
+                    <td>Max ukuran (KB): 2048=2MB</td>
+                    <td><code>max:5120</code> = 5MB</td>
                 </tr>
                 <tr>
-                    <td style="padding:1rem;border:1px solid #E5E7EB;"><code>dimensions:min_width=100</code></td>
-                    <td style="padding:1rem;border:1px solid #E5E7EB;">Min lebar 100px</td>
+                    <td><code>dimensions:min_width=100</code></td>
+                    <td>Min lebar gambar</td>
+                    <td><code>'foto' => 'dimensions:min_width=200'</code></td>
+                </tr>
+                <tr>
+                    <td><code>file</code></td>
+                    <td>Harus berupa file</td>
+                    <td><code>'doc' => 'file|max:10240'</code></td>
                 </tr>
             </table>
 
+            <h2>📂 Upload File Non-Gambar</h2>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">Upload PDF dengan nama custom</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-keyword">public</span> <span class="code-variable">$dokumen</span>;
+
+<span class="code-keyword">protected</span> <span class="code-variable">$rules</span> = [
+    <span class="code-string">'dokumen'</span> => <span class="code-string">'required|file|mimes:pdf,doc,docx|max:5120'</span>,
+];
+
+<span class="code-keyword">public function</span> <span class="code-function">upload</span>()
+{
+    <span class="code-variable">$this</span>->validate();
+    <span class="code-comment">// storeAs = nama file custom</span>
+    <span class="code-variable">$nama</span> = <span class="code-string">'tugas_'</span> . time() . <span class="code-string">'.'</span> . <span class="code-variable">$this</span>->dokumen->getClientOriginalExtension();
+    <span class="code-variable">$this</span>->dokumen->storeAs(<span class="code-string">'documents'</span>, <span class="code-variable">$nama</span>, <span class="code-string">'public'</span>);
+}</pre>
+                </div>
+            </div>
+
+            <div class="alert alert-tip">
+                <span class="alert-icon">💡</span>
+                <div>
+                    <h4>store() vs storeAs()</h4>
+                    <p><code>store()</code> = nama random otomatis (aman). <code>storeAs()</code> = nama custom yang
+                        kamu tentukan.</p>
+                </div>
+            </div>
+
+            <div class="common-mistakes">
+                <h3>⚠️ Kesalahan Umum Pemula</h3>
+                <div class="mistake-item">
+                    <h4>❌ Lupa <code>use WithFileUploads</code></h4>
+                    <p>Error: "Property must be of type string"</p>
+                    <p class="solution">✅ Tambahkan <code>use WithFileUploads;</code> di dalam class.</p>
+                </div>
+                <div class="mistake-item">
+                    <h4>❌ Lupa <code>php artisan storage:link</code></h4>
+                    <p>File tersimpan tapi gambar tidak muncul di browser (icon rusak 🖼️❌).</p>
+                    <p class="solution">✅ Jalankan perintah sekali di terminal.</p>
+                </div>
+                <div class="mistake-item">
+                    <h4>❌ Pakai temporaryUrl() untuk PDF</h4>
+                    <p><code>temporaryUrl()</code> hanya untuk gambar!</p>
+                    <p class="solution">✅ Untuk non-gambar: <code>{{ $dokumen->getClientOriginalName() }}</code></p>
+                </div>
+            </div>
+
+            <div class="summary-box">
+                <h3>📋 Ringkasan</h3>
+                <ul>
+                    <li>Trait <code>WithFileUploads</code> untuk mengaktifkan upload</li>
+                    <li><code>$cover->temporaryUrl()</code> untuk preview gambar</li>
+                    <li><code>$cover->store('folder', 'public')</code> untuk simpan</li>
+                    <li>Jalankan <code>php artisan storage:link</code></li>
+                    <li>Validasi: <code>image</code>, <code>mimes</code>, <code>max</code>, <code>dimensions</code></li>
+                </ul>
+            </div>
+
+            <h2>📝 Latihan</h2>
+            <div class="exercise-section">
+                <div class="exercise-level basic">
+                    <h4>🟢 Level 1 — Memahami</h4>
+                    <ol>
+                        <li>Apa fungsi trait <code>WithFileUploads</code>?</li>
+                        <li>Apa bedanya <code>store()</code> dan <code>storeAs()</code>?</li>
+                        <li>Kenapa perlu <code>php artisan storage:link</code>?</li>
+                    </ol>
+                </div>
+                <div class="exercise-level intermediate">
+                    <h4>🔵 Level 2 — Praktik</h4>
+                    <ol>
+                        <li>Buat komponen <strong>UploadFotoProfil</strong> dengan preview dan validasi (gambar, max
+                            1MB).</li>
+                        <li>Tambahkan <strong>loading indicator</strong> dan simpan path ke database.</li>
+                    </ol>
+                </div>
+                <div class="exercise-level challenge">
+                    <h4>🟣 Level 3 — Tantangan</h4>
+                    <ol>
+                        <li>Tambahkan field <strong>cover</strong> ke CRUD BookManager dari Minggu 2!</li>
+                        <li>Buat upload <strong>dokumen tugas</strong> (PDF/DOC) yang tampilkan nama & ukuran file.</li>
+                    </ol>
+                </div>
+            </div>
+
             <div class="content-nav">
-                <a href="../minggu-2/database-eloquent.html" class="nav-btn">
+                <a href="../minggu-2/crud-sederhana.html" class="nav-btn">
                     <div>
                         <div class="nav-btn-label">Sebelumnya</div>
-                        <div class="nav-btn-title">← Database & Eloquent</div>
+                        <div class="nav-btn-title">← CRUD Sederhana</div>
                     </div>
                 </a>
                 <a href="pagination-search.html" class="nav-btn">
@@ -206,6 +408,8 @@
             </div>
         </main>
     </div>
+    <button class="sidebar-toggle-mobile"
+        onclick="document.querySelector('.sidebar').classList.toggle('active')">📚</button>
     <script src="../../js/app.js"></script>
 </body>
 

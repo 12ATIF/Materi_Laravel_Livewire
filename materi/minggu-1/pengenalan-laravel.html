@@ -34,6 +34,7 @@
                 <li><a href="pengenalan-laravel.html" class="active">Materi</a></li>
                 <li><a href="../../demo.html">Demo</a></li>
             </ul>
+            <button class="navbar-toggle" aria-label="Toggle menu"><span>☰</span></button>
         </div>
     </nav>
 
@@ -45,10 +46,10 @@
                     <li><a href="pengenalan-laravel.html" class="active">Pengenalan Laravel</a></li>
                     <li><a href="mvc-sederhana.html">MVC Sederhana</a></li>
                     <li><a href="instalasi-laravel.html">Instalasi Laravel</a></li>
-                    <li><a href="autentikasi.html">🔐 Autentikasi</a></li>
                     <li><a href="blade-template.html">Blade Template</a></li>
                     <li><a href="pengenalan-livewire.html">Pengenalan Livewire</a></li>
                     <li><a href="struktur-component.html">Struktur Component</a></li>
+                    <li><a href="autentikasi.html">🔐 Autentikasi</a></li>
                 </ul>
             </div>
             <div class="sidebar-section">
@@ -56,9 +57,19 @@
                 <ul class="sidebar-nav">
                     <li><a href="../minggu-2/wire-model.html">wire:model</a></li>
                     <li><a href="../minggu-2/wire-click.html">wire:click</a></li>
+                    <li><a href="../minggu-2/database-eloquent.html">Database & Eloquent</a></li>
                     <li><a href="../minggu-2/validasi.html">Validasi</a></li>
                     <li><a href="../minggu-2/crud-sederhana.html">CRUD Sederhana</a></li>
-                    <li><a href="../minggu-2/database-eloquent.html">Database & Eloquent</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-title">📕 Minggu 3</div>
+                <ul class="sidebar-nav">
+                    <li><a href="../minggu-3/upload-file.html">Upload File</a></li>
+                    <li><a href="../minggu-3/pagination-search.html">Pagination & Search</a></li>
+                    <li><a href="../minggu-3/komponen-reusable.html">Komponen Reusable</a></li>
+                    <li><a href="../minggu-3/tampilan-dinamis.html">Tampilan Dinamis</a></li>
+                    <li><a href="../minggu-3/project-elibrary.html">📚 Tutorial E-Library</a></li>
                 </ul>
             </div>
         </aside>
@@ -72,61 +83,129 @@
                 <h1 class="content-title">1.1 Pengenalan Laravel</h1>
                 <div class="content-meta">
                     <span>📗 Minggu 1</span>
-                    <span>⏱️ 15 menit</span>
+                    <span>⏱️ 20 menit</span>
                     <span>📖 Teori</span>
                 </div>
             </div>
 
+            <!-- Prasyarat -->
+            <div class="prerequisites">
+                <h3>📌 Prasyarat</h3>
+                <p>Sebelum memulai materi ini, pastikan kamu sudah menguasai:</p>
+                <ul>
+                    <li><strong>HTML & CSS dasar</strong> — bisa membuat halaman web sederhana</li>
+                    <li><strong>PHP dasar</strong> — paham variabel, fungsi, array, dan form handling</li>
+                    <li><strong>Database dasar</strong> — pernah pakai phpMyAdmin atau MySQL sederhana</li>
+                </ul>
+                <p style="margin-top:0.75rem;color:#92400E;font-size:0.9rem;">💡 Belum menguasai? Tidak apa-apa! Materi
+                    ini akan menjelaskan dari dasar. Tapi akan lebih mudah jika sudah punya fondasi di atas.</p>
+            </div>
+
+            <!-- Tujuan Belajar -->
             <div class="objectives">
                 <h3>🎯 Tujuan Belajar</h3>
+                <p>Setelah menyelesaikan materi ini, kamu akan mampu:</p>
                 <ul>
-                    <li>Memahami apa itu framework dan kenapa perlu menggunakannya</li>
-                    <li>Mengenal Laravel sebagai framework PHP modern</li>
-                    <li>Memahami keunggulan Laravel dibanding PHP murni</li>
+                    <li>Menjelaskan <strong>apa itu framework</strong> dan mengapa developer profesional menggunakannya
+                    </li>
+                    <li>Menyebutkan minimal <strong>5 keunggulan Laravel</strong> dibanding PHP murni</li>
+                    <li>Membedakan <strong>kode PHP murni vs kode Laravel</strong> untuk tugas yang sama</li>
+                    <li>Memahami <strong>ekosistem Laravel</strong> (Artisan, Composer, Blade, Eloquent)</li>
                 </ul>
             </div>
 
-            <h2>Apa itu Framework?</h2>
-            <p>Bayangkan kamu mau bikin rumah. Ada dua pilihan:</p>
-            <ol>
-                <li><strong>Bikin dari nol</strong> - Cetak batu bata sendiri, bikin semen, potong kayu</li>
-                <li><strong>Pakai material jadi</strong> - Beli batu bata, semen, kayu yang sudah siap pakai</li>
-            </ol>
-            <p><strong>Framework itu seperti pilihan kedua.</strong> Kumpulan kode yang sudah jadi dan siap pakai, jadi
-                kamu tinggal fokus bikin fitur aplikasimu.</p>
+            <!-- ==================== KONTEN UTAMA ==================== -->
+
+            <h2>💡 Apa itu Framework?</h2>
+
+            <p>Sebelum kita bicara Laravel, kamu perlu paham dulu: <strong>apa itu framework?</strong></p>
 
             <div class="alert alert-tip">
-                <span class="alert-icon">💡</span>
+                <span class="alert-icon">🏗️</span>
                 <div>
-                    <h4>Analogi Sederhana</h4>
-                    <p>Framework = Kerangka rumah yang sudah jadi. Kamu tinggal dekorasi dan isi furnitur sesuai
-                        kebutuhan.</p>
+                    <h4>Analogi: Bangun Rumah</h4>
+                    <p>Bayangkan kamu mau bikin rumah. Ada dua cara:</p>
+                    <ol style="margin-top:0.5rem;">
+                        <li><strong>Cara manual</strong> — Buat batu bata sendiri, aduk semen, potong kayu, desain
+                            sendiri. Bisa, tapi sangat lama dan rawan salah.</li>
+                        <li><strong>Pakai kontraktor + material jadi</strong> — Sudah ada kerangka rumah, tinggal pilih
+                            desain, cat, dan isi furnitur.</li>
+                    </ol>
+                    <p style="margin-top:0.5rem;"><strong>Framework = pilihan kedua.</strong> Semua "kerangka dasar"
+                        sudah disediakan, kamu tinggal fokus bikin fitur aplikasi.</p>
                 </div>
             </div>
 
-            <h2>Kenapa Pakai Laravel?</h2>
-            <p>Laravel adalah framework PHP paling populer di dunia. Ini alasannya:</p>
+            <p>Dalam pemrograman web, <strong>framework</strong> adalah kumpulan kode yang sudah jadi dan terstruktur,
+                yang menyediakan:</p>
+
+            <div
+                style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin:1.5rem 0;">
+                <div style="padding:1.5rem;background:#F0FDF4;border-radius:12px;text-align:center;">
+                    <div style="font-size:2rem;margin-bottom:0.5rem;">📁</div>
+                    <h4 style="margin:0 0 0.5rem;color:#059669;">Struktur Folder</h4>
+                    <p style="margin:0;font-size:0.9rem;color:#374151;">Kode terorganisir rapi, tidak berserakan di satu
+                        folder</p>
+                </div>
+                <div style="padding:1.5rem;background:#EFF6FF;border-radius:12px;text-align:center;">
+                    <div style="font-size:2rem;margin-bottom:0.5rem;">🔧</div>
+                    <h4 style="margin:0 0 0.5rem;color:#2563EB;">Tool Bawaan</h4>
+                    <p style="margin:0;font-size:0.9rem;color:#374151;">Fitur siap pakai: login, database, email, dll
+                    </p>
+                </div>
+                <div style="padding:1.5rem;background:#FEF3C7;border-radius:12px;text-align:center;">
+                    <div style="font-size:2rem;margin-bottom:0.5rem;">🛡️</div>
+                    <h4 style="margin:0 0 0.5rem;color:#D97706;">Keamanan</h4>
+                    <p style="margin:0;font-size:0.9rem;color:#374151;">Perlindungan dari serangan SQL injection, XSS,
+                        CSRF</p>
+                </div>
+            </div>
+
+            <!-- ==================== -->
+
+            <h2>🚀 Kenapa Laravel?</h2>
+
+            <p>Ada banyak framework PHP di dunia: CodeIgniter, Symfony, Yii, CakePHP. Tapi <strong>Laravel adalah yang
+                    paling populer</strong>. Kenapa?</p>
 
             <div style="display:grid;gap:1rem;margin:1.5rem 0;">
                 <div style="padding:1.5rem;background:#F0FDF4;border-radius:12px;border-left:4px solid #10B981;">
-                    <h4 style="margin:0 0 0.5rem;color:#059669;">✅ Kode Lebih Rapi</h4>
-                    <p style="margin:0;color:#374151;">Struktur folder terorganisir. Ada tempat khusus untuk database,
-                        tampilan, dan logika.</p>
+                    <h4 style="margin:0 0 0.5rem;color:#059669;">✅ 1. Sintaks Elegan & Mudah Dibaca</h4>
+                    <p style="margin:0;color:#374151;">Laravel dibuat agar kodenya mirip bahasa Inggris.
+                        <code>User::find(1)</code> artinya "cari user dengan ID 1". Sangat intuitif!
+                    </p>
                 </div>
                 <div style="padding:1.5rem;background:#EFF6FF;border-radius:12px;border-left:4px solid #3B82F6;">
-                    <h4 style="margin:0 0 0.5rem;color:#2563EB;">✅ Fitur Bawaan Lengkap</h4>
-                    <p style="margin:0;color:#374151;">Authentication, database, email, file storage - semua sudah
-                        disediakan.</p>
+                    <h4 style="margin:0 0 0.5rem;color:#2563EB;">✅ 2. Fitur Bawaan Super Lengkap</h4>
+                    <p style="margin:0;color:#374151;">Login/register, kirim email, upload file, antrian job, API —
+                        semua sudah tersedia tanpa install tambahan!</p>
                 </div>
                 <div style="padding:1.5rem;background:#FEF3C7;border-radius:12px;border-left:4px solid #F59E0B;">
-                    <h4 style="margin:0 0 0.5rem;color:#D97706;">✅ Komunitas Besar</h4>
-                    <p style="margin:0;color:#374151;">Banyak tutorial, package, dan bantuan kalau stuck.</p>
+                    <h4 style="margin:0 0 0.5rem;color:#D97706;">✅ 3. Komunitas Terbesar di Dunia</h4>
+                    <p style="margin:0;color:#374151;">Jutaan developer, ribuan package gratis, dan tutorial di
+                        mana-mana. Kalau stuck, pasti ada jawabannya.</p>
+                </div>
+                <div style="padding:1.5rem;background:#F3E8FF;border-radius:12px;border-left:4px solid #A855F7;">
+                    <h4 style="margin:0 0 0.5rem;color:#7C3AED;">✅ 4. Artisan — Asisten Pribadimu</h4>
+                    <p style="margin:0;color:#374151;">Laravel punya command-line tool bernama <strong>Artisan</strong>.
+                        Cukup ketik perintah, dan file-file otomatis dibuat. Sangat menghemat waktu!</p>
+                </div>
+                <div style="padding:1.5rem;background:#FEE2E2;border-radius:12px;border-left:4px solid #EF4444;">
+                    <h4 style="margin:0 0 0.5rem;color:#DC2626;">✅ 5. Dipakai Perusahaan Besar</h4>
+                    <p style="margin:0;color:#374151;">Banyak perusahaan besar dan startup menggunakan Laravel: dari
+                        e-commerce sampai fintech. Belajar Laravel = skill yang dicari di dunia kerja!</p>
                 </div>
             </div>
 
-            <h2>Perbandingan: PHP Murni vs Laravel</h2>
+            <!-- ==================== -->
 
-            <p><strong>Query database dengan PHP murni:</strong></p>
+            <h2>⚔️ Perbandingan: PHP Murni vs Laravel</h2>
+
+            <p>Berikut perbandingan nyata — <strong>tugas yang sama, cara yang berbeda</strong>:</p>
+
+            <h3>Contoh 1: Ambil Data dari Database</h3>
+
+            <p><strong>❌ Dengan PHP Murni (4 baris, rawan error):</strong></p>
             <div class="code-block">
                 <div class="code-header">
                     <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
@@ -135,14 +214,17 @@
                     <button class="code-copy">Salin</button>
                 </div>
                 <div class="code-body">
-                    <pre><span class="code-variable">$conn</span> = mysqli_connect(<span class="code-string">"localhost"</span>, <span class="code-string">"root"</span>, <span class="code-string">""</span>, <span class="code-string">"db"</span>);
-<span class="code-variable">$sql</span> = <span class="code-string">"SELECT * FROM users WHERE id = "</span> . <span class="code-variable">$id</span>;
+                    <pre><span class="code-comment">// Koneksi manual ke database</span>
+<span class="code-variable">$conn</span> = mysqli_connect(<span class="code-string">"localhost"</span>, <span class="code-string">"root"</span>, <span class="code-string">""</span>, <span class="code-string">"db_sekolah"</span>);
+
+<span class="code-comment">// Query manual (rawan SQL Injection!)</span>
+<span class="code-variable">$sql</span> = <span class="code-string">"SELECT * FROM users WHERE id = "</span> . <span class="code-variable">$_GET</span>[<span class="code-string">'id'</span>];
 <span class="code-variable">$result</span> = mysqli_query(<span class="code-variable">$conn</span>, <span class="code-variable">$sql</span>);
 <span class="code-variable">$user</span> = mysqli_fetch_assoc(<span class="code-variable">$result</span>);</pre>
                 </div>
             </div>
 
-            <p><strong>Query yang sama dengan Laravel:</strong></p>
+            <p><strong>✅ Dengan Laravel (1 baris, aman & bersih):</strong></p>
             <div class="code-block">
                 <div class="code-header">
                     <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
@@ -151,25 +233,230 @@
                     <button class="code-copy">Salin</button>
                 </div>
                 <div class="code-body">
-                    <pre><span class="code-variable">$user</span> = User::find(<span class="code-variable">$id</span>);</pre>
+                    <pre><span class="code-comment">// Satu baris, otomatis aman dari SQL Injection!</span>
+<span class="code-variable">$user</span> = User::find(<span class="code-variable">$id</span>);</pre>
                 </div>
             </div>
 
             <div class="alert alert-info">
-                <span class="alert-icon">📌</span>
+                <span class="alert-icon">🔍</span>
                 <div>
-                    <h4>Perhatikan!</h4>
-                    <p>1 baris vs 4 baris. Laravel punya ORM (Eloquent) yang bikin query database jadi sangat singkat
-                        dan aman.</p>
+                    <h4>Penjelasan</h4>
+                    <p><strong>PHP Murni:</strong> Kamu harus tulis koneksi manual, query SQL mentah, dan ambil data
+                        manual. Bahkan, kode di atas <span style="color:#DC2626;font-weight:600;">rawan SQL
+                            Injection</span> karena langsung menyambung variabel ke query!</p>
+                    <p style="margin-top:0.5rem;"><strong>Laravel:</strong> Cukup panggil <code>User::find($id)</code>.
+                        Laravel secara otomatis membuat query yang aman dengan <strong>prepared statements</strong>.
+                        Tidak perlu tulis koneksi — itu sudah diatur di file konfigurasi.</p>
                 </div>
             </div>
 
+            <h3>Contoh 2: Validasi Form</h3>
+
+            <table class="comparison-table">
+                <tr>
+                    <th>Aspek</th>
+                    <th>PHP Murni</th>
+                    <th>Laravel</th>
+                </tr>
+                <tr>
+                    <td><strong>Cek field kosong</strong></td>
+                    <td><code>if(empty($_POST['nama']))</code></td>
+                    <td><code>'nama' => 'required'</code></td>
+                </tr>
+                <tr>
+                    <td><strong>Cek format email</strong></td>
+                    <td><code>filter_var($email, FILTER_VALIDATE_EMAIL)</code></td>
+                    <td><code>'email' => 'required|email'</code></td>
+                </tr>
+                <tr>
+                    <td><strong>Tampilkan error</strong></td>
+                    <td>Manual: buat array error, kirim balik</td>
+                    <td>Otomatis: <code>@error('nama')</code></td>
+                </tr>
+                <tr>
+                    <td><strong>Jumlah kode</strong></td>
+                    <td>~30+ baris</td>
+                    <td>~5 baris</td>
+                </tr>
+            </table>
+
+            <!-- ==================== -->
+
+            <h2>🧩 Ekosistem Laravel</h2>
+
+            <p>Laravel bukan hanya satu tool — ia punya <strong>ekosistem lengkap</strong> yang saling mendukung.
+                Berikut yang akan kamu pelajari:</p>
+
+            <div
+                style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin:1.5rem 0;">
+                <div
+                    style="padding:1.5rem;background:white;border-radius:16px;border:2px solid #E5E7EB;text-align:center;">
+                    <div style="font-size:2rem;margin-bottom:0.5rem;">⚡</div>
+                    <h4 style="margin:0 0 0.25rem;">Artisan</h4>
+                    <p style="margin:0;font-size:0.85rem;color:#6B7280;">Command line tool untuk membuat file,
+                        migration, menjalankan server, dll.</p>
+                </div>
+                <div
+                    style="padding:1.5rem;background:white;border-radius:16px;border:2px solid #E5E7EB;text-align:center;">
+                    <div style="font-size:2rem;margin-bottom:0.5rem;">📦</div>
+                    <h4 style="margin:0 0 0.25rem;">Composer</h4>
+                    <p style="margin:0;font-size:0.85rem;color:#6B7280;">Package manager PHP. Seperti "toko alat" untuk
+                        install library tambahan.</p>
+                </div>
+                <div
+                    style="padding:1.5rem;background:white;border-radius:16px;border:2px solid #E5E7EB;text-align:center;">
+                    <div style="font-size:2rem;margin-bottom:0.5rem;">🎨</div>
+                    <h4 style="margin:0 0 0.25rem;">Blade</h4>
+                    <p style="margin:0;font-size:0.85rem;color:#6B7280;">Template engine untuk membuat tampilan HTML
+                        dengan sintaks PHP yang ringkas.</p>
+                </div>
+                <div
+                    style="padding:1.5rem;background:white;border-radius:16px;border:2px solid #E5E7EB;text-align:center;">
+                    <div style="font-size:2rem;margin-bottom:0.5rem;">🗄️</div>
+                    <h4 style="margin:0 0 0.25rem;">Eloquent ORM</h4>
+                    <p style="margin:0;font-size:0.85rem;color:#6B7280;">Cara elegan berinteraksi dengan database tanpa
+                        menulis SQL manual.</p>
+                </div>
+                <div
+                    style="padding:1.5rem;background:white;border-radius:16px;border:2px solid #E5E7EB;text-align:center;">
+                    <div style="font-size:2rem;margin-bottom:0.5rem;">🔌</div>
+                    <h4 style="margin:0 0 0.25rem;">Livewire</h4>
+                    <p style="margin:0;font-size:0.85rem;color:#6B7280;">Membuat halaman interaktif <strong>tanpa
+                            JavaScript</strong>! Ini yang akan kita pelajari.</p>
+                </div>
+                <div
+                    style="padding:1.5rem;background:white;border-radius:16px;border:2px solid #E5E7EB;text-align:center;">
+                    <div style="font-size:2rem;margin-bottom:0.5rem;">🛣️</div>
+                    <h4 style="margin:0 0 0.25rem;">Routing</h4>
+                    <p style="margin:0;font-size:0.85rem;color:#6B7280;">Mengatur URL mana yang mengarah ke halaman
+                        mana. Simpel dan fleksibel.</p>
+                </div>
+            </div>
+
+            <div class="alert alert-tip">
+                <span class="alert-icon">🗺️</span>
+                <div>
+                    <h4>Peta Perjalanan Belajarmu</h4>
+                    <p>Jangan khawatir dengan banyaknya istilah! Kamu akan mempelajarinya <strong>satu per satu,
+                            bertahap</strong>. Di Minggu 1, kita fokus di dasar. Minggu 2, kita bikin fitur interaktif.
+                        Minggu 3, kita gabungkan semua jadi project nyata!</p>
+                </div>
+            </div>
+
+            <!-- ==================== -->
+
+            <h2>🏢 Siapa yang Pakai Laravel?</h2>
+
+            <p>Laravel bukan framework mainan — ini digunakan oleh perusahaan dan platform besar:</p>
+
+            <div
+                style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin:1.5rem 0;">
+                <div style="padding:1.25rem;background:#F0FDF4;border-radius:12px;text-align:center;">
+                    <div style="font-size:1.5rem;margin-bottom:0.25rem;">🏬</div>
+                    <p style="margin:0;font-weight:600;">E-Commerce</p>
+                    <p style="margin:0;font-size:0.85rem;color:#6B7280;">Banyak toko online dibangun dengan Laravel</p>
+                </div>
+                <div style="padding:1.25rem;background:#EFF6FF;border-radius:12px;text-align:center;">
+                    <div style="font-size:1.5rem;margin-bottom:0.25rem;">🏥</div>
+                    <p style="margin:0;font-weight:600;">Sistem Informasi</p>
+                    <p style="margin:0;font-size:0.85rem;color:#6B7280;">Rumah sakit, sekolah, dan instansi pemerintah
+                    </p>
+                </div>
+                <div style="padding:1.25rem;background:#F3E8FF;border-radius:12px;text-align:center;">
+                    <div style="font-size:1.5rem;margin-bottom:0.25rem;">💼</div>
+                    <p style="margin:0;font-weight:600;">Startup</p>
+                    <p style="margin:0;font-size:0.85rem;color:#6B7280;">Startup Indonesia banyak yang pakai Laravel</p>
+                </div>
+            </div>
+
+            <!-- ==================== KESALAHAN UMUM ==================== -->
+
+            <div class="common-mistakes">
+                <h3>⚠️ Kesalahan Umum Pemula</h3>
+
+                <div class="mistake-item">
+                    <h4>❌ "Saya harus mahir PHP dulu sebelum belajar Laravel"</h4>
+                    <p>Tidak perlu mahir 100%. Cukup paham dasar PHP (variabel, fungsi, array, if-else). Laravel justru
+                        akan mempercepat pemahamanmu tentang PHP karena kamu langsung praktik proyek nyata.</p>
+                    <p class="solution">✅ Solusi: Mulai saja! Kamu akan belajar PHP lebih dalam SAMBIL belajar Laravel.
+                    </p>
+                </div>
+
+                <div class="mistake-item">
+                    <h4>❌ "Laravel terlalu sulit, lebih baik pakai PHP murni saja"</h4>
+                    <p>Memang awalnya terasa asing. Tapi setelah terbiasa, Laravel justru jauh lebih mudah dan cepat.
+                        Seperti belajar naik sepeda — awalnya jatuh terus, tapi setelah bisa, lebih cepat dari jalan
+                        kaki!</p>
+                    <p class="solution">✅ Solusi: Ikuti materi ini bertahap. Dalam 3 minggu kamu sudah bisa bikin
+                        aplikasi CRUD!</p>
+                </div>
+
+                <div class="mistake-item">
+                    <h4>❌ "Framework akan membuat saya tidak paham cara kerjanya"</h4>
+                    <p>Justru sebaliknya. Framework yang baik (seperti Laravel) mengajarkan pola-pola pemrograman yang
+                        benar: MVC, ORM, routing, dll. Ini skill yang berlaku di framework manapun!</p>
+                    <p class="solution">✅ Solusi: Sambil pakai Laravel, coba pahami "di balik layar" apa yang terjadi.
+                        Kita akan bahas ini di materi berikutnya.</p>
+                </div>
+            </div>
+
+            <!-- ==================== RINGKASAN ==================== -->
+
+            <div class="summary-box">
+                <h3>📋 Ringkasan Materi</h3>
+                <ul>
+                    <li><strong>Framework</strong> = kerangka kerja yang menyediakan struktur dan tool siap pakai</li>
+                    <li><strong>Laravel</strong> = framework PHP paling populer di dunia, sintaks elegan dan fitur
+                        lengkap</li>
+                    <li><strong>Keunggulan Laravel:</strong> kode rapi, aman, cepat development, komunitas besar</li>
+                    <li><strong>Ekosistem Laravel:</strong> Artisan, Composer, Blade, Eloquent, Routing, Livewire</li>
+                    <li><strong>Livewire</strong> = extension Laravel yang akan kita pelajari untuk buat web interaktif
+                        tanpa JavaScript</li>
+                </ul>
+            </div>
+
+            <!-- ==================== LATIHAN ==================== -->
+
             <h2>📝 Latihan</h2>
-            <ol>
-                <li>Cari 3 website besar yang dibuat dengan Laravel</li>
-                <li>Tuliskan 3 keunggulan framework menurut pemahamanmu sendiri</li>
-                <li>Diskusikan: Kapan sebaiknya pakai PHP murni? Kapan harus pakai framework?</li>
-            </ol>
+
+            <div class="exercise-section">
+                <div class="exercise-level basic">
+                    <h4>🟢 Level 1 — Dasar (Menjawab)</h4>
+                    <ol>
+                        <li>Jelaskan dengan kata-katamu sendiri: <strong>apa itu framework?</strong> Buat analogi selain
+                            "bangun rumah".</li>
+                        <li>Sebutkan <strong>5 keunggulan Laravel</strong> yang sudah kamu pelajari di materi ini.</li>
+                        <li>Apa bedanya <strong>Blade</strong> dan <strong>Eloquent</strong>? (Petunjuk: satu untuk
+                            tampilan, satu untuk database)</li>
+                    </ol>
+                </div>
+
+                <div class="exercise-level intermediate">
+                    <h4>🔵 Level 2 — Menengah (Riset)</h4>
+                    <ol>
+                        <li>Cari di Google: <strong>3 website atau aplikasi</strong> yang menggunakan Laravel. Catat
+                            nama dan fungsinya.</li>
+                        <li>Bandingkan <strong>Laravel vs CodeIgniter</strong>. Tuliskan minimal 3 perbedaannya dalam
+                            bentuk tabel.</li>
+                        <li>Buka <a href="https://laravel.com" target="_blank">laravel.com</a> — screenshot halaman
+                            utamanya dan tulis apa saja fitur yang ditampilkan.</li>
+                    </ol>
+                </div>
+
+                <div class="exercise-level challenge">
+                    <h4>🟣 Level 3 — Tantangan (Berpikir Kritis)</h4>
+                    <ol>
+                        <li><strong>Diskusi:</strong> Kapan sebaiknya pakai PHP murni tanpa framework? Berikan contoh
+                            kasus nyata.</li>
+                        <li><strong>Essay mini:</strong> Kalau kamu diminta membuat Sistem Informasi Perpustakaan untuk
+                            sekolahmu, fitur apa saja yang dibutuhkan? Coba buat daftar fiturnya (ini akan jadi project
+                            akhir kita!).</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- ==================== NAVIGASI ==================== -->
 
             <div class="content-nav">
                 <div></div>
@@ -183,6 +470,8 @@
         </main>
     </div>
 
+    <button class="sidebar-toggle-mobile"
+        onclick="document.querySelector('.sidebar').classList.toggle('active')">📚</button>
     <script src="../../js/app.js"></script>
 </body>
 

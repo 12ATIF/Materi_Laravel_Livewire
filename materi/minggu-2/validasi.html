@@ -31,9 +31,10 @@
             <ul class="navbar-menu">
                 <li><a href="../../index.html">Beranda</a></li>
                 <li><a href="../../silabus.html">Silabus</a></li>
-                <li><a href="#" class="active">Materi</a></li>
+                <li><a href="../minggu-1/pengenalan-laravel.html" class="active">Materi</a></li>
                 <li><a href="../../demo.html">Demo</a></li>
             </ul>
+            <button class="navbar-toggle" aria-label="Toggle menu"><span>☰</span></button>
         </div>
     </nav>
 
@@ -45,10 +46,10 @@
                     <li><a href="../minggu-1/pengenalan-laravel.html">Pengenalan Laravel</a></li>
                     <li><a href="../minggu-1/mvc-sederhana.html">MVC Sederhana</a></li>
                     <li><a href="../minggu-1/instalasi-laravel.html">Instalasi Laravel</a></li>
-                    <li><a href="../minggu-1/autentikasi.html">🔐 Autentikasi</a></li>
                     <li><a href="../minggu-1/blade-template.html">Blade Template</a></li>
                     <li><a href="../minggu-1/pengenalan-livewire.html">Pengenalan Livewire</a></li>
                     <li><a href="../minggu-1/struktur-component.html">Struktur Component</a></li>
+                    <li><a href="../minggu-1/autentikasi.html">🔐 Autentikasi</a></li>
                 </ul>
             </div>
             <div class="sidebar-section">
@@ -56,143 +57,521 @@
                 <ul class="sidebar-nav">
                     <li><a href="wire-model.html">wire:model</a></li>
                     <li><a href="wire-click.html">wire:click</a></li>
+                    <li><a href="database-eloquent.html">Database & Eloquent</a></li>
                     <li><a href="validasi.html" class="active">Validasi</a></li>
                     <li><a href="crud-sederhana.html">CRUD Sederhana</a></li>
-                    <li><a href="database-eloquent.html">Database & Eloquent</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-title">📕 Minggu 3</div>
+                <ul class="sidebar-nav">
+                    <li><a href="../minggu-3/upload-file.html">Upload File</a></li>
+                    <li><a href="../minggu-3/pagination-search.html">Pagination & Search</a></li>
+                    <li><a href="../minggu-3/komponen-reusable.html">Komponen Reusable</a></li>
+                    <li><a href="../minggu-3/tampilan-dinamis.html">Tampilan Dinamis</a></li>
+                    <li><a href="../minggu-3/project-elibrary.html">📚 Tutorial E-Library</a></li>
                 </ul>
             </div>
         </aside>
 
         <main class="main-content">
             <div class="content-header">
-                <h1 class="content-title">2.3 Validasi Livewire</h1>
+                <div class="content-breadcrumb">
+                    <a href="../../index.html">Beranda</a> / <a href="../../silabus.html">Silabus</a> / Minggu 2 /
+                    Validasi
+                </div>
+                <h1 class="content-title">2.4 Validasi Form</h1>
                 <div class="content-meta">
                     <span>📘 Minggu 2</span>
                     <span>⏱️ 25 menit</span>
+                    <span>🔧 Teori + Praktik</span>
                 </div>
             </div>
 
-            <div class="objectives">
-                <h3>🎯 Tujuan Belajar</h3>
+            <!-- Prasyarat -->
+            <div class="prerequisites">
+                <h3>📌 Prasyarat</h3>
                 <ul>
-                    <li>Membuat validasi form dengan Livewire</li>
-                    <li>Menampilkan pesan error real-time</li>
-                    <li>Menggunakan rules validation Laravel</li>
+                    <li>Sudah paham <a href="wire-model.html">wire:model</a> dan <a href="wire-click.html">wire:click /
+                            wire:submit</a></li>
+                    <li>Sudah paham <a href="database-eloquent.html">Database & Eloquent</a> (create, read)</li>
+                    <li>Mengerti HTML form dasar</li>
                 </ul>
             </div>
 
-            <h2>Validasi Dasar</h2>
+            <!-- Tujuan Belajar -->
+            <div class="objectives">
+                <h3>🎯 Tujuan Belajar</h3>
+                <p>Setelah menyelesaikan materi ini, kamu akan mampu:</p>
+                <ul>
+                    <li>Menambahkan <strong>validasi form</strong> di komponen Livewire menggunakan <code>$rules</code>
+                    </li>
+                    <li>Menampilkan <strong>pesan error</strong> di view menggunakan <code>@error</code></li>
+                    <li>Membuat <strong>validasi real-time</strong> menggunakan <code>updated()</code></li>
+                    <li>Mengenal <strong>validation rules</strong> populer dan membuat <strong>pesan custom</strong>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- ==================== KONTEN ==================== -->
+
+            <h2>🤔 Kenapa Butuh Validasi?</h2>
+
+            <p>Bayangkan user mengisi form tapi:</p>
+
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:1.5rem 0;">
+                <div style="padding:1rem;background:#FEE2E2;border-radius:12px;text-align:center;">
+                    <div style="font-size:1.5rem;">📭</div>
+                    <strong style="color:#DC2626;">Nama kosong</strong>
+                    <p style="font-size:0.85rem;margin:0.5rem 0 0;">Siapa yang mendaftar?</p>
+                </div>
+                <div style="padding:1rem;background:#FEE2E2;border-radius:12px;text-align:center;">
+                    <div style="font-size:1.5rem;">📧</div>
+                    <strong style="color:#DC2626;">Email "asal@"</strong>
+                    <p style="font-size:0.85rem;margin:0.5rem 0 0;">Format salah!</p>
+                </div>
+                <div style="padding:1rem;background:#FEE2E2;border-radius:12px;text-align:center;">
+                    <div style="font-size:1.5rem;">🔢</div>
+                    <strong style="color:#DC2626;">Umur = -5</strong>
+                    <p style="font-size:0.85rem;margin:0.5rem 0 0;">Hah? 😅</p>
+                </div>
+            </div>
+
+            <p>Tanpa validasi, data "sampah" masuk ke database. <strong>Validasi = satpam</strong> yang memeriksa data
+                sebelum masuk!</p>
+
+            <div class="alert alert-tip">
+                <span class="alert-icon">🔒</span>
+                <div>
+                    <h4>Analogi: Satpam Sekolah</h4>
+                    <ul style="margin-top:0.5rem;">
+                        <li>🏫 <strong>Database</strong> = gedung sekolah</li>
+                        <li>🚶 <strong>Data dari form</strong> = tamu yang datang</li>
+                        <li>👮 <strong>Validasi</strong> = satpam yang memeriksa identitas</li>
+                        <li>✅ Data valid → boleh masuk → tersimpan di database</li>
+                        <li>❌ Data tidak valid → ditolak → pesan error ditampilkan</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- ==================== -->
+
+            <h2>📝 Cara 1: Validasi Saat Submit</h2>
+
+            <p>Cara paling umum — validasi semua field sekaligus saat form disubmit:</p>
+
             <div class="code-block">
                 <div class="code-header">
                     <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
                             class="code-dot"></span></div>
-                    <span class="code-filename">ContactForm.php</span>
+                    <span class="code-filename">app/Livewire/ContactForm.php</span>
                     <button class="code-copy">Salin</button>
                 </div>
                 <div class="code-body">
                     <pre><span class="code-keyword">class</span> <span class="code-class">ContactForm</span> <span class="code-keyword">extends</span> Component
 {
-    <span class="code-keyword">public</span> $name = <span class="code-string">''</span>;
-    <span class="code-keyword">public</span> $email = <span class="code-string">''</span>;
-    <span class="code-keyword">public</span> $message = <span class="code-string">''</span>;
-    
-    <span class="code-keyword">protected</span> $rules = [
-        <span class="code-string">'name'</span> => <span class="code-string">'required|min:3'</span>,
-        <span class="code-string">'email'</span> => <span class="code-string">'required|email'</span>,
-        <span class="code-string">'message'</span> => <span class="code-string">'required|min:10'</span>,
+    <span class="code-keyword">public</span> <span class="code-variable">$name</span> = <span class="code-string">''</span>;
+    <span class="code-keyword">public</span> <span class="code-variable">$email</span> = <span class="code-string">''</span>;
+    <span class="code-keyword">public</span> <span class="code-variable">$message</span> = <span class="code-string">''</span>;
+
+    <span class="code-comment">// === Rules validasi ===</span>
+    <span class="code-keyword">protected</span> <span class="code-variable">$rules</span> = [
+        <span class="code-string">'name'</span>    => <span class="code-string">'required|min:3'</span>,           <span class="code-comment">// wajib, minimal 3 karakter</span>
+        <span class="code-string">'email'</span>   => <span class="code-string">'required|email'</span>,             <span class="code-comment">// wajib, format email</span>
+        <span class="code-string">'message'</span> => <span class="code-string">'required|min:10|max:500'</span>,   <span class="code-comment">// wajib, 10-500 karakter</span>
     ];
-    
+
     <span class="code-keyword">public function</span> <span class="code-function">submit</span>()
     {
-        $this->validate();
-        
-        <span class="code-comment">// Proses data...</span>
-        session()->flash(<span class="code-string">'success'</span>, <span class="code-string">'Pesan terkirim!'</span>);
+        <span class="code-comment">// ① Validasi — jika gagal, Livewire otomatis stop dan tampilkan error</span>
+        <span class="code-variable">$this</span>->validate();
+
+        <span class="code-comment">// ② Jika lolos validasi, simpan ke database</span>
+        Contact::create([
+            <span class="code-string">'name'</span>    => <span class="code-variable">$this</span>->name,
+            <span class="code-string">'email'</span>   => <span class="code-variable">$this</span>->email,
+            <span class="code-string">'message'</span> => <span class="code-variable">$this</span>->message,
+        ]);
+
+        <span class="code-comment">// ③ Reset form dan tampilkan notifikasi</span>
+        <span class="code-variable">$this</span>->reset([<span class="code-string">'name'</span>, <span class="code-string">'email'</span>, <span class="code-string">'message'</span>]);
+        session()->flash(<span class="code-string">'success'</span>, <span class="code-string">'Pesan berhasil dikirim!'</span>);
     }
 }</pre>
                 </div>
             </div>
 
-            <h2>Validasi Real-Time</h2>
-            <p>Dengan method <code>updated()</code>, error muncul saat user mengetik:</p>
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">resources/views/livewire/contact-form.blade.php</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-tag">&lt;div&gt;</span>
+    <span class="code-comment">&lt;!-- Notifikasi sukses --&gt;</span>
+    <span class="code-keyword">@if</span>(session()->has(<span class="code-string">'success'</span>))
+        <span class="code-tag">&lt;div style="padding:1rem;background:#D1FAE5;color:#059669;border-radius:8px;"&gt;</span>
+            ✅ {{ session(<span class="code-string">'success'</span>) }}
+        <span class="code-tag">&lt;/div&gt;</span>
+    <span class="code-keyword">@endif</span>
+
+    <span class="code-tag">&lt;form</span> <span class="code-attribute">wire:submit</span>=<span class="code-string">"submit"</span><span class="code-tag">&gt;</span>
+        <span class="code-comment">&lt;!-- Nama --&gt;</span>
+        <span class="code-tag">&lt;div&gt;</span>
+            <span class="code-tag">&lt;label&gt;</span>Nama<span class="code-tag">&lt;/label&gt;</span>
+            <span class="code-tag">&lt;input</span> <span class="code-attribute">wire:model</span>=<span class="code-string">"name"</span> <span class="code-attribute">placeholder</span>=<span class="code-string">"Nama lengkap"</span><span class="code-tag">&gt;</span>
+            <span class="code-keyword">@error</span>(<span class="code-string">'name'</span>)
+                <span class="code-tag">&lt;span style="color:#DC2626;font-size:0.85rem;"&gt;</span>{{ <span class="code-variable">$message</span> }}<span class="code-tag">&lt;/span&gt;</span>
+            <span class="code-keyword">@enderror</span>
+        <span class="code-tag">&lt;/div&gt;</span>
+
+        <span class="code-comment">&lt;!-- Email --&gt;</span>
+        <span class="code-tag">&lt;div&gt;</span>
+            <span class="code-tag">&lt;label&gt;</span>Email<span class="code-tag">&lt;/label&gt;</span>
+            <span class="code-tag">&lt;input</span> <span class="code-attribute">wire:model</span>=<span class="code-string">"email"</span> <span class="code-attribute">placeholder</span>=<span class="code-string">"email@contoh.com"</span><span class="code-tag">&gt;</span>
+            <span class="code-keyword">@error</span>(<span class="code-string">'email'</span>)
+                <span class="code-tag">&lt;span style="color:#DC2626;font-size:0.85rem;"&gt;</span>{{ <span class="code-variable">$message</span> }}<span class="code-tag">&lt;/span&gt;</span>
+            <span class="code-keyword">@enderror</span>
+        <span class="code-tag">&lt;/div&gt;</span>
+
+        <span class="code-comment">&lt;!-- Pesan --&gt;</span>
+        <span class="code-tag">&lt;div&gt;</span>
+            <span class="code-tag">&lt;label&gt;</span>Pesan<span class="code-tag">&lt;/label&gt;</span>
+            <span class="code-tag">&lt;textarea</span> <span class="code-attribute">wire:model</span>=<span class="code-string">"message"</span> <span class="code-attribute">rows</span>=<span class="code-string">"4"</span><span class="code-tag">&gt;&lt;/textarea&gt;</span>
+            <span class="code-keyword">@error</span>(<span class="code-string">'message'</span>)
+                <span class="code-tag">&lt;span style="color:#DC2626;font-size:0.85rem;"&gt;</span>{{ <span class="code-variable">$message</span> }}<span class="code-tag">&lt;/span&gt;</span>
+            <span class="code-keyword">@enderror</span>
+        <span class="code-tag">&lt;/div&gt;</span>
+
+        <span class="code-tag">&lt;button</span> <span class="code-attribute">type</span>=<span class="code-string">"submit"</span><span class="code-tag">&gt;</span>📨 Kirim<span class="code-tag">&lt;/button&gt;</span>
+    <span class="code-tag">&lt;/form&gt;</span>
+<span class="code-tag">&lt;/div&gt;</span></pre>
+                </div>
+            </div>
+
+            <div class="alert alert-info">
+                <span class="alert-icon">🔍</span>
+                <div>
+                    <h4>Cara Kerja @error</h4>
+                    <ul>
+                        <li><code>@error('name')</code> — cek apakah ada error untuk field <code>name</code></li>
+                        <li><code>{{ $message }}</code> — variabel otomatis berisi pesan error dari Laravel</li>
+                        <li><code>@enderror</code> — penutup blok error</li>
+                        <li>Kalau tidak ada error? Blok di dalamnya <strong>tidak ditampilkan sama sekali</strong>!</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- ==================== -->
+
+            <h2>⚡ Cara 2: Validasi Real-Time</h2>
+
+            <p>Dengan validasi real-time, error muncul <strong>saat user mengetik</strong>, bukan menunggu submit!</p>
 
             <div class="code-block">
                 <div class="code-header">
                     <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
                             class="code-dot"></span></div>
-                    <span class="code-filename">ContactForm.php</span>
+                    <span class="code-filename">app/Livewire/ContactForm.php — tambahan</span>
                     <button class="code-copy">Salin</button>
                 </div>
                 <div class="code-body">
-                    <pre><span class="code-keyword">public function</span> <span class="code-function">updated</span>($propertyName)
+                    <pre><span class="code-comment">// Tambahkan method ini ke class ContactForm</span>
+
+<span class="code-comment">// Dipanggil SETIAP KALI ada property yang berubah</span>
+<span class="code-keyword">public function</span> <span class="code-function">updated</span>(<span class="code-variable">$propertyName</span>)
 {
-    $this->validateOnly($propertyName);
+    <span class="code-comment">// Validasi HANYA property yang baru berubah</span>
+    <span class="code-variable">$this</span>->validateOnly(<span class="code-variable">$propertyName</span>);
 }</pre>
                 </div>
             </div>
 
-            <h2>Menampilkan Error di Blade</h2>
+            <div class="alert alert-tip">
+                <span class="alert-icon">💡</span>
+                <div>
+                    <h4>validate() vs validateOnly()</h4>
+                    <table class="comparison-table" style="margin-top:0.5rem;">
+                        <tr>
+                            <th>Method</th>
+                            <th>Validasi</th>
+                            <th>Kapan Pakai</th>
+                        </tr>
+                        <tr>
+                            <td><code>$this->validate()</code></td>
+                            <td><strong>Semua</strong> field sekaligus</td>
+                            <td>Saat submit form</td>
+                        </tr>
+                        <tr>
+                            <td><code>$this->validateOnly('email')</code></td>
+                            <td><strong>Satu</strong> field saja</td>
+                            <td>Saat input berubah (real-time)</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <p>Jangan lupa ubah <code>wire:model</code> menjadi <code>wire:model.blur</code> agar validasi dipicu saat
+                user <strong>pindah ke input berikutnya</strong>:</p>
+
             <div class="code-block">
                 <div class="code-header">
                     <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
                             class="code-dot"></span></div>
-                    <span class="code-filename">contact-form.blade.php</span>
+                    <span class="code-filename">View — pakai .blur untuk validasi real-time</span>
                     <button class="code-copy">Salin</button>
                 </div>
                 <div class="code-body">
-                    <pre><span class="code-tag">&lt;form</span> <span class="code-attr">wire:submit</span>=<span class="code-string">"submit"</span><span class="code-tag">&gt;</span>
-    <span class="code-tag">&lt;div&gt;</span>
-        <span class="code-tag">&lt;input</span> <span class="code-attr">wire:model.live</span>=<span class="code-string">"name"</span> <span class="code-attr">placeholder</span>=<span class="code-string">"Nama"</span><span class="code-tag">&gt;</span>
-        <span class="code-keyword">@error</span>('name') 
-            <span class="code-tag">&lt;span</span> <span class="code-attr">class</span>=<span class="code-string">"error"</span><span class="code-tag">&gt;</span>{{ $message }}<span class="code-tag">&lt;/span&gt;</span>
-        <span class="code-keyword">@enderror</span>
-    <span class="code-tag">&lt;/div&gt;</span>
-    
-    <span class="code-tag">&lt;div&gt;</span>
-        <span class="code-tag">&lt;input</span> <span class="code-attr">wire:model.live</span>=<span class="code-string">"email"</span> <span class="code-attr">placeholder</span>=<span class="code-string">"Email"</span><span class="code-tag">&gt;</span>
-        <span class="code-keyword">@error</span>('email') 
-            <span class="code-tag">&lt;span</span> <span class="code-attr">class</span>=<span class="code-string">"error"</span><span class="code-tag">&gt;</span>{{ $message }}<span class="code-tag">&lt;/span&gt;</span>
-        <span class="code-keyword">@enderror</span>
-    <span class="code-tag">&lt;/div&gt;</span>
-    
-    <span class="code-tag">&lt;button</span> <span class="code-attr">type</span>=<span class="code-string">"submit"</span><span class="code-tag">&gt;</span>Kirim<span class="code-tag">&lt;/button&gt;</span>
-<span class="code-tag">&lt;/form&gt;</span></pre>
+                    <pre><span class="code-comment">&lt;!-- Validasi dipicu saat pindah ke field berikutnya --&gt;</span>
+<span class="code-tag">&lt;input</span> <span class="code-attribute">wire:model.blur</span>=<span class="code-string">"name"</span> <span class="code-attribute">placeholder</span>=<span class="code-string">"Nama"</span><span class="code-tag">&gt;</span>
+<span class="code-tag">&lt;input</span> <span class="code-attribute">wire:model.blur</span>=<span class="code-string">"email"</span> <span class="code-attribute">placeholder</span>=<span class="code-string">"Email"</span><span class="code-tag">&gt;</span>
+<span class="code-tag">&lt;textarea</span> <span class="code-attribute">wire:model.blur</span>=<span class="code-string">"message"</span><span class="code-tag">&gt;&lt;/textarea&gt;</span></pre>
                 </div>
             </div>
 
-            <h2>Rules Populer</h2>
-            <table style="width:100%;border-collapse:collapse;margin:1.5rem 0;">
-                <tr style="background:#F3F4F6;">
-                    <th style="padding:1rem;text-align:left;border:1px solid #E5E7EB;">Rule</th>
-                    <th style="padding:1rem;text-align:left;border:1px solid #E5E7EB;">Fungsi</th>
+            <!-- ==================== -->
+
+            <h2>📚 Daftar Rules Populer</h2>
+
+            <table class="comparison-table">
+                <tr>
+                    <th>Rule</th>
+                    <th>Fungsi</th>
+                    <th>Contoh</th>
                 </tr>
                 <tr>
-                    <td style="padding:1rem;border:1px solid #E5E7EB;"><code>required</code></td>
-                    <td style="padding:1rem;border:1px solid #E5E7EB;">Wajib diisi</td>
+                    <td><code>required</code></td>
+                    <td>Wajib diisi</td>
+                    <td><code>'name' => 'required'</code></td>
                 </tr>
                 <tr>
-                    <td style="padding:1rem;border:1px solid #E5E7EB;"><code>email</code></td>
-                    <td style="padding:1rem;border:1px solid #E5E7EB;">Format email valid</td>
+                    <td><code>email</code></td>
+                    <td>Format email valid</td>
+                    <td><code>'email' => 'required|email'</code></td>
                 </tr>
                 <tr>
-                    <td style="padding:1rem;border:1px solid #E5E7EB;"><code>min:3</code></td>
-                    <td style="padding:1rem;border:1px solid #E5E7EB;">Minimal 3 karakter</td>
+                    <td><code>min:N</code></td>
+                    <td>Minimal N karakter</td>
+                    <td><code>'password' => 'min:8'</code></td>
                 </tr>
                 <tr>
-                    <td style="padding:1rem;border:1px solid #E5E7EB;"><code>max:255</code></td>
-                    <td style="padding:1rem;border:1px solid #E5E7EB;">Maksimal 255 karakter</td>
+                    <td><code>max:N</code></td>
+                    <td>Maksimal N karakter</td>
+                    <td><code>'name' => 'max:100'</code></td>
                 </tr>
                 <tr>
-                    <td style="padding:1rem;border:1px solid #E5E7EB;"><code>unique:users,email</code></td>
-                    <td style="padding:1rem;border:1px solid #E5E7EB;">Email unik di tabel users</td>
+                    <td><code>numeric</code></td>
+                    <td>Harus angka</td>
+                    <td><code>'umur' => 'numeric|min:1'</code></td>
+                </tr>
+                <tr>
+                    <td><code>unique:table,col</code></td>
+                    <td>Unik di tabel (tidak boleh duplikat)</td>
+                    <td><code>'email' => 'unique:users,email'</code></td>
+                </tr>
+                <tr>
+                    <td><code>confirmed</code></td>
+                    <td>Harus sama dengan field _confirmation</td>
+                    <td><code>'password' => 'confirmed'</code></td>
+                </tr>
+                <tr>
+                    <td><code>string</code></td>
+                    <td>Harus berupa teks</td>
+                    <td><code>'name' => 'string'</code></td>
+                </tr>
+                <tr>
+                    <td><code>nullable</code></td>
+                    <td>Boleh kosong</td>
+                    <td><code>'bio' => 'nullable|max:500'</code></td>
+                </tr>
+                <tr>
+                    <td><code>in:a,b,c</code></td>
+                    <td>Harus salah satu dari daftar</td>
+                    <td><code>'kelas' => 'in:X,XI,XII'</code></td>
                 </tr>
             </table>
 
+            <div class="alert alert-info">
+                <span class="alert-icon">📝</span>
+                <div>
+                    <h4>Cara Membaca Rules</h4>
+                    <p><code>'email' => 'required|email|unique:users,email'</code></p>
+                    <p>Artinya: Field email <strong>wajib diisi</strong> + harus <strong>format email</strong> + harus
+                        <strong>unik</strong> di tabel users
+                    </p>
+                    <p style="margin-top:0.5rem;">Tanda <code>|</code> (pipe) = "DAN" — semua rules harus terpenuhi!</p>
+                </div>
+            </div>
+
+            <!-- ==================== -->
+
+            <h2>🌐 Pesan Error dalam Bahasa Indonesia</h2>
+
+            <p>Secara default, pesan error muncul dalam bahasa Inggris. Kamu bisa membuat <strong>pesan custom</strong>
+                dalam Bahasa Indonesia:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">app/Livewire/ContactForm.php — pesan custom</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-keyword">protected</span> <span class="code-variable">$rules</span> = [
+    <span class="code-string">'name'</span>    => <span class="code-string">'required|min:3'</span>,
+    <span class="code-string">'email'</span>   => <span class="code-string">'required|email'</span>,
+    <span class="code-string">'message'</span> => <span class="code-string">'required|min:10'</span>,
+];
+
+<span class="code-comment">// Pesan error custom dalam Bahasa Indonesia</span>
+<span class="code-keyword">protected</span> <span class="code-variable">$messages</span> = [
+    <span class="code-string">'name.required'</span>    => <span class="code-string">'Nama harus diisi ya! 😊'</span>,
+    <span class="code-string">'name.min'</span>         => <span class="code-string">'Nama minimal 3 karakter.'</span>,
+    <span class="code-string">'email.required'</span>   => <span class="code-string">'Email wajib diisi.'</span>,
+    <span class="code-string">'email.email'</span>      => <span class="code-string">'Format email tidak valid. Contoh: budi@email.com'</span>,
+    <span class="code-string">'message.required'</span> => <span class="code-string">'Pesan tidak boleh kosong.'</span>,
+    <span class="code-string">'message.min'</span>      => <span class="code-string">'Pesan terlalu pendek, minimal 10 karakter.'</span>,
+];</pre>
+                </div>
+            </div>
+
+            <div class="alert alert-tip">
+                <span class="alert-icon">🎯</span>
+                <div>
+                    <h4>Format Pesan Custom</h4>
+                    <p>Format: <code>'namaField.namaRule' => 'Pesan dalam bahasa Indonesia'</code></p>
+                    <p style="margin-top:0.5rem;">Contoh: <code>'email.email'</code> = pesan error untuk field "email"
+                        ketika rule "email" gagal.</p>
+                </div>
+            </div>
+
+            <!-- ==================== -->
+
+            <h2>🎨 Styling Input Error</h2>
+
+            <p>Tambahkan <strong>visual feedback</strong> agar user tahu field mana yang bermasalah:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">Input dengan border merah saat error</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-tag">&lt;input</span> <span class="code-attribute">wire:model.blur</span>=<span class="code-string">"email"</span>
+       <span class="code-attribute">placeholder</span>=<span class="code-string">"Email"</span>
+       <span class="code-attribute">class</span>=<span class="code-string">"{{ $errors->has('email') ? 'border-red' : '' }}"</span><span class="code-tag">&gt;</span>
+
+<span class="code-keyword">@error</span>(<span class="code-string">'email'</span>)
+    <span class="code-tag">&lt;span style="color:#DC2626;font-size:0.85rem;display:block;margin-top:4px;"&gt;</span>
+        ⚠️ {{ <span class="code-variable">$message</span> }}
+    <span class="code-tag">&lt;/span&gt;</span>
+<span class="code-keyword">@enderror</span></pre>
+                </div>
+            </div>
+
+            <!-- ==================== KESALAHAN UMUM ==================== -->
+
+            <div class="common-mistakes">
+                <h3>⚠️ Kesalahan Umum Pemula</h3>
+
+                <div class="mistake-item">
+                    <h4>❌ Lupa memanggil $this->validate()</h4>
+                    <p>Rules sudah ditulis tapi tidak memanggil <code>$this->validate()</code> di method submit → data
+                        tetap tersimpan tanpa dicek!</p>
+                    <p class="solution">✅ Solusi: Selalu panggil <code>$this->validate()</code> di <strong>baris
+                            pertama</strong> method submit.</p>
+                </div>
+
+                <div class="mistake-item">
+                    <h4>❌ Nama property dan nama rule tidak cocok</h4>
+                    <p>Property <code>$name</code> tapi rule ditulis <code>'nama' => 'required'</code> → validasi tidak
+                        berjalan.</p>
+                    <p class="solution">✅ Solusi: Key di <code>$rules</code> harus <strong>persis sama</strong> dengan
+                        nama property.</p>
+                </div>
+
+                <div class="mistake-item">
+                    <h4>❌ Pakai validate() di dalam updated() (tanpa Only)</h4>
+                    <p><code>$this->validate()</code> di <code>updated()</code> akan memvalidasi <strong>semua</strong>
+                        field — error muncul di field yang bahkan belum disentuh user!</p>
+                    <p class="solution">✅ Solusi: Di <code>updated()</code>, gunakan
+                        <code>$this->validateOnly($propertyName)</code>
+                    </p>
+                </div>
+            </div>
+
+            <!-- ==================== RINGKASAN ==================== -->
+
+            <div class="summary-box">
+                <h3>📋 Ringkasan Materi</h3>
+                <ul>
+                    <li>Validasi = memeriksa data sebelum disimpan ke database</li>
+                    <li>Tulis rules di property <code>$rules</code> → panggil <code>$this->validate()</code></li>
+                    <li>Tampilkan error: <code>@error('nama')...@enderror</code></li>
+                    <li>Validasi real-time: tambahkan method <code>updated()</code> + <code>validateOnly()</code></li>
+                    <li>Pesan custom: property <code>$messages</code> dengan format <code>'field.rule' => 'pesan'</code>
+                    </li>
+                    <li>Rules populer: <code>required</code>, <code>email</code>, <code>min</code>, <code>max</code>,
+                        <code>unique</code>, <code>confirmed</code>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- ==================== LATIHAN ==================== -->
+
+            <h2>📝 Latihan</h2>
+
+            <div class="exercise-section">
+                <div class="exercise-level basic">
+                    <h4>🟢 Level 1 — Memahami</h4>
+                    <ol>
+                        <li>Apa perbedaan <code>$this->validate()</code> dan <code>$this->validateOnly()</code>? Kapan
+                            pakai masing-masing?</li>
+                        <li>Tulis rules untuk form yang punya field: <strong>nama</strong> (wajib, min 3),
+                            <strong>umur</strong> (wajib, angka, min 1), <strong>email</strong> (wajib, format email).
+                        </li>
+                        <li>Bagaimana cara menampilkan error di view? Tulis contoh kodenya!</li>
+                    </ol>
+                </div>
+
+                <div class="exercise-level intermediate">
+                    <h4>🔵 Level 2 — Praktik</h4>
+                    <ol>
+                        <li>Buat komponen <strong>"RegistrasiSiswa"</strong> dengan field: nama, NIS, kelas (dropdown
+                            X/XI/XII), email. Tambahkan validasi lengkap dan pesan error custom dalam Bahasa Indonesia.
+                        </li>
+                        <li>Tambahkan <strong>validasi real-time</strong> menggunakan <code>updated()</code> +
+                            <code>wire:model.blur</code>
+                        </li>
+                        <li>Tambahkan notifikasi "✅ Data berhasil disimpan!" setelah submit sukses.</li>
+                    </ol>
+                </div>
+
+                <div class="exercise-level challenge">
+                    <h4>🟣 Level 3 — Tantangan</h4>
+                    <ol>
+                        <li>Tambahkan rule <code>unique:students,nis</code> ke field NIS agar tidak ada NIS yang sama.
+                            Coba isi NIS yang sudah ada — apa pesan errornya?</li>
+                        <li>Buat field <strong>password + konfirmasi password</strong>. Gunakan rule
+                            <code>confirmed</code> agar kedua password harus cocok. (Petunjuk: field kedua harus bernama
+                            <code>password_confirmation</code>!)
+                        </li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- ==================== NAVIGASI ==================== -->
+
             <div class="content-nav">
-                <a href="wire-click.html" class="nav-btn">
+                <a href="database-eloquent.html" class="nav-btn">
                     <div>
                         <div class="nav-btn-label">Sebelumnya</div>
-                        <div class="nav-btn-title">← wire:click</div>
+                        <div class="nav-btn-title">← Database & Eloquent</div>
                     </div>
                 </a>
                 <a href="crud-sederhana.html" class="nav-btn">
@@ -204,6 +583,9 @@
             </div>
         </main>
     </div>
+
+    <button class="sidebar-toggle-mobile"
+        onclick="document.querySelector('.sidebar').classList.toggle('active')">📚</button>
     <script src="../../js/app.js"></script>
 </body>
 

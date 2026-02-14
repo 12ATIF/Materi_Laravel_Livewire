@@ -31,12 +31,12 @@
             <ul class="navbar-menu">
                 <li><a href="../../index.html">Beranda</a></li>
                 <li><a href="../../silabus.html">Silabus</a></li>
-                <li><a href="#" class="active">Materi</a></li>
+                <li><a href="../minggu-1/pengenalan-laravel.html" class="active">Materi</a></li>
                 <li><a href="../../demo.html">Demo</a></li>
             </ul>
+            <button class="navbar-toggle" aria-label="Toggle menu"><span>☰</span></button>
         </div>
     </nav>
-
     <div class="content-layout">
         <aside class="sidebar">
             <div class="sidebar-section">
@@ -45,10 +45,10 @@
                     <li><a href="../minggu-1/pengenalan-laravel.html">Pengenalan Laravel</a></li>
                     <li><a href="../minggu-1/mvc-sederhana.html">MVC Sederhana</a></li>
                     <li><a href="../minggu-1/instalasi-laravel.html">Instalasi Laravel</a></li>
-                    <li><a href="../minggu-1/autentikasi.html">🔐 Autentikasi</a></li>
                     <li><a href="../minggu-1/blade-template.html">Blade Template</a></li>
                     <li><a href="../minggu-1/pengenalan-livewire.html">Pengenalan Livewire</a></li>
                     <li><a href="../minggu-1/struktur-component.html">Struktur Component</a></li>
+                    <li><a href="../minggu-1/autentikasi.html">🔐 Autentikasi</a></li>
                 </ul>
             </div>
             <div class="sidebar-section">
@@ -56,9 +56,9 @@
                 <ul class="sidebar-nav">
                     <li><a href="../minggu-2/wire-model.html">wire:model</a></li>
                     <li><a href="../minggu-2/wire-click.html">wire:click</a></li>
+                    <li><a href="../minggu-2/database-eloquent.html">Database & Eloquent</a></li>
                     <li><a href="../minggu-2/validasi.html">Validasi</a></li>
                     <li><a href="../minggu-2/crud-sederhana.html">CRUD Sederhana</a></li>
-                    <li><a href="../minggu-2/database-eloquent.html">Database & Eloquent</a></li>
                 </ul>
             </div>
             <div class="sidebar-section">
@@ -72,82 +72,452 @@
                 </ul>
             </div>
         </aside>
-
         <main class="main-content">
             <div class="content-header">
-                <h1 class="content-title">📚 Tutorial E-Library Livewire</h1>
+                <div class="content-breadcrumb">
+                    <a href="../../index.html">Beranda</a> / <a href="../../silabus.html">Silabus</a> / Minggu 3 /
+                    Tutorial E-Library
+                </div>
+                <h1 class="content-title">📚 Tutorial Project: E-Library Livewire</h1>
                 <div class="content-meta">
-                    <span>📕 Project Tutorial</span>
-                    <span>⏱️ 60+ menit</span>
+                    <span>📕 Project Akhir Minggu 3</span>
+                    <span>⏱️ 90+ menit</span>
+                    <span>🔧 Project Lengkap</span>
                 </div>
             </div>
 
-            <div class="alert alert-info" style="margin-bottom: 2rem;">
+            <!-- PENGANTAR GURU -->
+            <div class="alert alert-tip" style="margin-bottom:2rem">
+                <span class="alert-icon">👨‍🏫</span>
+                <div>
+                    <h4>Pesan dari Guru</h4>
+                    <p>Selamat! Kamu sudah sampai di <strong>project akhir</strong>. Di tutorial ini, kamu akan
+                        membangun aplikasi perpustakaan digital dari nol. Semua ilmu dari Minggu 1-3 akan kamu
+                        praktikkan di sini: <strong>Blade Template, wire:model, wire:click, Eloquent, Validasi, CRUD,
+                            Pagination, Search, Upload File</strong> — semuanya jadi satu project nyata!</p>
+                </div>
+            </div>
+
+            <!-- ANALOGI BESAR -->
+            <div class="alert alert-info" style="margin-bottom:2rem">
+                <span class="alert-icon">🏗️</span>
+                <div>
+                    <h4>Analogi: Membangun Rumah</h4>
+                    <p>Membuat project E-Library ini seperti membangun rumah. Kita harus membangunnya <strong>bertahap
+                            dari fondasi</strong>:</p>
+                    <div
+                        style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:0.75rem;margin-top:0.75rem">
+                        <div style="text-align:center;padding:0.75rem;background:#F0FDF4;border-radius:8px">
+                            <div style="font-size:1.5rem">🧱</div>
+                            <strong>Step 1</strong><br><small>Fondasi = Database</small>
+                        </div>
+                        <div style="text-align:center;padding:0.75rem;background:#EFF6FF;border-radius:8px">
+                            <div style="font-size:1.5rem">🏠</div>
+                            <strong>Step 2</strong><br><small>Kerangka = Model</small>
+                        </div>
+                        <div style="text-align:center;padding:0.75rem;background:#FEF3C7;border-radius:8px">
+                            <div style="font-size:1.5rem">🔐</div>
+                            <strong>Step 3</strong><br><small>Pintu = Auth</small>
+                        </div>
+                        <div style="text-align:center;padding:0.75rem;background:#FDF2F8;border-radius:8px">
+                            <div style="font-size:1.5rem">📚</div>
+                            <strong>Step 4</strong><br><small>Isi = CRUD Buku</small>
+                        </div>
+                        <div style="text-align:center;padding:0.75rem;background:#F5F3FF;border-radius:8px">
+                            <div style="font-size:1.5rem">🔄</div>
+                            <strong>Step 5</strong><br><small>Aktivitas = Pinjam/Kembali</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="prerequisites">
+                <h3>📌 Prasyarat — Pastikan Kamu Sudah Paham</h3>
+                <ul>
+                    <li>✅ <a href="../minggu-1/instalasi-laravel.html">Instalasi Laravel</a> — bisa membuat project baru
+                    </li>
+                    <li>✅ <a href="../minggu-2/database-eloquent.html">Database & Eloquent</a> — migration, model,
+                        relasi</li>
+                    <li>✅ <a href="../minggu-2/crud-sederhana.html">CRUD Sederhana</a> — tambah, edit, hapus data</li>
+                    <li>✅ <a href="../minggu-2/validasi.html">Validasi</a> — memvalidasi input user</li>
+                    <li>✅ <a href="pagination-search.html">Pagination & Search</a> — paginate dan live search</li>
+                </ul>
+            </div>
+
+            <div class="objectives">
+                <h3>🎯 Yang Akan Kamu Bangun</h3>
+                <ul>
+                    <li>🔐 <strong>Sistem Login & Register</strong> — dengan Laravel Breeze</li>
+                    <li>👤 <strong>Role-based Dashboard</strong> — Admin vs User biasa (berbeda tampilan)</li>
+                    <li>📚 <strong>CRUD Buku Lengkap</strong> — tambah, edit, hapus + search + filter kategori +
+                        pagination</li>
+                    <li>📋 <strong>Sistem Peminjaman</strong> — catat siapa meminjam buku apa, kapan deadline</li>
+                    <li>✅ <strong>Sistem Pengembalian</strong> — proses kembali + stok otomatis bertambah</li>
+                    <li>📊 <strong>Dashboard Statistik</strong> — total buku, user, peminjaman aktif</li>
+                </ul>
+            </div>
+
+            <!-- DAFTAR ISI -->
+            <div
+                style="padding:1.5rem;background:linear-gradient(135deg,#1F2937,#111827);border-radius:12px;margin:2rem 0">
+                <h3 style="color:#10B981;margin-bottom:1rem">📑 Daftar Isi Tutorial</h3>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem">
+                    <a href="#step1" style="color:#D1D5DB;text-decoration:none;padding:0.4rem 0">🧱 Step 1 — Setup &
+                        Database</a>
+                    <a href="#step2" style="color:#D1D5DB;text-decoration:none;padding:0.4rem 0">🏠 Step 2 — Model &
+                        Relasi</a>
+                    <a href="#step3" style="color:#D1D5DB;text-decoration:none;padding:0.4rem 0">🔐 Step 3 — Autentikasi
+                        & Role</a>
+                    <a href="#step4" style="color:#D1D5DB;text-decoration:none;padding:0.4rem 0">📚 Step 4 — CRUD
+                        Buku</a>
+                    <a href="#step5" style="color:#D1D5DB;text-decoration:none;padding:0.4rem 0">📋 Step 5 —
+                        Peminjaman</a>
+                    <a href="#step6" style="color:#D1D5DB;text-decoration:none;padding:0.4rem 0">✅ Step 6 —
+                        Pengembalian</a>
+                    <a href="#step7" style="color:#D1D5DB;text-decoration:none;padding:0.4rem 0">📊 Step 7 —
+                        Dashboard</a>
+                    <a href="#step8" style="color:#D1D5DB;text-decoration:none;padding:0.4rem 0">🚀 Step 8 — Instalasi &
+                        Uji Coba</a>
+                </div>
+            </div>
+
+            <div class="alert alert-info" style="margin-bottom:2rem">
                 <span class="alert-icon">📁</span>
                 <div>
                     <h4>Source Code Lengkap</h4>
                     <p>Download source code lengkap dari GitHub: <a
                             href="https://github.com/12ATIF/E-Library_Livewire_S2_SKL1" target="_blank"
-                            style="color: #3B82F6; text-decoration: underline;">E-Library_Livewire_S2_SKL1</a></p>
+                            style="color:#3B82F6;text-decoration:underline">E-Library_Livewire_S2_SKL1</a></p>
                 </div>
             </div>
 
-            <div class="objectives">
-                <h3>🎯 Yang Akan Dipelajari</h3>
-                <ul>
-                    <li>Membuat sistem perpustakaan lengkap dengan Laravel Livewire</li>
-                    <li><strong>🔐 Sistem Login & Register dengan Laravel Breeze</strong></li>
-                    <li><strong>👤 Role-based Dashboard (Admin & User)</strong></li>
-                    <li>CRUD buku dengan search, filter, dan pagination</li>
-                    <li>Sistem peminjaman dan pengembalian buku</li>
-                    <li>Modal form dan konfirmasi hapus</li>
-                    <li>Manajemen stok otomatis</li>
-                </ul>
+            <!--===========================================-->
+            <!-- STEP 1: SETUP & DATABASE                  -->
+            <!--===========================================-->
+            <h2 id="step1">🧱 Step 1 — Setup Project & Database</h2>
+
+            <div class="alert alert-tip">
+                <span class="alert-icon">🧱</span>
+                <div>
+                    <h4>Kenapa Database Dulu?</h4>
+                    <p>Bayangkan kamu mau buka toko buku. Yang pertama kamu siapkan bukan rak (tampilan), tapi
+                        <strong>gudang penyimpanan</strong> (database). Tanpa gudang, buku-buku tidak punya tempat. Jadi
+                        kita mulai dari <strong>migration</strong> — "cetak biru" tabel database.
+                    </p>
+                </div>
             </div>
 
-            <!-- SECTION 1: STRUKTUR PROJECT -->
-            <h2 id="struktur">1. Struktur Project</h2>
-            <p>Project E-Library memiliki struktur folder sebagai berikut:</p>
+            <h3>1.1 Struktur Folder Project</h3>
+            <p>Sebelum coding, pahami dulu <strong>dimana file-file akan ditempatkan</strong>:</p>
 
             <div class="code-block">
                 <div class="code-header">
                     <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
                             class="code-dot"></span></div>
-                    <span class="code-filename">Struktur Folder</span>
+                    <span class="code-filename">Struktur Folder E-Library</span>
                     <button class="code-copy" onclick="copyCode(this)">Salin</button>
                 </div>
                 <div class="code-body">
-                    <pre>app/
-├── Livewire/
-│   ├── Books/
-│   │   └── Index.php          <span class="code-comment">// CRUD Buku</span>
-│   ├── Loans/
-│   │   └── Index.php          <span class="code-comment">// Peminjaman</span>
-│   └── Returns/
-│       └── Index.php          <span class="code-comment">// Pengembalian</span>
-├── Models/
-│   ├── Book.php               <span class="code-comment">// Model Buku</span>
-│   ├── Loan.php               <span class="code-comment">// Model Peminjaman</span>
-│   └── User.php               <span class="code-comment">// Model User</span>
-
-database/migrations/
-├── create_books_table.php     <span class="code-comment">// Tabel buku</span>
-└── create_loans_table.php     <span class="code-comment">// Tabel peminjaman</span>
-
-resources/views/livewire/
-├── books/index.blade.php      <span class="code-comment">// View CRUD Buku</span>
-├── loans/index.blade.php      <span class="code-comment">// View Peminjaman</span>
-└── returns/index.blade.php    <span class="code-comment">// View Pengembalian</span></pre>
+                    <pre>📁 e-library/
+├── app/
+│   ├── Livewire/
+│   │   ├── Admin/
+│   │   │   └── Dashboard.php      <span class="code-comment">← Dashboard admin (statistik)</span>
+│   │   ├── User/
+│   │   │   └── Dashboard.php      <span class="code-comment">← Dashboard user (riwayat)</span>
+│   │   ├── Books/
+│   │   │   └── Index.php          <span class="code-comment">← CRUD Buku lengkap</span>
+│   │   ├── Loans/
+│   │   │   └── Index.php          <span class="code-comment">← Sistem peminjaman</span>
+│   │   └── Returns/
+│   │       └── Index.php          <span class="code-comment">← Sistem pengembalian</span>
+│   └── Models/
+│       ├── User.php               <span class="code-comment">← Model user + role</span>
+│       ├── Book.php               <span class="code-comment">← Model buku</span>
+│       └── Loan.php               <span class="code-comment">← Model peminjaman</span>
+├── database/migrations/           <span class="code-comment">← Cetak biru tabel</span>
+└── resources/views/livewire/      <span class="code-comment">← Tampilan Blade</span></pre>
                 </div>
             </div>
 
-            <!-- SECTION 2: AUTENTIKASI -->
-            <h2 id="autentikasi">2. 🔐 Sistem Autentikasi</h2>
-            <p>Project ini menggunakan <strong>Laravel Breeze</strong> untuk autentikasi dengan tambahan fitur
-                role-based access.</p>
+            <div class="alert alert-tip">
+                <span class="alert-icon">💡</span>
+                <div>
+                    <h4>Tips Guru: Pahami Polanya</h4>
+                    <p>Perhatikan setiap fitur punya <strong>3 file</strong>: Model (data), Livewire Component (logika),
+                        dan View (tampilan). Ini adalah pola MVC yang sudah kamu pelajari di <a
+                            href="../minggu-1/mvc-sederhana.html">Minggu 1</a>!</p>
+                </div>
+            </div>
 
-            <h3>2.1 User Model dengan Role</h3>
-            <p>Tambahkan kolom <code>role</code> ke tabel users untuk membedakan Admin dan User biasa:</p>
+            <h3>1.2 Migration: Tabel Buku</h3>
+            <p>Jalankan perintah: <code>php artisan make:migration create_books_table</code></p>
+            <p>Lalu isi migration-nya seperti ini:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">database/migrations/create_books_table.php</span>
+                    <button class="code-copy" onclick="copyCode(this)">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre>Schema::create(<span class="code-string">'books'</span>, <span class="code-keyword">function</span> (Blueprint $table) {
+    $table-&gt;id();                                          <span class="code-comment">// ID unik otomatis</span>
+    $table-&gt;string(<span class="code-string">'judul'</span>);                              <span class="code-comment">// Wajib: nama buku</span>
+    $table-&gt;string(<span class="code-string">'penulis'</span>);                            <span class="code-comment">// Wajib: nama penulis</span>
+    $table-&gt;string(<span class="code-string">'penerbit'</span>)-&gt;nullable();               <span class="code-comment">// Opsional</span>
+    $table-&gt;year(<span class="code-string">'tahun_terbit'</span>)-&gt;nullable();              <span class="code-comment">// Opsional</span>
+    $table-&gt;string(<span class="code-string">'isbn'</span>)-&gt;nullable()-&gt;unique();          <span class="code-comment">// Opsional, harus unik</span>
+    $table-&gt;integer(<span class="code-string">'stok'</span>)-&gt;default(<span class="code-string">1</span>);                  <span class="code-comment">// Default: 1 eksemplar</span>
+    $table-&gt;string(<span class="code-string">'kategori'</span>)-&gt;nullable();               <span class="code-comment">// Untuk filter</span>
+    $table-&gt;text(<span class="code-string">'deskripsi'</span>)-&gt;nullable();                 <span class="code-comment">// Sinopsis buku</span>
+    $table-&gt;timestamps();                                  <span class="code-comment">// created_at & updated_at</span>
+});</pre>
+                </div>
+            </div>
+
+            <table class="comparison-table">
+                <tr>
+                    <th>Kolom</th>
+                    <th>Tipe</th>
+                    <th>Kenapa?</th>
+                </tr>
+                <tr>
+                    <td><code>judul</code>, <code>penulis</code></td>
+                    <td>string (wajib)</td>
+                    <td>Data minimal yang harus ada untuk setiap buku</td>
+                </tr>
+                <tr>
+                    <td><code>stok</code></td>
+                    <td>integer, default 1</td>
+                    <td>Untuk tracking berapa buku tersedia. Berkurang saat dipinjam, bertambah saat dikembalikan</td>
+                </tr>
+                <tr>
+                    <td><code>isbn</code></td>
+                    <td>string, unique</td>
+                    <td>Nomor identitas internasional buku. Unique agar tidak ada duplikat</td>
+                </tr>
+                <tr>
+                    <td><code>kategori</code></td>
+                    <td>string, nullable</td>
+                    <td>Untuk fitur filter buku berdasarkan kategori</td>
+                </tr>
+            </table>
+
+            <h3>1.3 Migration: Tabel Peminjaman</h3>
+            <p>Jalankan: <code>php artisan make:migration create_loans_table</code></p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">database/migrations/create_loans_table.php</span>
+                    <button class="code-copy" onclick="copyCode(this)">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre>Schema::create(<span class="code-string">'loans'</span>, <span class="code-keyword">function</span> (Blueprint $table) {
+    $table-&gt;id();
+    $table-&gt;foreignId(<span class="code-string">'user_id'</span>)-&gt;constrained()-&gt;onDelete(<span class="code-string">'cascade'</span>);   <span class="code-comment">// Siapa yang pinjam</span>
+    $table-&gt;foreignId(<span class="code-string">'book_id'</span>)-&gt;constrained()-&gt;onDelete(<span class="code-string">'cascade'</span>);   <span class="code-comment">// Buku apa</span>
+    $table-&gt;date(<span class="code-string">'tanggal_pinjam'</span>);                                       <span class="code-comment">// Kapan dipinjam</span>
+    $table-&gt;date(<span class="code-string">'tanggal_kembali'</span>);                                      <span class="code-comment">// Batas waktu</span>
+    $table-&gt;date(<span class="code-string">'tanggal_dikembalikan'</span>)-&gt;nullable();                     <span class="code-comment">// Aktual kembali</span>
+    $table-&gt;enum(<span class="code-string">'status'</span>, [<span class="code-string">'dipinjam'</span>, <span class="code-string">'dikembalikan'</span>, <span class="code-string">'terlambat'</span>])
+          -&gt;default(<span class="code-string">'dipinjam'</span>);                                           <span class="code-comment">// Status saat ini</span>
+    $table-&gt;timestamps();
+});</pre>
+                </div>
+            </div>
+
+            <div class="alert alert-tip">
+                <span class="alert-icon">🔗</span>
+                <div>
+                    <h4>Apa itu <code>foreignId</code>?</h4>
+                    <p>Bayangkan form peminjaman kertas di perpustakaan. Ada kolom "Nama Peminjam" dan "Judul Buku" —
+                        itu diisi berdasarkan data yang <strong>sudah ada</strong>. Di database,
+                        <code>foreignId('user_id')</code> artinya kolom ini <strong>mengacu ke tabel users</strong>.
+                        Jadi data yang masuk <em>pasti valid</em>.
+                    </p>
+                    <p><code>onDelete('cascade')</code> → jika user dihapus, semua peminjaman user itu juga ikut
+                        terhapus (seperti membuang kartu anggota beserta riwayatnya).</p>
+                </div>
+            </div>
+
+            <p>Setelah kedua migration selesai, jalankan:</p>
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">Terminal</span>
+                    <button class="code-copy" onclick="copyCode(this)">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre>php artisan migrate</pre>
+                </div>
+            </div>
+
+            <!--===========================================-->
+            <!-- STEP 2: MODEL & RELASI                    -->
+            <!--===========================================-->
+            <h2 id="step2">🏠 Step 2 — Model & Relasi Eloquent</h2>
+
+            <div class="alert alert-tip">
+                <span class="alert-icon">🏠</span>
+                <div>
+                    <h4>Kenapa Model Penting?</h4>
+                    <p>Jika migration adalah <strong>cetak biru gudang</strong>, maka Model adalah <strong>petugas
+                            gudang</strong>. Model-lah yang bertugas mengambil, menyimpan, dan menghubungkan data. Tanpa
+                        model, kamu harus menulis query SQL manual — ribet!</p>
+                </div>
+            </div>
+
+            <h3>2.1 Model Book</h3>
+            <p>Jalankan: <code>php artisan make:model Book</code></p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">app/Models/Book.php</span>
+                    <button class="code-copy" onclick="copyCode(this)">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-keyword">class</span> <span class="code-class">Book</span> <span class="code-keyword">extends</span> Model
+{
+    <span class="code-keyword">use</span> HasFactory;
+
+    <span class="code-comment">// Kolom yang boleh diisi massal (mass assignment)</span>
+    <span class="code-keyword">protected</span> $fillable = [
+        <span class="code-string">'judul'</span>, <span class="code-string">'penulis'</span>, <span class="code-string">'penerbit'</span>, <span class="code-string">'tahun_terbit'</span>,
+        <span class="code-string">'isbn'</span>, <span class="code-string">'stok'</span>, <span class="code-string">'kategori'</span>, <span class="code-string">'deskripsi'</span>,
+    ];
+
+    <span class="code-comment">// ✅ RELASI: Satu buku → banyak peminjaman</span>
+    <span class="code-keyword">public function</span> <span class="code-function">loans</span>()
+    {
+        <span class="code-keyword">return</span> $this-&gt;hasMany(Loan::class);
+    }
+
+    <span class="code-comment">// ✅ Cek apakah stok masih ada</span>
+    <span class="code-keyword">public function</span> <span class="code-function">isAvailable</span>(): <span class="code-keyword">bool</span>
+    {
+        <span class="code-keyword">return</span> $this-&gt;stok &gt; <span class="code-string">0</span>;
+    }
+}</pre>
+                </div>
+            </div>
+
+            <h3>2.2 Model Loan</h3>
+            <p>Jalankan: <code>php artisan make:model Loan</code></p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">app/Models/Loan.php</span>
+                    <button class="code-copy" onclick="copyCode(this)">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-keyword">class</span> <span class="code-class">Loan</span> <span class="code-keyword">extends</span> Model
+{
+    <span class="code-keyword">use</span> HasFactory;
+
+    <span class="code-keyword">protected</span> $fillable = [
+        <span class="code-string">'user_id'</span>, <span class="code-string">'book_id'</span>, <span class="code-string">'tanggal_pinjam'</span>,
+        <span class="code-string">'tanggal_kembali'</span>, <span class="code-string">'tanggal_dikembalikan'</span>, <span class="code-string">'status'</span>,
+    ];
+
+    <span class="code-keyword">protected</span> $casts = [
+        <span class="code-string">'tanggal_pinjam'</span> =&gt; <span class="code-string">'date'</span>,
+        <span class="code-string">'tanggal_kembali'</span> =&gt; <span class="code-string">'date'</span>,
+        <span class="code-string">'tanggal_dikembalikan'</span> =&gt; <span class="code-string">'date'</span>,
+    ];
+
+    <span class="code-comment">// ✅ RELASI: Peminjaman ini milik user siapa?</span>
+    <span class="code-keyword">public function</span> <span class="code-function">user</span>()
+    {
+        <span class="code-keyword">return</span> $this-&gt;belongsTo(User::class);
+    }
+
+    <span class="code-comment">// ✅ RELASI: Buku apa yang dipinjam?</span>
+    <span class="code-keyword">public function</span> <span class="code-function">book</span>()
+    {
+        <span class="code-keyword">return</span> $this-&gt;belongsTo(Book::class);
+    }
+
+    <span class="code-comment">// ✅ Cek apakah sudah lewat deadline</span>
+    <span class="code-keyword">public function</span> <span class="code-function">isOverdue</span>(): <span class="code-keyword">bool</span>
+    {
+        <span class="code-keyword">return</span> $this-&gt;status === <span class="code-string">'dipinjam'</span> &amp;&amp; $this-&gt;tanggal_kembali &lt; now();
+    }
+}</pre>
+                </div>
+            </div>
+
+            <!-- DIAGRAM RELASI -->
+            <div
+                style="padding:1.5rem;background:#F9FAFB;border-radius:12px;border:1px solid #E5E7EB;margin:1.5rem 0;text-align:center">
+                <h4 style="margin-bottom:1rem">🔗 Diagram Relasi Database</h4>
+                <div style="display:flex;justify-content:center;align-items:center;gap:1rem;flex-wrap:wrap">
+                    <div style="padding:1rem;background:#DBEAFE;border-radius:8px;min-width:120px">
+                        <strong>👤 User</strong><br><small>id, name, email, role</small>
+                    </div>
+                    <div style="font-size:1.5rem">→ 1:N ←</div>
+                    <div style="padding:1rem;background:#FEF3C7;border-radius:8px;min-width:120px">
+                        <strong>📋 Loan</strong><br><small>user_id, book_id, status</small>
+                    </div>
+                    <div style="font-size:1.5rem">→ N:1 ←</div>
+                    <div style="padding:1rem;background:#D1FAE5;border-radius:8px;min-width:120px">
+                        <strong>📚 Book</strong><br><small>judul, penulis, stok</small>
+                    </div>
+                </div>
+                <p style="margin-top:0.75rem;font-size:0.85rem;color:#6B7280">1 User → banyak Loan. 1 Book → banyak
+                    Loan. Loan = "jembatan" antara User dan Book.</p>
+            </div>
+
+            <!--===========================================-->
+            <!-- STEP 3: AUTENTIKASI & ROLE                -->
+            <!--===========================================-->
+            <h2 id="step3">🔐 Step 3 — Autentikasi & Role User</h2>
+
+            <div class="alert alert-tip">
+                <span class="alert-icon">🔐</span>
+                <div>
+                    <h4>Kenapa Butuh Login?</h4>
+                    <p>Perpustakaan nyata punya <strong>kartu anggota</strong>. Tanpa kartu, kamu tidak bisa meminjam
+                        buku. Login = kartu anggota digital. Dan <strong>petugas</strong> punya akses lebih banyak
+                        daripada anggota biasa — itulah gunanya <strong>role</strong> (admin vs user).</p>
+                </div>
+            </div>
+
+            <h3>3.1 Install Laravel Breeze</h3>
+            <p>Laravel Breeze menyediakan halaman login dan register yang sudah jadi. Kamu tinggal install:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">Terminal — Install step by step</span>
+                    <button class="code-copy" onclick="copyCode(this)">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-comment"># 1. Install package Breeze</span>
+composer require laravel/breeze --dev
+
+<span class="code-comment"># 2. Install scaffolding Blade (halaman login/register otomatis dibuat)</span>
+php artisan breeze:install blade
+
+<span class="code-comment"># 3. Install & build CSS/JS</span>
+npm install && npm run build
+
+<span class="code-comment"># 4. Jalankan migration (buat tabel users, dll)</span>
+php artisan migrate</pre>
+                </div>
+            </div>
+
+            <h3>3.2 Tambah Kolom Role ke Users</h3>
+            <p>Jalankan: <code>php artisan make:migration add_role_to_users_table</code></p>
 
             <div class="code-block">
                 <div class="code-header">
@@ -157,77 +527,44 @@ resources/views/livewire/
                     <button class="code-copy" onclick="copyCode(this)">Salin</button>
                 </div>
                 <div class="code-body">
-                    <pre><span class="code-keyword">&lt;?php</span>
-
-<span class="code-keyword">use</span> Illuminate\Database\Migrations\Migration;
-<span class="code-keyword">use</span> Illuminate\Database\Schema\Blueprint;
-<span class="code-keyword">use</span> Illuminate\Support\Facades\Schema;
-
-<span class="code-keyword">return new class extends</span> Migration
+                    <pre><span class="code-keyword">public function</span> <span class="code-function">up</span>(): <span class="code-keyword">void</span>
 {
-    <span class="code-keyword">public function</span> <span class="code-function">up</span>(): <span class="code-keyword">void</span>
-    {
-        Schema::table(<span class="code-string">'users'</span>, <span class="code-keyword">function</span> (Blueprint $table) {
-            $table-&gt;string(<span class="code-string">'role'</span>)-&gt;default(<span class="code-string">'user'</span>)-&gt;after(<span class="code-string">'email'</span>);
-        });
-    }
+    Schema::table(<span class="code-string">'users'</span>, <span class="code-keyword">function</span> (Blueprint $table) {
+        <span class="code-comment">// Tambah kolom role setelah email</span>
+        <span class="code-comment">// Default 'user' → setiap yang daftar jadi user biasa</span>
+        $table-&gt;string(<span class="code-string">'role'</span>)-&gt;default(<span class="code-string">'user'</span>)-&gt;after(<span class="code-string">'email'</span>);
+    });
+}
 
-    <span class="code-keyword">public function</span> <span class="code-function">down</span>(): <span class="code-keyword">void</span>
-    {
-        Schema::table(<span class="code-string">'users'</span>, <span class="code-keyword">function</span> (Blueprint $table) {
-            $table-&gt;dropColumn(<span class="code-string">'role'</span>);
-        });
-    }
-};</pre>
+<span class="code-keyword">public function</span> <span class="code-function">down</span>(): <span class="code-keyword">void</span>
+{
+    Schema::table(<span class="code-string">'users'</span>, <span class="code-keyword">function</span> (Blueprint $table) {
+        $table-&gt;dropColumn(<span class="code-string">'role'</span>);
+    });
+}</pre>
                 </div>
             </div>
 
-            <h3>2.2 Model User</h3>
+            <p>Lalu tambahkan <code>'role'</code> ke <code>$fillable</code> di <strong>app/Models/User.php</strong>:</p>
 
             <div class="code-block">
                 <div class="code-header">
                     <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
                             class="code-dot"></span></div>
-                    <span class="code-filename">app/Models/User.php</span>
+                    <span class="code-filename">app/Models/User.php — Tambahkan 'role'</span>
                     <button class="code-copy" onclick="copyCode(this)">Salin</button>
                 </div>
                 <div class="code-body">
-                    <pre><span class="code-keyword">&lt;?php</span>
-
-<span class="code-keyword">namespace</span> App\Models;
-
-<span class="code-keyword">use</span> Illuminate\Database\Eloquent\Factories\HasFactory;
-<span class="code-keyword">use</span> Illuminate\Foundation\Auth\User <span class="code-keyword">as</span> Authenticatable;
-<span class="code-keyword">use</span> Illuminate\Notifications\Notifiable;
-
-<span class="code-keyword">class</span> <span class="code-class">User</span> <span class="code-keyword">extends</span> Authenticatable
-{
-    <span class="code-keyword">use</span> HasFactory, Notifiable;
-
-    <span class="code-keyword">protected</span> $fillable = [
-        <span class="code-string">'name'</span>,
-        <span class="code-string">'email'</span>,
-        <span class="code-string">'password'</span>,
-        <span class="code-string">'role'</span>,  <span class="code-comment">// Tambahkan role</span>
-    ];
-
-    <span class="code-keyword">protected</span> $hidden = [
-        <span class="code-string">'password'</span>,
-        <span class="code-string">'remember_token'</span>,
-    ];
-
-    <span class="code-keyword">protected function</span> <span class="code-function">casts</span>(): <span class="code-keyword">array</span>
-    {
-        <span class="code-keyword">return</span> [
-            <span class="code-string">'email_verified_at'</span> =&gt; <span class="code-string">'datetime'</span>,
-            <span class="code-string">'password'</span> =&gt; <span class="code-string">'hashed'</span>,
-        ];
-    }
-}</pre>
+                    <pre><span class="code-keyword">protected</span> $fillable = [
+    <span class="code-string">'name'</span>,
+    <span class="code-string">'email'</span>,
+    <span class="code-string">'password'</span>,
+    <span class="code-string">'role'</span>,  <span class="code-comment">// ← Tambahkan ini!</span>
+];</pre>
                 </div>
             </div>
 
-            <h3>2.3 Routes dengan Role-based Dashboard</h3>
+            <h3>3.3 Routes — Dashboard Berdasarkan Role</h3>
 
             <div class="code-block">
                 <div class="code-header">
@@ -237,110 +574,544 @@ resources/views/livewire/
                     <button class="code-copy" onclick="copyCode(this)">Salin</button>
                 </div>
                 <div class="code-body">
-                    <pre><span class="code-keyword">&lt;?php</span>
-
-<span class="code-keyword">use</span> App\Http\Controllers\ProfileController;
-<span class="code-keyword">use</span> Illuminate\Support\Facades\Route;
-<span class="code-keyword">use</span> App\Livewire\Admin\Dashboard <span class="code-keyword">as</span> AdminDashboard;
-<span class="code-keyword">use</span> App\Livewire\User\Dashboard <span class="code-keyword">as</span> UserDashboard;
-<span class="code-keyword">use</span> App\Livewire\Books\Index <span class="code-keyword">as</span> BooksIndex;
-<span class="code-keyword">use</span> App\Livewire\Loans\Index <span class="code-keyword">as</span> LoansIndex;
-<span class="code-keyword">use</span> App\Livewire\Returns\Index <span class="code-keyword">as</span> ReturnsIndex;
-
-<span class="code-comment">// Halaman utama redirect ke login</span>
+                    <pre><span class="code-comment">// Halaman utama → langsung ke login</span>
 Route::get(<span class="code-string">'/'</span>, <span class="code-keyword">function</span> () {
     <span class="code-keyword">return</span> redirect()-&gt;route(<span class="code-string">'login'</span>);
-})-&gt;name(<span class="code-string">'home'</span>);
+});
 
-<span class="code-comment">// Dashboard berdasarkan role user</span>
+<span class="code-comment">// Dashboard → cek role, arahkan ke dashboard yang sesuai</span>
 Route::get(<span class="code-string">'/dashboard'</span>, <span class="code-keyword">function</span> () {
     $role = auth()-&gt;user()-&gt;role ?? <span class="code-string">'user'</span>;
-    
     <span class="code-keyword">if</span> ($role === <span class="code-string">'admin'</span>) {
         <span class="code-keyword">return</span> app(AdminDashboard::class)();
     }
-    
     <span class="code-keyword">return</span> app(UserDashboard::class)();
 })-&gt;middleware([<span class="code-string">'auth'</span>, <span class="code-string">'verified'</span>])-&gt;name(<span class="code-string">'dashboard'</span>);
 
-<span class="code-comment">// Routes yang memerlukan autentikasi</span>
+<span class="code-comment">// Halaman-halaman yang butuh login</span>
 Route::middleware(<span class="code-string">'auth'</span>)-&gt;group(<span class="code-keyword">function</span> () {
     Route::get(<span class="code-string">'/books'</span>, BooksIndex::class)-&gt;name(<span class="code-string">'books'</span>);
     Route::get(<span class="code-string">'/loans'</span>, LoansIndex::class)-&gt;name(<span class="code-string">'loans'</span>);
     Route::get(<span class="code-string">'/returns'</span>, ReturnsIndex::class)-&gt;name(<span class="code-string">'returns'</span>);
-});
-
-<span class="code-keyword">require</span> __DIR__.<span class="code-string">'/auth.php'</span>;</pre>
+});</pre>
                 </div>
             </div>
+
+            <div style="padding:1.5rem;background:#F9FAFB;border-radius:12px;border:1px solid #E5E7EB;margin:1.5rem 0">
+                <h4>🔄 Alur Login → Dashboard</h4>
+                <div
+                    style="display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;justify-content:center;margin-top:0.75rem">
+                    <div style="padding:0.5rem 1rem;background:#DBEAFE;border-radius:8px;font-size:0.9rem">👤 User login
+                    </div>
+                    <span>→</span>
+                    <div style="padding:0.5rem 1rem;background:#FEF3C7;border-radius:8px;font-size:0.9rem">🔍 Cek role
+                    </div>
+                    <span>→</span>
+                    <div style="display:flex;flex-direction:column;gap:0.5rem">
+                        <div style="padding:0.5rem 1rem;background:#D1FAE5;border-radius:8px;font-size:0.85rem">role =
+                            admin → 📊 Admin Dashboard</div>
+                        <div style="padding:0.5rem 1rem;background:#F3E8FF;border-radius:8px;font-size:0.85rem">role =
+                            user → 📋 User Dashboard</div>
+                    </div>
+                </div>
+            </div>
+
+            <!--===========================================-->
+            <!-- STEP 4: CRUD BUKU                         -->
+            <!--===========================================-->
+            <h2 id="step4">📚 Step 4 — CRUD Buku (Fitur Utama)</h2>
 
             <div class="alert alert-tip">
-                <span class="alert-icon">💡</span>
+                <span class="alert-icon">📚</span>
                 <div>
-                    <h4>Role-based Access</h4>
-                    <ul>
-                        <li><strong>admin</strong> - Dapat mengelola buku, peminjaman, dan pengembalian</li>
-                        <li><strong>user</strong> - Dapat melihat riwayat peminjaman sendiri</li>
-                    </ul>
+                    <h4>Ini Jantung Aplikasi!</h4>
+                    <p>CRUD Buku adalah fitur paling penting. Di sini kamu praktikkan <strong>semua ilmu
+                            sekaligus</strong>: wire:model (form), validasi (rules), pagination (WithPagination), search
+                        (live search), dan modal (tampilan dinamis).</p>
                 </div>
             </div>
 
-            <h3>2.4 Controller Register</h3>
+            <p>Jalankan: <code>php artisan make:livewire Books/Index</code></p>
+            <p>Perintah ini otomatis membuat 2 file:</p>
+            <ul>
+                <li><code>app/Livewire/Books/Index.php</code> — komponen PHP (logika)</li>
+                <li><code>resources/views/livewire/books/index.blade.php</code> — view Blade (tampilan)</li>
+            </ul>
+
+            <h3>4.1 Komponen PHP — Bagian Property</h3>
 
             <div class="code-block">
                 <div class="code-header">
                     <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
                             class="code-dot"></span></div>
-                    <span class="code-filename">app/Http/Controllers/Auth/RegisteredUserController.php</span>
+                    <span class="code-filename">app/Livewire/Books/Index.php — Property & Trait</span>
                     <button class="code-copy" onclick="copyCode(this)">Salin</button>
                 </div>
                 <div class="code-body">
-                    <pre><span class="code-keyword">&lt;?php</span>
-
-<span class="code-keyword">namespace</span> App\Http\Controllers\Auth;
-
-<span class="code-keyword">use</span> App\Http\Controllers\Controller;
-<span class="code-keyword">use</span> App\Models\User;
-<span class="code-keyword">use</span> Illuminate\Auth\Events\Registered;
-<span class="code-keyword">use</span> Illuminate\Http\Request;
-<span class="code-keyword">use</span> Illuminate\Support\Facades\Auth;
-<span class="code-keyword">use</span> Illuminate\Support\Facades\Hash;
-<span class="code-keyword">use</span> Illuminate\Validation\Rules;
-
-<span class="code-keyword">class</span> <span class="code-class">RegisteredUserController</span> <span class="code-keyword">extends</span> Controller
+                    <pre><span class="code-keyword">class</span> <span class="code-class">Index</span> <span class="code-keyword">extends</span> Component
 {
-    <span class="code-comment">// Tampilkan form register</span>
-    <span class="code-keyword">public function</span> <span class="code-function">create</span>()
+    <span class="code-keyword">use</span> WithPagination;            <span class="code-comment">// ← Dari materi Pagination!</span>
+
+    <span class="code-comment">// 🔍 Property untuk Search & Filter</span>
+    <span class="code-keyword">public string</span> $search = <span class="code-string">''</span>;
+    <span class="code-keyword">public string</span> $kategori = <span class="code-string">''</span>;
+
+    <span class="code-comment">// 🪟 Property untuk Modal (tambah/edit)</span>
+    <span class="code-keyword">public bool</span> $showModal = <span class="code-keyword">false</span>;
+    <span class="code-keyword">public bool</span> $isEdit = <span class="code-keyword">false</span>;
+    <span class="code-keyword">public</span> ?<span class="code-keyword">int</span> $bookId = <span class="code-keyword">null</span>;
+
+    <span class="code-comment">// 📝 Property untuk Form (wire:model)</span>
+    <span class="code-keyword">public string</span> $judul = <span class="code-string">''</span>;
+    <span class="code-keyword">public string</span> $penulis = <span class="code-string">''</span>;
+    <span class="code-keyword">public string</span> $penerbit = <span class="code-string">''</span>;
+    <span class="code-keyword">public</span> ?<span class="code-keyword">int</span> $tahun_terbit = <span class="code-keyword">null</span>;
+    <span class="code-keyword">public string</span> $isbn = <span class="code-string">''</span>;
+    <span class="code-keyword">public int</span> $stok = <span class="code-string">1</span>;
+    <span class="code-keyword">public string</span> $kategoriInput = <span class="code-string">''</span>;
+    <span class="code-keyword">public string</span> $deskripsi = <span class="code-string">''</span>;
+
+    <span class="code-comment">// 🗑️ Property untuk Konfirmasi Hapus</span>
+    <span class="code-keyword">public bool</span> $showDeleteModal = <span class="code-keyword">false</span>;
+    <span class="code-keyword">public</span> ?<span class="code-keyword">int</span> $deleteId = <span class="code-keyword">null</span>;
+
+    <span class="code-comment">// 🔗 Simpan search/filter di URL agar bisa di-bookmark</span>
+    <span class="code-keyword">protected</span> $queryString = [<span class="code-string">'search'</span>, <span class="code-string">'kategori'</span>];</pre>
+                </div>
+            </div>
+
+            <div class="alert alert-info">
+                <span class="alert-icon">🧠</span>
+                <div>
+                    <h4>Pahami Pattern-nya</h4>
+                    <p>Perhatikan property dikelompokkan berdasarkan <strong>fungsi</strong>. Ini kebiasaan developer
+                        profesional — kode rapi, mudah dibaca. Setiap kelompok punya tugas masing-masing.</p>
+                </div>
+            </div>
+
+            <h3>4.2 Komponen PHP — Validasi & Method CRUD</h3>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">app/Livewire/Books/Index.php — Method CRUD</span>
+                    <button class="code-copy" onclick="copyCode(this)">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre>    <span class="code-comment">// ✅ Aturan validasi — dari materi Validasi!</span>
+    <span class="code-keyword">protected function</span> <span class="code-function">rules</span>()
     {
-        <span class="code-keyword">return</span> view(<span class="code-string">'auth.register'</span>);
+        <span class="code-keyword">return</span> [
+            <span class="code-string">'judul'</span>       =&gt; <span class="code-string">'required|min:3|max:255'</span>,
+            <span class="code-string">'penulis'</span>     =&gt; <span class="code-string">'required|min:3|max:255'</span>,
+            <span class="code-string">'penerbit'</span>    =&gt; <span class="code-string">'nullable|max:255'</span>,
+            <span class="code-string">'tahun_terbit'</span> =&gt; <span class="code-string">'nullable|integer|min:1900|max:'</span> . date(<span class="code-string">'Y'</span>),
+            <span class="code-string">'stok'</span>        =&gt; <span class="code-string">'required|integer|min:0'</span>,
+        ];
     }
 
-    <span class="code-comment">// Proses registrasi</span>
-    <span class="code-keyword">public function</span> <span class="code-function">store</span>(Request $request)
+    <span class="code-comment">// 🔍 Reset halaman saat search berubah — dari materi Pagination!</span>
+    <span class="code-keyword">public function</span> <span class="code-function">updatingSearch</span>() { $this-&gt;resetPage(); }
+
+    <span class="code-comment">// ➕ Buka modal TAMBAH buku baru</span>
+    <span class="code-keyword">public function</span> <span class="code-function">openModal</span>()
     {
-        $request-&gt;validate([
-            <span class="code-string">'name'</span> =&gt; [<span class="code-string">'required'</span>, <span class="code-string">'string'</span>, <span class="code-string">'max:255'</span>],
-            <span class="code-string">'email'</span> =&gt; [<span class="code-string">'required'</span>, <span class="code-string">'email'</span>, <span class="code-string">'unique:'</span>.User::class],
-            <span class="code-string">'password'</span> =&gt; [<span class="code-string">'required'</span>, <span class="code-string">'confirmed'</span>, Rules\Password::defaults()],
+        $this-&gt;resetForm();        <span class="code-comment">// Kosongkan form dulu</span>
+        $this-&gt;showModal = <span class="code-keyword">true</span>;
+        $this-&gt;isEdit = <span class="code-keyword">false</span>;     <span class="code-comment">// Mode: tambah (bukan edit)</span>
+    }
+
+    <span class="code-comment">// ✏️ Buka modal EDIT — isi form dengan data buku yang dipilih</span>
+    <span class="code-keyword">public function</span> <span class="code-function">editBook</span>($id)
+    {
+        $book = Book::findOrFail($id);
+        $this-&gt;bookId = $book-&gt;id;
+        $this-&gt;judul = $book-&gt;judul;
+        $this-&gt;penulis = $book-&gt;penulis;
+        <span class="code-comment">// ... isi semua field dari data buku</span>
+        $this-&gt;showModal = <span class="code-keyword">true</span>;
+        $this-&gt;isEdit = <span class="code-keyword">true</span>;      <span class="code-comment">// Mode: edit</span>
+    }
+
+    <span class="code-comment">// 💾 Simpan data (CREATE atau UPDATE, tergantung $isEdit)</span>
+    <span class="code-keyword">public function</span> <span class="code-function">save</span>()
+    {
+        $this-&gt;validate();         <span class="code-comment">// Validasi dulu!</span>
+
+        $data = [
+            <span class="code-string">'judul'</span> =&gt; $this-&gt;judul,
+            <span class="code-string">'penulis'</span> =&gt; $this-&gt;penulis,
+            <span class="code-comment">// ... field lainnya</span>
+        ];
+
+        <span class="code-keyword">if</span> ($this-&gt;isEdit &amp;&amp; $this-&gt;bookId) {
+            Book::find($this-&gt;bookId)-&gt;update($data);  <span class="code-comment">// UPDATE</span>
+            session()-&gt;flash(<span class="code-string">'message'</span>, <span class="code-string">'Buku berhasil diperbarui!'</span>);
+        } <span class="code-keyword">else</span> {
+            Book::create($data);                         <span class="code-comment">// CREATE</span>
+            session()-&gt;flash(<span class="code-string">'message'</span>, <span class="code-string">'Buku berhasil ditambahkan!'</span>);
+        }
+        $this-&gt;closeModal();
+    }
+
+    <span class="code-comment">// 🗑️ Konfirmasi + Hapus buku</span>
+    <span class="code-keyword">public function</span> <span class="code-function">confirmDelete</span>($id)
+    {
+        $this-&gt;deleteId = $id;
+        $this-&gt;showDeleteModal = <span class="code-keyword">true</span>;
+    }
+
+    <span class="code-keyword">public function</span> <span class="code-function">deleteBook</span>()
+    {
+        Book::find($this-&gt;deleteId)-&gt;delete();
+        session()-&gt;flash(<span class="code-string">'message'</span>, <span class="code-string">'Buku berhasil dihapus!'</span>);
+        $this-&gt;showDeleteModal = <span class="code-keyword">false</span>;
+    }</pre>
+                </div>
+            </div>
+
+            <h3>4.3 Komponen PHP — Render (Tampilkan Data)</h3>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">app/Livewire/Books/Index.php — Method render()</span>
+                    <button class="code-copy" onclick="copyCode(this)">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre>    <span class="code-keyword">public function</span> <span class="code-function">render</span>()
+    {
+        <span class="code-comment">// Query buku dengan search + filter + pagination</span>
+        $books = Book::query()
+            -&gt;when($this-&gt;search, fn($q) =&gt;
+                $q-&gt;where(<span class="code-string">'judul'</span>, <span class="code-string">'like'</span>, <span class="code-string">"%{$this-&gt;search}%"</span>)
+                  -&gt;orWhere(<span class="code-string">'penulis'</span>, <span class="code-string">'like'</span>, <span class="code-string">"%{$this-&gt;search}%"</span>))
+            -&gt;when($this-&gt;kategori, fn($q) =&gt;
+                $q-&gt;where(<span class="code-string">'kategori'</span>, $this-&gt;kategori))
+            -&gt;orderBy(<span class="code-string">'created_at'</span>, <span class="code-string">'desc'</span>)
+            -&gt;paginate(<span class="code-string">10</span>);
+
+        <span class="code-comment">// Ambil daftar kategori untuk dropdown filter</span>
+        $kategoris = Book::whereNotNull(<span class="code-string">'kategori'</span>)
+            -&gt;distinct()-&gt;pluck(<span class="code-string">'kategori'</span>);
+
+        <span class="code-keyword">return</span> view(<span class="code-string">'livewire.books.index'</span>, [
+            <span class="code-string">'books'</span> =&gt; $books,
+            <span class="code-string">'kategoris'</span> =&gt; $kategoris,
+        ])-&gt;layout(<span class="code-string">'layouts.app'</span>);
+    }</pre>
+                </div>
+            </div>
+
+            <div style="padding:1.5rem;background:#F9FAFB;border-radius:12px;border:1px solid #E5E7EB;margin:1.5rem 0">
+                <h4 style="margin-bottom:0.75rem">📐 Peta Fitur CRUD Buku</h4>
+                <table class="comparison-table" style="margin:0">
+                    <tr>
+                        <th>Method</th>
+                        <th>Trigger di View</th>
+                        <th>Yang Terjadi</th>
+                    </tr>
+                    <tr>
+                        <td><code>openModal()</code></td>
+                        <td><code>wire:click="openModal"</code></td>
+                        <td>Reset form → buka modal mode tambah</td>
+                    </tr>
+                    <tr>
+                        <td><code>editBook($id)</code></td>
+                        <td><code>wire:click="editBook({{ $book->id }})"</code></td>
+                        <td>Isi form dari DB → buka modal mode edit</td>
+                    </tr>
+                    <tr>
+                        <td><code>save()</code></td>
+                        <td><code>wire:submit="save"</code></td>
+                        <td>Validasi → Create/Update → tutup modal</td>
+                    </tr>
+                    <tr>
+                        <td><code>confirmDelete($id)</code></td>
+                        <td><code>wire:click="confirmDelete({{ $book->id }})"</code></td>
+                        <td>Simpan ID → buka modal konfirmasi</td>
+                    </tr>
+                    <tr>
+                        <td><code>deleteBook()</code></td>
+                        <td><code>wire:click="deleteBook"</code></td>
+                        <td>Hapus buku → tutup modal</td>
+                    </tr>
+                </table>
+            </div>
+
+            <!--===========================================-->
+            <!-- STEP 5: PEMINJAMAN                        -->
+            <!--===========================================-->
+            <h2 id="step5">📋 Step 5 — Sistem Peminjaman</h2>
+
+            <div class="alert alert-tip">
+                <span class="alert-icon">📋</span>
+                <div>
+                    <h4>Analogi: Formulir Perpustakaan</h4>
+                    <p>Di perpustakaan nyata, saat meminjam buku kamu mengisi <strong>formulir</strong>: nama peminjam,
+                        judul buku, tanggal pinjam, tanggal kembali. Komponen peminjaman ini adalah formulir digital
+                        tersebut — plus fitur otomatis mengurangi stok!</p>
+                </div>
+            </div>
+
+            <p>Jalankan: <code>php artisan make:livewire Loans/Index</code></p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">app/Livewire/Loans/Index.php</span>
+                    <button class="code-copy" onclick="copyCode(this)">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-keyword">class</span> <span class="code-class">Index</span> <span class="code-keyword">extends</span> Component
+{
+    <span class="code-keyword">use</span> WithPagination;
+
+    <span class="code-keyword">public string</span> $search = <span class="code-string">''</span>;
+    <span class="code-keyword">public string</span> $status = <span class="code-string">''</span>;       <span class="code-comment">// Filter: dipinjam/dikembalikan</span>
+    <span class="code-keyword">public bool</span> $showModal = <span class="code-keyword">false</span>;
+    <span class="code-keyword">public</span> ?<span class="code-keyword">int</span> $userId = <span class="code-keyword">null</span>;       <span class="code-comment">// Siapa yang pinjam</span>
+    <span class="code-keyword">public</span> ?<span class="code-keyword">int</span> $bookId = <span class="code-keyword">null</span>;       <span class="code-comment">// Buku apa</span>
+    <span class="code-keyword">public string</span> $tanggalPinjam = <span class="code-string">''</span>;
+    <span class="code-keyword">public string</span> $tanggalKembali = <span class="code-string">''</span>;
+
+    <span class="code-keyword">public function</span> <span class="code-function">mount</span>()
+    {
+        <span class="code-comment">// Set default tanggal: hari ini → 7 hari ke depan</span>
+        $this-&gt;tanggalPinjam = now()-&gt;format(<span class="code-string">'Y-m-d'</span>);
+        $this-&gt;tanggalKembali = now()-&gt;addDays(<span class="code-string">7</span>)-&gt;format(<span class="code-string">'Y-m-d'</span>);
+    }
+
+    <span class="code-keyword">public function</span> <span class="code-function">save</span>()
+    {
+        $this-&gt;validate([
+            <span class="code-string">'userId'</span> =&gt; <span class="code-string">'required|exists:users,id'</span>,
+            <span class="code-string">'bookId'</span> =&gt; <span class="code-string">'required|exists:books,id'</span>,
+            <span class="code-string">'tanggalPinjam'</span> =&gt; <span class="code-string">'required|date'</span>,
+            <span class="code-string">'tanggalKembali'</span> =&gt; <span class="code-string">'required|date|after:tanggalPinjam'</span>,
         ]);
 
-        $user = User::create([
-            <span class="code-string">'name'</span> =&gt; $request-&gt;name,
-            <span class="code-string">'email'</span> =&gt; $request-&gt;email,
-            <span class="code-string">'password'</span> =&gt; Hash::make($request-&gt;password),
-            <span class="code-comment">// role default 'user' dari migration</span>
+        $book = Book::find($this-&gt;bookId);
+
+        <span class="code-comment">// ⚠️ PENTING: Cek stok dulu sebelum meminjamkan!</span>
+        <span class="code-keyword">if</span> (!$book || $book-&gt;stok &lt; <span class="code-string">1</span>) {
+            session()-&gt;flash(<span class="code-string">'error'</span>, <span class="code-string">'Stok buku tidak tersedia!'</span>);
+            <span class="code-keyword">return</span>;
+        }
+
+        <span class="code-comment">// ✅ Buat record peminjaman</span>
+        Loan::create([
+            <span class="code-string">'user_id'</span> =&gt; $this-&gt;userId,
+            <span class="code-string">'book_id'</span> =&gt; $this-&gt;bookId,
+            <span class="code-string">'tanggal_pinjam'</span> =&gt; $this-&gt;tanggalPinjam,
+            <span class="code-string">'tanggal_kembali'</span> =&gt; $this-&gt;tanggalKembali,
+            <span class="code-string">'status'</span> =&gt; <span class="code-string">'dipinjam'</span>,
         ]);
 
-        event(<span class="code-keyword">new</span> Registered($user));
-        Auth::login($user);
+        <span class="code-comment">// 📉 Kurangi stok buku otomatis</span>
+        $book-&gt;decrement(<span class="code-string">'stok'</span>);
 
-        <span class="code-keyword">return</span> redirect(route(<span class="code-string">'dashboard'</span>));
+        session()-&gt;flash(<span class="code-string">'message'</span>, <span class="code-string">'Peminjaman berhasil dicatat!'</span>);
+        $this-&gt;showModal = <span class="code-keyword">false</span>;
+    }
+
+    <span class="code-keyword">public function</span> <span class="code-function">render</span>()
+    {
+        $loans = Loan::with([<span class="code-string">'user'</span>, <span class="code-string">'book'</span>])   <span class="code-comment">// Eager loading!</span>
+            -&gt;when($this-&gt;search, fn($q) =&gt; $q
+                -&gt;whereHas(<span class="code-string">'book'</span>, fn($b) =&gt;
+                    $b-&gt;where(<span class="code-string">'judul'</span>, <span class="code-string">'like'</span>, <span class="code-string">"%{$this-&gt;search}%"</span>))
+                -&gt;orWhereHas(<span class="code-string">'user'</span>, fn($u) =&gt;
+                    $u-&gt;where(<span class="code-string">'name'</span>, <span class="code-string">'like'</span>, <span class="code-string">"%{$this-&gt;search}%"</span>)))
+            -&gt;when($this-&gt;status, fn($q) =&gt;
+                $q-&gt;where(<span class="code-string">'status'</span>, $this-&gt;status))
+            -&gt;orderBy(<span class="code-string">'created_at'</span>, <span class="code-string">'desc'</span>)
+            -&gt;paginate(<span class="code-string">10</span>);
+
+        $users = User::orderBy(<span class="code-string">'name'</span>)-&gt;get();
+        $books = Book::where(<span class="code-string">'stok'</span>, <span class="code-string">'>'</span>, <span class="code-string">0</span>)-&gt;orderBy(<span class="code-string">'judul'</span>)-&gt;get();
+
+        <span class="code-keyword">return</span> view(<span class="code-string">'livewire.loans.index'</span>,
+            compact(<span class="code-string">'loans'</span>, <span class="code-string">'users'</span>, <span class="code-string">'books'</span>))
+            -&gt;layout(<span class="code-string">'layouts.app'</span>);
     }
 }</pre>
                 </div>
             </div>
 
-            <h3>2.5 Admin Dashboard</h3>
+            <div class="alert alert-info">
+                <span class="alert-icon">🧠</span>
+                <div>
+                    <h4>Teknik Baru: <code>whereHas()</code></h4>
+                    <p>Saat mencari peminjaman, kita ingin search berdasarkan <strong>judul buku</strong> atau
+                        <strong>nama user</strong> — tapi data itu ada di <em>tabel lain</em>!
+                        <code>whereHas('book', ...)</code> artinya: <em>"cari di tabel loans, tapi filter berdasarkan
+                            kolom di tabel books"</em>. Ini kekuatan relasi Eloquent!
+                    </p>
+                </div>
+            </div>
+
+            <!-- DIAGRAM ALUR PEMINJAMAN -->
+            <div
+                style="padding:1.5rem;background:#F9FAFB;border-radius:12px;border:1px solid #E5E7EB;margin:1.5rem 0;text-align:center">
+                <h4>🔄 Alur Peminjaman Buku</h4>
+                <div
+                    style="display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;justify-content:center;margin-top:0.75rem">
+                    <div style="padding:0.5rem 0.75rem;background:#DBEAFE;border-radius:8px;font-size:0.85rem">📝 Isi
+                        Form</div>
+                    <span>→</span>
+                    <div style="padding:0.5rem 0.75rem;background:#FEF3C7;border-radius:8px;font-size:0.85rem">✅
+                        Validasi</div>
+                    <span>→</span>
+                    <div style="padding:0.5rem 0.75rem;background:#FEE2E2;border-radius:8px;font-size:0.85rem">📦 Cek
+                        Stok</div>
+                    <span>→</span>
+                    <div style="padding:0.5rem 0.75rem;background:#D1FAE5;border-radius:8px;font-size:0.85rem">💾 Simpan
+                    </div>
+                    <span>→</span>
+                    <div style="padding:0.5rem 0.75rem;background:#F3E8FF;border-radius:8px;font-size:0.85rem">📉 Stok
+                        -1</div>
+                </div>
+            </div>
+
+            <!--===========================================-->
+            <!-- STEP 6: PENGEMBALIAN                      -->
+            <!--===========================================-->
+            <h2 id="step6">✅ Step 6 — Sistem Pengembalian</h2>
+
+            <div class="alert alert-tip">
+                <span class="alert-icon">✅</span>
+                <div>
+                    <h4>Kebalikan dari Peminjaman</h4>
+                    <p>Jika peminjaman <strong>mengurangi</strong> stok, maka pengembalian <strong>menambahkan</strong>
+                        stok kembali. Ini yang disebut <strong>manajemen stok otomatis</strong> — sistem menjaga data
+                        tetap konsisten tanpa petugas harus menghitung manual.</p>
+                </div>
+            </div>
+
+            <p>Jalankan: <code>php artisan make:livewire Returns/Index</code></p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">app/Livewire/Returns/Index.php</span>
+                    <button class="code-copy" onclick="copyCode(this)">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-keyword">class</span> <span class="code-class">Index</span> <span class="code-keyword">extends</span> Component
+{
+    <span class="code-keyword">use</span> WithPagination;
+
+    <span class="code-keyword">public string</span> $search = <span class="code-string">''</span>;
+    <span class="code-keyword">public bool</span> $showModal = <span class="code-keyword">false</span>;
+    <span class="code-keyword">public</span> ?<span class="code-keyword">int</span> $loanId = <span class="code-keyword">null</span>;
+    <span class="code-keyword">public</span> ?Loan $selectedLoan = <span class="code-keyword">null</span>;
+
+    <span class="code-comment">// 📋 Tampilkan detail sebelum konfirmasi</span>
+    <span class="code-keyword">public function</span> <span class="code-function">confirmReturn</span>($id)
+    {
+        $this-&gt;loanId = $id;
+        $this-&gt;selectedLoan = Loan::with([<span class="code-string">'user'</span>, <span class="code-string">'book'</span>])-&gt;find($id);
+        $this-&gt;showModal = <span class="code-keyword">true</span>;
+    }
+
+    <span class="code-comment">// ✅ Proses pengembalian buku</span>
+    <span class="code-keyword">public function</span> <span class="code-function">processReturn</span>()
+    {
+        <span class="code-keyword">if</span> (!$this-&gt;loanId) <span class="code-keyword">return</span>;
+
+        $loan = Loan::find($this-&gt;loanId);
+        <span class="code-keyword">if</span> ($loan) {
+            <span class="code-comment">// 1️⃣ Update status dan tanggal dikembalikan</span>
+            $loan-&gt;update([
+                <span class="code-string">'status'</span> =&gt; <span class="code-string">'dikembalikan'</span>,
+                <span class="code-string">'tanggal_dikembalikan'</span> =&gt; now(),
+            ]);
+
+            <span class="code-comment">// 2️⃣ Tambah stok buku kembali!</span>
+            $loan-&gt;book-&gt;increment(<span class="code-string">'stok'</span>);
+
+            session()-&gt;flash(<span class="code-string">'message'</span>, <span class="code-string">'Buku berhasil dikembalikan!'</span>);
+        }
+        $this-&gt;closeModal();
+    }
+
+    <span class="code-keyword">public function</span> <span class="code-function">render</span>()
+    {
+        <span class="code-comment">// Hanya tampilkan yang BELUM dikembalikan</span>
+        $loans = Loan::with([<span class="code-string">'user'</span>, <span class="code-string">'book'</span>])
+            -&gt;where(<span class="code-string">'status'</span>, <span class="code-string">'dipinjam'</span>)
+            -&gt;when($this-&gt;search, fn($q) =&gt; $q
+                -&gt;whereHas(<span class="code-string">'book'</span>, fn($b) =&gt;
+                    $b-&gt;where(<span class="code-string">'judul'</span>, <span class="code-string">'like'</span>, <span class="code-string">"%{$this-&gt;search}%"</span>)))
+            -&gt;orderBy(<span class="code-string">'tanggal_kembali'</span>, <span class="code-string">'asc'</span>) <span class="code-comment">// Deadline terdekat duluan!</span>
+            -&gt;paginate(<span class="code-string">10</span>);
+
+        <span class="code-keyword">return</span> view(<span class="code-string">'livewire.returns.index'</span>, compact(<span class="code-string">'loans'</span>))
+            -&gt;layout(<span class="code-string">'layouts.app'</span>);
+    }
+}</pre>
+                </div>
+            </div>
+
+            <!-- TABEL PERBANDINGAN PINJAM VS KEMBALI -->
+            <div style="padding:1.5rem;background:#F9FAFB;border-radius:12px;border:1px solid #E5E7EB;margin:1.5rem 0">
+                <h4 style="margin-bottom:0.75rem">⚖️ Perbandingan: Peminjaman vs Pengembalian</h4>
+                <table class="comparison-table" style="margin:0">
+                    <tr>
+                        <th>Aspek</th>
+                        <th>📋 Peminjaman</th>
+                        <th>✅ Pengembalian</th>
+                    </tr>
+                    <tr>
+                        <td>Stok Buku</td>
+                        <td><code>decrement('stok')</code> — berkurang</td>
+                        <td><code>increment('stok')</code> — bertambah</td>
+                    </tr>
+                    <tr>
+                        <td>Status</td>
+                        <td>Set ke <code>'dipinjam'</code></td>
+                        <td>Ubah ke <code>'dikembalikan'</code></td>
+                    </tr>
+                    <tr>
+                        <td>Tanggal</td>
+                        <td>Set <code>tanggal_pinjam</code></td>
+                        <td>Set <code>tanggal_dikembalikan</code></td>
+                    </tr>
+                    <tr>
+                        <td>Validasi</td>
+                        <td>Cek stok &gt; 0</td>
+                        <td>Cek status = 'dipinjam'</td>
+                    </tr>
+                    <tr>
+                        <td>Sort</td>
+                        <td>Terbaru di atas</td>
+                        <td>Deadline terdekat di atas</td>
+                    </tr>
+                </table>
+            </div>
+
+            <!--===========================================-->
+            <!-- STEP 7: DASHBOARD                         -->
+            <!--===========================================-->
+            <h2 id="step7">📊 Step 7 — Dashboard Admin & User</h2>
+
+            <div class="alert alert-tip">
+                <span class="alert-icon">📊</span>
+                <div>
+                    <h4>Kenapa 2 Dashboard Berbeda?</h4>
+                    <p>Bayangkan perpustakaan sungguhan: <strong>Petugas</strong> butuh melihat total buku, total
+                        anggota, dan berapa yang aktif meminjam. Sedangkan <strong>Anggota</strong> cukup melihat
+                        riwayat peminjaman sendiri. Inilah konsep <strong>role-based view</strong>.</p>
+                </div>
+            </div>
+
+            <h3>7.1 Admin Dashboard</h3>
+            <p>Jalankan: <code>php artisan make:livewire Admin/Dashboard</code></p>
 
             <div class="code-block">
                 <div class="code-header">
@@ -350,16 +1121,7 @@ Route::middleware(<span class="code-string">'auth'</span>)-&gt;group(<span class
                     <button class="code-copy" onclick="copyCode(this)">Salin</button>
                 </div>
                 <div class="code-body">
-                    <pre><span class="code-keyword">&lt;?php</span>
-
-<span class="code-keyword">namespace</span> App\Livewire\Admin;
-
-<span class="code-keyword">use</span> Livewire\Component;
-<span class="code-keyword">use</span> App\Models\User;
-<span class="code-keyword">use</span> App\Models\Book;
-<span class="code-keyword">use</span> App\Models\Loan;
-
-<span class="code-keyword">class</span> <span class="code-class">Dashboard</span> <span class="code-keyword">extends</span> Component
+                    <pre><span class="code-keyword">class</span> <span class="code-class">Dashboard</span> <span class="code-keyword">extends</span> Component
 {
     <span class="code-keyword">public int</span> $totalBuku = <span class="code-string">0</span>;
     <span class="code-keyword">public int</span> $totalUser = <span class="code-string">0</span>;
@@ -367,6 +1129,7 @@ Route::middleware(<span class="code-string">'auth'</span>)-&gt;group(<span class
 
     <span class="code-keyword">public function</span> <span class="code-function">mount</span>(): <span class="code-keyword">void</span>
     {
+        <span class="code-comment">// Ambil statistik untuk card dashboard</span>
         $this-&gt;totalBuku = Book::count();
         $this-&gt;totalUser = User::count();
         $this-&gt;totalPeminjamanAktif = Loan::where(<span class="code-string">'status'</span>, <span class="code-string">'dipinjam'</span>)-&gt;count();
@@ -381,7 +1144,8 @@ Route::middleware(<span class="code-string">'auth'</span>)-&gt;group(<span class
                 </div>
             </div>
 
-            <h3>2.6 User Dashboard</h3>
+            <h3>7.2 User Dashboard</h3>
+            <p>Jalankan: <code>php artisan make:livewire User/Dashboard</code></p>
 
             <div class="code-block">
                 <div class="code-header">
@@ -391,14 +1155,7 @@ Route::middleware(<span class="code-string">'auth'</span>)-&gt;group(<span class
                     <button class="code-copy" onclick="copyCode(this)">Salin</button>
                 </div>
                 <div class="code-body">
-                    <pre><span class="code-keyword">&lt;?php</span>
-
-<span class="code-keyword">namespace</span> App\Livewire\User;
-
-<span class="code-keyword">use</span> Livewire\Component;
-<span class="code-keyword">use</span> App\Models\Loan;
-
-<span class="code-keyword">class</span> <span class="code-class">Dashboard</span> <span class="code-keyword">extends</span> Component
+                    <pre><span class="code-keyword">class</span> <span class="code-class">Dashboard</span> <span class="code-keyword">extends</span> Component
 {
     <span class="code-keyword">public int</span> $bukuDipinjam = <span class="code-string">0</span>;
     <span class="code-keyword">public</span> $riwayatPeminjaman;
@@ -406,18 +1163,16 @@ Route::middleware(<span class="code-string">'auth'</span>)-&gt;group(<span class
     <span class="code-keyword">public function</span> <span class="code-function">mount</span>(): <span class="code-keyword">void</span>
     {
         $user = auth()-&gt;user();
-        
-        <span class="code-comment">// Hitung buku yang sedang dipinjam</span>
+
+        <span class="code-comment">// Hitung buku yang SEDANG dipinjam user ini</span>
         $this-&gt;bukuDipinjam = Loan::where(<span class="code-string">'user_id'</span>, $user-&gt;id)
-            -&gt;where(<span class="code-string">'status'</span>, <span class="code-string">'dipinjam'</span>)
-            -&gt;count();
-        
-        <span class="code-comment">// Ambil 5 riwayat peminjaman terakhir</span>
+            -&gt;where(<span class="code-string">'status'</span>, <span class="code-string">'dipinjam'</span>)-&gt;count();
+
+        <span class="code-comment">// Ambil 5 riwayat terakhir</span>
         $this-&gt;riwayatPeminjaman = Loan::with(<span class="code-string">'book'</span>)
             -&gt;where(<span class="code-string">'user_id'</span>, $user-&gt;id)
             -&gt;orderBy(<span class="code-string">'created_at'</span>, <span class="code-string">'desc'</span>)
-            -&gt;take(<span class="code-string">5</span>)
-            -&gt;get();
+            -&gt;take(<span class="code-string">5</span>)-&gt;get();
     }
 
     <span class="code-keyword">public function</span> <span class="code-function">render</span>()
@@ -429,631 +1184,24 @@ Route::middleware(<span class="code-string">'auth'</span>)-&gt;group(<span class
                 </div>
             </div>
 
-            <div class="alert alert-info">
-                <span class="alert-icon">📌</span>
-                <div>
-                    <h4>Cara Install Laravel Breeze</h4>
-                    <pre
-                        style="background: #1a1a2e; color: #10B981; padding: 1rem; border-radius: 8px; margin-top: 0.5rem; font-family: 'Fira Code', monospace;">composer require laravel/breeze --dev
-php artisan breeze:install blade
-npm install && npm run build
-php artisan migrate</pre>
-                </div>
-            </div>
-
-            <!-- SECTION 3: DATABASE -->
-            <h2 id="database">3. Database Migration</h2>
-
-            <h3>3.1 Tabel Buku</h3>
-            <p>Migration untuk menyimpan data buku perpustakaan:</p>
+            <!--===========================================-->
+            <!-- STEP 8: INSTALASI & UJI COBA              -->
+            <!--===========================================-->
+            <h2 id="step8">🚀 Step 8 — Instalasi & Uji Coba</h2>
 
             <div class="code-block">
                 <div class="code-header">
                     <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
                             class="code-dot"></span></div>
-                    <span class="code-filename">database/migrations/create_books_table.php</span>
+                    <span class="code-filename">Terminal — Langkah Instalasi Lengkap</span>
                     <button class="code-copy" onclick="copyCode(this)">Salin</button>
                 </div>
                 <div class="code-body">
-                    <pre><span class="code-keyword">&lt;?php</span>
-
-<span class="code-keyword">use</span> Illuminate\Database\Migrations\Migration;
-<span class="code-keyword">use</span> Illuminate\Database\Schema\Blueprint;
-<span class="code-keyword">use</span> Illuminate\Support\Facades\Schema;
-
-<span class="code-keyword">return new class extends</span> Migration
-{
-    <span class="code-keyword">public function</span> <span class="code-function">up</span>(): <span class="code-keyword">void</span>
-    {
-        Schema::create(<span class="code-string">'books'</span>, <span class="code-keyword">function</span> (Blueprint $table) {
-            $table-&gt;id();
-            $table-&gt;string(<span class="code-string">'judul'</span>);
-            $table-&gt;string(<span class="code-string">'penulis'</span>);
-            $table-&gt;string(<span class="code-string">'penerbit'</span>)-&gt;nullable();
-            $table-&gt;year(<span class="code-string">'tahun_terbit'</span>)-&gt;nullable();
-            $table-&gt;string(<span class="code-string">'isbn'</span>)-&gt;nullable()-&gt;unique();
-            $table-&gt;integer(<span class="code-string">'stok'</span>)-&gt;default(<span class="code-string">1</span>);
-            $table-&gt;string(<span class="code-string">'kategori'</span>)-&gt;nullable();
-            $table-&gt;text(<span class="code-string">'deskripsi'</span>)-&gt;nullable();
-            $table-&gt;timestamps();
-        });
-    }
-
-    <span class="code-keyword">public function</span> <span class="code-function">down</span>(): <span class="code-keyword">void</span>
-    {
-        Schema::dropIfExists(<span class="code-string">'books'</span>);
-    }
-};</pre>
-                </div>
-            </div>
-
-            <div class="alert alert-tip">
-                <span class="alert-icon">💡</span>
-                <div>
-                    <h4>Penjelasan Kolom</h4>
-                    <ul>
-                        <li><strong>judul, penulis</strong> - Data wajib buku</li>
-                        <li><strong>stok</strong> - Jumlah buku tersedia (default 1)</li>
-                        <li><strong>isbn</strong> - Unique identifier buku (opsional)</li>
-                        <li><strong>kategori</strong> - Untuk filter buku</li>
-                    </ul>
-                </div>
-            </div>
-
-            <h3>3.2 Tabel Peminjaman</h3>
-
-            <div class="code-block">
-                <div class="code-header">
-                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
-                            class="code-dot"></span></div>
-                    <span class="code-filename">database/migrations/create_loans_table.php</span>
-                    <button class="code-copy" onclick="copyCode(this)">Salin</button>
-                </div>
-                <div class="code-body">
-                    <pre><span class="code-keyword">&lt;?php</span>
-
-<span class="code-keyword">use</span> Illuminate\Database\Migrations\Migration;
-<span class="code-keyword">use</span> Illuminate\Database\Schema\Blueprint;
-<span class="code-keyword">use</span> Illuminate\Support\Facades\Schema;
-
-<span class="code-keyword">return new class extends</span> Migration
-{
-    <span class="code-keyword">public function</span> <span class="code-function">up</span>(): <span class="code-keyword">void</span>
-    {
-        Schema::create(<span class="code-string">'loans'</span>, <span class="code-keyword">function</span> (Blueprint $table) {
-            $table-&gt;id();
-            $table-&gt;foreignId(<span class="code-string">'user_id'</span>)-&gt;constrained()-&gt;onDelete(<span class="code-string">'cascade'</span>);
-            $table-&gt;foreignId(<span class="code-string">'book_id'</span>)-&gt;constrained()-&gt;onDelete(<span class="code-string">'cascade'</span>);
-            $table-&gt;date(<span class="code-string">'tanggal_pinjam'</span>);
-            $table-&gt;date(<span class="code-string">'tanggal_kembali'</span>);      <span class="code-comment">// Batas waktu</span>
-            $table-&gt;date(<span class="code-string">'tanggal_dikembalikan'</span>)-&gt;nullable(); <span class="code-comment">// Aktual</span>
-            $table-&gt;enum(<span class="code-string">'status'</span>, [<span class="code-string">'dipinjam'</span>, <span class="code-string">'dikembalikan'</span>, <span class="code-string">'terlambat'</span>])-&gt;default(<span class="code-string">'dipinjam'</span>);
-            $table-&gt;timestamps();
-        });
-    }
-
-    <span class="code-keyword">public function</span> <span class="code-function">down</span>(): <span class="code-keyword">void</span>
-    {
-        Schema::dropIfExists(<span class="code-string">'loans'</span>);
-    }
-};</pre>
-                </div>
-            </div>
-
-            <!-- SECTION 4: MODEL -->
-            <h2 id="model">4. Model Eloquent</h2>
-
-            <h3>4.1 Model Book</h3>
-
-            <div class="code-block">
-                <div class="code-header">
-                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
-                            class="code-dot"></span></div>
-                    <span class="code-filename">app/Models/Book.php</span>
-                    <button class="code-copy" onclick="copyCode(this)">Salin</button>
-                </div>
-                <div class="code-body">
-                    <pre><span class="code-keyword">&lt;?php</span>
-
-<span class="code-keyword">namespace</span> App\Models;
-
-<span class="code-keyword">use</span> Illuminate\Database\Eloquent\Model;
-<span class="code-keyword">use</span> Illuminate\Database\Eloquent\Factories\HasFactory;
-
-<span class="code-keyword">class</span> <span class="code-class">Book</span> <span class="code-keyword">extends</span> Model
-{
-    <span class="code-keyword">use</span> HasFactory;
-
-    <span class="code-keyword">protected</span> $fillable = [
-        <span class="code-string">'judul'</span>,
-        <span class="code-string">'penulis'</span>,
-        <span class="code-string">'penerbit'</span>,
-        <span class="code-string">'tahun_terbit'</span>,
-        <span class="code-string">'isbn'</span>,
-        <span class="code-string">'stok'</span>,
-        <span class="code-string">'kategori'</span>,
-        <span class="code-string">'deskripsi'</span>,
-    ];
-
-    <span class="code-comment">// Relasi: Satu buku bisa dipinjam berkali-kali</span>
-    <span class="code-keyword">public function</span> <span class="code-function">loans</span>()
-    {
-        <span class="code-keyword">return</span> $this-&gt;hasMany(Loan::class);
-    }
-
-    <span class="code-comment">// Cek apakah buku tersedia</span>
-    <span class="code-keyword">public function</span> <span class="code-function">isAvailable</span>(): <span class="code-keyword">bool</span>
-    {
-        <span class="code-keyword">return</span> $this-&gt;stok &gt; <span class="code-string">0</span>;
-    }
-}</pre>
-                </div>
-            </div>
-
-            <h3>4.2 Model Loan</h3>
-
-            <div class="code-block">
-                <div class="code-header">
-                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
-                            class="code-dot"></span></div>
-                    <span class="code-filename">app/Models/Loan.php</span>
-                    <button class="code-copy" onclick="copyCode(this)">Salin</button>
-                </div>
-                <div class="code-body">
-                    <pre><span class="code-keyword">&lt;?php</span>
-
-<span class="code-keyword">namespace</span> App\Models;
-
-<span class="code-keyword">use</span> Illuminate\Database\Eloquent\Model;
-<span class="code-keyword">use</span> Illuminate\Database\Eloquent\Factories\HasFactory;
-
-<span class="code-keyword">class</span> <span class="code-class">Loan</span> <span class="code-keyword">extends</span> Model
-{
-    <span class="code-keyword">use</span> HasFactory;
-
-    <span class="code-keyword">protected</span> $fillable = [
-        <span class="code-string">'user_id'</span>,
-        <span class="code-string">'book_id'</span>,
-        <span class="code-string">'tanggal_pinjam'</span>,
-        <span class="code-string">'tanggal_kembali'</span>,
-        <span class="code-string">'tanggal_dikembalikan'</span>,
-        <span class="code-string">'status'</span>,
-    ];
-
-    <span class="code-keyword">protected</span> $casts = [
-        <span class="code-string">'tanggal_pinjam'</span> =&gt; <span class="code-string">'date'</span>,
-        <span class="code-string">'tanggal_kembali'</span> =&gt; <span class="code-string">'date'</span>,
-        <span class="code-string">'tanggal_dikembalikan'</span> =&gt; <span class="code-string">'date'</span>,
-    ];
-
-    <span class="code-comment">// Relasi ke User</span>
-    <span class="code-keyword">public function</span> <span class="code-function">user</span>()
-    {
-        <span class="code-keyword">return</span> $this-&gt;belongsTo(User::class);
-    }
-
-    <span class="code-comment">// Relasi ke Book</span>
-    <span class="code-keyword">public function</span> <span class="code-function">book</span>()
-    {
-        <span class="code-keyword">return</span> $this-&gt;belongsTo(Book::class);
-    }
-
-    <span class="code-comment">// Scope: Peminjaman aktif</span>
-    <span class="code-keyword">public function</span> <span class="code-function">scopeActive</span>($query)
-    {
-        <span class="code-keyword">return</span> $query-&gt;where(<span class="code-string">'status'</span>, <span class="code-string">'dipinjam'</span>);
-    }
-
-    <span class="code-comment">// Cek apakah terlambat</span>
-    <span class="code-keyword">public function</span> <span class="code-function">isOverdue</span>(): <span class="code-keyword">bool</span>
-    {
-        <span class="code-keyword">return</span> $this-&gt;status === <span class="code-string">'dipinjam'</span> && $this-&gt;tanggal_kembali &lt; now();
-    }
-}</pre>
-                </div>
-            </div>
-
-            <!-- SECTION 5: LIVEWIRE CRUD BUKU -->
-            <h2 id="crud-buku">5. Livewire Component: CRUD Buku</h2>
-            <p>Component utama untuk mengelola data buku dengan fitur lengkap:</p>
-
-            <div class="code-block">
-                <div class="code-header">
-                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
-                            class="code-dot"></span></div>
-                    <span class="code-filename">app/Livewire/Books/Index.php</span>
-                    <button class="code-copy" onclick="copyCode(this)">Salin</button>
-                </div>
-                <div class="code-body">
-                    <pre><span class="code-keyword">&lt;?php</span>
-
-<span class="code-keyword">namespace</span> App\Livewire\Books;
-
-<span class="code-keyword">use</span> Livewire\Component;
-<span class="code-keyword">use</span> Livewire\WithPagination;
-<span class="code-keyword">use</span> App\Models\Book;
-
-<span class="code-keyword">class</span> <span class="code-class">Index</span> <span class="code-keyword">extends</span> Component
-{
-    <span class="code-keyword">use</span> WithPagination;
-
-    <span class="code-comment">// Search & Filter</span>
-    <span class="code-keyword">public string</span> $search = <span class="code-string">''</span>;
-    <span class="code-keyword">public string</span> $kategori = <span class="code-string">''</span>;
-    
-    <span class="code-comment">// Form data</span>
-    <span class="code-keyword">public bool</span> $showModal = <span class="code-keyword">false</span>;
-    <span class="code-keyword">public bool</span> $isEdit = <span class="code-keyword">false</span>;
-    <span class="code-keyword">public</span> ?<span class="code-keyword">int</span> $bookId = <span class="code-keyword">null</span>;
-    
-    <span class="code-keyword">public string</span> $judul = <span class="code-string">''</span>;
-    <span class="code-keyword">public string</span> $penulis = <span class="code-string">''</span>;
-    <span class="code-keyword">public string</span> $penerbit = <span class="code-string">''</span>;
-    <span class="code-keyword">public</span> ?<span class="code-keyword">int</span> $tahun_terbit = <span class="code-keyword">null</span>;
-    <span class="code-keyword">public string</span> $isbn = <span class="code-string">''</span>;
-    <span class="code-keyword">public int</span> $stok = <span class="code-string">1</span>;
-    <span class="code-keyword">public string</span> $kategoriInput = <span class="code-string">''</span>;
-    <span class="code-keyword">public string</span> $deskripsi = <span class="code-string">''</span>;
-
-    <span class="code-comment">// Konfirmasi hapus</span>
-    <span class="code-keyword">public bool</span> $showDeleteModal = <span class="code-keyword">false</span>;
-    <span class="code-keyword">public</span> ?<span class="code-keyword">int</span> $deleteId = <span class="code-keyword">null</span>;
-
-    <span class="code-keyword">protected</span> $queryString = [<span class="code-string">'search'</span>, <span class="code-string">'kategori'</span>];
-
-    <span class="code-keyword">protected function</span> <span class="code-function">rules</span>()
-    {
-        <span class="code-keyword">return</span> [
-            <span class="code-string">'judul'</span> =&gt; <span class="code-string">'required|min:3|max:255'</span>,
-            <span class="code-string">'penulis'</span> =&gt; <span class="code-string">'required|min:3|max:255'</span>,
-            <span class="code-string">'penerbit'</span> =&gt; <span class="code-string">'nullable|max:255'</span>,
-            <span class="code-string">'tahun_terbit'</span> =&gt; <span class="code-string">'nullable|integer|min:1900|max:'</span> . date(<span class="code-string">'Y'</span>),
-            <span class="code-string">'isbn'</span> =&gt; <span class="code-string">'nullable|max:20'</span>,
-            <span class="code-string">'stok'</span> =&gt; <span class="code-string">'required|integer|min:0'</span>,
-            <span class="code-string">'kategoriInput'</span> =&gt; <span class="code-string">'nullable|max:100'</span>,
-            <span class="code-string">'deskripsi'</span> =&gt; <span class="code-string">'nullable|max:1000'</span>,
-        ];
-    }
-
-    <span class="code-comment">// Reset halaman saat search berubah</span>
-    <span class="code-keyword">public function</span> <span class="code-function">updatingSearch</span>()
-    {
-        $this-&gt;resetPage();
-    }
-
-    <span class="code-comment">// Buka modal tambah</span>
-    <span class="code-keyword">public function</span> <span class="code-function">openModal</span>()
-    {
-        $this-&gt;resetForm();
-        $this-&gt;showModal = <span class="code-keyword">true</span>;
-        $this-&gt;isEdit = <span class="code-keyword">false</span>;
-    }
-
-    <span class="code-comment">// Buka modal edit</span>
-    <span class="code-keyword">public function</span> <span class="code-function">editBook</span>($id)
-    {
-        $book = Book::findOrFail($id);
-        $this-&gt;bookId = $book-&gt;id;
-        $this-&gt;judul = $book-&gt;judul;
-        $this-&gt;penulis = $book-&gt;penulis;
-        $this-&gt;penerbit = $book-&gt;penerbit ?? <span class="code-string">''</span>;
-        $this-&gt;tahun_terbit = $book-&gt;tahun_terbit;
-        $this-&gt;isbn = $book-&gt;isbn ?? <span class="code-string">''</span>;
-        $this-&gt;stok = $book-&gt;stok;
-        $this-&gt;kategoriInput = $book-&gt;kategori ?? <span class="code-string">''</span>;
-        $this-&gt;deskripsi = $book-&gt;deskripsi ?? <span class="code-string">''</span>;
-        
-        $this-&gt;showModal = <span class="code-keyword">true</span>;
-        $this-&gt;isEdit = <span class="code-keyword">true</span>;
-    }
-
-    <span class="code-comment">// Simpan data</span>
-    <span class="code-keyword">public function</span> <span class="code-function">save</span>()
-    {
-        $this-&gt;validate();
-
-        $data = [
-            <span class="code-string">'judul'</span> =&gt; $this-&gt;judul,
-            <span class="code-string">'penulis'</span> =&gt; $this-&gt;penulis,
-            <span class="code-string">'penerbit'</span> =&gt; $this-&gt;penerbit ?: <span class="code-keyword">null</span>,
-            <span class="code-string">'tahun_terbit'</span> =&gt; $this-&gt;tahun_terbit,
-            <span class="code-string">'isbn'</span> =&gt; $this-&gt;isbn ?: <span class="code-keyword">null</span>,
-            <span class="code-string">'stok'</span> =&gt; $this-&gt;stok,
-            <span class="code-string">'kategori'</span> =&gt; $this-&gt;kategoriInput ?: <span class="code-keyword">null</span>,
-            <span class="code-string">'deskripsi'</span> =&gt; $this-&gt;deskripsi ?: <span class="code-keyword">null</span>,
-        ];
-
-        <span class="code-keyword">if</span> ($this-&gt;isEdit && $this-&gt;bookId) {
-            Book::find($this-&gt;bookId)-&gt;update($data);
-            session()-&gt;flash(<span class="code-string">'message'</span>, <span class="code-string">'Buku berhasil diperbarui!'</span>);
-        } <span class="code-keyword">else</span> {
-            Book::create($data);
-            session()-&gt;flash(<span class="code-string">'message'</span>, <span class="code-string">'Buku berhasil ditambahkan!'</span>);
-        }
-
-        $this-&gt;closeModal();
-    }
-
-    <span class="code-comment">// Konfirmasi hapus</span>
-    <span class="code-keyword">public function</span> <span class="code-function">confirmDelete</span>($id)
-    {
-        $this-&gt;deleteId = $id;
-        $this-&gt;showDeleteModal = <span class="code-keyword">true</span>;
-    }
-
-    <span class="code-comment">// Hapus buku</span>
-    <span class="code-keyword">public function</span> <span class="code-function">deleteBook</span>()
-    {
-        <span class="code-keyword">if</span> ($this-&gt;deleteId) {
-            Book::find($this-&gt;deleteId)-&gt;delete();
-            session()-&gt;flash(<span class="code-string">'message'</span>, <span class="code-string">'Buku berhasil dihapus!'</span>);
-        }
-        $this-&gt;showDeleteModal = <span class="code-keyword">false</span>;
-        $this-&gt;deleteId = <span class="code-keyword">null</span>;
-    }
-
-    <span class="code-keyword">public function</span> <span class="code-function">closeModal</span>()
-    {
-        $this-&gt;showModal = <span class="code-keyword">false</span>;
-        $this-&gt;resetForm();
-    }
-
-    <span class="code-keyword">private function</span> <span class="code-function">resetForm</span>()
-    {
-        $this-&gt;bookId = <span class="code-keyword">null</span>;
-        $this-&gt;judul = <span class="code-string">''</span>;
-        $this-&gt;penulis = <span class="code-string">''</span>;
-        $this-&gt;penerbit = <span class="code-string">''</span>;
-        $this-&gt;tahun_terbit = <span class="code-keyword">null</span>;
-        $this-&gt;isbn = <span class="code-string">''</span>;
-        $this-&gt;stok = <span class="code-string">1</span>;
-        $this-&gt;kategoriInput = <span class="code-string">''</span>;
-        $this-&gt;deskripsi = <span class="code-string">''</span>;
-        $this-&gt;isEdit = <span class="code-keyword">false</span>;
-    }
-
-    <span class="code-keyword">public function</span> <span class="code-function">render</span>()
-    {
-        $books = Book::query()
-            -&gt;when($this-&gt;search, fn($q) =&gt; $q-&gt;where(<span class="code-string">'judul'</span>, <span class="code-string">'like'</span>, <span class="code-string">"%{$this-&gt;search}%"</span>)
-                -&gt;orWhere(<span class="code-string">'penulis'</span>, <span class="code-string">'like'</span>, <span class="code-string">"%{$this-&gt;search}%"</span>))
-            -&gt;when($this-&gt;kategori, fn($q) =&gt; $q-&gt;where(<span class="code-string">'kategori'</span>, $this-&gt;kategori))
-            -&gt;orderBy(<span class="code-string">'created_at'</span>, <span class="code-string">'desc'</span>)
-            -&gt;paginate(<span class="code-string">10</span>);
-
-        $kategoris = Book::whereNotNull(<span class="code-string">'kategori'</span>)-&gt;distinct()-&gt;pluck(<span class="code-string">'kategori'</span>);
-
-        <span class="code-keyword">return</span> view(<span class="code-string">'livewire.books.index'</span>, [
-            <span class="code-string">'books'</span> =&gt; $books,
-            <span class="code-string">'kategoris'</span> =&gt; $kategoris,
-        ])-&gt;layout(<span class="code-string">'layouts.app'</span>);
-    }
-}</pre>
-                </div>
-            </div>
-
-            <div class="alert alert-tip">
-                <span class="alert-icon">💡</span>
-                <div>
-                    <h4>Fitur Utama Component</h4>
-                    <ul>
-                        <li><strong>WithPagination</strong> - Pagination otomatis</li>
-                        <li><strong>$queryString</strong> - Search/filter tersimpan di URL</li>
-                        <li><strong>updatingSearch()</strong> - Reset halaman saat search</li>
-                        <li><strong>Modal</strong> - Satu modal untuk tambah & edit</li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- SECTION 6: LIVEWIRE PEMINJAMAN -->
-            <h2 id="peminjaman">6. Livewire Component: Peminjaman</h2>
-
-            <div class="code-block">
-                <div class="code-header">
-                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
-                            class="code-dot"></span></div>
-                    <span class="code-filename">app/Livewire/Loans/Index.php</span>
-                    <button class="code-copy" onclick="copyCode(this)">Salin</button>
-                </div>
-                <div class="code-body">
-                    <pre><span class="code-keyword">&lt;?php</span>
-
-<span class="code-keyword">namespace</span> App\Livewire\Loans;
-
-<span class="code-keyword">use</span> Livewire\Component;
-<span class="code-keyword">use</span> Livewire\WithPagination;
-<span class="code-keyword">use</span> App\Models\Loan;
-<span class="code-keyword">use</span> App\Models\Book;
-<span class="code-keyword">use</span> App\Models\User;
-
-<span class="code-keyword">class</span> <span class="code-class">Index</span> <span class="code-keyword">extends</span> Component
-{
-    <span class="code-keyword">use</span> WithPagination;
-
-    <span class="code-keyword">public string</span> $search = <span class="code-string">''</span>;
-    <span class="code-keyword">public string</span> $status = <span class="code-string">''</span>;
-    
-    <span class="code-keyword">public bool</span> $showModal = <span class="code-keyword">false</span>;
-    <span class="code-keyword">public</span> ?<span class="code-keyword">int</span> $userId = <span class="code-keyword">null</span>;
-    <span class="code-keyword">public</span> ?<span class="code-keyword">int</span> $bookId = <span class="code-keyword">null</span>;
-    <span class="code-keyword">public string</span> $tanggalPinjam = <span class="code-string">''</span>;
-    <span class="code-keyword">public string</span> $tanggalKembali = <span class="code-string">''</span>;
-
-    <span class="code-keyword">protected function</span> <span class="code-function">rules</span>()
-    {
-        <span class="code-keyword">return</span> [
-            <span class="code-string">'userId'</span> =&gt; <span class="code-string">'required|exists:users,id'</span>,
-            <span class="code-string">'bookId'</span> =&gt; <span class="code-string">'required|exists:books,id'</span>,
-            <span class="code-string">'tanggalPinjam'</span> =&gt; <span class="code-string">'required|date'</span>,
-            <span class="code-string">'tanggalKembali'</span> =&gt; <span class="code-string">'required|date|after:tanggalPinjam'</span>,
-        ];
-    }
-
-    <span class="code-keyword">public function</span> <span class="code-function">mount</span>()
-    {
-        <span class="code-comment">// Set default tanggal</span>
-        $this-&gt;tanggalPinjam = now()-&gt;format(<span class="code-string">'Y-m-d'</span>);
-        $this-&gt;tanggalKembali = now()-&gt;addDays(<span class="code-string">7</span>)-&gt;format(<span class="code-string">'Y-m-d'</span>);
-    }
-
-    <span class="code-keyword">public function</span> <span class="code-function">save</span>()
-    {
-        $this-&gt;validate();
-
-        $book = Book::find($this-&gt;bookId);
-        
-        <span class="code-comment">// Cek stok buku</span>
-        <span class="code-keyword">if</span> (!$book || $book-&gt;stok &lt; <span class="code-string">1</span>) {
-            session()-&gt;flash(<span class="code-string">'error'</span>, <span class="code-string">'Stok buku tidak tersedia!'</span>);
-            <span class="code-keyword">return</span>;
-        }
-
-        <span class="code-comment">// Buat peminjaman</span>
-        Loan::create([
-            <span class="code-string">'user_id'</span> =&gt; $this-&gt;userId,
-            <span class="code-string">'book_id'</span> =&gt; $this-&gt;bookId,
-            <span class="code-string">'tanggal_pinjam'</span> =&gt; $this-&gt;tanggalPinjam,
-            <span class="code-string">'tanggal_kembali'</span> =&gt; $this-&gt;tanggalKembali,
-            <span class="code-string">'status'</span> =&gt; <span class="code-string">'dipinjam'</span>,
-        ]);
-
-        <span class="code-comment">// Kurangi stok buku</span>
-        $book-&gt;decrement(<span class="code-string">'stok'</span>);
-
-        session()-&gt;flash(<span class="code-string">'message'</span>, <span class="code-string">'Peminjaman berhasil dicatat!'</span>);
-        $this-&gt;showModal = <span class="code-keyword">false</span>;
-    }
-
-    <span class="code-keyword">public function</span> <span class="code-function">render</span>()
-    {
-        $loans = Loan::with([<span class="code-string">'user'</span>, <span class="code-string">'book'</span>])
-            -&gt;when($this-&gt;search, fn($q) =&gt; $q
-                -&gt;whereHas(<span class="code-string">'book'</span>, fn($b) =&gt; $b-&gt;where(<span class="code-string">'judul'</span>, <span class="code-string">'like'</span>, <span class="code-string">"%{$this-&gt;search}%"</span>))
-                -&gt;orWhereHas(<span class="code-string">'user'</span>, fn($u) =&gt; $u-&gt;where(<span class="code-string">'name'</span>, <span class="code-string">'like'</span>, <span class="code-string">"%{$this-&gt;search}%"</span>)))
-            -&gt;when($this-&gt;status, fn($q) =&gt; $q-&gt;where(<span class="code-string">'status'</span>, $this-&gt;status))
-            -&gt;orderBy(<span class="code-string">'created_at'</span>, <span class="code-string">'desc'</span>)
-            -&gt;paginate(<span class="code-string">10</span>);
-
-        $users = User::orderBy(<span class="code-string">'name'</span>)-&gt;get();
-        $books = Book::where(<span class="code-string">'stok'</span>, <span class="code-string">'&gt;'</span>, <span class="code-string">0</span>)-&gt;orderBy(<span class="code-string">'judul'</span>)-&gt;get();
-
-        <span class="code-keyword">return</span> view(<span class="code-string">'livewire.loans.index'</span>, compact(<span class="code-string">'loans'</span>, <span class="code-string">'users'</span>, <span class="code-string">'books'</span>))
-            -&gt;layout(<span class="code-string">'layouts.app'</span>);
-    }
-}</pre>
-                </div>
-            </div>
-
-            <!-- SECTION 7: LIVEWIRE PENGEMBALIAN -->
-            <h2 id="pengembalian">7. Livewire Component: Pengembalian</h2>
-
-            <div class="code-block">
-                <div class="code-header">
-                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
-                            class="code-dot"></span></div>
-                    <span class="code-filename">app/Livewire/Returns/Index.php</span>
-                    <button class="code-copy" onclick="copyCode(this)">Salin</button>
-                </div>
-                <div class="code-body">
-                    <pre><span class="code-keyword">&lt;?php</span>
-
-<span class="code-keyword">namespace</span> App\Livewire\Returns;
-
-<span class="code-keyword">use</span> Livewire\Component;
-<span class="code-keyword">use</span> Livewire\WithPagination;
-<span class="code-keyword">use</span> App\Models\Loan;
-
-<span class="code-keyword">class</span> <span class="code-class">Index</span> <span class="code-keyword">extends</span> Component
-{
-    <span class="code-keyword">use</span> WithPagination;
-
-    <span class="code-keyword">public string</span> $search = <span class="code-string">''</span>;
-    <span class="code-keyword">public bool</span> $showModal = <span class="code-keyword">false</span>;
-    <span class="code-keyword">public</span> ?<span class="code-keyword">int</span> $loanId = <span class="code-keyword">null</span>;
-    <span class="code-keyword">public</span> ?Loan $selectedLoan = <span class="code-keyword">null</span>;
-
-    <span class="code-keyword">public function</span> <span class="code-function">confirmReturn</span>($id)
-    {
-        $this-&gt;loanId = $id;
-        $this-&gt;selectedLoan = Loan::with([<span class="code-string">'user'</span>, <span class="code-string">'book'</span>])-&gt;find($id);
-        $this-&gt;showModal = <span class="code-keyword">true</span>;
-    }
-
-    <span class="code-keyword">public function</span> <span class="code-function">processReturn</span>()
-    {
-        <span class="code-keyword">if</span> (!$this-&gt;loanId) <span class="code-keyword">return</span>;
-
-        $loan = Loan::find($this-&gt;loanId);
-        
-        <span class="code-keyword">if</span> ($loan) {
-            <span class="code-comment">// Update status peminjaman</span>
-            $loan-&gt;update([
-                <span class="code-string">'status'</span> =&gt; <span class="code-string">'dikembalikan'</span>,
-                <span class="code-string">'tanggal_dikembalikan'</span> =&gt; now(),
-            ]);
-
-            <span class="code-comment">// Tambah stok buku kembali</span>
-            $loan-&gt;book-&gt;increment(<span class="code-string">'stok'</span>);
-
-            session()-&gt;flash(<span class="code-string">'message'</span>, <span class="code-string">'Buku berhasil dikembalikan!'</span>);
-        }
-
-        $this-&gt;closeModal();
-    }
-
-    <span class="code-keyword">public function</span> <span class="code-function">closeModal</span>()
-    {
-        $this-&gt;showModal = <span class="code-keyword">false</span>;
-        $this-&gt;loanId = <span class="code-keyword">null</span>;
-        $this-&gt;selectedLoan = <span class="code-keyword">null</span>;
-    }
-
-    <span class="code-keyword">public function</span> <span class="code-function">render</span>()
-    {
-        <span class="code-comment">// Ambil peminjaman yang belum dikembalikan</span>
-        $loans = Loan::with([<span class="code-string">'user'</span>, <span class="code-string">'book'</span>])
-            -&gt;where(<span class="code-string">'status'</span>, <span class="code-string">'dipinjam'</span>)
-            -&gt;when($this-&gt;search, fn($q) =&gt; $q
-                -&gt;whereHas(<span class="code-string">'book'</span>, fn($b) =&gt; $b-&gt;where(<span class="code-string">'judul'</span>, <span class="code-string">'like'</span>, <span class="code-string">"%{$this-&gt;search}%"</span>))
-                -&gt;orWhereHas(<span class="code-string">'user'</span>, fn($u) =&gt; $u-&gt;where(<span class="code-string">'name'</span>, <span class="code-string">'like'</span>, <span class="code-string">"%{$this-&gt;search}%"</span>)))
-            -&gt;orderBy(<span class="code-string">'tanggal_kembali'</span>, <span class="code-string">'asc'</span>) <span class="code-comment">// Urutkan berdasarkan batas kembali</span>
-            -&gt;paginate(<span class="code-string">10</span>);
-
-        <span class="code-keyword">return</span> view(<span class="code-string">'livewire.returns.index'</span>, compact(<span class="code-string">'loans'</span>))
-            -&gt;layout(<span class="code-string">'layouts.app'</span>);
-    }
-}</pre>
-                </div>
-            </div>
-
-            <div class="alert alert-info">
-                <span class="alert-icon">📌</span>
-                <div>
-                    <h4>Manajemen Stok Otomatis</h4>
-                    <p>Perhatikan bagaimana stok buku dikelola otomatis:</p>
-                    <ul>
-                        <li><strong>Saat pinjam:</strong> <code>$book->decrement('stok')</code></li>
-                        <li><strong>Saat kembali:</strong> <code>$loan->book->increment('stok')</code></li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- SECTION 8: CARA INSTALASI -->
-            <h2 id="instalasi">8. Cara Instalasi</h2>
-
-            <div class="code-block">
-                <div class="code-header">
-                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
-                            class="code-dot"></span></div>
-                    <span class="code-filename">Terminal</span>
-                    <button class="code-copy" onclick="copyCode(this)">Salin</button>
-                </div>
-                <div class="code-body">
-                    <pre><span class="code-comment"># 1. Clone repository</span>
+                    <pre><span class="code-comment"># 1. Clone repository dari GitHub</span>
 git clone https://github.com/12ATIF/E-Library_Livewire_S2_SKL1.git
 cd E-Library_Livewire_S2_SKL1
 
-<span class="code-comment"># 2. Install dependencies</span>
+<span class="code-comment"># 2. Install semua package PHP & JavaScript</span>
 composer install
 npm install
 
@@ -1061,22 +1209,151 @@ npm install
 cp .env.example .env
 php artisan key:generate
 
-<span class="code-comment"># 4. Setup database (edit .env dulu)</span>
+<span class="code-comment"># 4. Edit .env → sesuaikan nama database</span>
+<span class="code-comment"># DB_DATABASE=e_library</span>
+<span class="code-comment"># DB_USERNAME=root</span>
+<span class="code-comment"># DB_PASSWORD=</span>
+
+<span class="code-comment"># 5. Buat database, lalu jalankan migration</span>
 php artisan migrate
 
-<span class="code-comment"># 5. Jalankan server</span>
-php artisan serve
-npm run dev</pre>
+<span class="code-comment"># 6. Jalankan server (buka 2 terminal terpisah)</span>
+php artisan serve       <span class="code-comment"># Terminal 1: server PHP</span>
+npm run dev             <span class="code-comment"># Terminal 2: asset builder</span></pre>
                 </div>
             </div>
 
-            <h2>📝 Latihan</h2>
-            <ol>
-                <li>Tambahkan fitur upload cover buku</li>
-                <li>Buat laporan peminjaman bulanan</li>
-                <li>Tambahkan notifikasi jika peminjaman terlambat</li>
-                <li>Implementasikan filter berdasarkan rentang tanggal</li>
-            </ol>
+            <div class="alert alert-info">
+                <span class="alert-icon">💡</span>
+                <div>
+                    <h4>Tips Uji Coba</h4>
+                    <ol style="margin:0;padding-left:1.25rem">
+                        <li>Register 2 akun: satu sebagai <strong>admin</strong>, satu sebagai <strong>user</strong>
+                        </li>
+                        <li>Ubah role akun admin langsung di database menjadi <code>'admin'</code> (gunakan
+                            phpMyAdmin/HeidiSQL)</li>
+                        <li>Login sebagai admin → tambah beberapa buku → coba pinjamkan ke user</li>
+                        <li>Login sebagai user → cek dashboard, lihat riwayat peminjaman</li>
+                        <li>Login kembali sebagai admin → proses pengembalian → cek stok bertambah</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- RINGKASAN KESELURUHAN -->
+            <div
+                style="padding:1.5rem;background:linear-gradient(135deg,#1F2937,#111827);border-radius:12px;margin:2rem 0">
+                <h3 style="color:#10B981;margin-bottom:1rem">🎓 Ringkasan: Apa yang Sudah Kamu Pelajari</h3>
+                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem">
+                    <div
+                        style="padding:1rem;background:rgba(16,185,129,0.1);border-radius:8px;border:1px solid rgba(16,185,129,0.3)">
+                        <strong style="color:#10B981">🧱 Database</strong>
+                        <p style="color:#D1D5DB;font-size:0.85rem;margin-top:0.5rem">Migration, foreign key, enum,
+                            nullable, default value</p>
+                    </div>
+                    <div
+                        style="padding:1rem;background:rgba(59,130,246,0.1);border-radius:8px;border:1px solid rgba(59,130,246,0.3)">
+                        <strong style="color:#3B82F6">🏠 Model</strong>
+                        <p style="color:#D1D5DB;font-size:0.85rem;margin-top:0.5rem">Relasi hasMany/belongsTo,
+                            $fillable, $casts, scope, method custom</p>
+                    </div>
+                    <div
+                        style="padding:1rem;background:rgba(245,158,11,0.1);border-radius:8px;border:1px solid rgba(245,158,11,0.3)">
+                        <strong style="color:#F59E0B">🔐 Auth</strong>
+                        <p style="color:#D1D5DB;font-size:0.85rem;margin-top:0.5rem">Laravel Breeze, role-based access,
+                            middleware auth</p>
+                    </div>
+                    <div
+                        style="padding:1rem;background:rgba(139,92,246,0.1);border-radius:8px;border:1px solid rgba(139,92,246,0.3)">
+                        <strong style="color:#8B5CF6">📚 Livewire</strong>
+                        <p style="color:#D1D5DB;font-size:0.85rem;margin-top:0.5rem">CRUD, modal, pagination, search,
+                            filter, stok otomatis</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- KESALAHAN UMUM -->
+            <h2>⚠️ Kesalahan Umum & Cara Mengatasinya</h2>
+            <table class="comparison-table">
+                <tr>
+                    <th>❌ Kesalahan</th>
+                    <th>✅ Solusi</th>
+                    <th>Penjelasan</th>
+                </tr>
+                <tr>
+                    <td>Lupa <code>use WithPagination</code></td>
+                    <td>Tambahkan di bagian atas class</td>
+                    <td>Tanpa trait ini, <code>paginate()</code> tidak akan berfungsi di Livewire</td>
+                </tr>
+                <tr>
+                    <td>Lupa <code>resetPage()</code> saat search</td>
+                    <td>Tambah method <code>updatingSearch()</code></td>
+                    <td>Tanpa reset, search di halaman 5 tidak menunjukkan hasil dari halaman 1</td>
+                </tr>
+                <tr>
+                    <td>Stok tidak berubah saat pinjam/kembali</td>
+                    <td>Gunakan <code>decrement()</code> dan <code>increment()</code></td>
+                    <td>Method ini langsung update di database tanpa perlu <code>save()</code></td>
+                </tr>
+                <tr>
+                    <td>Role tidak bekerja setelah register</td>
+                    <td>Tambahkan <code>'role'</code> ke <code>$fillable</code></td>
+                    <td>Laravel melindungi dari mass-assignment. Field harus di-whitelist</td>
+                </tr>
+                <tr>
+                    <td>Error "property not found" di view</td>
+                    <td>Pastikan property didefinisikan <code>public</code></td>
+                    <td>Hanya property <code>public</code> yang bisa diakses dari Blade view</td>
+                </tr>
+            </table>
+
+            <!-- LATIHAN BERJENJANG -->
+            <h2>📝 Latihan Berjenjang</h2>
+
+            <div class="alert alert-info">
+                <span class="alert-icon">🎯</span>
+                <div>
+                    <h4>Latihan Dasar ⭐</h4>
+                    <ol>
+                        <li>Clone project dari GitHub dan jalankan di komputer kamu</li>
+                        <li>Tambahkan 5 data buku menggunakan fitur CRUD</li>
+                        <li>Buat 2 akun (admin & user), lalu uji alur pinjam → kembali</li>
+                        <li>Verifikasi bahwa stok berkurang saat dipinjam dan bertambah saat dikembalikan</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="alert alert-tip">
+                <span class="alert-icon">🚀</span>
+                <div>
+                    <h4>Latihan Menengah ⭐⭐</h4>
+                    <ol>
+                        <li>Tambahkan fitur <strong>upload cover buku</strong> (gunakan ilmu dari materi <a
+                                href="upload-file.html">Upload File</a>)</li>
+                        <li>Buat <strong>laporan peminjaman bulanan</strong> — tampilkan tabel berisi total peminjaman
+                            per bulan</li>
+                        <li>Tambahkan <strong>filter berdasarkan rentang tanggal</strong> di halaman peminjaman</li>
+                        <li>Buat <strong>badge "Terlambat"</strong> berwarna merah di daftar pengembalian jika sudah
+                            melewati deadline</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="alert alert-warning">
+                <span class="alert-icon">🏆</span>
+                <div>
+                    <h4>Latihan Tantangan ⭐⭐⭐</h4>
+                    <ol>
+                        <li>Implementasikan <strong>sistem denda otomatis</strong> — hitung denda berdasarkan jumlah
+                            hari keterlambatan (misal Rp 1.000/hari)</li>
+                        <li>Buat <strong>fitur export CSV/Excel</strong> untuk laporan peminjaman (<em>Hint: gunakan
+                                package laravel-excel</em>)</li>
+                        <li>Tambahkan <strong>notifikasi email</strong> jika buku akan melewati deadline H-1 (<em>Hint:
+                                Laravel Notification + Task Scheduling</em>)</li>
+                        <li>Buat <strong>middleware khusus</strong> yang memblokir akses user biasa ke halaman /books,
+                            /loans, /returns — hanya admin yang bisa mengakses</li>
+                    </ol>
+                </div>
+            </div>
 
             <div class="content-nav">
                 <a href="tampilan-dinamis.html" class="nav-btn">
@@ -1087,14 +1364,15 @@ npm run dev</pre>
                 </a>
                 <a href="../../silabus.html" class="nav-btn">
                     <div>
-                        <div class="nav-btn-label">Selesai!</div>
+                        <div class="nav-btn-label">Selesai! 🎉</div>
                         <div class="nav-btn-title">Kembali ke Silabus 📋</div>
                     </div>
                 </a>
             </div>
         </main>
     </div>
-
+    <button class="sidebar-toggle-mobile"
+        onclick="document.querySelector('.sidebar').classList.toggle('active')">📚</button>
     <script src="../../js/app.js"></script>
     <script>
         function copyCode(button) {
@@ -1103,10 +1381,7 @@ npm run dev</pre>
             navigator.clipboard.writeText(code).then(() => {
                 button.textContent = 'Tersalin!';
                 button.style.background = '#10B981';
-                setTimeout(() => {
-                    button.textContent = 'Salin';
-                    button.style.background = '';
-                }, 2000);
+                setTimeout(() => { button.textContent = 'Salin'; button.style.background = ''; }, 2000);
             });
         }
     </script>

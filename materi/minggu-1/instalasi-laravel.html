@@ -31,9 +31,10 @@
             <ul class="navbar-menu">
                 <li><a href="../../index.html">Beranda</a></li>
                 <li><a href="../../silabus.html">Silabus</a></li>
-                <li><a href="#" class="active">Materi</a></li>
+                <li><a href="pengenalan-laravel.html" class="active">Materi</a></li>
                 <li><a href="../../demo.html">Demo</a></li>
             </ul>
+            <button class="navbar-toggle" aria-label="Toggle menu"><span>☰</span></button>
         </div>
     </nav>
 
@@ -45,17 +46,41 @@
                     <li><a href="pengenalan-laravel.html">Pengenalan Laravel</a></li>
                     <li><a href="mvc-sederhana.html">MVC Sederhana</a></li>
                     <li><a href="instalasi-laravel.html" class="active">Instalasi Laravel</a></li>
-                    <li><a href="autentikasi.html">🔐 Autentikasi</a></li>
                     <li><a href="blade-template.html">Blade Template</a></li>
                     <li><a href="pengenalan-livewire.html">Pengenalan Livewire</a></li>
                     <li><a href="struktur-component.html">Struktur Component</a></li>
+                    <li><a href="autentikasi.html">🔐 Autentikasi</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-title">📘 Minggu 2</div>
+                <ul class="sidebar-nav">
+                    <li><a href="../minggu-2/wire-model.html">wire:model</a></li>
+                    <li><a href="../minggu-2/wire-click.html">wire:click</a></li>
+                    <li><a href="../minggu-2/database-eloquent.html">Database & Eloquent</a></li>
+                    <li><a href="../minggu-2/validasi.html">Validasi</a></li>
+                    <li><a href="../minggu-2/crud-sederhana.html">CRUD Sederhana</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-title">📕 Minggu 3</div>
+                <ul class="sidebar-nav">
+                    <li><a href="../minggu-3/upload-file.html">Upload File</a></li>
+                    <li><a href="../minggu-3/pagination-search.html">Pagination & Search</a></li>
+                    <li><a href="../minggu-3/komponen-reusable.html">Komponen Reusable</a></li>
+                    <li><a href="../minggu-3/tampilan-dinamis.html">Tampilan Dinamis</a></li>
+                    <li><a href="../minggu-3/project-elibrary.html">📚 Tutorial E-Library</a></li>
                 </ul>
             </div>
         </aside>
 
         <main class="main-content">
             <div class="content-header">
-                <h1 class="content-title">1.3 Instalasi Laravel</h1>
+                <div class="content-breadcrumb">
+                    <a href="../../index.html">Beranda</a> / <a href="../../silabus.html">Silabus</a> / Minggu 1 /
+                    Instalasi Laravel
+                </div>
+                <h1 class="content-title">1.3 Instalasi Laravel & Livewire</h1>
                 <div class="content-meta">
                     <span>📗 Minggu 1</span>
                     <span>⏱️ 30 menit</span>
@@ -63,88 +88,509 @@
                 </div>
             </div>
 
-            <div class="objectives">
-                <h3>🎯 Tujuan Belajar</h3>
+            <!-- Prasyarat -->
+            <div class="prerequisites">
+                <h3>📌 Prasyarat</h3>
                 <ul>
-                    <li>Menginstall Composer dan Laragon</li>
-                    <li>Membuat project Laravel baru</li>
-                    <li>Menjalankan development server</li>
+                    <li>Sudah membaca <a href="pengenalan-laravel.html">1.1 Pengenalan Laravel</a> dan <a
+                            href="mvc-sederhana.html">1.2 MVC Sederhana</a></li>
+                    <li>Sudah paham: Laravel = framework MVC, Composer = package manager</li>
+                    <li>Komputer dengan <strong>Windows 10/11</strong> (minimal RAM 4GB)</li>
                 </ul>
             </div>
 
-            <h2>1️⃣ Install Laragon</h2>
-            <p>Laragon adalah paket lengkap untuk development PHP di Windows. Download di <a
-                    href="https://laragon.org/download/" target="_blank">laragon.org</a></p>
+            <!-- Tujuan Belajar -->
+            <div class="objectives">
+                <h3>🎯 Tujuan Belajar</h3>
+                <p>Setelah menyelesaikan materi ini, kamu akan mampu:</p>
+                <ul>
+                    <li>Menginstall <strong>Laragon</strong> sebagai environment development lokal</li>
+                    <li>Membuat <strong>project Laravel baru</strong> via terminal</li>
+                    <li>Menjalankan <strong>development server</strong> dan melihat hasilnya di browser</li>
+                    <li>Menginstall <strong>Livewire</strong> ke dalam project Laravel</li>
+                    <li>Mengatasi <strong>error umum</strong> saat instalasi</li>
+                </ul>
+            </div>
 
-            <div class="alert alert-info">
-                <span class="alert-icon">📌</span>
+            <!-- ==================== KONTEN ==================== -->
+
+            <h2>🛠️ Apa Saja yang Kita Butuhkan?</h2>
+
+            <p>Sebelum mulai coding, kita perlu menyiapkan "bengkel" dulu. Berikut tool yang dibutuhkan:</p>
+
+            <div class="diagram-flow">
+                <div class="flow-item">🔧 Laragon<br><small>Web server lokal</small></div>
+                <div class="flow-arrow">+</div>
+                <div class="flow-item">📦 Composer<br><small>Package manager</small></div>
+                <div class="flow-arrow">+</div>
+                <div class="flow-item highlight">🚀 Laravel<br><small>Framework PHP</small></div>
+                <div class="flow-arrow">+</div>
+                <div class="flow-item">⚡ Livewire<br><small>Extension interaktif</small></div>
+            </div>
+
+            <div class="alert alert-tip">
+                <span class="alert-icon">🏗️</span>
                 <div>
-                    <h4>Kenapa Laragon?</h4>
-                    <p>Sudah include PHP, MySQL, Apache, dan Composer. Satu kali install, langsung siap pakai!</p>
-                </div>
-            </div>
-
-            <h2>2️⃣ Buat Project Laravel</h2>
-            <p>Buka Terminal di Laragon (klik kanan > Terminal), lalu ketik:</p>
-
-            <div class="code-block">
-                <div class="code-header">
-                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
-                            class="code-dot"></span></div>
-                    <span class="code-filename">Terminal</span>
-                    <button class="code-copy">Salin</button>
-                </div>
-                <div class="code-body">
-                    <pre><span class="code-comment"># Masuk ke folder www</span>
-cd C:\laragon\www
-
-<span class="code-comment"># Buat project baru</span>
-composer create-project laravel/laravel perpustakaan
-
-<span class="code-comment"># Masuk ke folder project</span>
-cd perpustakaan
-
-<span class="code-comment"># Jalankan server</span>
-php artisan serve</pre>
-                </div>
-            </div>
-
-            <h2>3️⃣ Akses di Browser</h2>
-            <p>Buka browser dan ketik: <code>http://localhost:8000</code></p>
-            <p>Kalau muncul halaman "Laravel" berarti sukses! 🎉</p>
-
-            <h2>4️⃣ Install Livewire</h2>
-            <div class="code-block">
-                <div class="code-header">
-                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
-                            class="code-dot"></span></div>
-                    <span class="code-filename">Terminal</span>
-                    <button class="code-copy">Salin</button>
-                </div>
-                <div class="code-body">
-                    <pre><span class="code-comment"># Install Livewire</span>
-composer require livewire/livewire
-
-<span class="code-comment"># Cek versi</span>
-php artisan livewire:version</pre>
-                </div>
-            </div>
-
-            <div class="alert alert-warning">
-                <span class="alert-icon">⚠️</span>
-                <div>
-                    <h4>Troubleshooting</h4>
-                    <p>Kalau error "composer not found", pastikan Laragon sudah running dan buka terminal lewat Laragon.
+                    <h4>Analogi: Bengkel Tukang</h4>
+                    <p><strong>Laragon</strong> = meja kerja + alat-alat dasar (palu, gergaji, dll).
+                        <strong>Composer</strong> = toko material yang mengantarkan bahan ke bengkelmu.
+                        <strong>Laravel</strong> = blueprint rumah. <strong>Livewire</strong> = alat listrik canggih
+                        untuk fitur spesial.
                     </p>
                 </div>
             </div>
 
+            <!-- STEP 1 -->
+            <h2>1️⃣ Install Laragon</h2>
+
+            <div class="step-box">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h4>Download Laragon</h4>
+                    <p>Buka browser, pergi ke <a href="https://laragon.org/download/" target="_blank"
+                            style="color:#3B82F6;font-weight:600;">laragon.org/download</a>. Pilih versi
+                        <strong>"Full"</strong> (sudah termasuk PHP 8, MySQL, Apache, Composer, Git).
+                    </p>
+                </div>
+            </div>
+
+            <div class="step-box">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h4>Install Laragon</h4>
+                    <p>Jalankan file installer yang sudah didownload. Ikuti langkah default-nya:</p>
+                    <ul>
+                        <li>Pilih lokasi install: <code>C:\laragon</code> (biarkan default)</li>
+                        <li>Centang semua opsi yang ditawarkan</li>
+                        <li>Klik <strong>Install</strong> dan tunggu sampai selesai</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="step-box">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h4>Jalankan Laragon</h4>
+                    <p>Buka Laragon, klik tombol <strong>"Start All"</strong>. Pastikan Apache dan MySQL menyala
+                        (indikator hijau).</p>
+                </div>
+            </div>
+
+            <div class="alert alert-info">
+                <span class="alert-icon">📌</span>
+                <div>
+                    <h4>Kenapa Laragon dan Bukan XAMPP?</h4>
+                    <table class="comparison-table">
+                        <tr>
+                            <th>Fitur</th>
+                            <th>Laragon</th>
+                            <th>XAMPP</th>
+                        </tr>
+                        <tr>
+                            <td>Composer bawaan</td>
+                            <td>✅ Sudah termasuk</td>
+                            <td>❌ Harus install sendiri</td>
+                        </tr>
+                        <tr>
+                            <td>Git bawaan</td>
+                            <td>✅ Sudah termasuk</td>
+                            <td>❌ Harus install sendiri</td>
+                        </tr>
+                        <tr>
+                            <td>Auto Virtual Host</td>
+                            <td>✅ Otomatis</td>
+                            <td>❌ Harus setting manual</td>
+                        </tr>
+                        <tr>
+                            <td>Terminal bawaan</td>
+                            <td>✅ Cmder terintegrasi</td>
+                            <td>⚠️ Harus pakai CMD/PowerShell</td>
+                        </tr>
+                        <tr>
+                            <td>Quick Create Laravel</td>
+                            <td>✅ Klik kanan → Create Laravel</td>
+                            <td>❌ Harus manual via terminal</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <!-- STEP 2 -->
+            <h2>2️⃣ Buat Project Laravel Baru</h2>
+
+            <p>Ada <strong>2 cara</strong> untuk membuat project Laravel baru. Pilih yang paling nyaman:</p>
+
+            <h3>Cara 1: Via Terminal (Direkomendasikan)</h3>
+
+            <div class="step-box">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h4>Buka Terminal Laragon</h4>
+                    <p>Klik kanan di Laragon → pilih <strong>"Terminal"</strong>. Akan terbuka Cmder (terminal bawaan
+                        Laragon).</p>
+                </div>
+            </div>
+
+            <div class="step-box">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h4>Masuk ke Folder www</h4>
+                    <p>Ketik perintah berikut untuk masuk ke folder project:</p>
+                </div>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">Terminal Laragon</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-comment"># Masuk ke folder www (tempat semua project)</span>
+cd C:\laragon\www</pre>
+                </div>
+            </div>
+
+            <div class="step-box">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h4>Buat Project Laravel</h4>
+                    <p>Jalankan perintah Composer untuk membuat project baru. Proses ini akan <strong>download semua
+                            file Laravel</strong> dari internet (±5 menit tergantung koneksi).</p>
+                </div>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">Terminal Laragon</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-comment"># Buat project Laravel dengan nama "perpustakaan"</span>
+composer create-project laravel/laravel perpustakaan
+
+<span class="code-comment"># Tunggu... ini akan download sekitar 80MB file</span>
+<span class="code-comment"># Kalau sukses, akan muncul "Application key set successfully."</span></pre>
+                </div>
+            </div>
+
+            <div class="alert alert-info">
+                <span class="alert-icon">🔍</span>
+                <div>
+                    <h4>Penjelasan Perintah</h4>
+                    <ul>
+                        <li><code>composer</code> — Panggil package manager Composer</li>
+                        <li><code>create-project</code> — Perintah untuk membuat project baru</li>
+                        <li><code>laravel/laravel</code> — Nama package Laravel dari Packagist (toko online package PHP)
+                        </li>
+                        <li><code>perpustakaan</code> — Nama folder project-mu. Bisa diganti sesuai keinginan!</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>Cara 2: Via Laragon GUI (Cepat & Mudah)</h3>
+
+            <div class="step-box">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h4>Klik Kanan di Laragon</h4>
+                    <p>Di window Laragon, klik kanan → <strong>Quick app</strong> → <strong>Laravel</strong></p>
+                </div>
+            </div>
+
+            <div class="step-box">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h4>Masukkan Nama Project</h4>
+                    <p>Ketik nama project: <strong>perpustakaan</strong>. Klik OK dan tunggu sampai selesai.</p>
+                </div>
+            </div>
+
+            <div class="alert alert-tip">
+                <span class="alert-icon">💡</span>
+                <div>
+                    <h4>Mana yang Lebih Baik?</h4>
+                    <p>Kedua cara hasilnya sama. Tapi <strong>via terminal lebih direkomendasikan</strong> karena kamu
+                        akan sering pakai terminal untuk menjalankan Artisan commands di materi-materi selanjutnya.
+                        Lebih baik terbiasa dari sekarang!</p>
+                </div>
+            </div>
+
+            <!-- STEP 3 -->
+            <h2>3️⃣ Jalankan Development Server</h2>
+
+            <div class="step-box">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h4>Masuk ke Folder Project</h4>
+                    <p>Di terminal, masuk ke folder project yang baru dibuat:</p>
+                </div>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">Terminal</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-comment"># Masuk ke folder project</span>
+cd perpustakaan
+
+<span class="code-comment"># Jalankan server development Laravel</span>
+php artisan serve</pre>
+                </div>
+            </div>
+
+            <div class="alert alert-info">
+                <span class="alert-icon">🔍</span>
+                <div>
+                    <h4>Apa yang Terjadi?</h4>
+                    <ul>
+                        <li><code>php artisan serve</code> — Menjalankan web server bawaan Laravel di
+                            <code>localhost:8000</code>
+                        </li>
+                        <li>Terminal akan menampilkan: <code>Server running on [http://127.0.0.1:8000]</code></li>
+                        <li>Jangan tutup terminal ini! Server berjalan selama terminal terbuka</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="step-box">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h4>Buka di Browser</h4>
+                    <p>Buka browser (Chrome/Firefox), ketik: <code
+                            style="background:#10B981;color:white;padding:4px 12px;border-radius:6px;font-weight:600;">http://localhost:8000</code>
+                    </p>
+                    <p>Kalau muncul <strong>halaman Welcome Laravel</strong> — 🎉 <strong>SELAMAT! Instalasi
+                            berhasil!</strong></p>
+                </div>
+            </div>
+
+            <div class="alert alert-tip">
+                <span class="alert-icon">🌐</span>
+                <div>
+                    <h4>Alternatif: Pakai Pretty URL Laragon</h4>
+                    <p>Kalau Apache di Laragon sudah running, kamu juga bisa akses project tanpa
+                        <code>php artisan serve</code>. Cukup buka: <code>http://perpustakaan.test</code> — Laragon
+                        otomatis membuat virtual host!
+                    </p>
+                </div>
+            </div>
+
+            <!-- STEP 4 -->
+            <h2>4️⃣ Install Livewire</h2>
+
+            <p>Sekarang kita install <strong>Livewire</strong> — package yang membuat Laravel bisa interaktif tanpa
+                JavaScript!</p>
+
+            <div class="step-box">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h4>Buka Terminal Baru</h4>
+                    <p>Buka tab terminal baru (jangan tutup yang lama!). Pastikan masih di folder
+                        <code>perpustakaan</code>.
+                    </p>
+                </div>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">Terminal (tab baru)</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-comment"># Pastikan masih di folder project</span>
+cd C:\laragon\www\perpustakaan
+
+<span class="code-comment"># Install Livewire via Composer</span>
+composer require livewire/livewire
+
+<span class="code-comment"># Cek apakah Livewire berhasil terinstall</span>
+php artisan livewire:version</pre>
+                </div>
+            </div>
+
+            <div class="alert alert-info">
+                <span class="alert-icon">🔍</span>
+                <div>
+                    <h4>Penjelasan Perintah</h4>
+                    <ul>
+                        <li><code>composer require</code> — Perintah untuk menambahkan package baru ke project</li>
+                        <li><code>livewire/livewire</code> — Nama package Livewire dari Packagist</li>
+                        <li><code>php artisan livewire:version</code> — Cek versi Livewire yang terinstall</li>
+                    </ul>
+                    <p>Kalau berhasil, terminal akan menampilkan versi seperti: <code>Livewire: v3.x.x</code></p>
+                </div>
+            </div>
+
+            <div class="step-box">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h4>Tambahkan Livewire ke Layout Blade</h4>
+                    <p>Supaya Livewire bisa bekerja, kita perlu menambahkan script-nya ke file layout. Buka file
+                        <code>resources/views/welcome.blade.php</code> dan pastikan ada tag berikut:
+                    </p>
+                </div>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">resources/views/welcome.blade.php</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-tag">&lt;html&gt;</span>
+<span class="code-tag">&lt;head&gt;</span>
+    <span class="code-comment">&lt;!-- Tambahkan ini di dalam &lt;head&gt; --&gt;</span>
+    <span class="code-keyword">@livewireStyles</span>
+<span class="code-tag">&lt;/head&gt;</span>
+<span class="code-tag">&lt;body&gt;</span>
+
+    <span class="code-comment">&lt;!-- Konten halaman di sini --&gt;</span>
+
+    <span class="code-comment">&lt;!-- Tambahkan ini sebelum &lt;/body&gt; --&gt;</span>
+    <span class="code-keyword">@livewireScripts</span>
+<span class="code-tag">&lt;/body&gt;</span>
+<span class="code-tag">&lt;/html&gt;</span></pre>
+                </div>
+            </div>
+
+            <div class="alert alert-tip">
+                <span class="alert-icon">💡</span>
+                <div>
+                    <h4>Ingat Aturannya!</h4>
+                    <p><code>@livewireStyles</code> selalu di <code>&lt;head&gt;</code> (untuk CSS Livewire)<br>
+                        <code>@livewireScripts</code> selalu sebelum <code>&lt;/body&gt;</code> (untuk JavaScript
+                        Livewire)<br>
+                        Tanpa kedua tag ini, komponen Livewire <strong>tidak akan bekerja!</strong>
+                    </p>
+                </div>
+            </div>
+
+            <!-- ==================== TROUBLESHOOTING ==================== -->
+
+            <h2>🔧 Troubleshooting — Kalau Ada Error</h2>
+
+            <p>Tenang, error saat instalasi itu <strong>normal</strong>. Berikut solusi untuk masalah yang sering
+                muncul:</p>
+
+            <div class="common-mistakes">
+                <h3>⚠️ Error yang Sering Terjadi</h3>
+
+                <div class="mistake-item">
+                    <h4>❌ "composer is not recognized as an internal command"</h4>
+                    <p>Artinya: Composer belum terinstall atau belum dikenali oleh sistem.</p>
+                    <p class="solution">✅ Solusi: Pastikan Laragon sudah dijalankan (klik Start All). Buka terminal via
+                        Laragon, JANGAN via CMD Windows langsung.</p>
+                </div>
+
+                <div class="mistake-item">
+                    <h4>❌ "Your requirements could not be resolved..."</h4>
+                    <p>Artinya: Versi PHP-mu mungkin terlalu lama untuk Laravel terbaru.</p>
+                    <p class="solution">✅ Solusi: Update PHP di Laragon. Buka Menu → Tools → Change PHP → pilih versi
+                        8.1 atau lebih baru.</p>
+                </div>
+
+                <div class="mistake-item">
+                    <h4>❌ "Failed to download laravel/laravel" atau koneksi timeout</h4>
+                    <p>Artinya: Koneksi internet bermasalah atau toko Packagist sedang lambat.</p>
+                    <p class="solution">✅ Solusi: Cek koneksimu. Kalau wifi sekolah lambat, coba pakai hotspot HP. Atau
+                        tambahkan <code>--prefer-dist</code> di perintah.</p>
+                </div>
+
+                <div class="mistake-item">
+                    <h4>❌ "Port 8000 already in use"</h4>
+                    <p>Artinya: Sudah ada program lain yang memakai port 8000.</p>
+                    <p class="solution">✅ Solusi: Ganti port dengan: <code>php artisan serve --port=8080</code> lalu
+                        buka <code>localhost:8080</code>.</p>
+                </div>
+            </div>
+
+            <!-- ==================== RINGKASAN ==================== -->
+
+            <div class="summary-box">
+                <h3>📋 Ringkasan Materi</h3>
+                <ul>
+                    <li><strong>Laragon</strong> = environment development all-in-one untuk Windows</li>
+                    <li>Buat project: <code>composer create-project laravel/laravel nama-project</code></li>
+                    <li>Jalankan server: <code>php artisan serve</code> → buka <code>localhost:8000</code></li>
+                    <li>Install Livewire: <code>composer require livewire/livewire</code></li>
+                    <li>Jangan lupa tambahkan <code>@livewireStyles</code> dan <code>@livewireScripts</code> ke layout
+                    </li>
+                </ul>
+            </div>
+
+            <!-- ==================== CHECKLIST ==================== -->
+
+            <h2>✅ Checklist Selesai Instalasi</h2>
+            <p>Pastikan semua item berikut sudah tercyeklist sebelum lanjut ke materi berikutnya:</p>
+
+            <ul class="checklist">
+                <li><span class="check-icon">✓</span> Laragon terinstall dan bisa Start All tanpa error</li>
+                <li><span class="check-icon">✓</span> Bisa buka terminal dari Laragon</li>
+                <li><span class="check-icon">✓</span> Project Laravel berhasil dibuat (ada folder
+                    <code>perpustakaan</code> di <code>C:\laragon\www\</code>)
+                </li>
+                <li><span class="check-icon">✓</span> <code>php artisan serve</code> berjalan dan bisa diakses di
+                    browser</li>
+                <li><span class="check-icon">✓</span> Livewire terinstall (perintah
+                    <code>php artisan livewire:version</code> menampilkan versi)
+                </li>
+            </ul>
+
+            <!-- ==================== LATIHAN ==================== -->
+
             <h2>📝 Latihan</h2>
-            <ol>
-                <li>Install Laragon di komputer masing-masing</li>
-                <li>Buat project Laravel baru dengan nama "belajar-livewire"</li>
-                <li>Install Livewire dan screenshot hasilnya</li>
-            </ol>
+
+            <div class="exercise-section">
+                <div class="exercise-level basic">
+                    <h4>🟢 Level 1 — Praktik Dasar</h4>
+                    <ol>
+                        <li>Install Laragon di komputermu dan <strong>screenshot</strong> tampilan ketika sudah Start
+                            All.</li>
+                        <li>Buat project Laravel baru dengan nama <strong>"belajar-livewire"</strong>. Screenshot
+                            terminal ketika sukses.</li>
+                        <li>Jalankan <code>php artisan serve</code> lalu screenshot halaman Welcome Laravel di browser.
+                        </li>
+                    </ol>
+                </div>
+
+                <div class="exercise-level intermediate">
+                    <h4>🔵 Level 2 — Eksplorasi</h4>
+                    <ol>
+                        <li>Install Livewire ke project-mu. Jalankan <code>php artisan livewire:version</code> dan catat
+                            versinya.</li>
+                        <li>Coba jalankan <code>php artisan list</code> — ini akan menampilkan semua perintah Artisan
+                            yang tersedia. Berapa total perintah yang ada?</li>
+                        <li>Buka folder project di File Explorer (<code>C:\laragon\www\perpustakaan</code>). Bandingkan
+                            struktur folder dengan yang kita pelajari di <a href="mvc-sederhana.html">materi MVC</a>.
+                            Apakah folder-folder Model, View, Controller ada di posisi yang benar?</li>
+                    </ol>
+                </div>
+
+                <div class="exercise-level challenge">
+                    <h4>🟣 Level 3 — Tantangan</h4>
+                    <ol>
+                        <li>Buka file <code>.env</code> di root project. File ini berisi konfigurasi project. Cari baris
+                            yang mengatur nama aplikasi (<code>APP_NAME</code>) dan ganti menjadi <strong>"Perpustakaan
+                                SMK"</strong>. Refresh browser — apa yang berubah?</li>
+                        <li>Coba buat project kedua dengan nama berbeda. Apakah keduanya bisa jalan bersamaan? Bagaimana
+                            caranya? (Petunjuk: gunakan port berbeda)</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- ==================== NAVIGASI ==================== -->
 
             <div class="content-nav">
                 <a href="mvc-sederhana.html" class="nav-btn">
@@ -162,6 +608,9 @@ php artisan livewire:version</pre>
             </div>
         </main>
     </div>
+
+    <button class="sidebar-toggle-mobile"
+        onclick="document.querySelector('.sidebar').classList.toggle('active')">📚</button>
     <script src="../../js/app.js"></script>
 </body>
 

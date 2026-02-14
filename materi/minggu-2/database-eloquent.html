@@ -31,9 +31,10 @@
             <ul class="navbar-menu">
                 <li><a href="../../index.html">Beranda</a></li>
                 <li><a href="../../silabus.html">Silabus</a></li>
-                <li><a href="#" class="active">Materi</a></li>
+                <li><a href="../minggu-1/pengenalan-laravel.html" class="active">Materi</a></li>
                 <li><a href="../../demo.html">Demo</a></li>
             </ul>
+            <button class="navbar-toggle" aria-label="Toggle menu"><span>☰</span></button>
         </div>
     </nav>
 
@@ -45,10 +46,10 @@
                     <li><a href="../minggu-1/pengenalan-laravel.html">Pengenalan Laravel</a></li>
                     <li><a href="../minggu-1/mvc-sederhana.html">MVC Sederhana</a></li>
                     <li><a href="../minggu-1/instalasi-laravel.html">Instalasi Laravel</a></li>
-                    <li><a href="../minggu-1/autentikasi.html">🔐 Autentikasi</a></li>
                     <li><a href="../minggu-1/blade-template.html">Blade Template</a></li>
                     <li><a href="../minggu-1/pengenalan-livewire.html">Pengenalan Livewire</a></li>
                     <li><a href="../minggu-1/struktur-component.html">Struktur Component</a></li>
+                    <li><a href="../minggu-1/autentikasi.html">🔐 Autentikasi</a></li>
                 </ul>
             </div>
             <div class="sidebar-section">
@@ -56,163 +57,589 @@
                 <ul class="sidebar-nav">
                     <li><a href="wire-model.html">wire:model</a></li>
                     <li><a href="wire-click.html">wire:click</a></li>
+                    <li><a href="database-eloquent.html" class="active">Database & Eloquent</a></li>
                     <li><a href="validasi.html">Validasi</a></li>
                     <li><a href="crud-sederhana.html">CRUD Sederhana</a></li>
-                    <li><a href="database-eloquent.html" class="active">Database & Eloquent</a></li>
                 </ul>
             </div>
             <div class="sidebar-section">
                 <div class="sidebar-title">📕 Minggu 3</div>
                 <ul class="sidebar-nav">
                     <li><a href="../minggu-3/upload-file.html">Upload File</a></li>
+                    <li><a href="../minggu-3/pagination-search.html">Pagination & Search</a></li>
+                    <li><a href="../minggu-3/komponen-reusable.html">Komponen Reusable</a></li>
+                    <li><a href="../minggu-3/tampilan-dinamis.html">Tampilan Dinamis</a></li>
+                    <li><a href="../minggu-3/project-elibrary.html">📚 Tutorial E-Library</a></li>
                 </ul>
             </div>
         </aside>
 
         <main class="main-content">
             <div class="content-header">
-                <h1 class="content-title">2.5 Database & Eloquent</h1>
+                <div class="content-breadcrumb">
+                    <a href="../../index.html">Beranda</a> / <a href="../../silabus.html">Silabus</a> / Minggu 2 /
+                    Database & Eloquent
+                </div>
+                <h1 class="content-title">2.3 Database & Eloquent ORM</h1>
                 <div class="content-meta">
                     <span>📘 Minggu 2</span>
-                    <span>⏱️ 30 menit</span>
+                    <span>⏱️ 35 menit</span>
+                    <span>🔧 Teori + Praktik</span>
                 </div>
             </div>
 
-            <div class="objectives">
-                <h3>🎯 Tujuan Belajar</h3>
+            <!-- Prasyarat -->
+            <div class="prerequisites">
+                <h3>📌 Prasyarat</h3>
                 <ul>
-                    <li>Membuat migration untuk tabel database</li>
-                    <li>Menggunakan Eloquent ORM untuk CRUD</li>
-                    <li>Menghubungkan Livewire dengan database</li>
+                    <li>Sudah paham <a href="../minggu-1/mvc-sederhana.html">MVC Sederhana</a> — database = bagian
+                        "Model"</li>
+                    <li>Sudah install Laravel dan Laragon (<a href="../minggu-1/instalasi-laravel.html">Materi 1.3</a>)
+                    </li>
+                    <li>Laragon sudah menyalakan <strong>MySQL</strong></li>
                 </ul>
             </div>
 
-            <h2>1. Buat Migration</h2>
-            <div class="code-block">
-                <div class="code-header">
-                    <span class="code-filename">Terminal</span>
-                    <button class="code-copy">Salin</button>
-                </div>
-                <div class="code-body">
-                    <pre>php artisan make:model Todo -m</pre>
-                </div>
+            <!-- Tujuan Belajar -->
+            <div class="objectives">
+                <h3>🎯 Tujuan Belajar</h3>
+                <p>Setelah menyelesaikan materi ini, kamu akan mampu:</p>
+                <ul>
+                    <li>Mengatur koneksi database di file <strong>.env</strong></li>
+                    <li>Membuat tabel menggunakan <strong>Migration</strong></li>
+                    <li>Membuat <strong>Model</strong> Eloquent dan memahami <code>$fillable</code></li>
+                    <li>Menggunakan Eloquent untuk operasi <strong>CRUD dasar</strong></li>
+                    <li>Menghubungkan Eloquent dengan komponen <strong>Livewire</strong></li>
+                </ul>
             </div>
 
-            <div class="code-block">
-                <div class="code-header">
-                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
-                            class="code-dot"></span></div>
-                    <span class="code-filename">create_todos_table.php</span>
-                    <button class="code-copy">Salin</button>
-                </div>
-                <div class="code-body">
-                    <pre>Schema::create(<span class="code-string">'todos'</span>, <span class="code-keyword">function</span> (Blueprint $table) {
-    $table->id();
-    $table->string(<span class="code-string">'task'</span>);
-    $table->boolean(<span class="code-string">'is_done'</span>)->default(<span class="code-keyword">false</span>);
-    $table->timestamps();
-});</pre>
-                </div>
-            </div>
+            <!-- ==================== KONTEN ==================== -->
 
-            <div class="code-block">
-                <div class="code-header"><span class="code-filename">Terminal</span></div>
-                <div class="code-body">
-                    <pre>php artisan migrate</pre>
-                </div>
-            </div>
+            <h2>🤔 Kenapa Butuh Database?</h2>
 
-            <h2>2. Setup Model</h2>
-            <div class="code-block">
-                <div class="code-header">
-                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
-                            class="code-dot"></span></div>
-                    <span class="code-filename">app/Models/Todo.php</span>
-                    <button class="code-copy">Salin</button>
-                </div>
-                <div class="code-body">
-                    <pre><span class="code-keyword">class</span> <span class="code-class">Todo</span> <span class="code-keyword">extends</span> Model
-{
-    <span class="code-keyword">protected</span> $fillable = [<span class="code-string">'task'</span>, <span class="code-string">'is_done'</span>];
-}</pre>
-                </div>
-            </div>
-
-            <h2>3. CRUD dengan Eloquent</h2>
-            <div class="code-block">
-                <div class="code-header">
-                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
-                            class="code-dot"></span></div>
-                    <span class="code-filename">TodoList.php (Livewire)</span>
-                    <button class="code-copy">Salin</button>
-                </div>
-                <div class="code-body">
-                    <pre><span class="code-keyword">use</span> App\Models\Todo;
-
-<span class="code-keyword">class</span> <span class="code-class">TodoList</span> <span class="code-keyword">extends</span> Component
-{
-    <span class="code-keyword">public</span> $task = <span class="code-string">''</span>;
-    
-    <span class="code-comment">// READ - Ambil semua data</span>
-    <span class="code-keyword">public function</span> <span class="code-function">render</span>()
-    {
-        <span class="code-keyword">return</span> view(<span class="code-string">'livewire.todo-list'</span>, [
-            <span class="code-string">'todos'</span> => Todo::latest()->get()
-        ]);
-    }
-    
-    <span class="code-comment">// CREATE - Simpan data baru</span>
-    <span class="code-keyword">public function</span> <span class="code-function">addTodo</span>()
-    {
-        Todo::create([<span class="code-string">'task'</span> => $this->task]);
-        $this->task = <span class="code-string">''</span>;
-    }
-    
-    <span class="code-comment">// UPDATE - Ubah status</span>
-    <span class="code-keyword">public function</span> <span class="code-function">toggleTodo</span>($id)
-    {
-        $todo = Todo::find($id);
-        $todo->update([<span class="code-string">'is_done'</span> => !$todo->is_done]);
-    }
-    
-    <span class="code-comment">// DELETE - Hapus data</span>
-    <span class="code-keyword">public function</span> <span class="code-function">deleteTodo</span>($id)
-    {
-        Todo::find($id)->delete();
-    }
-}</pre>
-                </div>
-            </div>
+            <p>Selama ini, data yang kita simpan di <strong>property Livewire</strong> (seperti
+                <code>$todos = []</code>) akan <strong>hilang saat halaman di-refresh</strong>. Untuk menyimpan data
+                secara permanen, kita butuh <strong>database</strong>!
+            </p>
 
             <div class="alert alert-tip">
-                <span class="alert-icon">💡</span>
+                <span class="alert-icon">🏢</span>
                 <div>
-                    <h4>Eloquent Cheat Sheet</h4>
-                    <p><code>Model::all()</code> = Ambil semua<br>
-                        <code>Model::find($id)</code> = Cari by ID<br>
-                        <code>Model::create([])</code> = Buat baru<br>
-                        <code>$model->update([])</code> = Update<br>
-                        <code>$model->delete()</code> = Hapus
+                    <h4>Analogi: Lemari Arsip Sekolah</h4>
+                    <ul style="margin-top:0.5rem;">
+                        <li>🗒️ <strong>Property Livewire</strong> = catatan di papan tulis → hapus saat bel pulang</li>
+                        <li>🗄️ <strong>Database</strong> = lemari arsip → data tersimpan permanen, bisa dicari kapan
+                            saja</li>
+                        <li>📋 <strong>Migration</strong> = label di setiap laci → menentukan isi setiap rak</li>
+                        <li>🤖 <strong>Eloquent</strong> = petugas yang mengambil/menyimpan arsip untuk kamu</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- ==================== -->
+
+            <h2>1️⃣ Setup Database (.env)</h2>
+
+            <p>Buka file <code>.env</code> di root project Laravel. Pastikan pengaturan database sesuai:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">.env (root project)</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-variable">DB_CONNECTION</span>=<span class="code-string">mysql</span>
+<span class="code-variable">DB_HOST</span>=<span class="code-string">127.0.0.1</span>
+<span class="code-variable">DB_PORT</span>=<span class="code-string">3306</span>
+<span class="code-variable">DB_DATABASE</span>=<span class="code-string">perpustakaan</span>    <span class="code-comment"># ← nama database kamu</span>
+<span class="code-variable">DB_USERNAME</span>=<span class="code-string">root</span>
+<span class="code-variable">DB_PASSWORD</span>=                 <span class="code-comment"># ← kosong di Laragon</span></pre>
+                </div>
+            </div>
+
+            <div class="alert alert-warning">
+                <span class="alert-icon">⚠️</span>
+                <div>
+                    <h4>Jangan Lupa Buat Database Dulu!</h4>
+                    <p>Buka <strong>HeidiSQL</strong> (bawaan Laragon) → klik kanan → <strong>Create new →
+                            Database</strong> → ketik nama "perpustakaan" → OK</p>
+                    <p style="margin-top:0.5rem;">Atau lewat terminal: masuk ke MySQL lalu ketik
+                        <code>CREATE DATABASE perpustakaan;</code>
                     </p>
                 </div>
             </div>
 
+            <!-- ==================== -->
+
+            <h2>2️⃣ Migration — Membuat Tabel</h2>
+
+            <p>Migration = "blueprint" tabel database yang ditulis dalam PHP. Dengan migration, kamu bisa membuat,
+                mengubah, dan menghapus tabel tanpa query SQL manual!</p>
+
+            <h3>Langkah 1: Buat Migration + Model Sekaligus</h3>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">Terminal</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-comment"># -m artinya sekaligus buat migration</span>
+php artisan make:model Book -m</pre>
+                </div>
+            </div>
+
+            <div class="alert alert-info">
+                <span class="alert-icon">📂</span>
+                <div>
+                    <h4>Perintah ini membuat 2 file:</h4>
+                    <div class="code-block" style="margin-top:0.5rem;">
+                        <div class="code-body">
+                            <pre>📦 project-laravel/
+├── app/Models/
+│   └── <span class="code-function">Book.php</span>                              <span class="code-comment">← Model</span>
+└── database/migrations/
+    └── <span class="code-string">2024_01_15_create_books_table.php</span>     <span class="code-comment">← Migration</span></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Langkah 2: Isi Migration</h3>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">database/migrations/xxxx_create_books_table.php</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-keyword">public function</span> <span class="code-function">up</span>(): <span class="code-keyword">void</span>
+{
+    Schema::create(<span class="code-string">'books'</span>, <span class="code-keyword">function</span> (Blueprint <span class="code-variable">$table</span>) {
+        <span class="code-variable">$table</span>->id();                          <span class="code-comment">// kolom ID auto-increment</span>
+        <span class="code-variable">$table</span>->string(<span class="code-string">'title'</span>);               <span class="code-comment">// judul buku (VARCHAR)</span>
+        <span class="code-variable">$table</span>->string(<span class="code-string">'author'</span>);              <span class="code-comment">// penulis</span>
+        <span class="code-variable">$table</span>->text(<span class="code-string">'description'</span>)->nullable(); <span class="code-comment">// deskripsi (boleh kosong)</span>
+        <span class="code-variable">$table</span>->integer(<span class="code-string">'year'</span>);               <span class="code-comment">// tahun terbit</span>
+        <span class="code-variable">$table</span>->boolean(<span class="code-string">'is_available'</span>)->default(<span class="code-keyword">true</span>); <span class="code-comment">// status tersedia</span>
+        <span class="code-variable">$table</span>->timestamps();                  <span class="code-comment">// created_at & updated_at</span>
+    });
+}</pre>
+                </div>
+            </div>
+
+            <h3>Tipe Kolom yang Sering Dipakai</h3>
+
+            <table class="comparison-table">
+                <tr>
+                    <th>Method</th>
+                    <th>Tipe SQL</th>
+                    <th>Contoh Data</th>
+                </tr>
+                <tr>
+                    <td><code>$table->string('nama')</code></td>
+                    <td>VARCHAR(255)</td>
+                    <td>"Harry Potter"</td>
+                </tr>
+                <tr>
+                    <td><code>$table->text('isi')</code></td>
+                    <td>TEXT (panjang)</td>
+                    <td>Deskripsi, konten</td>
+                </tr>
+                <tr>
+                    <td><code>$table->integer('stok')</code></td>
+                    <td>INT</td>
+                    <td>25, 100</td>
+                </tr>
+                <tr>
+                    <td><code>$table->boolean('aktif')</code></td>
+                    <td>TINYINT(1)</td>
+                    <td>true / false</td>
+                </tr>
+                <tr>
+                    <td><code>$table->date('tanggal')</code></td>
+                    <td>DATE</td>
+                    <td>2024-01-15</td>
+                </tr>
+                <tr>
+                    <td><code>$table->timestamps()</code></td>
+                    <td>2 kolom TIMESTAMP</td>
+                    <td>created_at, updated_at</td>
+                </tr>
+            </table>
+
+            <h3>Langkah 3: Jalankan Migration</h3>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">Terminal</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-comment"># Jalankan semua migration yang belum dijalankan</span>
+php artisan migrate
+
+<span class="code-comment"># Kalau mau reset dan jalankan ulang semua migration</span>
+php artisan migrate:fresh</pre>
+                </div>
+            </div>
+
+            <!-- ==================== -->
+
+            <h2>3️⃣ Model — Penghubung ke Tabel</h2>
+
+            <p>Model Eloquent = class PHP yang merepresentasikan satu tabel database. Setiap baris di tabel = satu
+                object model.</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">app/Models/Book.php</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-keyword">namespace</span> App\Models;
+
+<span class="code-keyword">use</span> Illuminate\Database\Eloquent\Model;
+
+<span class="code-keyword">class</span> <span class="code-class">Book</span> <span class="code-keyword">extends</span> Model
+{
+    <span class="code-comment">// Kolom yang boleh diisi massal (mass assignment)</span>
+    <span class="code-keyword">protected</span> <span class="code-variable">$fillable</span> = [
+        <span class="code-string">'title'</span>,
+        <span class="code-string">'author'</span>,
+        <span class="code-string">'description'</span>,
+        <span class="code-string">'year'</span>,
+        <span class="code-string">'is_available'</span>,
+    ];
+}</pre>
+                </div>
+            </div>
+
+            <div class="alert alert-warning">
+                <span class="alert-icon">⚠️</span>
+                <div>
+                    <h4>Kenapa $fillable Penting?</h4>
+                    <p>Tanpa <code>$fillable</code>, Laravel akan menolak <code>Book::create([...])</code> demi
+                        <strong>keamanan</strong>. Hanya kolom yang didaftarkan di <code>$fillable</code> yang boleh
+                        diisi lewat array.
+                    </p>
+                    <p style="margin-top:0.5rem;color:#DC2626;">Ini mencegah hacker menyisipkan data ke kolom yang tidak
+                        seharusnya!</p>
+                </div>
+            </div>
+
+            <h3>Penamaan otomatis Laravel</h3>
+
+            <table class="comparison-table">
+                <tr>
+                    <th>Nama Model</th>
+                    <th>Nama Tabel (otomatis)</th>
+                    <th>Aturan</th>
+                </tr>
+                <tr>
+                    <td><code>Book</code></td>
+                    <td><code>books</code></td>
+                    <td>Singular → Plural</td>
+                </tr>
+                <tr>
+                    <td><code>User</code></td>
+                    <td><code>users</code></td>
+                    <td>Singular → Plural</td>
+                </tr>
+                <tr>
+                    <td><code>Category</code></td>
+                    <td><code>categories</code></td>
+                    <td>Singular → Plural</td>
+                </tr>
+                <tr>
+                    <td><code>BookCategory</code></td>
+                    <td><code>book_categories</code></td>
+                    <td>CamelCase → snake_case + Plural</td>
+                </tr>
+            </table>
+
+            <!-- ==================== -->
+
+            <h2>4️⃣ Eloquent CRUD — Cheat Sheet</h2>
+
+            <p>Eloquent membuat operasi database semudah menulis PHP biasa. Tidak perlu query SQL!</p>
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1.5rem 0;">
+                <div style="padding:1.5rem;background:#D1FAE5;border-radius:12px;border-left:4px solid #10B981;">
+                    <h4 style="margin:0 0 0.75rem;color:#059669;">➕ CREATE (Tambah)</h4>
+                    <div class="code-block" style="margin:0;">
+                        <div class="code-body">
+                            <pre>Book::create([
+    'title' => 'Laravel',
+    'author' => 'Taylor',
+    'year' => 2024,
+]);</pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="padding:1.5rem;background:#DBEAFE;border-radius:12px;border-left:4px solid #3B82F6;">
+                    <h4 style="margin:0 0 0.75rem;color:#2563EB;">👁️ READ (Baca)</h4>
+                    <div class="code-block" style="margin:0;">
+                        <div class="code-body">
+                            <pre>Book::all();         // Semua
+Book::find(1);       // By ID
+Book::latest()->get(); // Terbaru
+Book::where('year', 2024)
+    ->get();         // Filter</pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="padding:1.5rem;background:#FEF3C7;border-radius:12px;border-left:4px solid #F59E0B;">
+                    <h4 style="margin:0 0 0.75rem;color:#D97706;">✏️ UPDATE (Ubah)</h4>
+                    <div class="code-block" style="margin:0;">
+                        <div class="code-body">
+                            <pre>$book = Book::find(1);
+$book->update([
+    'title' => 'Laravel 11',
+    'year' => 2025,
+]);</pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="padding:1.5rem;background:#FEE2E2;border-radius:12px;border-left:4px solid #EF4444;">
+                    <h4 style="margin:0 0 0.75rem;color:#DC2626;">🗑️ DELETE (Hapus)</h4>
+                    <div class="code-block" style="margin:0;">
+                        <div class="code-body">
+                            <pre>$book = Book::find(1);
+$book->delete();
+
+// Atau langsung:
+Book::destroy(1);</pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== -->
+
+            <h2>5️⃣ Eloquent di Livewire</h2>
+
+            <p>Sekarang kita gabungkan Eloquent dengan Livewire — data tersimpan permanen di database!</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">app/Livewire/BookList.php</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-keyword">namespace</span> App\Livewire;
+
+<span class="code-keyword">use</span> Livewire\Component;
+<span class="code-keyword">use</span> App\Models\Book;
+
+<span class="code-keyword">class</span> <span class="code-class">BookList</span> <span class="code-keyword">extends</span> Component
+{
+    <span class="code-keyword">public</span> <span class="code-variable">$title</span> = <span class="code-string">''</span>;
+    <span class="code-keyword">public</span> <span class="code-variable">$author</span> = <span class="code-string">''</span>;
+
+    <span class="code-comment">// CREATE — Tambah buku baru ke database</span>
+    <span class="code-keyword">public function</span> <span class="code-function">addBook</span>()
+    {
+        Book::create([
+            <span class="code-string">'title'</span>  => <span class="code-variable">$this</span>->title,
+            <span class="code-string">'author'</span> => <span class="code-variable">$this</span>->author,
+            <span class="code-string">'year'</span>   => date(<span class="code-string">'Y'</span>),
+        ]);
+
+        <span class="code-comment">// Kosongkan form setelah submit</span>
+        <span class="code-variable">$this</span>->title = <span class="code-string">''</span>;
+        <span class="code-variable">$this</span>->author = <span class="code-string">''</span>;
+    }
+
+    <span class="code-comment">// DELETE — Hapus buku dari database</span>
+    <span class="code-keyword">public function</span> <span class="code-function">deleteBook</span>(<span class="code-variable">$id</span>)
+    {
+        Book::find(<span class="code-variable">$id</span>)->delete();
+    }
+
+    <span class="code-comment">// READ — Ambil semua buku, tampilkan di view</span>
+    <span class="code-keyword">public function</span> <span class="code-function">render</span>()
+    {
+        <span class="code-keyword">return</span> view(<span class="code-string">'livewire.book-list'</span>, [
+            <span class="code-string">'books'</span> => Book::latest()->get()
+        ]);
+    }
+}</pre>
+                </div>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">resources/views/livewire/book-list.blade.php</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-tag">&lt;div&gt;</span>
+    <span class="code-comment">&lt;!-- Form tambah buku --&gt;</span>
+    <span class="code-tag">&lt;form</span> <span class="code-attribute">wire:submit</span>=<span class="code-string">"addBook"</span><span class="code-tag">&gt;</span>
+        <span class="code-tag">&lt;input</span> <span class="code-attribute">wire:model</span>=<span class="code-string">"title"</span> <span class="code-attribute">placeholder</span>=<span class="code-string">"Judul buku..."</span><span class="code-tag">&gt;</span>
+        <span class="code-tag">&lt;input</span> <span class="code-attribute">wire:model</span>=<span class="code-string">"author"</span> <span class="code-attribute">placeholder</span>=<span class="code-string">"Nama penulis..."</span><span class="code-tag">&gt;</span>
+        <span class="code-tag">&lt;button</span> <span class="code-attribute">type</span>=<span class="code-string">"submit"</span><span class="code-tag">&gt;</span>➕ Tambah Buku<span class="code-tag">&lt;/button&gt;</span>
+    <span class="code-tag">&lt;/form&gt;</span>
+
+    <span class="code-comment">&lt;!-- Daftar buku dari database --&gt;</span>
+    <span class="code-keyword">@forelse</span>(<span class="code-variable">$books</span> as <span class="code-variable">$book</span>)
+        <span class="code-tag">&lt;div style="display:flex;justify-content:space-between;padding:0.75rem;border-bottom:1px solid #eee;"&gt;</span>
+            <span class="code-tag">&lt;div&gt;</span>
+                <span class="code-tag">&lt;strong&gt;</span>{{ <span class="code-variable">$book</span>->title }}<span class="code-tag">&lt;/strong&gt;</span>
+                <span class="code-tag">&lt;small&gt;</span>oleh {{ <span class="code-variable">$book</span>->author }}<span class="code-tag">&lt;/small&gt;</span>
+            <span class="code-tag">&lt;/div&gt;</span>
+            <span class="code-tag">&lt;button</span> <span class="code-attribute">wire:click</span>=<span class="code-string">"deleteBook({{ $book->id }})"</span><span class="code-tag">&gt;</span>🗑️<span class="code-tag">&lt;/button&gt;</span>
+        <span class="code-tag">&lt;/div&gt;</span>
+    <span class="code-keyword">@empty</span>
+        <span class="code-tag">&lt;p&gt;</span>📭 Belum ada buku. Tambahkan yang pertama!<span class="code-tag">&lt;/p&gt;</span>
+    <span class="code-keyword">@endforelse</span>
+<span class="code-tag">&lt;/div&gt;</span></pre>
+                </div>
+            </div>
+
+            <div class="alert alert-tip">
+                <span class="alert-icon">✨</span>
+                <div>
+                    <h4>Sekarang Data Permanen!</h4>
+                    <p>Coba refresh halaman — data buku <strong>tetap ada</strong> karena tersimpan di database MySQL.
+                        Bandingkan dengan contoh Todo List di materi sebelumnya yang datanya hilang saat refresh!</p>
+                </div>
+            </div>
+
+            <!-- ==================== KESALAHAN UMUM ==================== -->
+
+            <div class="common-mistakes">
+                <h3>⚠️ Kesalahan Umum Pemula</h3>
+
+                <div class="mistake-item">
+                    <h4>❌ Lupa mendaftarkan kolom di $fillable</h4>
+                    <p><code>Book::create([...])</code> gagal dengan error "Mass Assignment" karena kolom tidak ada di
+                        <code>$fillable</code>.
+                    </p>
+                    <p class="solution">✅ Solusi: Pastikan semua kolom yang ingin diisi lewat <code>create()</code> ada
+                        di array <code>$fillable</code> pada model.</p>
+                </div>
+
+                <div class="mistake-item">
+                    <h4>❌ Lupa jalankan php artisan migrate</h4>
+                    <p>Sudah buat migration tapi tabel belum ada di database → error "table not found".</p>
+                    <p class="solution">✅ Solusi: Selalu jalankan <code>php artisan migrate</code> setelah membuat atau
+                        mengubah migration.</p>
+                </div>
+
+                <div class="mistake-item">
+                    <h4>❌ Database belum dibuat di MySQL</h4>
+                    <p>File <code>.env</code> mengarah ke database "perpustakaan" tapi database belum dibuat → error
+                        koneksi.</p>
+                    <p class="solution">✅ Solusi: Buat database dulu lewat HeidiSQL atau terminal sebelum menjalankan
+                        migrate.</p>
+                </div>
+
+                <div class="mistake-item">
+                    <h4>❌ Nama model tidak sesuai konvensi</h4>
+                    <p>Model harus <strong>singular + PascalCase</strong>: <code>Book</code> (bukan <code>Books</code>
+                        atau <code>book</code>).</p>
+                    <p class="solution">✅ Solusi: Gunakan <code>php artisan make:model NamaModel -m</code> agar Laravel
+                        yang atur penamaan.</p>
+                </div>
+            </div>
+
+            <!-- ==================== RINGKASAN ==================== -->
+
+            <div class="summary-box">
+                <h3>📋 Ringkasan Materi</h3>
+                <ul>
+                    <li>Database = penyimpanan data permanen (tidak hilang saat refresh)</li>
+                    <li><strong>.env</strong> = file konfigurasi koneksi database</li>
+                    <li><strong>Migration</strong> = blueprint tabel dalam PHP
+                        (<code>php artisan make:model Nama -m</code>)</li>
+                    <li><strong>Model</strong> = class PHP yang merepresentasikan tabel database</li>
+                    <li><strong>$fillable</strong> = daftar kolom yang boleh diisi massal (keamanan)</li>
+                    <li><strong>Eloquent CRUD</strong>: <code>create()</code>, <code>all()</code>, <code>find()</code>,
+                        <code>update()</code>, <code>delete()</code>
+                    </li>
+                    <li>Di Livewire, ambil data di <code>render()</code> dan kirim ke view lewat parameter kedua
+                        <code>view()</code>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- ==================== LATIHAN ==================== -->
+
+            <h2>📝 Latihan</h2>
+
+            <div class="exercise-section">
+                <div class="exercise-level basic">
+                    <h4>🟢 Level 1 — Memahami</h4>
+                    <ol>
+                        <li>Apa perbedaan data di property Livewire ($todos = []) dan data di database?</li>
+                        <li>Sebutkan 3 langkah untuk membuat tabel baru! (petunjuk: make:model → isi migration →
+                            migrate)</li>
+                        <li>Kalau model bernama <code>Student</code>, apa nama tabel-nya otomatis di database?</li>
+                    </ol>
+                </div>
+
+                <div class="exercise-level intermediate">
+                    <h4>🔵 Level 2 — Praktik</h4>
+                    <ol>
+                        <li>Buat model <strong>"Student"</strong> dengan kolom: nama, kelas, jurusan, no_absen. Jalankan
+                            migration dan cek di HeidiSQL.</li>
+                        <li>Buat komponen Livewire <strong>"StudentList"</strong> yang menampilkan semua siswa dari
+                            database, dengan form tambah siswa baru.</li>
+                        <li>Tambahkan tombol hapus 🗑️ di setiap baris siswa.</li>
+                    </ol>
+                </div>
+
+                <div class="exercise-level challenge">
+                    <h4>🟣 Level 3 — Tantangan</h4>
+                    <ol>
+                        <li>Tambahkan fitur <strong>filter by kelas</strong> di StudentList — user bisa memilih dropdown
+                            kelas X/XI/XII dan hanya siswa dari kelas itu yang ditampilkan.</li>
+                        <li>Apa yang terjadi kalau kamu lupa menambahkan kolom ke <code>$fillable</code> tapi tetap
+                            memakai <code>create()</code>? Coba dan jelaskan error-nya!</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- ==================== NAVIGASI ==================== -->
+
             <div class="content-nav">
-                <a href="crud-sederhana.html" class="nav-btn">
+                <a href="wire-click.html" class="nav-btn">
                     <div>
                         <div class="nav-btn-label">Sebelumnya</div>
-                        <div class="nav-btn-title">← CRUD Sederhana</div>
+                        <div class="nav-btn-title">← wire:click</div>
                     </div>
                 </a>
-                <a href="../minggu-3/upload-file.html" class="nav-btn">
+                <a href="validasi.html" class="nav-btn">
                     <div>
-                        <div class="nav-btn-label">Minggu 3</div>
-                        <div class="nav-btn-title">Upload File →</div>
+                        <div class="nav-btn-label">Selanjutnya</div>
+                        <div class="nav-btn-title">Validasi →</div>
                     </div>
                 </a>
             </div>
         </main>
     </div>
+
+    <button class="sidebar-toggle-mobile"
+        onclick="document.querySelector('.sidebar').classList.toggle('active')">📚</button>
     <script src="../../js/app.js"></script>
 </body>
 

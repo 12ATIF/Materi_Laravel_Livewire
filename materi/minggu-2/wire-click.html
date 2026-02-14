@@ -31,9 +31,10 @@
             <ul class="navbar-menu">
                 <li><a href="../../index.html">Beranda</a></li>
                 <li><a href="../../silabus.html">Silabus</a></li>
-                <li><a href="#" class="active">Materi</a></li>
+                <li><a href="../minggu-1/pengenalan-laravel.html" class="active">Materi</a></li>
                 <li><a href="../../demo.html">Demo</a></li>
             </ul>
+            <button class="navbar-toggle" aria-label="Toggle menu"><span>☰</span></button>
         </div>
     </nav>
 
@@ -45,10 +46,10 @@
                     <li><a href="../minggu-1/pengenalan-laravel.html">Pengenalan Laravel</a></li>
                     <li><a href="../minggu-1/mvc-sederhana.html">MVC Sederhana</a></li>
                     <li><a href="../minggu-1/instalasi-laravel.html">Instalasi Laravel</a></li>
-                    <li><a href="../minggu-1/autentikasi.html">🔐 Autentikasi</a></li>
                     <li><a href="../minggu-1/blade-template.html">Blade Template</a></li>
                     <li><a href="../minggu-1/pengenalan-livewire.html">Pengenalan Livewire</a></li>
                     <li><a href="../minggu-1/struktur-component.html">Struktur Component</a></li>
+                    <li><a href="../minggu-1/autentikasi.html">🔐 Autentikasi</a></li>
                 </ul>
             </div>
             <div class="sidebar-section">
@@ -56,56 +57,126 @@
                 <ul class="sidebar-nav">
                     <li><a href="wire-model.html">wire:model</a></li>
                     <li><a href="wire-click.html" class="active">wire:click</a></li>
+                    <li><a href="database-eloquent.html">Database & Eloquent</a></li>
                     <li><a href="validasi.html">Validasi</a></li>
                     <li><a href="crud-sederhana.html">CRUD Sederhana</a></li>
-                    <li><a href="database-eloquent.html">Database & Eloquent</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-title">📕 Minggu 3</div>
+                <ul class="sidebar-nav">
+                    <li><a href="../minggu-3/upload-file.html">Upload File</a></li>
+                    <li><a href="../minggu-3/pagination-search.html">Pagination & Search</a></li>
+                    <li><a href="../minggu-3/komponen-reusable.html">Komponen Reusable</a></li>
+                    <li><a href="../minggu-3/tampilan-dinamis.html">Tampilan Dinamis</a></li>
+                    <li><a href="../minggu-3/project-elibrary.html">📚 Tutorial E-Library</a></li>
                 </ul>
             </div>
         </aside>
 
         <main class="main-content">
             <div class="content-header">
-                <h1 class="content-title">2.2 Event (wire:click)</h1>
+                <div class="content-breadcrumb">
+                    <a href="../../index.html">Beranda</a> / <a href="../../silabus.html">Silabus</a> / Minggu 2 /
+                    wire:click
+                </div>
+                <h1 class="content-title">2.2 Event Handling (wire:click & lainnya)</h1>
                 <div class="content-meta">
                     <span>📘 Minggu 2</span>
-                    <span>⏱️ 20 menit</span>
+                    <span>⏱️ 25 menit</span>
+                    <span>📖 Teori + Praktik</span>
                 </div>
             </div>
 
-            <div class="objectives">
-                <h3>🎯 Tujuan Belajar</h3>
+            <!-- Prasyarat -->
+            <div class="prerequisites">
+                <h3>📌 Prasyarat</h3>
                 <ul>
-                    <li>Handle event klik dengan wire:click</li>
-                    <li>Passing parameter ke method</li>
-                    <li>Mengenal event lain (submit, keydown, dll)</li>
+                    <li>Sudah paham <a href="wire-model.html">wire:model</a> (binding data input ke property)</li>
+                    <li>Sudah paham <a href="../minggu-1/struktur-component.html">Struktur Component</a> (property,
+                        method, render)</li>
                 </ul>
             </div>
 
-            <h2>Apa itu wire:click?</h2>
-            <p><code>wire:click</code> memungkinkan kamu memanggil method PHP langsung dari tombol HTML. Tanpa perlu
-                JavaScript!</p>
+            <!-- Tujuan Belajar -->
+            <div class="objectives">
+                <h3>🎯 Tujuan Belajar</h3>
+                <p>Setelah menyelesaikan materi ini, kamu akan mampu:</p>
+                <ul>
+                    <li>Menggunakan <strong>wire:click</strong> untuk memanggil method PHP dari tombol HTML</li>
+                    <li>Mengirim <strong>parameter</strong> ke method lewat wire:click</li>
+                    <li>Menggunakan <strong>wire:submit</strong> untuk form</li>
+                    <li>Mengenal event lain: <code>wire:keydown</code>, <code>wire:change</code>, dll</li>
+                    <li>Menggunakan <strong>modifier</strong> event: <code>.prevent</code>, <code>.self</code></li>
+                </ul>
+            </div>
 
-            <h2>Contoh Dasar</h2>
+            <!-- ==================== KONTEN ==================== -->
+
+            <h2>🖱️ Apa itu wire:click?</h2>
+
+            <p>Di materi sebelumnya, <code>wire:model</code> menghubungkan <strong>data</strong> (property). Sekarang
+                <code>wire:click</code> menghubungkan <strong>aksi</strong> (method). Saat tombol diklik → method PHP
+                dijalankan → tampilan diupdate. Tanpa JavaScript sama sekali!
+            </p>
+
+            <div class="alert alert-tip">
+                <span class="alert-icon">🎮</span>
+                <div>
+                    <h4>Analogi: Remote TV</h4>
+                    <p>Bayangkan tombol remote TV:</p>
+                    <ul style="margin-top:0.5rem;">
+                        <li>Tombol <strong>Volume +</strong> → TV menaikkan volume → tampilan volume berubah</li>
+                        <li>Tombol <strong>Channel ▲</strong> → TV pindah channel → tampilan channel berubah</li>
+                    </ul>
+                    <p style="margin-top:0.5rem;"><code>wire:click</code> = tombol remote yang menjalankan "perintah"
+                        (method) di "TV" (server PHP)!</p>
+                </div>
+            </div>
+
+            <h3>Alur wire:click</h3>
+
+            <div class="diagram-flow">
+                <div class="flow-item">👆 User Klik<br><small>tombol</small></div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-item highlight">🔗 wire:click<br><small>kirim ke server</small></div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-item">⚙️ Method PHP<br><small>proses logika</small></div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-item highlight">🔄 Re-render<br><small>update tampilan</small></div>
+            </div>
+
+            <!-- ==================== -->
+
+            <h2>📝 Contoh 1: Counter Sederhana</h2>
+
             <div class="code-block">
                 <div class="code-header">
                     <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
                             class="code-dot"></span></div>
-                    <span class="code-filename">Counter.php</span>
+                    <span class="code-filename">app/Livewire/Counter.php</span>
                     <button class="code-copy">Salin</button>
                 </div>
                 <div class="code-body">
                     <pre><span class="code-keyword">class</span> <span class="code-class">Counter</span> <span class="code-keyword">extends</span> Component
 {
-    <span class="code-keyword">public</span> <span class="code-variable">$count</span> = 0;
-    
+    <span class="code-keyword">public</span> <span class="code-variable">$count</span> = <span class="code-number">0</span>;
+
     <span class="code-keyword">public function</span> <span class="code-function">increment</span>()
     {
-        $this->count++;
+        <span class="code-variable">$this</span>->count++;
     }
-    
+
     <span class="code-keyword">public function</span> <span class="code-function">decrement</span>()
     {
-        $this->count--;
+        <span class="code-keyword">if</span> (<span class="code-variable">$this</span>->count > <span class="code-number">0</span>) {
+            <span class="code-variable">$this</span>->count--;
+        }
+    }
+
+    <span class="code-keyword">public function</span> <span class="code-function">resetCounter</span>()
+    {
+        <span class="code-variable">$this</span>->count = <span class="code-number">0</span>;
     }
 }</pre>
                 </div>
@@ -115,68 +186,385 @@
                 <div class="code-header">
                     <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
                             class="code-dot"></span></div>
-                    <span class="code-filename">counter.blade.php</span>
+                    <span class="code-filename">resources/views/livewire/counter.blade.php</span>
                     <button class="code-copy">Salin</button>
                 </div>
                 <div class="code-body">
-                    <pre><span class="code-tag">&lt;div&gt;</span>
-    <span class="code-tag">&lt;button</span> <span class="code-attr">wire:click</span>=<span class="code-string">"decrement"</span><span class="code-tag">&gt;</span>-<span class="code-tag">&lt;/button&gt;</span>
-    <span class="code-tag">&lt;span&gt;</span>{{ $count }}<span class="code-tag">&lt;/span&gt;</span>
-    <span class="code-tag">&lt;button</span> <span class="code-attr">wire:click</span>=<span class="code-string">"increment"</span><span class="code-tag">&gt;</span>+<span class="code-tag">&lt;/button&gt;</span>
+                    <pre><span class="code-tag">&lt;div style="text-align:center;"&gt;</span>
+    <span class="code-tag">&lt;h2&gt;</span>{{ <span class="code-variable">$count</span> }}<span class="code-tag">&lt;/h2&gt;</span>
+
+    <span class="code-tag">&lt;button</span> <span class="code-attribute">wire:click</span>=<span class="code-string">"decrement"</span><span class="code-tag">&gt;</span>➖ Kurang<span class="code-tag">&lt;/button&gt;</span>
+    <span class="code-tag">&lt;button</span> <span class="code-attribute">wire:click</span>=<span class="code-string">"resetCounter"</span><span class="code-tag">&gt;</span>🔄 Reset<span class="code-tag">&lt;/button&gt;</span>
+    <span class="code-tag">&lt;button</span> <span class="code-attribute">wire:click</span>=<span class="code-string">"increment"</span><span class="code-tag">&gt;</span>➕ Tambah<span class="code-tag">&lt;/button&gt;</span>
 <span class="code-tag">&lt;/div&gt;</span></pre>
                 </div>
             </div>
 
-            <h2>Passing Parameter</h2>
+            <!-- ==================== -->
+
+            <h2>📦 Mengirim Parameter</h2>
+
+            <p>Method bisa menerima parameter langsung dari view — sangat berguna untuk aksi pada item tertentu!</p>
+
             <div class="code-block">
                 <div class="code-header">
                     <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
                             class="code-dot"></span></div>
-                    <span class="code-filename">Contoh dengan Parameter</span>
+                    <span class="code-filename">app/Livewire/BookFilter.php</span>
                     <button class="code-copy">Salin</button>
                 </div>
                 <div class="code-body">
-                    <pre><span class="code-comment">&lt;!-- Blade --&gt;</span>
-<span class="code-tag">&lt;button</span> <span class="code-attr">wire:click</span>=<span class="code-string">"setCategory('fiction')"</span><span class="code-tag">&gt;</span>Fiksi<span class="code-tag">&lt;/button&gt;</span>
-<span class="code-tag">&lt;button</span> <span class="code-attr">wire:click</span>=<span class="code-string">"setCategory('non-fiction')"</span><span class="code-tag">&gt;</span>Non-Fiksi<span class="code-tag">&lt;/button&gt;</span>
-
-<span class="code-comment">// PHP</span>
-<span class="code-keyword">public function</span> <span class="code-function">setCategory</span>($category)
+                    <pre><span class="code-keyword">class</span> <span class="code-class">BookFilter</span> <span class="code-keyword">extends</span> Component
 {
-    $this->category = $category;
+    <span class="code-keyword">public</span> <span class="code-variable">$category</span> = <span class="code-string">'semua'</span>;
+
+    <span class="code-comment">// Method menerima parameter dari view</span>
+    <span class="code-keyword">public function</span> <span class="code-function">setCategory</span>(<span class="code-variable">$cat</span>)
+    {
+        <span class="code-variable">$this</span>->category = <span class="code-variable">$cat</span>;
+    }
 }</pre>
                 </div>
             </div>
 
-            <h2>Event Lainnya</h2>
-            <table style="width:100%;border-collapse:collapse;margin:1.5rem 0;">
-                <tr style="background:#F3F4F6;">
-                    <th style="padding:1rem;text-align:left;border:1px solid #E5E7EB;">Event</th>
-                    <th style="padding:1rem;text-align:left;border:1px solid #E5E7EB;">Kegunaan</th>
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">resources/views/livewire/book-filter.blade.php</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-tag">&lt;div&gt;</span>
+    <span class="code-tag">&lt;h3&gt;</span>Filter Buku: <span class="code-tag">&lt;strong&gt;</span>{{ <span class="code-variable">$category</span> }}<span class="code-tag">&lt;/strong&gt;</span><span class="code-tag">&lt;/h3&gt;</span>
+
+    <span class="code-comment">&lt;!-- Kirim string sebagai parameter --&gt;</span>
+    <span class="code-tag">&lt;button</span> <span class="code-attribute">wire:click</span>=<span class="code-string">"setCategory('semua')"</span><span class="code-tag">&gt;</span>📚 Semua<span class="code-tag">&lt;/button&gt;</span>
+    <span class="code-tag">&lt;button</span> <span class="code-attribute">wire:click</span>=<span class="code-string">"setCategory('fiksi')"</span><span class="code-tag">&gt;</span>📖 Fiksi<span class="code-tag">&lt;/button&gt;</span>
+    <span class="code-tag">&lt;button</span> <span class="code-attribute">wire:click</span>=<span class="code-string">"setCategory('sains')"</span><span class="code-tag">&gt;</span>🔬 Sains<span class="code-tag">&lt;/button&gt;</span>
+    <span class="code-tag">&lt;button</span> <span class="code-attribute">wire:click</span>=<span class="code-string">"setCategory('sejarah')"</span><span class="code-tag">&gt;</span>🏛️ Sejarah<span class="code-tag">&lt;/button&gt;</span>
+<span class="code-tag">&lt;/div&gt;</span></pre>
+                </div>
+            </div>
+
+            <div class="alert alert-info">
+                <span class="alert-icon">🔍</span>
+                <div>
+                    <h4>Cara Kerja Parameter</h4>
+                    <ul>
+                        <li><code>wire:click="setCategory('fiksi')"</code> → memanggil method <code>setCategory</code>
+                            dan mengirim string <code>'fiksi'</code> sebagai argumen <code>$cat</code></li>
+                        <li>Bisa kirim angka juga: <code>wire:click="setPage(2)"</code></li>
+                        <li>Bisa kirim variabel: <code>wire:click="delete({{ $book->id }})"</code></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- ==================== -->
+
+            <h2>📋 wire:submit — Event Form</h2>
+
+            <p>Untuk form, gunakan <code>wire:submit</code> alih-alih <code>wire:click</code> pada tombol submit:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">Contoh wire:submit</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-comment">&lt;!-- ✅ Cara yang Benar --&gt;</span>
+<span class="code-tag">&lt;form</span> <span class="code-attribute">wire:submit</span>=<span class="code-string">"simpan"</span><span class="code-tag">&gt;</span>
+    <span class="code-tag">&lt;input</span> <span class="code-attribute">wire:model</span>=<span class="code-string">"nama"</span> <span class="code-attribute">placeholder</span>=<span class="code-string">"Nama"</span><span class="code-tag">&gt;</span>
+    <span class="code-tag">&lt;input</span> <span class="code-attribute">wire:model</span>=<span class="code-string">"email"</span> <span class="code-attribute">placeholder</span>=<span class="code-string">"Email"</span><span class="code-tag">&gt;</span>
+    <span class="code-tag">&lt;button</span> <span class="code-attribute">type</span>=<span class="code-string">"submit"</span><span class="code-tag">&gt;</span>💾 Simpan<span class="code-tag">&lt;/button&gt;</span>
+<span class="code-tag">&lt;/form&gt;</span>
+
+<span class="code-comment">&lt;!-- ❌ Kurang tepat: pakai wire:click di tombol submit --&gt;</span>
+<span class="code-tag">&lt;form&gt;</span>
+    <span class="code-tag">&lt;input</span> <span class="code-attribute">wire:model</span>=<span class="code-string">"nama"</span><span class="code-tag">&gt;</span>
+    <span class="code-tag">&lt;button</span> <span class="code-attribute">wire:click</span>=<span class="code-string">"simpan"</span><span class="code-tag">&gt;</span>Simpan<span class="code-tag">&lt;/button&gt;</span>
+<span class="code-tag">&lt;/form&gt;</span></pre>
+                </div>
+            </div>
+
+            <div class="alert alert-tip">
+                <span class="alert-icon">💡</span>
+                <div>
+                    <h4>Kenapa wire:submit lebih baik?</h4>
+                    <ul style="margin-top:0.5rem;">
+                        <li><code>wire:submit</code> otomatis mencegah reload halaman (sama seperti
+                            <code>e.preventDefault()</code> di JavaScript)
+                        </li>
+                        <li>User bisa submit form dengan menekan <strong>Enter</strong>, tidak hanya klik tombol</li>
+                        <li>Livewire 3 otomatis menambahkan <code>prevent</code> ke <code>wire:submit</code></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- ==================== -->
+
+            <h2>🎛️ Event Lainnya</h2>
+
+            <p>Selain click dan submit, Livewire mendukung banyak event HTML:</p>
+
+            <table class="comparison-table">
+                <tr>
+                    <th>Event Livewire</th>
+                    <th>Trigger</th>
+                    <th>Contoh Penggunaan</th>
                 </tr>
                 <tr>
-                    <td style="padding:1rem;border:1px solid #E5E7EB;"><code>wire:click</code></td>
-                    <td style="padding:1rem;border:1px solid #E5E7EB;">Saat diklik</td>
+                    <td><code>wire:click</code></td>
+                    <td>Saat elemen diklik</td>
+                    <td>Tombol, link, card</td>
                 </tr>
                 <tr>
-                    <td style="padding:1rem;border:1px solid #E5E7EB;"><code>wire:submit</code></td>
-                    <td style="padding:1rem;border:1px solid #E5E7EB;">Saat form disubmit</td>
+                    <td><code>wire:submit</code></td>
+                    <td>Saat form disubmit</td>
+                    <td>Simpan data, login</td>
                 </tr>
                 <tr>
-                    <td style="padding:1rem;border:1px solid #E5E7EB;"><code>wire:keydown.enter</code></td>
-                    <td style="padding:1rem;border:1px solid #E5E7EB;">Saat tekan Enter</td>
+                    <td><code>wire:keydown</code></td>
+                    <td>Saat tombol keyboard ditekan</td>
+                    <td>Shortcut keyboard</td>
                 </tr>
                 <tr>
-                    <td style="padding:1rem;border:1px solid #E5E7EB;"><code>wire:change</code></td>
-                    <td style="padding:1rem;border:1px solid #E5E7EB;">Saat nilai berubah</td>
+                    <td><code>wire:keydown.enter</code></td>
+                    <td>Saat tekan Enter</td>
+                    <td>Submit chat, search</td>
+                </tr>
+                <tr>
+                    <td><code>wire:keydown.escape</code></td>
+                    <td>Saat tekan Escape</td>
+                    <td>Tutup modal/popup</td>
+                </tr>
+                <tr>
+                    <td><code>wire:change</code></td>
+                    <td>Saat nilai berubah</td>
+                    <td>Dropdown filter</td>
+                </tr>
+                <tr>
+                    <td><code>wire:mouseenter</code></td>
+                    <td>Saat mouse masuk elemen</td>
+                    <td>Tooltip, preview</td>
                 </tr>
             </table>
 
+            <h3>Contoh: Tekan Enter untuk Tambah Todo</h3>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">Contoh wire:keydown.enter</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-tag">&lt;input</span> <span class="code-attribute">type</span>=<span class="code-string">"text"</span>
+       <span class="code-attribute">wire:model</span>=<span class="code-string">"newTask"</span>
+       <span class="code-attribute">wire:keydown.enter</span>=<span class="code-string">"addTask"</span>
+       <span class="code-attribute">placeholder</span>=<span class="code-string">"Tulis task lalu tekan Enter..."</span><span class="code-tag">&gt;</span></pre>
+                </div>
+            </div>
+
+            <!-- ==================== -->
+
+            <h2>🔀 Contoh Nyata: Tab Navigation</h2>
+
+            <p>Gabungkan wire:click + parameter untuk membuat navigasi tab yang interaktif:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">app/Livewire/ProfileTabs.php</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-keyword">class</span> <span class="code-class">ProfileTabs</span> <span class="code-keyword">extends</span> Component
+{
+    <span class="code-keyword">public</span> <span class="code-variable">$activeTab</span> = <span class="code-string">'profil'</span>;
+
+    <span class="code-keyword">public function</span> <span class="code-function">setTab</span>(<span class="code-variable">$tab</span>)
+    {
+        <span class="code-variable">$this</span>->activeTab = <span class="code-variable">$tab</span>;
+    }
+}</pre>
+                </div>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">resources/views/livewire/profile-tabs.blade.php</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-tag">&lt;div&gt;</span>
+    <span class="code-comment">&lt;!-- Tab buttons --&gt;</span>
+    <span class="code-tag">&lt;div style="display:flex;gap:0.5rem;"&gt;</span>
+        <span class="code-tag">&lt;button</span> <span class="code-attribute">wire:click</span>=<span class="code-string">"setTab('profil')"</span>
+                <span class="code-attribute">class</span>=<span class="code-string">"{{ $activeTab === 'profil' ? 'active' : '' }}"</span><span class="code-tag">&gt;</span>
+            👤 Profil
+        <span class="code-tag">&lt;/button&gt;</span>
+        <span class="code-tag">&lt;button</span> <span class="code-attribute">wire:click</span>=<span class="code-string">"setTab('nilai')"</span>
+                <span class="code-attribute">class</span>=<span class="code-string">"{{ $activeTab === 'nilai' ? 'active' : '' }}"</span><span class="code-tag">&gt;</span>
+            📊 Nilai
+        <span class="code-tag">&lt;/button&gt;</span>
+        <span class="code-tag">&lt;button</span> <span class="code-attribute">wire:click</span>=<span class="code-string">"setTab('absensi')"</span>
+                <span class="code-attribute">class</span>=<span class="code-string">"{{ $activeTab === 'absensi' ? 'active' : '' }}"</span><span class="code-tag">&gt;</span>
+            📅 Absensi
+        <span class="code-tag">&lt;/button&gt;</span>
+    <span class="code-tag">&lt;/div&gt;</span>
+
+    <span class="code-comment">&lt;!-- Tab content --&gt;</span>
+    <span class="code-keyword">@if</span>(<span class="code-variable">$activeTab</span> === <span class="code-string">'profil'</span>)
+        <span class="code-tag">&lt;div&gt;</span>Konten profil siswa...<span class="code-tag">&lt;/div&gt;</span>
+    <span class="code-keyword">@elseif</span>(<span class="code-variable">$activeTab</span> === <span class="code-string">'nilai'</span>)
+        <span class="code-tag">&lt;div&gt;</span>Konten nilai siswa...<span class="code-tag">&lt;/div&gt;</span>
+    <span class="code-keyword">@elseif</span>(<span class="code-variable">$activeTab</span> === <span class="code-string">'absensi'</span>)
+        <span class="code-tag">&lt;div&gt;</span>Konten absensi siswa...<span class="code-tag">&lt;/div&gt;</span>
+    <span class="code-keyword">@endif</span>
+<span class="code-tag">&lt;/div&gt;</span></pre>
+                </div>
+            </div>
+
+            <!-- ==================== -->
+
+            <h2>⚡ wire:model vs wire:click — Kapan Pakai yang Mana?</h2>
+
+            <table class="comparison-table">
+                <tr>
+                    <th>Aspek</th>
+                    <th>wire:model</th>
+                    <th>wire:click</th>
+                </tr>
+                <tr>
+                    <td><strong>Fungsi</strong></td>
+                    <td>Sinkronkan <em>data</em></td>
+                    <td>Jalankan <em>aksi</em></td>
+                </tr>
+                <tr>
+                    <td><strong>Trigger</strong></td>
+                    <td>User mengetik / memilih</td>
+                    <td>User mengklik</td>
+                </tr>
+                <tr>
+                    <td><strong>Target</strong></td>
+                    <td>Property</td>
+                    <td>Method</td>
+                </tr>
+                <tr>
+                    <td><strong>Contoh</strong></td>
+                    <td><code>wire:model="nama"</code></td>
+                    <td><code>wire:click="simpan"</code></td>
+                </tr>
+                <tr>
+                    <td><strong>Elemen HTML</strong></td>
+                    <td>input, select, textarea</td>
+                    <td>button, div, span, dll</td>
+                </tr>
+            </table>
+
+            <!-- ==================== KESALAHAN UMUM ==================== -->
+
+            <div class="common-mistakes">
+                <h3>⚠️ Kesalahan Umum Pemula</h3>
+
+                <div class="mistake-item">
+                    <h4>❌ Lupa tanda kutip pada parameter string</h4>
+                    <p><code>wire:click="setCategory(fiksi)"</code> → ERROR! Livewire mengira <code>fiksi</code> adalah
+                        variabel.</p>
+                    <p class="solution">✅ Solusi: Gunakan tanda kutip: <code>wire:click="setCategory('fiksi')"</code>
+                    </p>
+                </div>
+
+                <div class="mistake-item">
+                    <h4>❌ Pakai wire:click di form padahal lebih tepat wire:submit</h4>
+                    <p>Tombol submit di dalam form sebaiknya menggunakan <code>wire:submit</code> di tag
+                        <code>&lt;form&gt;</code>.
+                    </p>
+                    <p class="solution">✅ Solusi: Pindahkan handler ke form:
+                        <code>&lt;form wire:submit="simpan"&gt;</code>
+                    </p>
+                </div>
+
+                <div class="mistake-item">
+                    <h4>❌ Method tidak public</h4>
+                    <p>Method <code>private</code> atau <code>protected</code> tidak bisa dipanggil dari view!</p>
+                    <p class="solution">✅ Solusi: Pastikan semua method yang dipanggil dari Blade adalah
+                        <code>public function</code>
+                    </p>
+                </div>
+
+                <div class="mistake-item">
+                    <h4>❌ Nama method "reset" konflik dengan Livewire</h4>
+                    <p><code>reset()</code> adalah method bawaan Livewire. Kalau kamu buat
+                        <code>public function reset()</code>, bisa bentrok!
+                    </p>
+                    <p class="solution">✅ Solusi: Pakai nama lain seperti <code>resetCounter()</code>,
+                        <code>resetForm()</code>
+                    </p>
+                </div>
+            </div>
+
+            <!-- ==================== RINGKASAN ==================== -->
+
+            <div class="summary-box">
+                <h3>📋 Ringkasan Materi</h3>
+                <ul>
+                    <li><code>wire:click</code> = memanggil method PHP saat elemen diklik</li>
+                    <li>Bisa mengirim <strong>parameter</strong>: <code>wire:click="method('value')"</code></li>
+                    <li><code>wire:submit</code> = handler form yang lebih tepat dari wire:click di tombol submit</li>
+                    <li>Event lain: <code>wire:keydown.enter</code>, <code>wire:change</code>,
+                        <code>wire:mouseenter</code>
+                    </li>
+                    <li><strong>wire:model</strong> = untuk data (property), <strong>wire:click</strong> = untuk aksi
+                        (method)</li>
+                </ul>
+            </div>
+
+            <!-- ==================== LATIHAN ==================== -->
+
             <h2>📝 Latihan</h2>
-            <ol>
-                <li>Buat component "Calculator" dengan tombol +, -, ×, ÷</li>
-                <li>Tambahkan method reset() untuk mengembalikan nilai ke 0</li>
-            </ol>
+
+            <div class="exercise-section">
+                <div class="exercise-level basic">
+                    <h4>🟢 Level 1 — Praktik Dasar</h4>
+                    <ol>
+                        <li>Buat komponen <strong>"Counter"</strong> dengan 3 tombol: Tambah, Kurang, Reset. Pastikan
+                            nilai tidak bisa kurang dari 0.</li>
+                        <li>Apa perbedaan <code>wire:click</code> dan <code>wire:submit</code>? Kapan pakai
+                            masing-masing?</li>
+                    </ol>
+                </div>
+
+                <div class="exercise-level intermediate">
+                    <h4>🔵 Level 2 — Praktik Menengah</h4>
+                    <ol>
+                        <li>Buat komponen <strong>"Calculator"</strong> dengan tombol +, -, ×, ÷ yang menerima parameter
+                            angka. Misalnya: <code>wire:click="calculate('tambah', 5)"</code></li>
+                        <li>Buat komponen <strong>"TabNavigation"</strong> dengan 3 tab (Profil, Nilai, Jadwal). Gunakan
+                            wire:click dengan parameter untuk mengganti konten.</li>
+                    </ol>
+                </div>
+
+                <div class="exercise-level challenge">
+                    <h4>🟣 Level 3 — Tantangan</h4>
+                    <ol>
+                        <li>Gabungkan <code>wire:model</code> dan <code>wire:click</code> dalam satu komponen: form
+                            input nama + tombol "Tambah ke daftar" + daftar nama yang ditampilkan di bawahnya.</li>
+                        <li>Buat komponen <strong>"Quiz"</strong> dengan 3 soal pilihan ganda. Gunakan
+                            <code>wire:click</code> untuk memilih jawaban dan hitung skor di akhir!
+                        </li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- ==================== NAVIGASI ==================== -->
 
             <div class="content-nav">
                 <a href="wire-model.html" class="nav-btn">
@@ -185,15 +573,18 @@
                         <div class="nav-btn-title">← wire:model</div>
                     </div>
                 </a>
-                <a href="validasi.html" class="nav-btn">
+                <a href="database-eloquent.html" class="nav-btn">
                     <div>
                         <div class="nav-btn-label">Selanjutnya</div>
-                        <div class="nav-btn-title">Validasi →</div>
+                        <div class="nav-btn-title">Database & Eloquent →</div>
                     </div>
                 </a>
             </div>
         </main>
     </div>
+
+    <button class="sidebar-toggle-mobile"
+        onclick="document.querySelector('.sidebar').classList.toggle('active')">📚</button>
     <script src="../../js/app.js"></script>
 </body>
 

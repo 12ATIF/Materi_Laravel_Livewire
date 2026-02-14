@@ -46,10 +46,10 @@
                     <li><a href="pengenalan-laravel.html">Pengenalan Laravel</a></li>
                     <li><a href="mvc-sederhana.html">MVC Sederhana</a></li>
                     <li><a href="instalasi-laravel.html">Instalasi Laravel</a></li>
-                    <li><a href="autentikasi.html" class="active">🔐 Autentikasi</a></li>
                     <li><a href="blade-template.html">Blade Template</a></li>
                     <li><a href="pengenalan-livewire.html">Pengenalan Livewire</a></li>
                     <li><a href="struktur-component.html">Struktur Component</a></li>
+                    <li><a href="autentikasi.html" class="active">🔐 Autentikasi</a></li>
                 </ul>
             </div>
             <div class="sidebar-section">
@@ -57,9 +57,9 @@
                 <ul class="sidebar-nav">
                     <li><a href="../minggu-2/wire-model.html">wire:model</a></li>
                     <li><a href="../minggu-2/wire-click.html">wire:click</a></li>
+                    <li><a href="../minggu-2/database-eloquent.html">Database & Eloquent</a></li>
                     <li><a href="../minggu-2/validasi.html">Validasi</a></li>
                     <li><a href="../minggu-2/crud-sederhana.html">CRUD Sederhana</a></li>
-                    <li><a href="../minggu-2/database-eloquent.html">Database & Eloquent</a></li>
                 </ul>
             </div>
             <div class="sidebar-section">
@@ -69,7 +69,8 @@
                     <li><a href="../minggu-3/pagination-search.html">Pagination & Search</a></li>
                     <li><a href="../minggu-3/komponen-reusable.html">Komponen Reusable</a></li>
                     <li><a href="../minggu-3/tampilan-dinamis.html">Tampilan Dinamis</a></li>
-                    </ul>
+                    <li><a href="../minggu-3/project-elibrary.html">📚 Tutorial E-Library</a></li>
+                </ul>
             </div>
         </aside>
 
@@ -948,7 +949,8 @@ Route::middleware('auth')->group(function () {
                         <h4>Tips: Gunakan Middleware Khusus Role</h4>
                         <p>Untuk project besar, buat middleware khusus seperti <code>admin</code> agar tidak perlu cek
                             manual di setiap controller. Contoh:
-                            <code>Route::middleware(['auth', 'admin'])->group(...)</code></p>
+                            <code>Route::middleware(['auth', 'admin'])->group(...)</code>
+                        </p>
                     </div>
                 </div>
             </section>
@@ -981,17 +983,16 @@ Route::middleware('auth')->group(function () {
             </section>
 
             <div class="content-nav">
-                <a href="instalasi-laravel.html" class="nav-btn">
-                    <span>←</span>
+                <a href="struktur-component.html" class="nav-btn">
                     <div>
                         <div class="nav-btn-label">Sebelumnya</div>
-                        <div class="nav-btn-title">Instalasi Laravel</div>
+                        <div class="nav-btn-title">← Struktur Component</div>
                     </div>
                 </a>
-                <a href="blade-template.html" class="nav-btn">
+                <a href="../minggu-2/wire-model.html" class="nav-btn">
                     <div>
-                        <div class="nav-btn-label">Selanjutnya</div>
-                        <div class="nav-btn-title">Blade Template →</div>
+                        <div class="nav-btn-label">Minggu 2</div>
+                        <div class="nav-btn-title">wire:model →</div>
                     </div>
                 </a>
             </div>
@@ -999,7 +1000,8 @@ Route::middleware('auth')->group(function () {
     </div>
 
     <!-- Mobile Sidebar Toggle -->
-    <button class="sidebar-toggle-mobile" onclick="toggleSidebar()">📚</button>
+    <button class="sidebar-toggle-mobile"
+        onclick="document.querySelector('.sidebar').classList.toggle('active')">📚</button>
 
     <script src="../../js/app.js"></script>
     <script>

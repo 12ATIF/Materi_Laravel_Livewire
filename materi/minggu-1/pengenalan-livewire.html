@@ -31,9 +31,10 @@
             <ul class="navbar-menu">
                 <li><a href="../../index.html">Beranda</a></li>
                 <li><a href="../../silabus.html">Silabus</a></li>
-                <li><a href="#" class="active">Materi</a></li>
+                <li><a href="pengenalan-laravel.html" class="active">Materi</a></li>
                 <li><a href="../../demo.html">Demo</a></li>
             </ul>
+            <button class="navbar-toggle" aria-label="Toggle menu"><span>☰</span></button>
         </div>
     </nav>
 
@@ -45,115 +46,454 @@
                     <li><a href="pengenalan-laravel.html">Pengenalan Laravel</a></li>
                     <li><a href="mvc-sederhana.html">MVC Sederhana</a></li>
                     <li><a href="instalasi-laravel.html">Instalasi Laravel</a></li>
-                    <li><a href="autentikasi.html">🔐 Autentikasi</a></li>
                     <li><a href="blade-template.html">Blade Template</a></li>
                     <li><a href="pengenalan-livewire.html" class="active">Pengenalan Livewire</a></li>
                     <li><a href="struktur-component.html">Struktur Component</a></li>
+                    <li><a href="autentikasi.html">🔐 Autentikasi</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-title">📘 Minggu 2</div>
+                <ul class="sidebar-nav">
+                    <li><a href="../minggu-2/wire-model.html">wire:model</a></li>
+                    <li><a href="../minggu-2/wire-click.html">wire:click</a></li>
+                    <li><a href="../minggu-2/database-eloquent.html">Database & Eloquent</a></li>
+                    <li><a href="../minggu-2/validasi.html">Validasi</a></li>
+                    <li><a href="../minggu-2/crud-sederhana.html">CRUD Sederhana</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-title">📕 Minggu 3</div>
+                <ul class="sidebar-nav">
+                    <li><a href="../minggu-3/upload-file.html">Upload File</a></li>
+                    <li><a href="../minggu-3/pagination-search.html">Pagination & Search</a></li>
+                    <li><a href="../minggu-3/komponen-reusable.html">Komponen Reusable</a></li>
+                    <li><a href="../minggu-3/tampilan-dinamis.html">Tampilan Dinamis</a></li>
+                    <li><a href="../minggu-3/project-elibrary.html">📚 Tutorial E-Library</a></li>
                 </ul>
             </div>
         </aside>
 
         <main class="main-content">
             <div class="content-header">
+                <div class="content-breadcrumb">
+                    <a href="../../index.html">Beranda</a> / <a href="../../silabus.html">Silabus</a> / Minggu 1 /
+                    Pengenalan Livewire
+                </div>
                 <h1 class="content-title">1.5 Pengenalan Livewire</h1>
                 <div class="content-meta">
                     <span>📗 Minggu 1</span>
-                    <span>⏱️ 20 menit</span>
+                    <span>⏱️ 25 menit</span>
+                    <span>📖 Teori</span>
                 </div>
             </div>
 
-            <div class="objectives">
-                <h3>🎯 Tujuan Belajar</h3>
+            <!-- Prasyarat -->
+            <div class="prerequisites">
+                <h3>📌 Prasyarat</h3>
                 <ul>
-                    <li>Memahami apa itu Livewire dan fungsinya</li>
-                    <li>Mengetahui cara kerja reaktivitas Livewire</li>
-                    <li>Membandingkan Livewire dengan JavaScript framework</li>
+                    <li>Sudah paham <a href="blade-template.html">Blade Template</a> ({{ }}, @if, @foreach)</li>
+                    <li>Sudah install Livewire di project (<a href="instalasi-laravel.html">Materi 1.3</a>)</li>
+                    <li>Paham konsep dasar MVC dari <a href="mvc-sederhana.html">Materi 1.2</a></li>
                 </ul>
             </div>
 
-            <h2>Apa itu Livewire?</h2>
-            <p>Livewire adalah <strong>full-stack framework</strong> untuk Laravel yang memungkinkan kamu membuat UI
-                interaktif <strong>tanpa menulis JavaScript</strong>.</p>
+            <!-- Tujuan Belajar -->
+            <div class="objectives">
+                <h3>🎯 Tujuan Belajar</h3>
+                <p>Setelah menyelesaikan materi ini, kamu akan mampu:</p>
+                <ul>
+                    <li>Menjelaskan <strong>apa itu Livewire</strong> dan apa masalah yang dipecahkannya</li>
+                    <li>Membedakan <strong>cara tradisional (reload halaman)</strong> vs <strong>cara Livewire
+                            (real-time)</strong></li>
+                    <li>Memahami <strong>cara kerja Livewire di balik layar</strong> (AJAX tanpa JavaScript)</li>
+                    <li>Menyebutkan <strong>kapan sebaiknya pakai Livewire</strong> dan kapan tidak</li>
+                </ul>
+            </div>
+
+            <!-- ==================== KONTEN ==================== -->
+
+            <h2>🤔 Masalah yang Dipecahkan Livewire</h2>
+
+            <p>Sampai materi sebelumnya, kamu sudah belajar Laravel yang <strong>sangat powerful</strong>. Tapi ada satu
+                masalah besar:</p>
+
+            <div class="alert alert-warning">
+                <span class="alert-icon">😤</span>
+                <div>
+                    <h4>Masalah: Setiap Aksi = Halaman Reload!</h4>
+                    <p>Di Laravel biasa, kalau user klik tombol, submit form, atau ubah data — <strong>halaman harus
+                            reload ulang</strong>. Ini terasa lambat dan tidak modern. Bandingkan dengan Instagram,
+                        WhatsApp Web, atau tokped yang <strong>langsung update tanpa reload</strong>.</p>
+                </div>
+            </div>
+
+            <p>Solusi tradisional? Belajar <strong>JavaScript + AJAX + API</strong>. Tapi ini butuh belajar bahasa baru
+                dan arsitektur yang berbeda — terlalu berat untuk pemula!</p>
 
             <div class="alert alert-tip">
                 <span class="alert-icon">💡</span>
                 <div>
-                    <h4>Analogi Sederhana</h4>
-                    <p>Bayangkan kamu punya asisten yang bisa memahami dan menjalankan perintahmu tanpa kamu harus
-                        berbicara dalam bahasa asing (JavaScript). Kamu cukup berbicara PHP!</p>
+                    <h4>Analogi: TV Biasa vs Smart TV</h4>
+                    <ul style="margin-top:0.5rem;">
+                        <li><strong>Laravel biasa</strong> = TV biasa. Tiap ganti channel, harus matikan dulu, ganti
+                            kaset, nyalakan lagi (reload halaman).</li>
+                        <li><strong>Laravel + JavaScript/AJAX</strong> = Beli remote universal canggih. Bisa, tapi harus
+                            belajar programming remote-nya.</li>
+                        <li><strong>Laravel + Livewire</strong> = Smart TV. Tinggal ketuk layar, langsung ganti. Tidak
+                            perlu belajar hal baru — tetap pakai PHP!</li>
+                    </ul>
                 </div>
             </div>
 
-            <h2>Bagaimana Cara Kerjanya?</h2>
-            <div class="code-block">
-                <div class="code-header">
-                    <span class="code-filename">Alur Kerja Livewire</span>
+            <!-- ==================== -->
+
+            <h2>⚡ Apa itu Livewire?</h2>
+
+            <p><strong>Livewire</strong> adalah framework untuk Laravel yang memungkinkan kamu membuat <strong>halaman
+                    web interaktif tanpa menulis JavaScript</strong>.</p>
+
+            <div
+                style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin:1.5rem 0;">
+                <div style="padding:1.5rem;background:#F0FDF4;border-radius:12px;border-left:4px solid #10B981;">
+                    <h4 style="margin:0 0 0.5rem;color:#059669;">✅ Pakai PHP saja</h4>
+                    <p style="margin:0;font-size:0.9rem;color:#374151;">Kamu cuma perlu PHP dan Blade — bahasa yang
+                        sudah kamu pelajari!</p>
                 </div>
-                <div class="code-body">
-                    <pre>1. User klik tombol di browser
-      ↓
-2. Livewire kirim request AJAX ke server
-      ↓
-3. PHP method dijalankan di server
-      ↓
-4. Livewire kirim balik HTML baru
-      ↓
-5. Browser update <span class="code-keyword">hanya bagian yang berubah</span></pre>
+                <div style="padding:1.5rem;background:#EFF6FF;border-radius:12px;border-left:4px solid #3B82F6;">
+                    <h4 style="margin:0 0 0.5rem;color:#2563EB;">✅ Real-time updates</h4>
+                    <p style="margin:0;font-size:0.9rem;color:#374151;">Ketik di form — hasilnya langsung muncul tanpa
+                        reload halaman!</p>
+                </div>
+                <div style="padding:1.5rem;background:#FEF3C7;border-radius:12px;border-left:4px solid #F59E0B;">
+                    <h4 style="margin:0 0 0.5rem;color:#D97706;">✅ Tetap di server</h4>
+                    <p style="margin:0;font-size:0.9rem;color:#374151;">Logikamu tetap aman di server, bukan di browser
+                        yang bisa diotak-atik user.</p>
                 </div>
             </div>
 
-            <h2>Livewire vs JavaScript Framework</h2>
-            <table style="width:100%;border-collapse:collapse;margin:1.5rem 0;">
-                <tr style="background:#F3F4F6;">
-                    <th style="padding:1rem;text-align:left;border:1px solid #E5E7EB;">Aspek</th>
-                    <th style="padding:1rem;text-align:left;border:1px solid #E5E7EB;">Livewire</th>
-                    <th style="padding:1rem;text-align:left;border:1px solid #E5E7EB;">React/Vue</th>
+            <!-- ==================== -->
+
+            <h2>⚔️ Perbandingan 3 Cara Membuat Web Interaktif</h2>
+
+            <table class="comparison-table">
+                <tr>
+                    <th>Aspek</th>
+                    <th>🔄 PHP Biasa</th>
+                    <th>📜 PHP + JavaScript</th>
+                    <th>⚡ Livewire</th>
                 </tr>
                 <tr>
-                    <td style="padding:1rem;border:1px solid #E5E7EB;">Bahasa</td>
-                    <td style="padding:1rem;border:1px solid #E5E7EB;color:#10B981;font-weight:600;">PHP saja ✅</td>
-                    <td style="padding:1rem;border:1px solid #E5E7EB;">JavaScript</td>
+                    <td><strong>Reload halaman</strong></td>
+                    <td>Ya, setiap aksi</td>
+                    <td>Tidak (pakai AJAX)</td>
+                    <td>Tidak (otomatis)</td>
                 </tr>
                 <tr>
-                    <td style="padding:1rem;border:1px solid #E5E7EB;">Learning Curve</td>
-                    <td style="padding:1rem;border:1px solid #E5E7EB;color:#10B981;font-weight:600;">Mudah ✅</td>
-                    <td style="padding:1rem;border:1px solid #E5E7EB;">Lebih kompleks</td>
+                    <td><strong>Bahasa yang dipakai</strong></td>
+                    <td>PHP saja</td>
+                    <td>PHP + JavaScript + AJAX</td>
+                    <td>PHP + Blade saja</td>
                 </tr>
                 <tr>
-                    <td style="padding:1rem;border:1px solid #E5E7EB;">Integrasi Laravel</td>
-                    <td style="padding:1rem;border:1px solid #E5E7EB;color:#10B981;font-weight:600;">Sempurna ✅</td>
-                    <td style="padding:1rem;border:1px solid #E5E7EB;">Perlu setup API</td>
+                    <td><strong>Kesulitan belajar</strong></td>
+                    <td>⭐ Mudah</td>
+                    <td>⭐⭐⭐ Sulit</td>
+                    <td>⭐⭐ Sedang</td>
                 </tr>
                 <tr>
-                    <td style="padding:1rem;border:1px solid #E5E7EB;">SEO</td>
-                    <td style="padding:1rem;border:1px solid #E5E7EB;color:#10B981;font-weight:600;">Bagus ✅</td>
-                    <td style="padding:1rem;border:1px solid #E5E7EB;">Perlu SSR</td>
+                    <td><strong>Pengalaman user</strong></td>
+                    <td>😐 Biasa</td>
+                    <td>😎 Smooth</td>
+                    <td>😎 Smooth</td>
+                </tr>
+                <tr>
+                    <td><strong>Cocok untuk</strong></td>
+                    <td>Web statis, blog</td>
+                    <td>SPA (Single Page App)</td>
+                    <td>Dashboard, CRUD, form</td>
                 </tr>
             </table>
 
-            <h2>Contoh Sederhana</h2>
+            <!-- ==================== -->
+
+            <h2>🔧 Cara Kerja Livewire (di Balik Layar)</h2>
+
+            <p>Meskipun kamu tidak menulis JavaScript, Livewire <strong>sebenarnya menggunakan JavaScript</strong> di
+                balik layar. Ini yang terjadi:</p>
+
+            <div class="diagram-flow">
+                <div class="flow-item">👤 User<br><small>klik/ketik</small></div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-item highlight">⚡ Livewire JS<br><small>kirim AJAX</small></div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-item">🖥️ Server PHP<br><small>proses logika</small></div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-item highlight">⚡ Livewire JS<br><small>terima HTML baru</small></div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-item">👁️ Browser<br><small>update tampilan</small></div>
+            </div>
+
+            <div class="step-box">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h4>User melakukan aksi</h4>
+                    <p>User klik tombol atau ketik di input form. Livewire JavaScript (yang sudah di-include otomatis)
+                        menangkap event ini.</p>
+                </div>
+            </div>
+
+            <div class="step-box">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h4>AJAX dikirim ke server</h4>
+                    <p>Livewire mengirim request AJAX ke server Laravel. Data yang dikirim: aksi apa yang terjadi dan
+                        data terkait.</p>
+                </div>
+            </div>
+
+            <div class="step-box">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h4>Server memproses dengan PHP</h4>
+                    <p>Server menjalankan method PHP di komponen Livewire-mu. Misalnya: ubah data, simpan ke database,
+                        dll.</p>
+                </div>
+            </div>
+
+            <div class="step-box">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                    <h4>HTML baru dikirim balik</h4>
+                    <p>Server mengirim kembali potongan HTML yang berubah (bukan seluruh halaman!). Livewire memperbarui
+                        hanya bagian yang berubah.</p>
+                </div>
+            </div>
+
+            <div class="alert alert-tip">
+                <span class="alert-icon">🎯</span>
+                <div>
+                    <h4>Ringkasnya</h4>
+                    <p>Kamu menulis PHP biasa, tapi hasilnya terasa seperti aplikasi JavaScript modern. <strong>Livewire
+                            mengurus semua komunikasi client-server untuk kamu!</strong></p>
+                </div>
+            </div>
+
+            <!-- ==================== -->
+
+            <h2>📌 Contoh Nyata: Tombol Counter</h2>
+
+            <p>Lihat perbedaan kode untuk membuat fitur <strong>counter sederhana</strong> (klik tombol, angka
+                bertambah):</p>
+
+            <h3>❌ Cara Tradisional (PHP Biasa)</h3>
+
             <div class="code-block">
                 <div class="code-header">
                     <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
                             class="code-dot"></span></div>
-                    <span class="code-filename">Counter.php</span>
+                    <span class="code-filename">counter.php (PHP murni — reload setiap klik!)</span>
                     <button class="code-copy">Salin</button>
                 </div>
                 <div class="code-body">
-                    <pre><span class="code-keyword">class</span> <span class="code-class">Counter</span> <span class="code-keyword">extends</span> Component
+                    <pre><span class="code-comment">// Tiap kali klik, halaman RELOAD PENUH</span>
+<span class="code-keyword">&lt;?php</span>
+session_start();
+<span class="code-keyword">if</span> (!isset(<span class="code-variable">$_SESSION</span>[<span class="code-string">'count'</span>])) {
+    <span class="code-variable">$_SESSION</span>[<span class="code-string">'count'</span>] = <span class="code-number">0</span>;
+}
+<span class="code-keyword">if</span> (isset(<span class="code-variable">$_POST</span>[<span class="code-string">'tambah'</span>])) {
+    <span class="code-variable">$_SESSION</span>[<span class="code-string">'count'</span>]++;
+}
+<span class="code-keyword">?&gt;</span>
+
+<span class="code-tag">&lt;h1&gt;</span>Count: <span class="code-keyword">&lt;?=</span> <span class="code-variable">$_SESSION</span>[<span class="code-string">'count'</span>] <span class="code-keyword">?&gt;</span><span class="code-tag">&lt;/h1&gt;</span>
+<span class="code-tag">&lt;form method="POST"&gt;</span>
+    <span class="code-tag">&lt;button name="tambah"&gt;</span>+ Tambah<span class="code-tag">&lt;/button&gt;</span>
+<span class="code-tag">&lt;/form&gt;</span></pre>
+                </div>
+            </div>
+
+            <h3>✅ Cara Livewire (Tanpa Reload!)</h3>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">app/Livewire/Counter.php</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-keyword">namespace</span> App\Livewire;
+
+<span class="code-keyword">use</span> Livewire\Component;
+
+<span class="code-keyword">class</span> <span class="code-class">Counter</span> <span class="code-keyword">extends</span> Component
 {
-    <span class="code-keyword">public</span> <span class="code-variable">$count</span> = 0;
-    
+    <span class="code-keyword">public</span> <span class="code-variable">$count</span> = <span class="code-number">0</span>;
+
     <span class="code-keyword">public function</span> <span class="code-function">tambah</span>()
     {
-        $this->count++;
+        <span class="code-variable">$this</span>->count++;
+    }
+
+    <span class="code-keyword">public function</span> <span class="code-function">render</span>()
+    {
+        <span class="code-keyword">return</span> view(<span class="code-string">'livewire.counter'</span>);
     }
 }</pre>
                 </div>
             </div>
 
-            <p>Hanya dengan kode PHP di atas, kamu sudah bisa membuat counter yang interaktif tanpa JavaScript sama
-                sekali! 🎉</p>
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">resources/views/livewire/counter.blade.php</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-tag">&lt;div&gt;</span>
+    <span class="code-tag">&lt;h1&gt;</span>Count: {{ <span class="code-variable">$count</span> }}<span class="code-tag">&lt;/h1&gt;</span>
+    <span class="code-tag">&lt;button</span> <span class="code-attribute">wire:click</span>=<span class="code-string">"tambah"</span><span class="code-tag">&gt;</span>+ Tambah<span class="code-tag">&lt;/button&gt;</span>
+<span class="code-tag">&lt;/div&gt;</span></pre>
+                </div>
+            </div>
+
+            <div class="alert alert-info">
+                <span class="alert-icon">🔍</span>
+                <div>
+                    <h4>Penjelasan Kode Livewire</h4>
+                    <ul>
+                        <li><code>public $count = 0;</code> — Variabel/property yang bisa diakses oleh view. Nilai awal
+                            = 0</li>
+                        <li><code>public function tambah()</code> — Method yang dipanggil saat tombol diklik</li>
+                        <li><code>$this->count++</code> — Tambah nilai count. Tampilan <strong>otomatis update!</strong>
+                        </li>
+                        <li><code>wire:click="tambah"</code> — Saat tombol diklik, panggil method <code>tambah()</code>
+                            di server</li>
+                    </ul>
+                    <p style="margin-top:0.5rem;font-weight:600;color:#059669;">✨ Hasil: Angka bertambah INSTAN tanpa
+                        halaman reload! Magic!</p>
+                </div>
+            </div>
+
+            <!-- ==================== -->
+
+            <h2>📋 Kapan Pakai Livewire? Kapan Tidak?</h2>
+
+            <table class="comparison-table">
+                <tr>
+                    <th>✅ Cocok untuk Livewire</th>
+                    <th>❌ Kurang Cocok untuk Livewire</th>
+                </tr>
+                <tr>
+                    <td>Form dengan validasi real-time</td>
+                    <td>Animasi kompleks (pakai CSS/JS)</td>
+                </tr>
+                <tr>
+                    <td>CRUD (Create, Read, Update, Delete)</td>
+                    <td>Game browser</td>
+                </tr>
+                <tr>
+                    <td>Dashboard admin</td>
+                    <td>Video player custom</td>
+                </tr>
+                <tr>
+                    <td>Search & filter real-time</td>
+                    <td>Chat real-time (butuh WebSocket)</td>
+                </tr>
+                <tr>
+                    <td>Modal, tab, dan komponen UI</td>
+                    <td>Drag & drop yang kompleks</td>
+                </tr>
+            </table>
+
+            <!-- ==================== KESALAHAN UMUM ==================== -->
+
+            <div class="common-mistakes">
+                <h3>⚠️ Kesalahan Umum Pemula</h3>
+
+                <div class="mistake-item">
+                    <h4>❌ Lupa @livewireStyles dan @livewireScripts</h4>
+                    <p>Komponen Livewire tidak akan bekerja tanpa kedua tag ini di layout Blade-mu.</p>
+                    <p class="solution">✅ Solusi: Selalu cek layout — <code>@livewireStyles</code> di
+                        <code>&lt;head&gt;</code>, <code>@livewireScripts</code> sebelum <code>&lt;/body&gt;</code>.
+                    </p>
+                </div>
+
+                <div class="mistake-item">
+                    <h4>❌ Mengira Livewire = pengganti JavaScript sepenuhnya</h4>
+                    <p>Livewire sangat bagus untuk interaksi data (form, CRUD). Tapi untuk animasi, drag-drop, atau
+                        interaksi visual kompleks, tetap butuh CSS atau sedikit JavaScript.</p>
+                    <p class="solution">✅ Solusi: Pakai Livewire untuk logika dan data. Kombinasikan dengan CSS atau
+                        Alpine.js untuk interaksi visual.</p>
+                </div>
+
+                <div class="mistake-item">
+                    <h4>❌ View Livewire tanpa root element &lt;div&gt;</h4>
+                    <p>Setiap view Livewire HARUS punya satu elemen root (biasanya <code>&lt;div&gt;</code>). Kalau
+                        tidak, akan error.</p>
+                    <p class="solution">✅ Solusi: Selalu bungkus konten view Livewire dalam satu
+                        <code>&lt;div&gt;...&lt;/div&gt;</code>.
+                    </p>
+                </div>
+            </div>
+
+            <!-- ==================== RINGKASAN ==================== -->
+
+            <div class="summary-box">
+                <h3>📋 Ringkasan Materi</h3>
+                <ul>
+                    <li><strong>Livewire</strong> = framework Laravel untuk membuat web interaktif tanpa JavaScript</li>
+                    <li>Masalah yang dipecahkan: halaman reload setiap aksi user</li>
+                    <li>Cara kerja: Livewire mengirim AJAX otomatis, server memproses PHP, hasilnya di-update di browser
+                    </li>
+                    <li>Komponen = class PHP + view Blade yang bekerja bersama</li>
+                    <li><code>wire:click</code> = menghubungkan klik tombol ke method PHP</li>
+                    <li>Cocok untuk: CRUD, form, dashboard. Kurang cocok untuk: animasi, game, chat real-time</li>
+                </ul>
+            </div>
+
+            <!-- ==================== LATIHAN ==================== -->
+
+            <h2>📝 Latihan</h2>
+
+            <div class="exercise-section">
+                <div class="exercise-level basic">
+                    <h4>🟢 Level 1 — Memahami</h4>
+                    <ol>
+                        <li>Jelaskan dengan kata-katamu sendiri: <strong>apa itu Livewire</strong> dan masalah apa yang
+                            dipecahkannya?</li>
+                        <li>Sebutkan <strong>3 kelebihan</strong> Livewire dibanding cara tradisional (PHP + JavaScript
+                            + AJAX).</li>
+                        <li>Apa beda <code>wire:click="tambah"</code> dengan <code>onclick="tambah()"</code> di
+                            JavaScript biasa?</li>
+                    </ol>
+                </div>
+
+                <div class="exercise-level intermediate">
+                    <h4>🔵 Level 2 — Analisis</h4>
+                    <ol>
+                        <li>Lihat contoh Counter di atas. Apa yang terjadi di <strong>balik layar</strong> ketika user
+                            klik tombol "+ Tambah"? Tulis alurnya step by step.</li>
+                        <li>Kalau kamu diminta membuat fitur <strong>"cari buku secara real-time"</strong> (ketik
+                            keyword, hasil langsung muncul), apakah cocok pakai Livewire? Jelaskan alasanmu.</li>
+                    </ol>
+                </div>
+
+                <div class="exercise-level challenge">
+                    <h4>🟣 Level 3 — Berpikir Kritis</h4>
+                    <ol>
+                        <li>Livewire mengirim AJAX ke server setiap aksi. Apa kelemahan pendekatan ini kalau koneksi
+                            internet lambat? Bagaimana kamu menanganinya?</li>
+                        <li>Kalau kamu diminta membuat aplikasi <strong>WhatsApp Web clone</strong>, apakah Livewire
+                            cukup? Fitur apa yang butuh JavaScript tambahan?</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- ==================== NAVIGASI ==================== -->
 
             <div class="content-nav">
                 <a href="blade-template.html" class="nav-btn">
@@ -171,6 +511,9 @@
             </div>
         </main>
     </div>
+
+    <button class="sidebar-toggle-mobile"
+        onclick="document.querySelector('.sidebar').classList.toggle('active')">📚</button>
     <script src="../../js/app.js"></script>
 </body>
 

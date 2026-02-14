@@ -34,6 +34,7 @@
                 <li><a href="pengenalan-laravel.html" class="active">Materi</a></li>
                 <li><a href="../../demo.html">Demo</a></li>
             </ul>
+            <button class="navbar-toggle" aria-label="Toggle menu"><span>☰</span></button>
         </div>
     </nav>
 
@@ -45,10 +46,30 @@
                     <li><a href="pengenalan-laravel.html">Pengenalan Laravel</a></li>
                     <li><a href="mvc-sederhana.html" class="active">MVC Sederhana</a></li>
                     <li><a href="instalasi-laravel.html">Instalasi Laravel</a></li>
-                    <li><a href="autentikasi.html">🔐 Autentikasi</a></li>
                     <li><a href="blade-template.html">Blade Template</a></li>
                     <li><a href="pengenalan-livewire.html">Pengenalan Livewire</a></li>
                     <li><a href="struktur-component.html">Struktur Component</a></li>
+                    <li><a href="autentikasi.html">🔐 Autentikasi</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-title">📘 Minggu 2</div>
+                <ul class="sidebar-nav">
+                    <li><a href="../minggu-2/wire-model.html">wire:model</a></li>
+                    <li><a href="../minggu-2/wire-click.html">wire:click</a></li>
+                    <li><a href="../minggu-2/database-eloquent.html">Database & Eloquent</a></li>
+                    <li><a href="../minggu-2/validasi.html">Validasi</a></li>
+                    <li><a href="../minggu-2/crud-sederhana.html">CRUD Sederhana</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-title">📕 Minggu 3</div>
+                <ul class="sidebar-nav">
+                    <li><a href="../minggu-3/upload-file.html">Upload File</a></li>
+                    <li><a href="../minggu-3/pagination-search.html">Pagination & Search</a></li>
+                    <li><a href="../minggu-3/komponen-reusable.html">Komponen Reusable</a></li>
+                    <li><a href="../minggu-3/tampilan-dinamis.html">Tampilan Dinamis</a></li>
+                    <li><a href="../minggu-3/project-elibrary.html">📚 Tutorial E-Library</a></li>
                 </ul>
             </div>
         </aside>
@@ -56,68 +77,151 @@
         <main class="main-content">
             <div class="content-header">
                 <div class="content-breadcrumb">
-                    <a href="../../index.html">Beranda</a> / Minggu 1 / MVC Sederhana
+                    <a href="../../index.html">Beranda</a> / <a href="../../silabus.html">Silabus</a> / Minggu 1 /
+                    MVC Sederhana
                 </div>
                 <h1 class="content-title">1.2 MVC Sederhana</h1>
                 <div class="content-meta">
                     <span>📗 Minggu 1</span>
-                    <span>⏱️ 20 menit</span>
+                    <span>⏱️ 25 menit</span>
+                    <span>📖 Teori</span>
                 </div>
             </div>
 
-            <div class="objectives">
-                <h3>🎯 Tujuan Belajar</h3>
+            <!-- Prasyarat -->
+            <div class="prerequisites">
+                <h3>📌 Prasyarat</h3>
                 <ul>
-                    <li>Memahami konsep Model-View-Controller</li>
-                    <li>Mengetahui peran setiap komponen MVC</li>
-                    <li>Melihat bagaimana Laravel menerapkan MVC</li>
+                    <li>Sudah membaca materi <a href="pengenalan-laravel.html">1.1 Pengenalan Laravel</a></li>
+                    <li>Paham konsep dasar: Laravel = framework PHP dengan fitur lengkap</li>
                 </ul>
             </div>
 
-            <h2>Apa itu MVC?</h2>
-            <p>MVC adalah cara mengorganisir kode supaya rapi. Seperti <strong>divisi kerja di restoran</strong>:</p>
+            <!-- Tujuan Belajar -->
+            <div class="objectives">
+                <h3>🎯 Tujuan Belajar</h3>
+                <p>Setelah menyelesaikan materi ini, kamu akan mampu:</p>
+                <ul>
+                    <li>Menjelaskan apa itu <strong>MVC</strong> dan mengapa pola ini penting</li>
+                    <li>Mengidentifikasi peran <strong>Model, View, dan Controller</strong> masing-masing</li>
+                    <li>Menelusuri <strong>alur request</strong> dari user sampai tampil di browser</li>
+                    <li>Menunjukkan <strong>lokasi file</strong> Model, View, dan Controller di folder Laravel</li>
+                </ul>
+            </div>
+
+            <!-- ==================== KONTEN ==================== -->
+
+            <h2>💡 Apa itu MVC?</h2>
+
+            <p><strong>MVC</strong> singkatan dari <strong>Model - View - Controller</strong>. Ini adalah cara
+                mengorganisir kode supaya rapi, mudah dibaca, dan mudah dikembangkan.</p>
+
+            <div class="alert alert-tip">
+                <span class="alert-icon">🍽️</span>
+                <div>
+                    <h4>Analogi: Restoran</h4>
+                    <p>Bayangkan kamu pergi ke restoran. Ada 3 bagian yang bekerja sama:</p>
+                    <ul style="margin-top:0.5rem;">
+                        <li><strong>🧑‍🍳 Dapur (Model)</strong> — Tempat memasak makanan dan menyimpan resep. Tidak
+                            berhubungan langsung dengan pelanggan.</li>
+                        <li><strong>🍽️ Meja & Piring (View)</strong> — Penyajian makanan di meja. Yang dilihat
+                            pelanggan.</li>
+                        <li><strong>🧑‍💼 Pelayan (Controller)</strong> — Menerima pesanan pelanggan, minta dapur masak,
+                            lalu bawa makanan ke meja.</li>
+                    </ul>
+                    <p style="margin-top:0.5rem;">Peran mereka <strong>terpisah tapi saling bekerja sama</strong>. Kalau
+                        koki merangkap pelayan, akan kacau! Begitu juga di kode.</p>
+                </div>
+            </div>
+
+            <h2>🔍 Peran Masing-Masing Komponen</h2>
 
             <div
-                style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin:1.5rem 0;">
-                <div style="padding:1.5rem;background:#FEF3C7;border-radius:12px;text-align:center;">
-                    <div style="font-size:2.5rem;margin-bottom:0.5rem;">📊</div>
-                    <h3 style="color:#D97706;margin:0 0 0.5rem;">Model</h3>
-                    <p style="margin:0;font-size:0.9rem;color:#374151;">Gudang bahan & resep<br><em>= Database &
-                            Logic</em></p>
-                </div>
-                <div style="padding:1.5rem;background:#DBEAFE;border-radius:12px;text-align:center;">
-                    <div style="font-size:2.5rem;margin-bottom:0.5rem;">👁️</div>
-                    <h3 style="color:#2563EB;margin:0 0 0.5rem;">View</h3>
-                    <p style="margin:0;font-size:0.9rem;color:#374151;">Penyajian makanan<br><em>= Tampilan HTML</em>
+                style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.5rem;margin:1.5rem 0;">
+                <div style="padding:2rem;background:#FEF3C7;border-radius:16px;border-top:4px solid #F59E0B;">
+                    <div style="font-size:2.5rem;margin-bottom:0.75rem;text-align:center;">📊</div>
+                    <h3 style="color:#D97706;margin:0 0 0.75rem;text-align:center;">Model</h3>
+                    <p style="margin:0 0 0.75rem;font-size:0.95rem;color:#374151;"><strong>Tugas:</strong> Mengelola
+                        DATA — ambil, simpan, update, hapus data dari database.</p>
+                    <p style="margin:0 0 0.5rem;font-size:0.9rem;color:#374151;"><strong>Contoh di kehidupan:</strong>
+                    </p>
+                    <ul style="margin:0;padding-left:1.25rem;font-size:0.9rem;color:#374151;">
+                        <li>Gudang & resep di restoran</li>
+                        <li>Database siswa di sekolah</li>
+                        <li>Lemari arsip di kantor</li>
+                    </ul>
+                    <p style="margin:0.75rem 0 0;font-size:0.85rem;color:#92400E;"><strong>📁 Lokasi:</strong>
+                        <code>app/Models/</code>
                     </p>
                 </div>
-                <div style="padding:1.5rem;background:#D1FAE5;border-radius:12px;text-align:center;">
-                    <div style="font-size:2.5rem;margin-bottom:0.5rem;">🎮</div>
-                    <h3 style="color:#059669;margin:0 0 0.5rem;">Controller</h3>
-                    <p style="margin:0;font-size:0.9rem;color:#374151;">Pelayan yang koordinasi<br><em>= Penghubung</em>
+
+                <div style="padding:2rem;background:#DBEAFE;border-radius:16px;border-top:4px solid #3B82F6;">
+                    <div style="font-size:2.5rem;margin-bottom:0.75rem;text-align:center;">👁️</div>
+                    <h3 style="color:#2563EB;margin:0 0 0.75rem;text-align:center;">View</h3>
+                    <p style="margin:0 0 0.75rem;font-size:0.95rem;color:#374151;"><strong>Tugas:</strong> Menampilkan
+                        TAMPILAN — halaman HTML yang dilihat user di browser.</p>
+                    <p style="margin:0 0 0.5rem;font-size:0.9rem;color:#374151;"><strong>Contoh di kehidupan:</strong>
+                    </p>
+                    <ul style="margin:0;padding-left:1.25rem;font-size:0.9rem;color:#374151;">
+                        <li>Meja & piring di restoran</li>
+                        <li>Rapor yang dicetak</li>
+                        <li>Layar ATM</li>
+                    </ul>
+                    <p style="margin:0.75rem 0 0;font-size:0.85rem;color:#1E40AF;"><strong>📁 Lokasi:</strong>
+                        <code>resources/views/</code>
+                    </p>
+                </div>
+
+                <div style="padding:2rem;background:#D1FAE5;border-radius:16px;border-top:4px solid #10B981;">
+                    <div style="font-size:2.5rem;margin-bottom:0.75rem;text-align:center;">🎮</div>
+                    <h3 style="color:#059669;margin:0 0 0.75rem;text-align:center;">Controller</h3>
+                    <p style="margin:0 0 0.75rem;font-size:0.95rem;color:#374151;"><strong>Tugas:</strong> MENGHUBUNGKAN
+                        Model & View — terima request, proses, kirim response.</p>
+                    <p style="margin:0 0 0.5rem;font-size:0.9rem;color:#374151;"><strong>Contoh di kehidupan:</strong>
+                    </p>
+                    <ul style="margin:0;padding-left:1.25rem;font-size:0.9rem;color:#374151;">
+                        <li>Pelayan di restoran</li>
+                        <li>Teller di bank</li>
+                        <li>Kasir di toko</li>
+                    </ul>
+                    <p style="margin:0.75rem 0 0;font-size:0.85rem;color:#065F46;"><strong>📁 Lokasi:</strong>
+                        <code>app/Http/Controllers/</code>
                     </p>
                 </div>
             </div>
 
-            <h2>Alur MVC di Laravel</h2>
-            <div class="code-block">
-                <div class="code-header">
-                    <span class="code-filename">Alur Request</span>
-                </div>
-                <div class="code-body">
-                    <pre>User klik tombol
-    ↓
-<span class="code-function">Route</span> → terima request, kirim ke Controller
-    ↓
-<span class="code-class">Controller</span> → ambil data dari Model
-    ↓
-<span class="code-variable">Model</span> → query ke database
-    ↓
-<span class="code-string">View</span> → tampilkan ke user</pre>
+            <!-- ==================== -->
+
+            <h2>🔄 Alur Request di Laravel (Step by Step)</h2>
+
+            <p>Ketika user mengakses sebuah halaman, ini yang terjadi <strong>di balik layar</strong>:</p>
+
+            <div class="diagram-flow">
+                <div class="flow-item">👤 User<br><small>klik/ketik URL</small></div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-item highlight">🛣️ Route<br><small>terima request</small></div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-item">🎮 Controller<br><small>proses logika</small></div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-item">📊 Model<br><small>ambil data</small></div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-item">👁️ View<br><small>tampilkan</small></div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-item">👤 User<br><small>lihat halaman</small></div>
+            </div>
+
+            <p>Mari kita ikuti alurnya dengan <strong>contoh nyata</strong>: user ingin melihat daftar buku.</p>
+
+            <!-- Step 1 -->
+            <div class="step-box">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h4>🛣️ Route — Penerima Tamu</h4>
+                    <p>User mengetik <code>sekolahku.com/buku</code>. Route mencocokkan URL ini dengan Controller yang
+                        tepat.</p>
                 </div>
             </div>
 
-            <h2>Contoh Kode</h2>
             <div class="code-block">
                 <div class="code-header">
                     <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
@@ -126,7 +230,31 @@
                     <button class="code-copy">Salin</button>
                 </div>
                 <div class="code-body">
-                    <pre>Route::get(<span class="code-string">'/buku'</span>, [BookController::<span class="code-keyword">class</span>, <span class="code-string">'index'</span>]);</pre>
+                    <pre><span class="code-comment">// Kalau ada yang buka URL '/buku', jalankan method index di BookController</span>
+Route::get(<span class="code-string">'/buku'</span>, [BookController::<span class="code-keyword">class</span>, <span class="code-string">'index'</span>]);</pre>
+                </div>
+            </div>
+
+            <div class="alert alert-info">
+                <span class="alert-icon">🔍</span>
+                <div>
+                    <h4>Penjelasan Baris per Baris</h4>
+                    <ul>
+                        <li><code>Route::get()</code> — Tangkap request GET (ketik URL atau klik link)</li>
+                        <li><code>'/buku'</code> — URL yang ditangkap, yaitu <code>/buku</code></li>
+                        <li><code>[BookController::class, 'index']</code> — Kirim ke method <code>index</code> di
+                            <code>BookController</code>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="step-box">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h4>🎮 Controller — Si Pelayan</h4>
+                    <p>Controller menerima request, minta data ke Model, lalu kirim hasilnya ke View.</p>
                 </div>
             </div>
 
@@ -134,31 +262,291 @@
                 <div class="code-header">
                     <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
                             class="code-dot"></span></div>
-                    <span class="code-filename">BookController.php</span>
+                    <span class="code-filename">app/Http/Controllers/BookController.php</span>
                     <button class="code-copy">Salin</button>
                 </div>
                 <div class="code-body">
-                    <pre><span class="code-keyword">public function</span> <span class="code-function">index</span>()
+                    <pre><span class="code-keyword">namespace</span> App\Http\Controllers;
+
+<span class="code-keyword">class</span> <span class="code-class">BookController</span> <span class="code-keyword">extends</span> Controller
 {
-    <span class="code-variable">$books</span> = Book::all(); <span class="code-comment">// Model</span>
-    <span class="code-keyword">return</span> view(<span class="code-string">'books.index'</span>, [<span class="code-string">'books'</span> => <span class="code-variable">$books</span>]); <span class="code-comment">// View</span>
+    <span class="code-keyword">public function</span> <span class="code-function">index</span>()
+    {
+        <span class="code-comment">// Langkah 1: Minta semua data buku ke Model</span>
+        <span class="code-variable">$books</span> = Book::all();
+
+        <span class="code-comment">// Langkah 2: Kirim data ke View untuk ditampilkan</span>
+        <span class="code-keyword">return</span> view(<span class="code-string">'books.index'</span>, [<span class="code-string">'books'</span> => <span class="code-variable">$books</span>]);
+    }
 }</pre>
+                </div>
+            </div>
+
+            <div class="alert alert-info">
+                <span class="alert-icon">🔍</span>
+                <div>
+                    <h4>Penjelasan Baris per Baris</h4>
+                    <ul>
+                        <li><code>Book::all()</code> — Panggil Model <code>Book</code>, ambil semua data buku dari
+                            database</li>
+                        <li><code>$books</code> — Variabel yang menampung semua data buku</li>
+                        <li><code>view('books.index', [...])</code> — Kirim ke file View
+                            <code>resources/views/books/index.blade.php</code>
+                        </li>
+                        <li><code>['books' => $books]</code> — Kirim data <code>$books</code> ke View dengan nama
+                            variabel <code>$books</code></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="step-box">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h4>📊 Model — Gudang Data</h4>
+                    <p>Model berinteraksi dengan database. Cukup definisikan nama tabel, Laravel yang urus sisanya.</p>
+                </div>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">app/Models/Book.php</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-keyword">namespace</span> App\Models;
+
+<span class="code-keyword">use</span> Illuminate\Database\Eloquent\Model;
+
+<span class="code-keyword">class</span> <span class="code-class">Book</span> <span class="code-keyword">extends</span> Model
+{
+    <span class="code-comment">// Laravel otomatis tahu tabel = 'books' (nama class + s)</span>
+    <span class="code-comment">// Kolom: id, title, author, created_at, updated_at</span>
+}</pre>
+                </div>
+            </div>
+
+            <div class="alert alert-tip">
+                <span class="alert-icon">🤯</span>
+                <div>
+                    <h4>Keren, bukan?</h4>
+                    <p>Model <code>Book</code> tidak perlu menulis SQL apapun! Laravel otomatis tahu untuk mengakses
+                        tabel <code>books</code> (huruf kecil + tambah 's'). Ini disebut <strong>Convention over
+                            Configuration</strong> — ikuti aturan penamaan, semuanya otomatis bekerja.</p>
+                </div>
+            </div>
+
+            <!-- Step 4 -->
+            <div class="step-box">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                    <h4>👁️ View — Tampilan Cantik</h4>
+                    <p>View menampilkan data yang dikirim Controller dalam bentuk HTML yang bisa dilihat user.</p>
+                </div>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">resources/views/books/index.blade.php</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-tag">&lt;h1&gt;</span>📚 Daftar Buku<span class="code-tag">&lt;/h1&gt;</span>
+
+<span class="code-tag">&lt;table&gt;</span>
+    <span class="code-tag">&lt;tr&gt;</span>
+        <span class="code-tag">&lt;th&gt;</span>Judul<span class="code-tag">&lt;/th&gt;</span>
+        <span class="code-tag">&lt;th&gt;</span>Penulis<span class="code-tag">&lt;/th&gt;</span>
+    <span class="code-tag">&lt;/tr&gt;</span>
+    <span class="code-keyword">@foreach</span>(<span class="code-variable">$books</span> as <span class="code-variable">$book</span>)
+    <span class="code-tag">&lt;tr&gt;</span>
+        <span class="code-tag">&lt;td&gt;</span>{{ <span class="code-variable">$book</span>->title }}<span class="code-tag">&lt;/td&gt;</span>
+        <span class="code-tag">&lt;td&gt;</span>{{ <span class="code-variable">$book</span>->author }}<span class="code-tag">&lt;/td&gt;</span>
+    <span class="code-tag">&lt;/tr&gt;</span>
+    <span class="code-keyword">@endforeach</span>
+<span class="code-tag">&lt;/table&gt;</span></pre>
+                </div>
+            </div>
+
+            <div class="alert alert-info">
+                <span class="alert-icon">🔍</span>
+                <div>
+                    <h4>Penjelasan Baris per Baris</h4>
+                    <ul>
+                        <li><code>@foreach($books as $book)</code> — Loop setiap buku. Seperti <code>foreach</code> PHP
+                            biasa tapi sintaks Blade</li>
+                        <li><code>{{ $book->title }}</code> — Tampilkan judul buku. Tanda <code>{{ }}</code> akan
+                            otomatis escape HTML (aman dari XSS)</li>
+                        <li><code>@endforeach</code> — Akhiri loop</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- ==================== -->
+
+            <h2>📁 Dimana File-file Ini Berada?</h2>
+
+            <p>Berikut struktur folder Laravel yang perlu kamu tahu:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-filename">📂 Struktur Folder Laravel (Simplified)</span>
+                </div>
+                <div class="code-body">
+                    <pre>📦 project-laravel/
+├── 📂 <span class="code-function">app/</span>
+│   ├── 📂 <span class="code-class">Http/Controllers/</span>    <span class="code-comment">← Controller di sini</span>
+│   │   └── BookController.php
+│   └── 📂 <span class="code-variable">Models/</span>              <span class="code-comment">← Model di sini</span>
+│       └── Book.php
+├── 📂 <span class="code-string">resources/views/</span>        <span class="code-comment">← View di sini</span>
+│   └── 📂 books/
+│       └── index.blade.php
+├── 📂 <span class="code-keyword">routes/</span>                  <span class="code-comment">← Route di sini</span>
+│   └── web.php
+├── 📂 database/                 <span class="code-comment">← Migration & seeder</span>
+├── 📂 public/                   <span class="code-comment">← CSS, JS, gambar</span>
+└── 📂 config/                   <span class="code-comment">← Pengaturan app</span></pre>
                 </div>
             </div>
 
             <div class="alert alert-tip">
                 <span class="alert-icon">💡</span>
                 <div>
-                    <h4>Ingat!</h4>
-                    <p>Model = Data, View = Tampilan, Controller = Penghubung. Jangan campur-campur!</p>
+                    <h4>Tips Mengingat Lokasi File</h4>
+                    <p><strong>M</strong>odel → <code>app/<strong>M</strong>odels/</code><br>
+                        <strong>V</strong>iew → <code>resources/<strong>v</strong>iews/</code><br>
+                        <strong>C</strong>ontroller → <code>app/Http/<strong>C</strong>ontrollers/</code><br>
+                        Route → <code>routes/web.php</code> (satu-satunya yang berbeda pola)
+                    </p>
                 </div>
             </div>
 
+            <!-- ==================== -->
+
+            <h2>❓ Kenapa Harus Dipisah? Tidak Ribet?</h2>
+
+            <p>Pertanyaan bagus! Ini jawabannya:</p>
+
+            <table class="comparison-table">
+                <tr>
+                    <th>Aspek</th>
+                    <th>❌ Tanpa MVC (Campur Aduk)</th>
+                    <th>✅ Dengan MVC (Terpisah)</th>
+                </tr>
+                <tr>
+                    <td><strong>Baca kode</strong></td>
+                    <td>Sulit — HTML, PHP, SQL bercampur di satu file</td>
+                    <td>Mudah — setiap file punya tugas jelas</td>
+                </tr>
+                <tr>
+                    <td><strong>Cari bug</strong></td>
+                    <td>Bingung cari di mana errornya</td>
+                    <td>Langsung tahu: error data? cek Model. Error tampilan? cek View.</td>
+                </tr>
+                <tr>
+                    <td><strong>Kerja tim</strong></td>
+                    <td>Saling tumpuk — satu orang edit, yang lain kacau</td>
+                    <td>Bisa bagi tugas: A bikin View, B bikin Controller</td>
+                </tr>
+                <tr>
+                    <td><strong>Ubah desain</strong></td>
+                    <td>Harus edit banyak file karena campur dengan logika</td>
+                    <td>Edit View saja, logika dan data tetap aman</td>
+                </tr>
+            </table>
+
+            <!-- ==================== KESALAHAN UMUM ==================== -->
+
+            <div class="common-mistakes">
+                <h3>⚠️ Kesalahan Umum Pemula</h3>
+
+                <div class="mistake-item">
+                    <h4>❌ Menulis query SQL langsung di View</h4>
+                    <p>Contoh: <code>&lt;?php $data = mysqli_query($conn, "SELECT * FROM buku"); ?&gt;</code> langsung
+                        di file HTML.</p>
+                    <p class="solution">✅ Query harus di Model, bukan di View. View hanya untuk MENAMPILKAN data yang
+                        sudah dikirim dari Controller.</p>
+                </div>
+
+                <div class="mistake-item">
+                    <h4>❌ Controller yang terlalu "gemuk"</h4>
+                    <p>Memasukkan semua logika bisnis (validasi, hitung diskon, kirim email) ke dalam satu method
+                        Controller.</p>
+                    <p class="solution">✅ Controller hanya jadi "penghubung". Logika berat taruh di Model atau Service
+                        class.</p>
+                </div>
+
+                <div class="mistake-item">
+                    <h4>❌ Bingung nama file Model vs nama tabel</h4>
+                    <p>Model bernama <code>Book</code> tapi tabel database bernama <code>buku</code> — tidak cocok!</p>
+                    <p class="solution">✅ Ikuti konvensi Laravel: Model <code>Book</code> (singular, PascalCase) → tabel
+                        <code>books</code> (plural, snake_case).
+                    </p>
+                </div>
+            </div>
+
+            <!-- ==================== RINGKASAN ==================== -->
+
+            <div class="summary-box">
+                <h3>📋 Ringkasan Materi</h3>
+                <ul>
+                    <li><strong>MVC</strong> = pola untuk memisahkan kode menjadi 3 bagian: Model, View, Controller</li>
+                    <li><strong>Model</strong> → mengelola data dan database (📁 <code>app/Models/</code>)</li>
+                    <li><strong>View</strong> → menampilkan halaman ke user (📁 <code>resources/views/</code>)</li>
+                    <li><strong>Controller</strong> → menghubungkan Model dan View (📁
+                        <code>app/Http/Controllers/</code>)
+                    </li>
+                    <li><strong>Route</strong> → mengatur URL mana masuk ke Controller mana (📁
+                        <code>routes/web.php</code>)
+                    </li>
+                    <li>Alur: <strong>User → Route → Controller → Model → View → User</strong></li>
+                </ul>
+            </div>
+
+            <!-- ==================== LATIHAN ==================== -->
+
             <h2>📝 Latihan</h2>
-            <ol>
-                <li>Gambarkan diagram alur MVC dengan kata-katamu sendiri</li>
-                <li>Sebutkan file apa saja yang termasuk Model, View, dan Controller di Laravel</li>
-            </ol>
+
+            <div class="exercise-section">
+                <div class="exercise-level basic">
+                    <h4>🟢 Level 1 — Dasar</h4>
+                    <ol>
+                        <li>Gambar diagram alur MVC dengan <strong>kata-kata dan contohmu sendiri</strong> (boleh pakai
+                            kertas).</li>
+                        <li>Sebutkan <strong>lokasi folder</strong> untuk file Model, View, Controller, dan Route di
+                            Laravel.</li>
+                        <li>Di file mana kamu harus menulis kode untuk: (a) query database, (b) tampilan HTML, (c)
+                            hubungkan keduanya?</li>
+                    </ol>
+                </div>
+
+                <div class="exercise-level intermediate">
+                    <h4>🔵 Level 2 — Analisis</h4>
+                    <ol>
+                        <li>Baca kode Controller di atas. Kalau kamu ingin menambah fitur <strong>"cari buku berdasarkan
+                                judul"</strong>, method mana yang perlu diubah dan apa yang ditambahkan?</li>
+                        <li>Buat sketsa (gambar tangan) bagaimana alur MVC bekerja untuk fitur <strong>"tambah buku
+                                baru"</strong>.</li>
+                    </ol>
+                </div>
+
+                <div class="exercise-level challenge">
+                    <h4>🟣 Level 3 — Berpikir Kritis</h4>
+                    <ol>
+                        <li>Kalau kita TIDAK pakai MVC dan semua kode ditulis di satu file PHP, apa yang terjadi kalau
+                            aplikasinya punya 50+ halaman? Jelaskan masalah yang mungkin muncul.</li>
+                        <li>Selain restoran, cari <strong>analogi lain</strong> untuk MVC dari kehidupan sehari-hari.
+                            Jelaskan peran setiap komponen.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- ==================== NAVIGASI ==================== -->
 
             <div class="content-nav">
                 <a href="pengenalan-laravel.html" class="nav-btn">
@@ -176,6 +564,9 @@
             </div>
         </main>
     </div>
+
+    <button class="sidebar-toggle-mobile"
+        onclick="document.querySelector('.sidebar').classList.toggle('active')">📚</button>
     <script src="../../js/app.js"></script>
 </body>
 

@@ -31,12 +31,12 @@
             <ul class="navbar-menu">
                 <li><a href="../../index.html">Beranda</a></li>
                 <li><a href="../../silabus.html">Silabus</a></li>
-                <li><a href="#" class="active">Materi</a></li>
+                <li><a href="../minggu-1/pengenalan-laravel.html" class="active">Materi</a></li>
                 <li><a href="../../demo.html">Demo</a></li>
             </ul>
+            <button class="navbar-toggle" aria-label="Toggle menu"><span>☰</span></button>
         </div>
     </nav>
-
     <div class="content-layout">
         <aside class="sidebar">
             <div class="sidebar-section">
@@ -45,10 +45,10 @@
                     <li><a href="../minggu-1/pengenalan-laravel.html">Pengenalan Laravel</a></li>
                     <li><a href="../minggu-1/mvc-sederhana.html">MVC Sederhana</a></li>
                     <li><a href="../minggu-1/instalasi-laravel.html">Instalasi Laravel</a></li>
-                    <li><a href="../minggu-1/autentikasi.html">🔐 Autentikasi</a></li>
                     <li><a href="../minggu-1/blade-template.html">Blade Template</a></li>
                     <li><a href="../minggu-1/pengenalan-livewire.html">Pengenalan Livewire</a></li>
                     <li><a href="../minggu-1/struktur-component.html">Struktur Component</a></li>
+                    <li><a href="../minggu-1/autentikasi.html">🔐 Autentikasi</a></li>
                 </ul>
             </div>
             <div class="sidebar-section">
@@ -56,9 +56,9 @@
                 <ul class="sidebar-nav">
                     <li><a href="../minggu-2/wire-model.html">wire:model</a></li>
                     <li><a href="../minggu-2/wire-click.html">wire:click</a></li>
+                    <li><a href="../minggu-2/database-eloquent.html">Database & Eloquent</a></li>
                     <li><a href="../minggu-2/validasi.html">Validasi</a></li>
                     <li><a href="../minggu-2/crud-sederhana.html">CRUD Sederhana</a></li>
-                    <li><a href="../minggu-2/database-eloquent.html">Database & Eloquent</a></li>
                 </ul>
             </div>
             <div class="sidebar-section">
@@ -72,47 +72,77 @@
                 </ul>
             </div>
         </aside>
-
         <main class="main-content">
             <div class="content-header">
+                <div class="content-breadcrumb">
+                    <a href="../../index.html">Beranda</a> / <a href="../../silabus.html">Silabus</a> / Minggu 3 /
+                    Tampilan Dinamis
+                </div>
                 <h1 class="content-title">3.4 Tampilan Dinamis</h1>
                 <div class="content-meta">
                     <span>📕 Minggu 3</span>
                     <span>⏱️ 25 menit</span>
+                    <span>🔧 Teori + Praktik</span>
                 </div>
+            </div>
+
+            <div class="prerequisites">
+                <h3>📌 Prasyarat</h3>
+                <ul>
+                    <li>Sudah paham <a href="../minggu-2/wire-click.html">wire:click</a> dan <a
+                            href="../minggu-2/wire-model.html">wire:model</a></li>
+                    <li>Sudah paham <a href="../minggu-1/blade-template.html">Blade Template</a> (@if, @foreach)</li>
+                </ul>
             </div>
 
             <div class="objectives">
                 <h3>🎯 Tujuan Belajar</h3>
                 <ul>
-                    <li>Membuat modal dengan Livewire</li>
-                    <li>Menampilkan loading state</li>
-                    <li>Flash message / toast notification</li>
+                    <li>Menampilkan/menyembunyikan elemen dengan <strong>Blade conditional</strong></li>
+                    <li>Membuat <strong>tab navigation</strong> dinamis</li>
+                    <li>Mengubah <strong>class CSS</strong> secara dinamis</li>
+                    <li>Menggunakan <strong>wire:loading</strong> untuk indikator proses</li>
+                    <li>Memahami <strong>wire:transition</strong> untuk animasi</li>
                 </ul>
             </div>
 
-            <h2>1. Modal</h2>
+            <h2>🤔 Apa Itu Tampilan Dinamis?</h2>
+
+            <div class="alert alert-tip">
+                <span class="alert-icon">🎭</span>
+                <div>
+                    <h4>Analogi: Panggung Teater</h4>
+                    <ul style="margin-top:0.5rem;">
+                        <li>🎭 <strong>Tampilan dinamis</strong> = panggung teater → properti (latar panggung, aktor)
+                            berubah tiap adegan</li>
+                        <li>🎬 <strong>wire:click</strong> = sutradara → memberi perintah "ganti adegan!"</li>
+                        <li>💡 <strong>Property PHP</strong> = naskah → menentukan adegan mana yang ditampilkan</li>
+                        <li>🔄 <strong>Re-render</strong> = perpindahan adegan → halaman berubah tanpa buka-tutup tirai
+                            (tanpa refresh)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h2>1️⃣ Show/Hide dengan @if</h2>
+
+            <p>Cara paling dasar: tampilkan atau sembunyikan elemen berdasarkan <strong>property</strong>:</p>
+
             <div class="code-block">
                 <div class="code-header">
                     <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
                             class="code-dot"></span></div>
-                    <span class="code-filename">BookManager.php</span>
+                    <span class="code-filename">app/Livewire/ToggleDemo.php</span>
                     <button class="code-copy">Salin</button>
                 </div>
                 <div class="code-body">
-                    <pre><span class="code-keyword">public</span> $showModal = <span class="code-keyword">false</span>;
-<span class="code-keyword">public</span> $selectedBook;
-
-<span class="code-keyword">public function</span> <span class="code-function">openModal</span>($bookId)
+                    <pre><span class="code-keyword">class</span> <span class="code-class">ToggleDemo</span> <span class="code-keyword">extends</span> Component
 {
-    $this->selectedBook = Book::find($bookId);
-    $this->showModal = <span class="code-keyword">true</span>;
-}
+    <span class="code-keyword">public</span> <span class="code-variable">$showDetail</span> = <span class="code-keyword">false</span>;
 
-<span class="code-keyword">public function</span> <span class="code-function">closeModal</span>()
-{
-    $this->showModal = <span class="code-keyword">false</span>;
-    $this->selectedBook = <span class="code-keyword">null</span>;
+    <span class="code-keyword">public function</span> <span class="code-function">toggle</span>()
+    {
+        <span class="code-variable">$this</span>->showDetail = !<span class="code-variable">$this</span>->showDetail;  <span class="code-comment">// Toggle true ↔ false</span>
+    }
 }</pre>
                 </div>
             </div>
@@ -121,59 +151,35 @@
                 <div class="code-header">
                     <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
                             class="code-dot"></span></div>
-                    <span class="code-filename">book-manager.blade.php</span>
+                    <span class="code-filename">View</span>
                     <button class="code-copy">Salin</button>
                 </div>
                 <div class="code-body">
-                    <pre><span class="code-comment">&lt;!-- Tombol buka modal --&gt;</span>
-<span class="code-tag">&lt;button</span> <span class="code-attr">wire:click</span>=<span class="code-string">"openModal({{ $book->id }})"</span><span class="code-tag">&gt;</span>Detail<span class="code-tag">&lt;/button&gt;</span>
-
-<span class="code-comment">&lt;!-- Modal --&gt;</span>
-<span class="code-keyword">@if</span>($showModal)
-<span class="code-tag">&lt;div</span> <span class="code-attr">class</span>=<span class="code-string">"modal-overlay"</span><span class="code-tag">&gt;</span>
-    <span class="code-tag">&lt;div</span> <span class="code-attr">class</span>=<span class="code-string">"modal"</span><span class="code-tag">&gt;</span>
-        <span class="code-tag">&lt;h2&gt;</span>{{ $selectedBook->title }}<span class="code-tag">&lt;/h2&gt;</span>
-        <span class="code-tag">&lt;p&gt;</span>{{ $selectedBook->description }}<span class="code-tag">&lt;/p&gt;</span>
-        <span class="code-tag">&lt;button</span> <span class="code-attr">wire:click</span>=<span class="code-string">"closeModal"</span><span class="code-tag">&gt;</span>Tutup<span class="code-tag">&lt;/button&gt;</span>
-    <span class="code-tag">&lt;/div&gt;</span>
-<span class="code-tag">&lt;/div&gt;</span>
-<span class="code-keyword">@endif</span></pre>
-                </div>
-            </div>
-
-            <h2>2. Loading State</h2>
-            <div class="code-block">
-                <div class="code-header">
-                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
-                            class="code-dot"></span></div>
-                    <span class="code-filename">Loading States</span>
-                    <button class="code-copy">Salin</button>
-                </div>
-                <div class="code-body">
-                    <pre><span class="code-comment">&lt;!-- Loading saat submit --&gt;</span>
-<span class="code-tag">&lt;button</span> <span class="code-attr">wire:click</span>=<span class="code-string">"save"</span><span class="code-tag">&gt;</span>
-    <span class="code-tag">&lt;span</span> <span class="code-attr">wire:loading.remove</span> <span class="code-attr">wire:target</span>=<span class="code-string">"save"</span><span class="code-tag">&gt;</span>Simpan<span class="code-tag">&lt;/span&gt;</span>
-    <span class="code-tag">&lt;span</span> <span class="code-attr">wire:loading</span> <span class="code-attr">wire:target</span>=<span class="code-string">"save"</span><span class="code-tag">&gt;</span>Menyimpan...<span class="code-tag">&lt;/span&gt;</span>
+                    <pre><span class="code-tag">&lt;button</span> <span class="code-attribute">wire:click</span>=<span class="code-string">"toggle"</span><span class="code-tag">&gt;</span>
+    {{ <span class="code-variable">$showDetail</span> ? <span class="code-string">'🔽 Sembunyikan'</span> : <span class="code-string">'▶️ Lihat Detail'</span> }}
 <span class="code-tag">&lt;/button&gt;</span>
 
-<span class="code-comment">&lt;!-- Disable button saat loading --&gt;</span>
-<span class="code-tag">&lt;button</span> <span class="code-attr">wire:loading.attr</span>=<span class="code-string">"disabled"</span><span class="code-tag">&gt;</span>Simpan<span class="code-tag">&lt;/button&gt;</span></pre>
+<span class="code-keyword">@if</span>(<span class="code-variable">$showDetail</span>)
+    <span class="code-tag">&lt;div style="padding:1rem;background:#F3F4F6;border-radius:8px;margin-top:0.5rem"&gt;</span>
+        <span class="code-tag">&lt;p&gt;</span>Ini konten detail yang muncul/menghilang! 🪄<span class="code-tag">&lt;/p&gt;</span>
+    <span class="code-tag">&lt;/div&gt;</span>
+<span class="code-keyword">@endif</span></pre>
                 </div>
             </div>
 
-            <h2>3. Flash Message</h2>
+            <h2>2️⃣ Tab Navigation Dinamis</h2>
+
             <div class="code-block">
                 <div class="code-header">
                     <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
                             class="code-dot"></span></div>
-                    <span class="code-filename">PHP</span>
+                    <span class="code-filename">app/Livewire/TabView.php</span>
                     <button class="code-copy">Salin</button>
                 </div>
                 <div class="code-body">
-                    <pre><span class="code-keyword">public function</span> <span class="code-function">save</span>()
+                    <pre><span class="code-keyword">class</span> <span class="code-class">TabView</span> <span class="code-keyword">extends</span> Component
 {
-    <span class="code-comment">// Simpan data...</span>
-    session()->flash(<span class="code-string">'message'</span>, <span class="code-string">'Data berhasil disimpan!'</span>);
+    <span class="code-keyword">public</span> <span class="code-variable">$activeTab</span> = <span class="code-string">'profil'</span>;  <span class="code-comment">// Tab aktif saat ini</span>
 }</pre>
                 </div>
             </div>
@@ -182,15 +188,273 @@
                 <div class="code-header">
                     <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
                             class="code-dot"></span></div>
-                    <span class="code-filename">Blade</span>
+                    <span class="code-filename">View — Tab dengan class dinamis</span>
                     <button class="code-copy">Salin</button>
                 </div>
                 <div class="code-body">
-                    <pre><span class="code-keyword">@if</span>(session()->has(<span class="code-string">'message'</span>))
-    <span class="code-tag">&lt;div</span> <span class="code-attr">class</span>=<span class="code-string">"alert-success"</span><span class="code-tag">&gt;</span>
-        {{ session(<span class="code-string">'message'</span>) }}
+                    <pre><span class="code-tag">&lt;div&gt;</span>
+    <span class="code-comment">&lt;!-- Tombol tab --&gt;</span>
+    <span class="code-tag">&lt;div style="display:flex;gap:0.5rem;margin-bottom:1rem"&gt;</span>
+        <span class="code-keyword">@foreach</span>([<span class="code-string">'profil'</span>, <span class="code-string">'nilai'</span>, <span class="code-string">'absensi'</span>] as <span class="code-variable">$tab</span>)
+            <span class="code-tag">&lt;button</span>
+                <span class="code-attribute">wire:click</span>=<span class="code-string">"$set('activeTab', '{{ $tab }}')"</span>
+                <span class="code-attribute">style</span>=<span class="code-string">"padding:0.5rem 1rem;border-radius:8px;border:none;cursor:pointer;
+                       {{ $activeTab === $tab
+                           ? 'background:#3B82F6;color:white'
+                           : 'background:#E5E7EB;color:#374151' }}"</span><span class="code-tag">&gt;</span>
+                {{ ucfirst(<span class="code-variable">$tab</span>) }}
+            <span class="code-tag">&lt;/button&gt;</span>
+        <span class="code-keyword">@endforeach</span>
     <span class="code-tag">&lt;/div&gt;</span>
-<span class="code-keyword">@endif</span></pre>
+
+    <span class="code-comment">&lt;!-- Konten tab --&gt;</span>
+    <span class="code-tag">&lt;div style="padding:1.5rem;background:#F9FAFB;border-radius:8px"&gt;</span>
+        <span class="code-keyword">@if</span>(<span class="code-variable">$activeTab</span> === <span class="code-string">'profil'</span>)
+            <span class="code-tag">&lt;h3&gt;</span>👤 Data Profil Siswa<span class="code-tag">&lt;/h3&gt;</span>
+            <span class="code-tag">&lt;p&gt;</span>Nama, kelas, alamat...<span class="code-tag">&lt;/p&gt;</span>
+        <span class="code-keyword">@elseif</span>(<span class="code-variable">$activeTab</span> === <span class="code-string">'nilai'</span>)
+            <span class="code-tag">&lt;h3&gt;</span>📊 Tabel Nilai<span class="code-tag">&lt;/h3&gt;</span>
+            <span class="code-tag">&lt;p&gt;</span>Nilai UTS, UAS, tugas...<span class="code-tag">&lt;/p&gt;</span>
+        <span class="code-keyword">@elseif</span>(<span class="code-variable">$activeTab</span> === <span class="code-string">'absensi'</span>)
+            <span class="code-tag">&lt;h3&gt;</span>📅 Rekap Absensi<span class="code-tag">&lt;/h3&gt;</span>
+            <span class="code-tag">&lt;p&gt;</span>Hadir, izin, sakit, alpha...<span class="code-tag">&lt;/p&gt;</span>
+        <span class="code-keyword">@endif</span>
+    <span class="code-tag">&lt;/div&gt;</span>
+<span class="code-tag">&lt;/div&gt;</span></pre>
+                </div>
+            </div>
+
+            <div class="alert alert-tip">
+                <span class="alert-icon">💡</span>
+                <div>
+                    <h4>Trik: $set tanpa bikin method</h4>
+                    <p><code>wire:click="$set('activeTab', 'nilai')"</code> → langsung ubah property tanpa perlu bikin
+                        method PHP khusus!</p>
+                </div>
+            </div>
+
+            <h2>3️⃣ wire:loading — Indikator Proses</h2>
+
+            <p>Tampilkan loading saat Livewire sedang memproses request:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">Berbagai cara pakai wire:loading</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-comment">&lt;!-- ① Tampilkan saat SEMUA proses --&gt;</span>
+<span class="code-tag">&lt;div</span> <span class="code-attribute">wire:loading</span><span class="code-tag">&gt;</span>⏳ Loading...<span class="code-tag">&lt;/div&gt;</span>
+
+<span class="code-comment">&lt;!-- ② Tampilkan saat method TERTENTU --&gt;</span>
+<span class="code-tag">&lt;div</span> <span class="code-attribute">wire:loading</span> <span class="code-attribute">wire:target</span>=<span class="code-string">"save"</span><span class="code-tag">&gt;</span>💾 Menyimpan data...<span class="code-tag">&lt;/div&gt;</span>
+
+<span class="code-comment">&lt;!-- ③ Sembunyikan saat loading --&gt;</span>
+<span class="code-tag">&lt;button&gt;</span>
+    <span class="code-tag">&lt;span</span> <span class="code-attribute">wire:loading.remove</span><span class="code-tag">&gt;</span>💾 Simpan<span class="code-tag">&lt;/span&gt;</span>
+    <span class="code-tag">&lt;span</span> <span class="code-attribute">wire:loading</span><span class="code-tag">&gt;</span>⏳ Menyimpan...<span class="code-tag">&lt;/span&gt;</span>
+<span class="code-tag">&lt;/button&gt;</span>
+
+<span class="code-comment">&lt;!-- ④ Ubah class saat loading --&gt;</span>
+<span class="code-tag">&lt;button</span> <span class="code-attribute">wire:loading.class</span>=<span class="code-string">"opacity-50"</span><span class="code-tag">&gt;</span>Simpan<span class="code-tag">&lt;/button&gt;</span>
+
+<span class="code-comment">&lt;!-- ⑤ Disable button saat loading --&gt;</span>
+<span class="code-tag">&lt;button</span> <span class="code-attribute">wire:loading.attr</span>=<span class="code-string">"disabled"</span><span class="code-tag">&gt;</span>Simpan<span class="code-tag">&lt;/button&gt;</span></pre>
+                </div>
+            </div>
+
+            <table class="comparison-table">
+                <tr>
+                    <th>Directive</th>
+                    <th>Fungsi</th>
+                </tr>
+                <tr>
+                    <td><code>wire:loading</code></td>
+                    <td>Tampilkan elemen saat loading</td>
+                </tr>
+                <tr>
+                    <td><code>wire:loading.remove</code></td>
+                    <td>Sembunyikan elemen saat loading</td>
+                </tr>
+                <tr>
+                    <td><code>wire:loading.class="..."</code></td>
+                    <td>Tambah class CSS saat loading</td>
+                </tr>
+                <tr>
+                    <td><code>wire:loading.attr="disabled"</code></td>
+                    <td>Tambah HTML attribute saat loading</td>
+                </tr>
+                <tr>
+                    <td><code>wire:target="save"</code></td>
+                    <td>Hanya aktif saat method tertentu diproses</td>
+                </tr>
+            </table>
+
+            <h2>4️⃣ Dynamic CSS Class</h2>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">Contoh: Status badge dinamis</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-comment">&lt;!-- Warna badge berubah berdasarkan status --&gt;</span>
+<span class="code-keyword">@foreach</span>(<span class="code-variable">$books</span> as <span class="code-variable">$book</span>)
+    <span class="code-tag">&lt;span style="padding:0.25rem 0.75rem;border-radius:999px;font-size:0.8rem;
+        {{ <span class="code-variable">$book</span>->status === <span class="code-string">'tersedia'</span>
+            ? <span class="code-string">'background:#D1FAE5;color:#065F46'</span>
+            : <span class="code-string">'background:#FEE2E2;color:#991B1B'</span> }}"</span><span class="code-tag">&gt;</span>
+        {{ <span class="code-variable">$book</span>->status }}
+    <span class="code-tag">&lt;/span&gt;</span>
+<span class="code-keyword">@endforeach</span></pre>
+                </div>
+            </div>
+
+            <h2>5️⃣ Contoh Real-World: Dashboard Siswa</h2>
+
+            <p>Mari gabungkan semua konsep dalam satu komponen lengkap:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">app/Livewire/StudentDashboard.php</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-keyword">class</span> <span class="code-class">StudentDashboard</span> <span class="code-keyword">extends</span> Component
+{
+    <span class="code-keyword">public</span> <span class="code-variable">$activeTab</span> = <span class="code-string">'overview'</span>;
+    <span class="code-keyword">public</span> <span class="code-variable">$showNotif</span> = <span class="code-keyword">true</span>;
+
+    <span class="code-keyword">public function</span> <span class="code-function">dismissNotif</span>()
+    {
+        <span class="code-variable">$this</span>->showNotif = <span class="code-keyword">false</span>;
+    }
+}</pre>
+                </div>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">View — Dashboard kombinasi semua teknik</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-tag">&lt;div&gt;</span>
+    <span class="code-comment">&lt;!-- Notifikasi yang bisa di-dismiss --&gt;</span>
+    <span class="code-keyword">@if</span>(<span class="code-variable">$showNotif</span>)
+        <span class="code-tag">&lt;div style="padding:1rem;background:#DBEAFE;border-radius:8px;
+                    display:flex;justify-content:space-between;margin-bottom:1rem"&gt;</span>
+            <span class="code-tag">&lt;span&gt;</span>📢 Selamat datang di dashboard siswa!<span class="code-tag">&lt;/span&gt;</span>
+            <span class="code-tag">&lt;button</span> <span class="code-attribute">wire:click</span>=<span class="code-string">"dismissNotif"</span>
+                    <span class="code-attribute">style</span>=<span class="code-string">"background:none;border:none;cursor:pointer"</span><span class="code-tag">&gt;</span>✕<span class="code-tag">&lt;/button&gt;</span>
+        <span class="code-tag">&lt;/div&gt;</span>
+    <span class="code-keyword">@endif</span>
+
+    <span class="code-comment">&lt;!-- Tab navigation --&gt;</span>
+    <span class="code-tag">&lt;div style="display:flex;gap:0.5rem;margin-bottom:1rem"&gt;</span>
+        <span class="code-keyword">@foreach</span>([<span class="code-string">'overview'</span> => <span class="code-string">'📊 Overview'</span>, <span class="code-string">'nilai'</span> => <span class="code-string">'📝 Nilai'</span>, <span class="code-string">'tugas'</span> => <span class="code-string">'📚 Tugas'</span>] as <span class="code-variable">$key</span> => <span class="code-variable">$label</span>)
+            <span class="code-tag">&lt;button</span> <span class="code-attribute">wire:click</span>=<span class="code-string">"$set('activeTab', '{{ $key }}')"</span>
+                    <span class="code-attribute">style</span>=<span class="code-string">"padding:0.5rem 1rem;border-radius:8px;border:none;cursor:pointer;
+                    {{ $activeTab === $key ? 'background:#3B82F6;color:white' : 'background:#E5E7EB' }}"</span><span class="code-tag">&gt;</span>
+                {{ <span class="code-variable">$label</span> }}
+            <span class="code-tag">&lt;/button&gt;</span>
+        <span class="code-keyword">@endforeach</span>
+    <span class="code-tag">&lt;/div&gt;</span>
+
+    <span class="code-comment">&lt;!-- Konten dinamis --&gt;</span>
+    <span class="code-keyword">@if</span>(<span class="code-variable">$activeTab</span> === <span class="code-string">'overview'</span>)
+        <span class="code-tag">&lt;div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem"&gt;</span>
+            <span class="code-tag">&lt;div style="padding:1rem;background:#D1FAE5;border-radius:12px;text-align:center"&gt;</span>
+                <span class="code-tag">&lt;div style="font-size:2rem"&gt;</span>📚<span class="code-tag">&lt;/div&gt;</span>
+                <span class="code-tag">&lt;strong&gt;</span>12 Buku<span class="code-tag">&lt;/strong&gt;</span>
+                <span class="code-tag">&lt;p style="font-size:0.85rem;color:#6B7280"&gt;</span>Dipinjam<span class="code-tag">&lt;/p&gt;</span>
+            <span class="code-tag">&lt;/div&gt;</span>
+            <span class="code-tag">&lt;div style="padding:1rem;background:#DBEAFE;border-radius:12px;text-align:center"&gt;</span>
+                <span class="code-tag">&lt;div style="font-size:2rem"&gt;</span>📝<span class="code-tag">&lt;/div&gt;</span>
+                <span class="code-tag">&lt;strong&gt;</span>85.5<span class="code-tag">&lt;/strong&gt;</span>
+                <span class="code-tag">&lt;p style="font-size:0.85rem;color:#6B7280"&gt;</span>Rata-rata Nilai<span class="code-tag">&lt;/p&gt;</span>
+            <span class="code-tag">&lt;/div&gt;</span>
+            <span class="code-tag">&lt;div style="padding:1rem;background:#FEF3C7;border-radius:12px;text-align:center"&gt;</span>
+                <span class="code-tag">&lt;div style="font-size:2rem"&gt;</span>📅<span class="code-tag">&lt;/div&gt;</span>
+                <span class="code-tag">&lt;strong&gt;</span>95%<span class="code-tag">&lt;/strong&gt;</span>
+                <span class="code-tag">&lt;p style="font-size:0.85rem;color:#6B7280"&gt;</span>Kehadiran<span class="code-tag">&lt;/p&gt;</span>
+            <span class="code-tag">&lt;/div&gt;</span>
+        <span class="code-tag">&lt;/div&gt;</span>
+    <span class="code-keyword">@elseif</span>(<span class="code-variable">$activeTab</span> === <span class="code-string">'nilai'</span>)
+        <span class="code-tag">&lt;p&gt;</span>📊 Tabel nilai UTS, UAS, dan tugas...<span class="code-tag">&lt;/p&gt;</span>
+    <span class="code-keyword">@elseif</span>(<span class="code-variable">$activeTab</span> === <span class="code-string">'tugas'</span>)
+        <span class="code-tag">&lt;p&gt;</span>📚 Daftar tugas yang perlu dikerjakan...<span class="code-tag">&lt;/p&gt;</span>
+    <span class="code-keyword">@endif</span>
+<span class="code-tag">&lt;/div&gt;</span></pre>
+                </div>
+            </div>
+
+            <div class="common-mistakes">
+                <h3>⚠️ Kesalahan Umum Pemula</h3>
+                <div class="mistake-item">
+                    <h4>❌ Lupa bahwa @if menghapus elemen, bukan menyembunyikan</h4>
+                    <p><code>@if(false)</code> → elemen dihapus total dari HTML. Jika butuh tetap ada tapi hidden,
+                        gunakan CSS.</p>
+                    <p class="solution">✅ Pakai <code>style="display:{{ $show ? 'block' : 'none' }}"</code> jika perlu.
+                    </p>
+                </div>
+                <div class="mistake-item">
+                    <h4>❌ Tidak pakai wire:target pada loading</h4>
+                    <p>Loading muncul untuk <strong>semua</strong> aksi, bukan cuma yang dimaksud.</p>
+                    <p class="solution">✅ Tambahkan <code>wire:target="methodName"</code> untuk spesifik.</p>
+                </div>
+                <div class="mistake-item">
+                    <h4>❌ Typo nama tab/property</h4>
+                    <p><code>$activeTab === 'profill'</code> (double L) → tab tidak pernah aktif.</p>
+                    <p class="solution">✅ Gunakan constant atau array agar tidak salah ketik.</p>
+                </div>
+            </div>
+
+            <div class="summary-box">
+                <h3>📋 Ringkasan</h3>
+                <ul>
+                    <li><code>@if/$showDetail</code> → Show/Hide toggle</li>
+                    <li><code>$activeTab</code> + <code>@if/@elseif</code> → Tab navigation dinamis</li>
+                    <li><code>wire:loading</code> + <code>wire:target</code> → Indikator proses spesifik</li>
+                    <li><code>wire:loading.class</code> / <code>.attr</code> → Ubah tampilan saat loading</li>
+                    <li><code>$set('prop', 'value')</code> → Ubah property tanpa bikin method</li>
+                </ul>
+            </div>
+
+            <h2>📝 Latihan</h2>
+            <div class="exercise-section">
+                <div class="exercise-level basic">
+                    <h4>🟢 Level 1 — Memahami</h4>
+                    <ol>
+                        <li>Apa bedanya <code>wire:loading</code> dan <code>wire:loading.remove</code>?</li>
+                        <li>Apa fungsi <code>wire:target</code> pada loading?</li>
+                        <li>Kenapa <code>$set()</code> praktis untuk tab navigation?</li>
+                    </ol>
+                </div>
+                <div class="exercise-level intermediate">
+                    <h4>🔵 Level 2 — Praktik</h4>
+                    <ol>
+                        <li>Buat komponen <strong>FAQ Accordion</strong> — klik pertanyaan → jawaban muncul/menghilang.
+                        </li>
+                        <li>Buat <strong>Dark Mode Toggle</strong> yang mengubah background dan warna teks secara
+                            dinamis.</li>
+                    </ol>
+                </div>
+                <div class="exercise-level challenge">
+                    <h4>🟣 Level 3 — Tantangan</h4>
+                    <ol>
+                        <li>Buat <strong>Dashboard Siswa lengkap</strong> dengan 3 tab (Overview, Nilai, Tugas). Tab
+                            Overview tampilkan stat card, tab Nilai tampilkan tabel nilai dari database, tab Tugas
+                            tampilkan daftar tugas!</li>
+                    </ol>
                 </div>
             </div>
 
@@ -201,15 +465,17 @@
                         <div class="nav-btn-title">← Komponen Reusable</div>
                     </div>
                 </a>
-                <a href="../../silabus.html" class="nav-btn">
+                <a href="project-elibrary.html" class="nav-btn">
                     <div>
-                        <div class="nav-btn-label">Selesai!</div>
-                        <div class="nav-btn-title">Kembali ke Silabus 📋</div>
+                        <div class="nav-btn-label">Selanjutnya</div>
+                        <div class="nav-btn-title">📚 Tutorial E-Library →</div>
                     </div>
                 </a>
             </div>
         </main>
     </div>
+    <button class="sidebar-toggle-mobile"
+        onclick="document.querySelector('.sidebar').classList.toggle('active')">📚</button>
     <script src="../../js/app.js"></script>
 </body>
 

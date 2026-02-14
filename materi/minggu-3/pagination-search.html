@@ -31,12 +31,12 @@
             <ul class="navbar-menu">
                 <li><a href="../../index.html">Beranda</a></li>
                 <li><a href="../../silabus.html">Silabus</a></li>
-                <li><a href="#" class="active">Materi</a></li>
+                <li><a href="../minggu-1/pengenalan-laravel.html" class="active">Materi</a></li>
                 <li><a href="../../demo.html">Demo</a></li>
             </ul>
+            <button class="navbar-toggle" aria-label="Toggle menu"><span>☰</span></button>
         </div>
     </nav>
-
     <div class="content-layout">
         <aside class="sidebar">
             <div class="sidebar-section">
@@ -45,10 +45,10 @@
                     <li><a href="../minggu-1/pengenalan-laravel.html">Pengenalan Laravel</a></li>
                     <li><a href="../minggu-1/mvc-sederhana.html">MVC Sederhana</a></li>
                     <li><a href="../minggu-1/instalasi-laravel.html">Instalasi Laravel</a></li>
-                    <li><a href="../minggu-1/autentikasi.html">🔐 Autentikasi</a></li>
                     <li><a href="../minggu-1/blade-template.html">Blade Template</a></li>
                     <li><a href="../minggu-1/pengenalan-livewire.html">Pengenalan Livewire</a></li>
                     <li><a href="../minggu-1/struktur-component.html">Struktur Component</a></li>
+                    <li><a href="../minggu-1/autentikasi.html">🔐 Autentikasi</a></li>
                 </ul>
             </div>
             <div class="sidebar-section">
@@ -56,9 +56,9 @@
                 <ul class="sidebar-nav">
                     <li><a href="../minggu-2/wire-model.html">wire:model</a></li>
                     <li><a href="../minggu-2/wire-click.html">wire:click</a></li>
+                    <li><a href="../minggu-2/database-eloquent.html">Database & Eloquent</a></li>
                     <li><a href="../minggu-2/validasi.html">Validasi</a></li>
                     <li><a href="../minggu-2/crud-sederhana.html">CRUD Sederhana</a></li>
-                    <li><a href="../minggu-2/database-eloquent.html">Database & Eloquent</a></li>
                 </ul>
             </div>
             <div class="sidebar-section">
@@ -72,44 +72,97 @@
                 </ul>
             </div>
         </aside>
-
         <main class="main-content">
             <div class="content-header">
+                <div class="content-breadcrumb">
+                    <a href="../../index.html">Beranda</a> / <a href="../../silabus.html">Silabus</a> / Minggu 3 /
+                    Pagination & Search
+                </div>
                 <h1 class="content-title">3.2 Pagination & Search</h1>
                 <div class="content-meta">
                     <span>📕 Minggu 3</span>
                     <span>⏱️ 25 menit</span>
+                    <span>🔧 Teori + Praktik</span>
                 </div>
+            </div>
+
+            <div class="prerequisites">
+                <h3>📌 Prasyarat</h3>
+                <ul>
+                    <li>Sudah paham <a href="../minggu-2/wire-model.html">wire:model</a> (terutama modifier
+                        <code>.live.debounce</code>)
+                    </li>
+                    <li>Sudah paham <a href="../minggu-2/database-eloquent.html">Database & Eloquent</a></li>
+                    <li>Sudah bisa buat <a href="../minggu-2/crud-sederhana.html">CRUD Sederhana</a></li>
+                </ul>
             </div>
 
             <div class="objectives">
                 <h3>🎯 Tujuan Belajar</h3>
                 <ul>
-                    <li>Menampilkan data dengan pagination</li>
-                    <li>Membuat live search tanpa refresh</li>
-                    <li>Kombinasi search + pagination</li>
+                    <li>Menampilkan data dengan <strong>pagination</strong> (halaman-halaman)</li>
+                    <li>Membuat <strong>live search</strong> tanpa refresh halaman</li>
+                    <li>Menggabungkan <strong>search + pagination</strong> dengan benar</li>
+                    <li>Memahami kenapa <code>resetPage()</code> penting</li>
                 </ul>
             </div>
 
-            <h2>1. Pagination</h2>
+            <h2>🤔 Kenapa Butuh Pagination?</h2>
+
+            <div class="alert alert-tip">
+                <span class="alert-icon">📖</span>
+                <div>
+                    <h4>Analogi: Buku vs Gulungan Kertas</h4>
+                    <ul style="margin-top:0.5rem;">
+                        <li>📜 <strong>Tanpa pagination</strong> = gulungan kertas panjang — semua data ditampilkan
+                            sekaligus, lambat kalau ribuan data</li>
+                        <li>📖 <strong>Dengan pagination</strong> = buku berhalaman — data dibagi per halaman (misal 10
+                            per halaman), cepat dan rapi</li>
+                        <li>🔍 <strong>Search</strong> = daftar isi buku — langsung lompat ke data yang dicari</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1.5rem 0;">
+                <div style="padding:1rem;background:#FEE2E2;border-radius:12px;text-align:center;">
+                    <div style="font-size:1.5rem;">❌</div>
+                    <strong style="color:#DC2626;">Tanpa Pagination</strong>
+                    <p style="font-size:0.85rem;margin:0.5rem 0 0;">1000 buku ditampilkan sekaligus → halaman lambat,
+                        user kewalahan</p>
+                </div>
+                <div style="padding:1rem;background:#D1FAE5;border-radius:12px;text-align:center;">
+                    <div style="font-size:1.5rem;">✅</div>
+                    <strong style="color:#059669;">Dengan Pagination</strong>
+                    <p style="font-size:0.85rem;margin:0.5rem 0 0;">10 buku per halaman × 100 halaman → cepat dan
+                        terorganisir</p>
+                </div>
+            </div>
+
+            <h2>📄 Step 1: Pagination Dasar</h2>
+
+            <p>Livewire membuat pagination sangat mudah — hanya butuh <strong>2 langkah</strong>:</p>
+
             <div class="code-block">
                 <div class="code-header">
                     <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
                             class="code-dot"></span></div>
-                    <span class="code-filename">BookList.php</span>
+                    <span class="code-filename">app/Livewire/BookList.php</span>
                     <button class="code-copy">Salin</button>
                 </div>
                 <div class="code-body">
-                    <pre><span class="code-keyword">use</span> Livewire\WithPagination;
+                    <pre><span class="code-keyword">use</span> Livewire\Component;
+<span class="code-keyword">use</span> Livewire\WithPagination;  <span class="code-comment">// ① Import trait</span>
+<span class="code-keyword">use</span> App\Models\Book;
 
 <span class="code-keyword">class</span> <span class="code-class">BookList</span> <span class="code-keyword">extends</span> Component
 {
-    <span class="code-keyword">use</span> WithPagination;
-    
+    <span class="code-keyword">use</span> WithPagination;  <span class="code-comment">// ② Aktifkan trait</span>
+
     <span class="code-keyword">public function</span> <span class="code-function">render</span>()
     {
         <span class="code-keyword">return</span> view(<span class="code-string">'livewire.book-list'</span>, [
-            <span class="code-string">'books'</span> => Book::paginate(10)
+            <span class="code-comment">// ③ Ganti get() dengan paginate(10)</span>
+            <span class="code-string">'books'</span> => Book::latest()->paginate(<span class="code-number">10</span>)
         ]);
     }
 }</pre>
@@ -120,47 +173,98 @@
                 <div class="code-header">
                     <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
                             class="code-dot"></span></div>
-                    <span class="code-filename">book-list.blade.php</span>
+                    <span class="code-filename">resources/views/livewire/book-list.blade.php</span>
                     <button class="code-copy">Salin</button>
                 </div>
                 <div class="code-body">
-                    <pre><span class="code-keyword">@foreach</span>($books as $book)
-    <span class="code-tag">&lt;div&gt;</span>{{ $book->title }}<span class="code-tag">&lt;/div&gt;</span>
-<span class="code-keyword">@endforeach</span>
+                    <pre><span class="code-tag">&lt;div&gt;</span>
+    <span class="code-tag">&lt;table style="width:100%;border-collapse:collapse"&gt;</span>
+        <span class="code-tag">&lt;thead&gt;</span>
+            <span class="code-tag">&lt;tr style="background:#F3F4F6"&gt;</span>
+                <span class="code-tag">&lt;th style="padding:0.75rem"&gt;</span>#<span class="code-tag">&lt;/th&gt;</span>
+                <span class="code-tag">&lt;th style="padding:0.75rem"&gt;</span>Judul<span class="code-tag">&lt;/th&gt;</span>
+                <span class="code-tag">&lt;th style="padding:0.75rem"&gt;</span>Penulis<span class="code-tag">&lt;/th&gt;</span>
+            <span class="code-tag">&lt;/tr&gt;</span>
+        <span class="code-tag">&lt;/thead&gt;</span>
+        <span class="code-tag">&lt;tbody&gt;</span>
+            <span class="code-keyword">@foreach</span>(<span class="code-variable">$books</span> as <span class="code-variable">$book</span>)
+                <span class="code-tag">&lt;tr style="border-bottom:1px solid #E5E7EB"&gt;</span>
+                    <span class="code-tag">&lt;td style="padding:0.75rem"&gt;</span>{{ <span class="code-variable">$loop</span>->iteration }}<span class="code-tag">&lt;/td&gt;</span>
+                    <span class="code-tag">&lt;td style="padding:0.75rem"&gt;</span>{{ <span class="code-variable">$book</span>->title }}<span class="code-tag">&lt;/td&gt;</span>
+                    <span class="code-tag">&lt;td style="padding:0.75rem"&gt;</span>{{ <span class="code-variable">$book</span>->author }}<span class="code-tag">&lt;/td&gt;</span>
+                <span class="code-tag">&lt;/tr&gt;</span>
+            <span class="code-keyword">@endforeach</span>
+        <span class="code-tag">&lt;/tbody&gt;</span>
+    <span class="code-tag">&lt;/table&gt;</span>
 
-<span class="code-comment">&lt;!-- Pagination links --&gt;</span>
-{{ $books->links() }}</pre>
+    <span class="code-comment">&lt;!-- ④ Tampilkan link pagination --&gt;</span>
+    <span class="code-tag">&lt;div style="margin-top:1rem"&gt;</span>
+        {{ <span class="code-variable">$books</span>->links() }}
+    <span class="code-tag">&lt;/div&gt;</span>
+<span class="code-tag">&lt;/div&gt;</span></pre>
                 </div>
             </div>
 
-            <h2>2. Live Search</h2>
+            <div class="alert alert-info">
+                <span class="alert-icon">🔍</span>
+                <div>
+                    <h4>paginate() vs get()</h4>
+                    <table class="comparison-table" style="margin-top:0.5rem;">
+                        <tr>
+                            <th>Method</th>
+                            <th>Hasil</th>
+                            <th>Kapan Pakai</th>
+                        </tr>
+                        <tr>
+                            <td><code>Book::all()</code> / <code>get()</code></td>
+                            <td>Ambil <strong>semua</strong> data sekaligus</td>
+                            <td>Data sedikit (&lt;50)</td>
+                        </tr>
+                        <tr>
+                            <td><code>Book::paginate(10)</code></td>
+                            <td>Ambil <strong>10 per halaman</strong> + link navigasi</td>
+                            <td>Data banyak (>50)</td>
+                        </tr>
+                        <tr>
+                            <td><code>Book::simplePaginate(10)</code></td>
+                            <td>Hanya "Prev" & "Next" (tanpa nomor)</td>
+                            <td>Data sangat banyak</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <h2>🔍 Step 2: Live Search</h2>
+
+            <p>Tambahkan pencarian yang <strong>langsung filter</strong> saat user mengetik:</p>
+
             <div class="code-block">
                 <div class="code-header">
                     <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
                             class="code-dot"></span></div>
-                    <span class="code-filename">BookList.php</span>
+                    <span class="code-filename">app/Livewire/BookList.php — tambah search</span>
                     <button class="code-copy">Salin</button>
                 </div>
                 <div class="code-body">
-                    <pre><span class="code-keyword">use</span> Livewire\WithPagination;
-
-<span class="code-keyword">class</span> <span class="code-class">BookList</span> <span class="code-keyword">extends</span> Component
+                    <pre><span class="code-keyword">class</span> <span class="code-class">BookList</span> <span class="code-keyword">extends</span> Component
 {
     <span class="code-keyword">use</span> WithPagination;
-    
-    <span class="code-keyword">public</span> $search = <span class="code-string">''</span>;
-    
-    <span class="code-comment">// Reset ke halaman 1 saat search berubah</span>
+
+    <span class="code-keyword">public</span> <span class="code-variable">$search</span> = <span class="code-string">''</span>;  <span class="code-comment">// Property untuk keyword pencarian</span>
+
+    <span class="code-comment">// ⭐ PENTING: Reset halaman ke 1 saat search berubah</span>
     <span class="code-keyword">public function</span> <span class="code-function">updatingSearch</span>()
     {
-        $this->resetPage();
+        <span class="code-variable">$this</span>->resetPage();
     }
-    
+
     <span class="code-keyword">public function</span> <span class="code-function">render</span>()
     {
         <span class="code-keyword">return</span> view(<span class="code-string">'livewire.book-list'</span>, [
-            <span class="code-string">'books'</span> => Book::where(<span class="code-string">'title'</span>, <span class="code-string">'like'</span>, <span class="code-string">'%'</span>.$this->search.<span class="code-string">'%'</span>)
-                          ->paginate(10)
+            <span class="code-string">'books'</span> => Book::where(<span class="code-string">'title'</span>, <span class="code-string">'like'</span>, <span class="code-string">'%'</span>.<span class="code-variable">$this</span>->search.<span class="code-string">'%'</span>)
+                          ->orWhere(<span class="code-string">'author'</span>, <span class="code-string">'like'</span>, <span class="code-string">'%'</span>.<span class="code-variable">$this</span>->search.<span class="code-string">'%'</span>)
+                          ->latest()
+                          ->paginate(<span class="code-number">10</span>)
         ]);
     }
 }</pre>
@@ -171,32 +275,149 @@
                 <div class="code-header">
                     <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
                             class="code-dot"></span></div>
-                    <span class="code-filename">book-list.blade.php</span>
+                    <span class="code-filename">View — tambah search input</span>
                     <button class="code-copy">Salin</button>
                 </div>
                 <div class="code-body">
-                    <pre><span class="code-comment">&lt;!-- Search input --&gt;</span>
-<span class="code-tag">&lt;input</span> <span class="code-attr">type</span>=<span class="code-string">"text"</span> 
-       <span class="code-attr">wire:model.live.debounce.300ms</span>=<span class="code-string">"search"</span>
-       <span class="code-attr">placeholder</span>=<span class="code-string">"Cari buku..."</span><span class="code-tag">&gt;</span>
+                    <pre><span class="code-tag">&lt;div&gt;</span>
+    <span class="code-comment">&lt;!-- Search bar --&gt;</span>
+    <span class="code-tag">&lt;input</span> <span class="code-attribute">type</span>=<span class="code-string">"text"</span>
+           <span class="code-attribute">wire:model.live.debounce.300ms</span>=<span class="code-string">"search"</span>
+           <span class="code-attribute">placeholder</span>=<span class="code-string">"🔍 Cari judul atau penulis..."</span>
+           <span class="code-attribute">style</span>=<span class="code-string">"width:100%;padding:0.75rem;border-radius:8px;border:1px solid #D1D5DB;margin-bottom:1rem"</span><span class="code-tag">&gt;</span>
 
-<span class="code-comment">&lt;!-- Results --&gt;</span>
-<span class="code-keyword">@forelse</span>($books as $book)
-    <span class="code-tag">&lt;div&gt;</span>{{ $book->title }}<span class="code-tag">&lt;/div&gt;</span>
-<span class="code-keyword">@empty</span>
-    <span class="code-tag">&lt;p&gt;</span>Tidak ada buku ditemukan.<span class="code-tag">&lt;/p&gt;</span>
-<span class="code-keyword">@endforelse</span>
+    <span class="code-comment">&lt;!-- Tabel data (sama seperti sebelumnya) --&gt;</span>
+    <span class="code-keyword">@forelse</span>(<span class="code-variable">$books</span> as <span class="code-variable">$book</span>)
+        ...
+    <span class="code-keyword">@empty</span>
+        <span class="code-tag">&lt;p style="text-align:center;color:#9CA3AF;padding:2rem"&gt;</span>
+            📭 Tidak ada buku yang cocok dengan "{{ <span class="code-variable">$search</span> }}"
+        <span class="code-tag">&lt;/p&gt;</span>
+    <span class="code-keyword">@endforelse</span>
 
-{{ $books->links() }}</pre>
+    {{ <span class="code-variable">$books</span>->links() }}
+<span class="code-tag">&lt;/div&gt;</span></pre>
                 </div>
             </div>
 
             <div class="alert alert-tip">
-                <span class="alert-icon">💡</span>
+                <span class="alert-icon">⏱️</span>
                 <div>
-                    <h4>Debounce</h4>
-                    <p><code>debounce.300ms</code> = tunggu 300ms setelah user berhenti mengetik baru kirim request.
-                        Hemat server!</p>
+                    <h4>Kenapa pakai debounce?</h4>
+                    <p><code>wire:model.live.debounce.300ms</code> = tunggu 300ms setelah user <strong>berhenti
+                            mengetik</strong> baru kirim request ke server.</p>
+                    <p style="margin-top:0.5rem;">Tanpa debounce: ketik "Laravel" → <strong>7 request</strong> (L, La,
+                        Lar, Lara, Larav, Larave, Laravel)</p>
+                    <p>Dengan debounce: ketik "Laravel" → <strong>1 request</strong> saja! Hemat server 🚀</p>
+                </div>
+            </div>
+
+            <h2>⭐ Kenapa resetPage() Penting?</h2>
+
+            <p>Bayangkan kamu di <strong>halaman 5</strong>, lalu mengetik pencarian baru. Tanpa
+                <code>resetPage()</code>:
+            </p>
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1.5rem 0;">
+                <div style="padding:1rem;background:#FEE2E2;border-radius:12px;">
+                    <h4 style="margin:0 0 0.5rem;color:#DC2626;">❌ Tanpa resetPage()</h4>
+                    <ol style="font-size:0.85rem;padding-left:1.2rem;margin:0;">
+                        <li>User di halaman 5</li>
+                        <li>Ketik "Laravel" → hasil hanya 3 data</li>
+                        <li>3 data = 1 halaman saja</li>
+                        <li>Tapi masih di halaman 5 → <strong>kosong!</strong> 😱</li>
+                    </ol>
+                </div>
+                <div style="padding:1rem;background:#D1FAE5;border-radius:12px;">
+                    <h4 style="margin:0 0 0.5rem;color:#059669;">✅ Dengan resetPage()</h4>
+                    <ol style="font-size:0.85rem;padding-left:1.2rem;margin:0;">
+                        <li>User di halaman 5</li>
+                        <li>Ketik "Laravel" → <code>resetPage()</code> dipanggil</li>
+                        <li>Otomatis kembali ke halaman 1</li>
+                        <li>Hasil pencarian tampil! ✅</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="alert alert-info">
+                <span class="alert-icon">📝</span>
+                <div>
+                    <h4>updating vs updated</h4>
+                    <p><code>updatingSearch()</code> = dipanggil <strong>sebelum</strong> $search berubah (tepat waktu
+                        untuk reset page)</p>
+                    <p><code>updatedSearch()</code> = dipanggil <strong>setelah</strong> $search berubah</p>
+                </div>
+            </div>
+
+            <div class="common-mistakes">
+                <h3>⚠️ Kesalahan Umum Pemula</h3>
+                <div class="mistake-item">
+                    <h4>❌ Lupa <code>use WithPagination</code></h4>
+                    <p>Error: Method paginate() tidak bekerja dengan benar di Livewire.</p>
+                    <p class="solution">✅ Tambahkan <code>use WithPagination;</code> di dalam class.</p>
+                </div>
+                <div class="mistake-item">
+                    <h4>❌ Lupa resetPage() saat search</h4>
+                    <p>User search dari halaman 5 → hasil kosong meskipun ada data.</p>
+                    <p class="solution">✅ Tambahkan <code>updatingSearch() { $this->resetPage(); }</code></p>
+                </div>
+                <div class="mistake-item">
+                    <h4>❌ Pakai wire:model tanpa .live</h4>
+                    <p>Search baru bekerja setelah submit, bukan real-time.</p>
+                    <p class="solution">✅ Gunakan <code>wire:model.live.debounce.300ms</code></p>
+                </div>
+                <div class="mistake-item">
+                    <h4>❌ Simpan hasil paginate() di property public</h4>
+                    <p>Pagination result tidak bisa disimpan sebagai property Livewire.</p>
+                    <p class="solution">✅ Kirim langsung lewat <code>render()</code> →
+                        <code>view('...', ['books' => ...])</code>
+                    </p>
+                </div>
+            </div>
+
+            <div class="summary-box">
+                <h3>📋 Ringkasan</h3>
+                <ul>
+                    <li>Trait <code>WithPagination</code> + <code>paginate(10)</code> + <code>$books->links()</code>
+                    </li>
+                    <li>Search: <code>wire:model.live.debounce.300ms</code> +
+                        <code>where('col', 'like', '%'.$search.'%')</code>
+                    </li>
+                    <li><code>updatingSearch()</code> + <code>resetPage()</code> agar search dari halaman berapapun
+                        kembali ke halaman 1</li>
+                    <li>Debounce menghemat request ke server</li>
+                </ul>
+            </div>
+
+            <h2>📝 Latihan</h2>
+            <div class="exercise-section">
+                <div class="exercise-level basic">
+                    <h4>🟢 Level 1 — Memahami</h4>
+                    <ol>
+                        <li>Apa bedanya <code>paginate(10)</code> dan <code>get()</code>?</li>
+                        <li>Kenapa <code>resetPage()</code> penting saat search berubah?</li>
+                        <li>Apa fungsi <code>debounce.300ms</code>?</li>
+                    </ol>
+                </div>
+                <div class="exercise-level intermediate">
+                    <h4>🔵 Level 2 — Praktik</h4>
+                    <ol>
+                        <li>Tambahkan <strong>pagination + search</strong> ke CRUD BookManager dari Minggu 2. Tampilkan
+                            5 buku per halaman.</li>
+                        <li>Buat search yang bisa mencari berdasarkan <strong>judul DAN penulis</strong> sekaligus
+                            menggunakan <code>orWhere()</code>.</li>
+                    </ol>
+                </div>
+                <div class="exercise-level challenge">
+                    <h4>🟣 Level 3 — Tantangan</h4>
+                    <ol>
+                        <li>Tambahkan <strong>dropdown filter kelas</strong> (X, XI, XII) yang digunakan bersama search
+                            di tabel siswa. Kedua filter harus bekerja bersamaan!</li>
+                        <li>Tampilkan informasi "Menampilkan 1-10 dari 50 data" di bawah tabel menggunakan method
+                            <code>$books->firstItem()</code>, <code>$books->lastItem()</code>, dan
+                            <code>$books->total()</code>.
+                        </li>
+                    </ol>
                 </div>
             </div>
 
@@ -216,6 +437,8 @@
             </div>
         </main>
     </div>
+    <button class="sidebar-toggle-mobile"
+        onclick="document.querySelector('.sidebar').classList.toggle('active')">📚</button>
     <script src="../../js/app.js"></script>
 </body>
 

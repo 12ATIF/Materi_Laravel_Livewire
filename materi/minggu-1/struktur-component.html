@@ -31,9 +31,10 @@
             <ul class="navbar-menu">
                 <li><a href="../../index.html">Beranda</a></li>
                 <li><a href="../../silabus.html">Silabus</a></li>
-                <li><a href="#" class="active">Materi</a></li>
+                <li><a href="pengenalan-laravel.html" class="active">Materi</a></li>
                 <li><a href="../../demo.html">Demo</a></li>
             </ul>
+            <button class="navbar-toggle" aria-label="Toggle menu"><span>☰</span></button>
         </div>
     </nav>
 
@@ -45,56 +46,103 @@
                     <li><a href="pengenalan-laravel.html">Pengenalan Laravel</a></li>
                     <li><a href="mvc-sederhana.html">MVC Sederhana</a></li>
                     <li><a href="instalasi-laravel.html">Instalasi Laravel</a></li>
-                    <li><a href="autentikasi.html">🔐 Autentikasi</a></li>
                     <li><a href="blade-template.html">Blade Template</a></li>
                     <li><a href="pengenalan-livewire.html">Pengenalan Livewire</a></li>
                     <li><a href="struktur-component.html" class="active">Struktur Component</a></li>
+                    <li><a href="autentikasi.html">🔐 Autentikasi</a></li>
                 </ul>
             </div>
             <div class="sidebar-section">
                 <div class="sidebar-title">📘 Minggu 2</div>
                 <ul class="sidebar-nav">
                     <li><a href="../minggu-2/wire-model.html">wire:model</a></li>
+                    <li><a href="../minggu-2/wire-click.html">wire:click</a></li>
+                    <li><a href="../minggu-2/database-eloquent.html">Database & Eloquent</a></li>
+                    <li><a href="../minggu-2/validasi.html">Validasi</a></li>
+                    <li><a href="../minggu-2/crud-sederhana.html">CRUD Sederhana</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-title">📕 Minggu 3</div>
+                <ul class="sidebar-nav">
+                    <li><a href="../minggu-3/upload-file.html">Upload File</a></li>
+                    <li><a href="../minggu-3/pagination-search.html">Pagination & Search</a></li>
+                    <li><a href="../minggu-3/komponen-reusable.html">Komponen Reusable</a></li>
+                    <li><a href="../minggu-3/tampilan-dinamis.html">Tampilan Dinamis</a></li>
+                    <li><a href="../minggu-3/project-elibrary.html">📚 Tutorial E-Library</a></li>
                 </ul>
             </div>
         </aside>
 
         <main class="main-content">
             <div class="content-header">
+                <div class="content-breadcrumb">
+                    <a href="../../index.html">Beranda</a> / <a href="../../silabus.html">Silabus</a> / Minggu 1 /
+                    Struktur Component
+                </div>
                 <h1 class="content-title">1.6 Struktur Component Livewire</h1>
                 <div class="content-meta">
                     <span>📗 Minggu 1</span>
-                    <span>⏱️ 25 menit</span>
-                    <span>🔧 Praktik</span>
+                    <span>⏱️ 30 menit</span>
+                    <span>🔧 Teori + Praktik</span>
                 </div>
             </div>
 
-            <div class="objectives">
-                <h3>🎯 Tujuan Belajar</h3>
+            <!-- Prasyarat -->
+            <div class="prerequisites">
+                <h3>📌 Prasyarat</h3>
                 <ul>
-                    <li>Memahami anatomi component Livewire</li>
-                    <li>Membuat component Livewire pertama</li>
-                    <li>Menghubungkan class PHP dengan Blade view</li>
+                    <li>Sudah paham <a href="pengenalan-livewire.html">Pengenalan Livewire</a> (cara kerja Livewire di
+                        balik layar)</li>
+                    <li>Sudah paham <a href="blade-template.html">Blade Template</a> ({{ }}, @if, @foreach)</li>
+                    <li>Sudah install Laravel + Livewire di komputer (<a href="instalasi-laravel.html">Materi 1.3</a>)
+                    </li>
                 </ul>
             </div>
 
-            <h2>Anatomi Component</h2>
-            <p>Setiap component Livewire terdiri dari <strong>2 file</strong>:</p>
+            <!-- Tujuan Belajar -->
+            <div class="objectives">
+                <h3>🎯 Tujuan Belajar</h3>
+                <p>Setelah menyelesaikan materi ini, kamu akan mampu:</p>
+                <ul>
+                    <li>Membuat komponen Livewire baru menggunakan <strong>Artisan command</strong></li>
+                    <li>Memahami <strong>2 bagian komponen</strong>: class PHP dan view Blade</li>
+                    <li>Menjelaskan peran <strong>property, method, dan render()</strong></li>
+                    <li>Menampilkan komponen Livewire di halaman menggunakan <strong>tag Blade</strong></li>
+                    <li>Memahami <strong>lifecycle</strong> dasar komponen (mount, render)</li>
+                </ul>
+            </div>
 
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin:1.5rem 0;">
-                <div style="padding:1.5rem;background:#DBEAFE;border-radius:12px;">
-                    <h3 style="margin:0 0 0.5rem;color:#2563EB;">📄 Class PHP</h3>
-                    <p style="margin:0;font-size:0.9rem;">app/Livewire/NamaComponent.php</p>
-                    <p style="margin:0.5rem 0 0;color:#374151;">Berisi logic, data, dan method</p>
-                </div>
-                <div style="padding:1.5rem;background:#D1FAE5;border-radius:12px;">
-                    <h3 style="margin:0 0 0.5rem;color:#059669;">🎨 Blade View</h3>
-                    <p style="margin:0;font-size:0.9rem;">resources/views/livewire/nama-component.blade.php</p>
-                    <p style="margin:0.5rem 0 0;color:#374151;">Berisi tampilan HTML</p>
+            <!-- ==================== KONTEN ==================== -->
+
+            <h2>🧩 Apa itu Component?</h2>
+
+            <p>Di Livewire, setiap fitur interaktif dibuat sebagai <strong>"komponen"</strong>. Satu komponen = satu
+                unit yang mandiri dan bisa dipakai ulang.</p>
+
+            <div class="alert alert-tip">
+                <span class="alert-icon">🧱</span>
+                <div>
+                    <h4>Analogi: Lego</h4>
+                    <p>Bayangkan website-mu seperti bangunan <strong>Lego</strong>. Setiap komponen = satu blok Lego:
+                    </p>
+                    <ul style="margin-top:0.5rem;">
+                        <li>🧱 Blok <strong>Counter</strong> — menghitung angka</li>
+                        <li>🧱 Blok <strong>SearchBar</strong> — kolom pencarian</li>
+                        <li>🧱 Blok <strong>BookList</strong> — daftar buku</li>
+                        <li>🧱 Blok <strong>LoginForm</strong> — form login</li>
+                    </ul>
+                    <p style="margin-top:0.5rem;">Setiap blok bisa dipasang, dicopot, dan <strong>dipakai ulang di
+                            halaman manapun!</strong></p>
                 </div>
             </div>
 
-            <h2>Membuat Component</h2>
+            <!-- ==================== -->
+
+            <h2>🛠️ Membuat Component Baru</h2>
+
+            <p>Buka terminal dan jalankan perintah Artisan:</p>
+
             <div class="code-block">
                 <div class="code-header">
                     <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
@@ -103,17 +151,36 @@
                     <button class="code-copy">Salin</button>
                 </div>
                 <div class="code-body">
-                    <pre>php artisan make:livewire Counter</pre>
+                    <pre><span class="code-comment"># Buat komponen Livewire baru bernama "Counter"</span>
+php artisan make:livewire Counter</pre>
                 </div>
             </div>
 
-            <p>Perintah di atas akan membuat 2 file:</p>
-            <ul>
-                <li><code>app/Livewire/Counter.php</code></li>
-                <li><code>resources/views/livewire/counter.blade.php</code></li>
-            </ul>
+            <div class="alert alert-info">
+                <span class="alert-icon">📂</span>
+                <div>
+                    <h4>Artisan Membuat 2 File Otomatis!</h4>
+                    <p>Perintah di atas akan membuat 2 file sekaligus:</p>
+                    <div class="code-block" style="margin-top:0.75rem;">
+                        <div class="code-body">
+                            <pre>📦 project-laravel/
+├── app/Livewire/
+│   └── <span class="code-function">Counter.php</span>          <span class="code-comment">← Class PHP (LOGIKA)</span>
+└── resources/views/livewire/
+    └── <span class="code-string">counter.blade.php</span>     <span class="code-comment">← View Blade (TAMPILAN)</span></pre>
+                        </div>
+                    </div>
+                    <p style="margin-top:0.5rem;">Dua file ini <strong>selalu berpasangan</strong> seperti otak 🧠 dan
+                        wajah 👁️ — otak berisi logika, wajah menampilkan hasilnya.</p>
+                </div>
+            </div>
 
-            <h2>Contoh Component</h2>
+            <!-- ==================== -->
+
+            <h2>🧠 Bagian 1: Class PHP (Logika)</h2>
+
+            <p>Ini adalah "otak" komponen — tempat menulis logika bisnis, menyimpan data, dan menangani aksi user.</p>
+
             <div class="code-block">
                 <div class="code-header">
                     <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
@@ -128,16 +195,241 @@
 
 <span class="code-keyword">class</span> <span class="code-class">Counter</span> <span class="code-keyword">extends</span> Component
 {
-    <span class="code-keyword">public</span> <span class="code-variable">$count</span> = 0;
-    
-    <span class="code-keyword">public function</span> <span class="code-function">increment</span>()
+    <span class="code-comment">// ① PROPERTY — data yang bisa diakses oleh View</span>
+    <span class="code-keyword">public</span> <span class="code-variable">$count</span> = <span class="code-number">0</span>;
+    <span class="code-keyword">public</span> <span class="code-variable">$nama</span> = <span class="code-string">'Budi'</span>;
+
+    <span class="code-comment">// ② METHOD — fungsi yang bisa dipanggil dari View</span>
+    <span class="code-keyword">public function</span> <span class="code-function">tambah</span>()
     {
-        $this->count++;
+        <span class="code-variable">$this</span>->count++;
     }
-    
+
+    <span class="code-keyword">public function</span> <span class="code-function">kurang</span>()
+    {
+        <span class="code-variable">$this</span>->count--;
+    }
+
+    <span class="code-keyword">public function</span> <span class="code-function">reset</span>()
+    {
+        <span class="code-variable">$this</span>->count = <span class="code-number">0</span>;
+    }
+
+    <span class="code-comment">// ③ RENDER — menghubungkan class ini ke View Blade</span>
     <span class="code-keyword">public function</span> <span class="code-function">render</span>()
     {
         <span class="code-keyword">return</span> view(<span class="code-string">'livewire.counter'</span>);
+    }
+}</pre>
+                </div>
+            </div>
+
+            <h3>Penjelasan Baris per Baris</h3>
+
+            <div style="display:grid;gap:1rem;margin:1.5rem 0;">
+                <div style="padding:1.5rem;background:#FEF3C7;border-radius:12px;border-left:4px solid #F59E0B;">
+                    <h4 style="margin:0 0 0.5rem;color:#D97706;">① Property (Data)</h4>
+                    <p style="margin:0;color:#374151;"><code>public $count = 0;</code> dan
+                        <code>public $nama = 'Budi';</code>
+                    </p>
+                    <p style="margin:0.5rem 0 0;color:#374151;">Property = variabel yang <strong>otomatis
+                            tersinkronisasi</strong> antara class PHP dan view Blade. Ketika nilainya berubah di PHP,
+                        tampilan di browser <strong>langsung update</strong>!</p>
+                    <p style="margin:0.5rem 0 0;color:#92400E;font-size:0.9rem;">⚠️ Property harus <code>public</code>
+                        agar bisa diakses view. Property <code>private</code> atau <code>protected</code> tidak akan
+                        terlihat di Blade.</p>
+                </div>
+
+                <div style="padding:1.5rem;background:#DBEAFE;border-radius:12px;border-left:4px solid #3B82F6;">
+                    <h4 style="margin:0 0 0.5rem;color:#2563EB;">② Method (Aksi)</h4>
+                    <p style="margin:0;color:#374151;"><code>public function tambah()</code>, <code>kurang()</code>,
+                        <code>reset()</code>
+                    </p>
+                    <p style="margin:0.5rem 0 0;color:#374151;">Method = fungsi yang bisa <strong>dipanggil dari
+                            View</strong> menggunakan <code>wire:click</code>, <code>wire:submit</code>, dll. Inilah
+                        "aksi" yang user bisa lakukan.</p>
+                </div>
+
+                <div style="padding:1.5rem;background:#D1FAE5;border-radius:12px;border-left:4px solid #10B981;">
+                    <h4 style="margin:0 0 0.5rem;color:#059669;">③ Render (Penyambung)</h4>
+                    <p style="margin:0;color:#374151;"><code>public function render()</code></p>
+                    <p style="margin:0.5rem 0 0;color:#374151;">Method wajib yang mengembalikan view Blade. Laravel tahu
+                        untuk mencari file <code>resources/views/livewire/counter.blade.php</code> dari string
+                        <code>'livewire.counter'</code>.
+                    </p>
+                </div>
+            </div>
+
+            <!-- ==================== -->
+
+            <h2>👁️ Bagian 2: View Blade (Tampilan)</h2>
+
+            <p>Ini adalah "wajah" komponen — tampilan yang dilihat user di browser.</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">resources/views/livewire/counter.blade.php</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-comment">&lt;!-- ⚠️ WAJIB: satu root element (div) --&gt;</span>
+<span class="code-tag">&lt;div&gt;</span>
+    <span class="code-tag">&lt;h2&gt;</span>Halo, {{ <span class="code-variable">$nama</span> }}!<span class="code-tag">&lt;/h2&gt;</span>
+    <span class="code-tag">&lt;p&gt;</span>Nilai counter: <span class="code-tag">&lt;strong&gt;</span>{{ <span class="code-variable">$count</span> }}<span class="code-tag">&lt;/strong&gt;</span><span class="code-tag">&lt;/p&gt;</span>
+
+    <span class="code-comment">&lt;!-- Tombol memanggil method di class PHP --&gt;</span>
+    <span class="code-tag">&lt;button</span> <span class="code-attribute">wire:click</span>=<span class="code-string">"tambah"</span><span class="code-tag">&gt;</span>➕ Tambah<span class="code-tag">&lt;/button&gt;</span>
+    <span class="code-tag">&lt;button</span> <span class="code-attribute">wire:click</span>=<span class="code-string">"kurang"</span><span class="code-tag">&gt;</span>➖ Kurang<span class="code-tag">&lt;/button&gt;</span>
+    <span class="code-tag">&lt;button</span> <span class="code-attribute">wire:click</span>=<span class="code-string">"reset"</span><span class="code-tag">&gt;</span>🔄 Reset<span class="code-tag">&lt;/button&gt;</span>
+<span class="code-tag">&lt;/div&gt;</span></pre>
+                </div>
+            </div>
+
+            <div class="alert alert-info">
+                <span class="alert-icon">🔍</span>
+                <div>
+                    <h4>Cara Baca Kode Ini</h4>
+                    <ul>
+                        <li><code>{{ $nama }}</code> — menampilkan property <code>$nama</code> dari class PHP
+                            (<strong>Budi</strong>)</li>
+                        <li><code>{{ $count }}</code> — menampilkan property <code>$count</code> (nilainya berubah saat
+                            tombol diklik)</li>
+                        <li><code>wire:click="tambah"</code> — saat tombol diklik, panggil method <code>tambah()</code>
+                            di class PHP</li>
+                    </ul>
+                    <p style="margin-top:0.5rem;font-weight:600;">Perhatikan: property dan method yang ada di class PHP
+                        <strong>langsung bisa diakses</strong> di view Blade!
+                    </p>
+                </div>
+            </div>
+
+            <!-- ==================== -->
+
+            <h2>📄 Menampilkan Component di Halaman</h2>
+
+            <p>Setelah komponen dibuat, bagaimana menampilkannya? Ada 2 cara:</p>
+
+            <h3>Cara 1: Tag Livewire (Direkomendasikan)</h3>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">resources/views/welcome.blade.php</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-keyword">@extends</span>(<span class="code-string">'layouts.app'</span>)
+
+<span class="code-keyword">@section</span>(<span class="code-string">'content'</span>)
+    <span class="code-tag">&lt;h1&gt;</span>Selamat Datang<span class="code-tag">&lt;/h1&gt;</span>
+
+    <span class="code-comment">&lt;!-- Sisipkan komponen Counter di sini --&gt;</span>
+    <span class="code-tag">&lt;livewire:counter /&gt;</span>
+<span class="code-keyword">@endsection</span></pre>
+                </div>
+            </div>
+
+            <h3>Cara 2: Directive Blade</h3>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">resources/views/welcome.blade.php</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-comment">&lt;!-- Cara alternatif menggunakan directive --&gt;</span>
+<span class="code-keyword">@livewire</span>(<span class="code-string">'counter'</span>)</pre>
+                </div>
+            </div>
+
+            <div class="alert alert-tip">
+                <span class="alert-icon">💡</span>
+                <div>
+                    <h4>Mana yang Lebih Baik?</h4>
+                    <p>Kedua cara hasilnya sama. Tapi <code>&lt;livewire:counter /&gt;</code> lebih populer karena mirip
+                        syntax HTML biasa dan lebih mudah dibaca.</p>
+                </div>
+            </div>
+
+            <!-- ==================== -->
+
+            <h2>🔄 Lifecycle Component</h2>
+
+            <p>Setiap komponen Livewire punya "siklus hidup" — fase-fase yang dilewati dari awal sampai selesai:</p>
+
+            <div class="diagram-flow">
+                <div class="flow-item">🏗️ mount()<br><small>inisialisasi</small></div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-item highlight">🎨 render()<br><small>tampilkan</small></div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-item">👤 User Aksi<br><small>klik, ketik</small></div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-item">⚙️ Method()<br><small>proses</small></div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-item highlight">🎨 render()<br><small>re-render</small></div>
+            </div>
+
+            <table class="comparison-table">
+                <tr>
+                    <th>Method Lifecycle</th>
+                    <th>Kapan Dipanggil</th>
+                    <th>Contoh Penggunaan</th>
+                </tr>
+                <tr>
+                    <td><code>mount()</code></td>
+                    <td>Sekali saat komponen pertama dimuat</td>
+                    <td>Set nilai awal, ambil data dari URL</td>
+                </tr>
+                <tr>
+                    <td><code>render()</code></td>
+                    <td>Setiap kali ada perubahan data</td>
+                    <td>Mengembalikan view Blade (wajib ada)</td>
+                </tr>
+                <tr>
+                    <td><code>updated()</code></td>
+                    <td>Setiap kali property berubah</td>
+                    <td>Validasi input real-time</td>
+                </tr>
+            </table>
+
+            <h3>Contoh mount() — Inisialisasi Data</h3>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">app/Livewire/Greeting.php</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-keyword">class</span> <span class="code-class">Greeting</span> <span class="code-keyword">extends</span> Component
+{
+    <span class="code-keyword">public</span> <span class="code-variable">$nama</span>;
+    <span class="code-keyword">public</span> <span class="code-variable">$waktu</span>;
+
+    <span class="code-comment">// mount() dipanggil SEKALI saat komponen pertama dimuat</span>
+    <span class="code-keyword">public function</span> <span class="code-function">mount</span>(<span class="code-variable">$nama</span>)
+    {
+        <span class="code-variable">$this</span>->nama = <span class="code-variable">$nama</span>;
+        <span class="code-variable">$hour</span> = date(<span class="code-string">'H'</span>);
+
+        <span class="code-keyword">if</span> (<span class="code-variable">$hour</span> < <span class="code-number">12</span>) {
+            <span class="code-variable">$this</span>->waktu = <span class="code-string">'Pagi'</span>;
+        } <span class="code-keyword">elseif</span> (<span class="code-variable">$hour</span> < <span class="code-number">17</span>) {
+            <span class="code-variable">$this</span>->waktu = <span class="code-string">'Siang'</span>;
+        } <span class="code-keyword">else</span> {
+            <span class="code-variable">$this</span>->waktu = <span class="code-string">'Malam'</span>;
+        }
+    }
+
+    <span class="code-keyword">public function</span> <span class="code-function">render</span>()
+    {
+        <span class="code-keyword">return</span> view(<span class="code-string">'livewire.greeting'</span>);
     }
 }</pre>
                 </div>
@@ -147,48 +439,157 @@
                 <div class="code-header">
                     <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
                             class="code-dot"></span></div>
-                    <span class="code-filename">livewire/counter.blade.php</span>
+                    <span class="code-filename">Cara pakai di halaman</span>
                     <button class="code-copy">Salin</button>
                 </div>
                 <div class="code-body">
-                    <pre><span class="code-tag">&lt;div&gt;</span>
-    <span class="code-tag">&lt;h1&gt;</span>{{ $count }}<span class="code-tag">&lt;/h1&gt;</span>
-    <span class="code-tag">&lt;button</span> <span class="code-attr">wire:click</span>=<span class="code-string">"increment"</span><span class="code-tag">&gt;</span>Tambah<span class="code-tag">&lt;/button&gt;</span>
-<span class="code-tag">&lt;/div&gt;</span></pre>
+                    <pre><span class="code-comment">&lt;!-- Kirim parameter ke mount() --&gt;</span>
+<span class="code-tag">&lt;livewire:greeting</span> <span class="code-attribute">nama</span>=<span class="code-string">"Budi"</span> <span class="code-tag">/&gt;</span>
+
+<span class="code-comment">&lt;!-- Hasil di browser: "Selamat Pagi, Budi!" --&gt;</span></pre>
                 </div>
             </div>
 
-            <h2>Menggunakan Component</h2>
-            <div class="code-block">
-                <div class="code-header">
-                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
-                            class="code-dot"></span></div>
-                    <span class="code-filename">welcome.blade.php</span>
-                    <button class="code-copy">Salin</button>
-                </div>
-                <div class="code-body">
-                    <pre><span class="code-comment">&lt;!-- Cara 1: Tag component --&gt;</span>
-<span class="code-tag">&lt;livewire:counter /&gt;</span>
+            <!-- ==================== POLA HUBUNGAN ==================== -->
 
-<span class="code-comment">&lt;!-- Cara 2: Blade directive --&gt;</span>
-@livewire('counter')</pre>
+            <h2>🗺️ Peta Hubungan: Class ↔ View</h2>
+
+            <p>Ini adalah inti dari komponen Livewire — bagaimana class dan view saling terhubung:</p>
+
+            <div style="display:grid;grid-template-columns:1fr 60px 1fr;gap:0;margin:1.5rem 0;align-items:center;">
+                <div style="padding:1.5rem;background:#FEF3C7;border-radius:16px 0 0 16px;border:2px solid #F59E0B;">
+                    <h4 style="margin:0 0 0.75rem;color:#D97706;text-align:center;">🧠 Class PHP</h4>
+                    <p style="margin:0 0 0.5rem;font-size:0.9rem;"><code>public $count = 0;</code></p>
+                    <p style="margin:0 0 0.5rem;font-size:0.9rem;"><code>public $nama;</code></p>
+                    <p style="margin:0 0 0.5rem;font-size:0.9rem;"><code>function tambah()</code></p>
+                    <p style="margin:0;font-size:0.9rem;"><code>function render()</code></p>
+                </div>
+                <div style="text-align:center;font-size:2rem;color:#10B981;">⟷</div>
+                <div style="padding:1.5rem;background:#DBEAFE;border-radius:0 16px 16px 0;border:2px solid #3B82F6;">
+                    <h4 style="margin:0 0 0.75rem;color:#2563EB;text-align:center;">👁️ View Blade</h4>
+                    <p style="margin:0 0 0.5rem;font-size:0.9rem;"><code>{{ $count }}</code></p>
+                    <p style="margin:0 0 0.5rem;font-size:0.9rem;"><code>{{ $nama }}</code></p>
+                    <p style="margin:0 0 0.5rem;font-size:0.9rem;"><code>wire:click="tambah"</code></p>
+                    <p style="margin:0;font-size:0.9rem;">→ <code>counter.blade.php</code></p>
                 </div>
             </div>
 
-            <div class="alert alert-warning">
-                <span class="alert-icon">⚠️</span>
+            <div class="alert alert-tip">
+                <span class="alert-icon">🔑</span>
                 <div>
-                    <h4>Penting!</h4>
-                    <p>Jangan lupa tambahkan @livewireStyles dan @livewireScripts di layout utama!</p>
+                    <h4>Aturan Emas Livewire</h4>
+                    <ol style="margin-top:0.5rem;">
+                        <li><strong>Property public</strong> di class → otomatis tersedia di view sebagai
+                            <code>$variabel</code>
+                        </li>
+                        <li><strong>Method public</strong> di class → bisa dipanggil dari view lewat
+                            <code>wire:click</code>, <code>wire:submit</code>, dll
+                        </li>
+                        <li><strong>render()</strong> → wajib ada, menghubungkan class ke file Blade-nya</li>
+                        <li><strong>View Livewire</strong> → HARUS punya satu root element <code>&lt;div&gt;</code></li>
+                    </ol>
                 </div>
             </div>
+
+            <!-- ==================== KESALAHAN UMUM ==================== -->
+
+            <div class="common-mistakes">
+                <h3>⚠️ Kesalahan Umum Pemula</h3>
+
+                <div class="mistake-item">
+                    <h4>❌ Tidak ada satu root element di view</h4>
+                    <p>View Livewire HARUS dibungkus dalam satu element. Kalau ada dua element sejajar tanpa wrapper,
+                        akan error.</p>
+                    <p class="solution">✅ Solusi: Selalu bungkus konten view dalam
+                        <code>&lt;div&gt;...&lt;/div&gt;</code>.
+                    </p>
+                </div>
+
+                <div class="mistake-item">
+                    <h4>❌ Property dengan tipe data yang tidak didukung</h4>
+                    <p>Livewire hanya mendukung tipe data sederhana: string, int, float, boolean, array, dan model
+                        Eloquent. Jangan simpan object custom atau closure.</p>
+                    <p class="solution">✅ Solusi: Gunakan tipe data sederhana. Kalau butuh object, konversi dulu ke
+                        array.</p>
+                </div>
+
+                <div class="mistake-item">
+                    <h4>❌ Lupa method render()</h4>
+                    <p>Tanpa <code>render()</code>, Livewire tidak tahu view mana yang harus ditampilkan.</p>
+                    <p class="solution">✅ Solusi: Method <code>render()</code> wajib ada dan harus return
+                        <code>view('livewire.nama-komponen')</code>.
+                    </p>
+                </div>
+
+                <div class="mistake-item">
+                    <h4>❌ Nama class dan nama file tidak cocok</h4>
+                    <p>Class <code>Counter</code> harus ada di file <code>Counter.php</code>, view-nya di
+                        <code>counter.blade.php</code> (huruf kecil).
+                    </p>
+                    <p class="solution">✅ Solusi: Gunakan perintah <code>php artisan make:livewire NamaKomponen</code>
+                        agar Laravel yang buatkan dengan penamaan yang benar!</p>
+                </div>
+            </div>
+
+            <!-- ==================== RINGKASAN ==================== -->
+
+            <div class="summary-box">
+                <h3>📋 Ringkasan Materi</h3>
+                <ul>
+                    <li>Setiap komponen Livewire terdiri dari <strong>2 file</strong>: Class PHP (logika) + View Blade
+                        (tampilan)</li>
+                    <li>Buat komponen: <code>php artisan make:livewire NamaKomponen</code></li>
+                    <li><strong>Property</strong> (public) = data yang tersinkronisasi antara PHP dan browser</li>
+                    <li><strong>Method</strong> (public) = aksi yang bisa dipanggil user via <code>wire:click</code>
+                    </li>
+                    <li><strong>render()</strong> = method wajib yang menghubungkan class ke view</li>
+                    <li><strong>mount()</strong> = inisialisasi yang dijalankan sekali saat komponen dimuat</li>
+                    <li>Tampilkan komponen: <code>&lt;livewire:nama-komponen /&gt;</code></li>
+                </ul>
+            </div>
+
+            <!-- ==================== LATIHAN ==================== -->
 
             <h2>📝 Latihan</h2>
-            <ol>
-                <li>Buat component <code>HelloWorld</code> yang menampilkan "Hello, World!"</li>
-                <li>Tambahkan property nama dan tampilkan "Hello, [nama]!"</li>
-                <li>Buat tombol untuk mengubah nama menjadi nama sendiri</li>
-            </ol>
+
+            <div class="exercise-section">
+                <div class="exercise-level basic">
+                    <h4>🟢 Level 1 — Memahami</h4>
+                    <ol>
+                        <li>Sebutkan 2 file yang dibuat oleh <code>php artisan make:livewire Counter</code> dan
+                            lokasinya.</li>
+                        <li>Apa perbedaan <strong>property</strong> dan <strong>method</strong> di komponen Livewire?
+                            Beri contoh masing-masing.</li>
+                        <li>Kenapa view Livewire harus punya <strong>satu root element</strong>? Apa yang terjadi kalau
+                            tidak?</li>
+                    </ol>
+                </div>
+
+                <div class="exercise-level intermediate">
+                    <h4>🔵 Level 2 — Praktik</h4>
+                    <ol>
+                        <li>Buat komponen Livewire bernama <strong>"Greeting"</strong> yang menampilkan "Selamat
+                            Pagi/Siang/Malam" berdasarkan waktu sekarang.</li>
+                        <li>Buat komponen <strong>"TodoCounter"</strong> yang punya property <code>$tasks</code> (array)
+                            dan menampilkan berapa jumlah task-nya.</li>
+                        <li>Modifikasi Counter di atas agar <strong>tidak bisa kurang dari 0</strong> (tambahkan
+                            validasi di method kurang()).</li>
+                    </ol>
+                </div>
+
+                <div class="exercise-level challenge">
+                    <h4>🟣 Level 3 — Tantangan</h4>
+                    <ol>
+                        <li>Buat komponen <strong>"ProfileCard"</strong> yang menerima parameter <code>nama</code> dan
+                            <code>kelas</code> lewat mount(). Tampilkan dalam card yang menarik.
+                        </li>
+                        <li>Kalau satu halaman punya 3 komponen Counter yang terpisah, apakah mereka saling
+                            mempengaruhi? Atau masing-masing punya data sendiri? Buktikan dengan mencoba!</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- ==================== NAVIGASI ==================== -->
 
             <div class="content-nav">
                 <a href="pengenalan-livewire.html" class="nav-btn">
@@ -197,15 +598,18 @@
                         <div class="nav-btn-title">← Pengenalan Livewire</div>
                     </div>
                 </a>
-                <a href="../minggu-2/wire-model.html" class="nav-btn">
+                <a href="autentikasi.html" class="nav-btn">
                     <div>
-                        <div class="nav-btn-label">Minggu 2</div>
-                        <div class="nav-btn-title">wire:model →</div>
+                        <div class="nav-btn-label">Selanjutnya</div>
+                        <div class="nav-btn-title">🔐 Autentikasi →</div>
                     </div>
                 </a>
             </div>
         </main>
     </div>
+
+    <button class="sidebar-toggle-mobile"
+        onclick="document.querySelector('.sidebar').classList.toggle('active')">📚</button>
     <script src="../../js/app.js"></script>
 </body>
 

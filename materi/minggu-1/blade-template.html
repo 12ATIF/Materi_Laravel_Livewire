@@ -31,9 +31,10 @@
             <ul class="navbar-menu">
                 <li><a href="../../index.html">Beranda</a></li>
                 <li><a href="../../silabus.html">Silabus</a></li>
-                <li><a href="#" class="active">Materi</a></li>
+                <li><a href="pengenalan-laravel.html" class="active">Materi</a></li>
                 <li><a href="../../demo.html">Demo</a></li>
             </ul>
+            <button class="navbar-toggle" aria-label="Toggle menu"><span>☰</span></button>
         </div>
     </nav>
 
@@ -45,41 +46,136 @@
                     <li><a href="pengenalan-laravel.html">Pengenalan Laravel</a></li>
                     <li><a href="mvc-sederhana.html">MVC Sederhana</a></li>
                     <li><a href="instalasi-laravel.html">Instalasi Laravel</a></li>
-                    <li><a href="autentikasi.html">🔐 Autentikasi</a></li>
                     <li><a href="blade-template.html" class="active">Blade Template</a></li>
                     <li><a href="pengenalan-livewire.html">Pengenalan Livewire</a></li>
                     <li><a href="struktur-component.html">Struktur Component</a></li>
+                    <li><a href="autentikasi.html">🔐 Autentikasi</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-title">📘 Minggu 2</div>
+                <ul class="sidebar-nav">
+                    <li><a href="../minggu-2/wire-model.html">wire:model</a></li>
+                    <li><a href="../minggu-2/wire-click.html">wire:click</a></li>
+                    <li><a href="../minggu-2/database-eloquent.html">Database & Eloquent</a></li>
+                    <li><a href="../minggu-2/validasi.html">Validasi</a></li>
+                    <li><a href="../minggu-2/crud-sederhana.html">CRUD Sederhana</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-title">📕 Minggu 3</div>
+                <ul class="sidebar-nav">
+                    <li><a href="../minggu-3/upload-file.html">Upload File</a></li>
+                    <li><a href="../minggu-3/pagination-search.html">Pagination & Search</a></li>
+                    <li><a href="../minggu-3/komponen-reusable.html">Komponen Reusable</a></li>
+                    <li><a href="../minggu-3/tampilan-dinamis.html">Tampilan Dinamis</a></li>
+                    <li><a href="../minggu-3/project-elibrary.html">📚 Tutorial E-Library</a></li>
                 </ul>
             </div>
         </aside>
 
         <main class="main-content">
             <div class="content-header">
+                <div class="content-breadcrumb">
+                    <a href="../../index.html">Beranda</a> / <a href="../../silabus.html">Silabus</a> / Minggu 1 /
+                    Blade Template
+                </div>
                 <h1 class="content-title">1.4 Blade Template</h1>
                 <div class="content-meta">
                     <span>📗 Minggu 1</span>
                     <span>⏱️ 25 menit</span>
+                    <span>📖 Teori + Praktik</span>
                 </div>
             </div>
 
-            <div class="objectives">
-                <h3>🎯 Tujuan Belajar</h3>
+            <!-- Prasyarat -->
+            <div class="prerequisites">
+                <h3>📌 Prasyarat</h3>
                 <ul>
-                    <li>Memahami Blade sebagai template engine Laravel</li>
-                    <li>Menampilkan variabel dengan {{ }}</li>
-                    <li>Menggunakan @if, @foreach, dan @extends</li>
+                    <li>Sudah menginstall Laravel & Livewire (<a href="instalasi-laravel.html">Materi 1.3</a>)</li>
+                    <li>Paham HTML dasar: tag, atribut, struktur halaman</li>
+                    <li>Paham PHP dasar: variabel, echo, if-else, foreach</li>
                 </ul>
             </div>
 
-            <h2>Apa itu Blade?</h2>
-            <p>Blade adalah template engine bawaan Laravel. Dengan Blade, kamu bisa:</p>
-            <ul>
-                <li>Menampilkan data PHP dalam HTML dengan mudah</li>
-                <li>Menggunakan kondisi dan perulangan</li>
-                <li>Membuat layout yang reusable</li>
-            </ul>
+            <!-- Tujuan Belajar -->
+            <div class="objectives">
+                <h3>🎯 Tujuan Belajar</h3>
+                <p>Setelah menyelesaikan materi ini, kamu akan mampu:</p>
+                <ul>
+                    <li>Menjelaskan apa itu <strong>template engine</strong> dan kenapa Blade lebih baik dari PHP biasa
+                    </li>
+                    <li>Menampilkan data menggunakan <strong>{{ }}</strong> dan <strong>{!! !!}</strong></li>
+                    <li>Menggunakan <strong>direktif Blade</strong>: @if, @foreach, @forelse, @include</li>
+                    <li>Membuat <strong>layout</strong> yang bisa dipakai ulang di banyak halaman</li>
+                </ul>
+            </div>
 
-            <h2>Menampilkan Variabel</h2>
+            <!-- ==================== KONTEN ==================== -->
+
+            <h2>💡 Apa itu Template Engine?</h2>
+
+            <p>Kamu sudah tahu cara menampilkan data PHP di HTML. Tapi cara lama sangat berantakan:</p>
+
+            <div class="alert alert-tip">
+                <span class="alert-icon">🎨</span>
+                <div>
+                    <h4>Analogi: Lukisan vs Template</h4>
+                    <p>Bayangkan kamu bikin undangan. Ada dua cara:</p>
+                    <ul style="margin-top:0.5rem;">
+                        <li><strong>Cara manual</strong> — Tulis satu per satu untuk setiap tamu. Lambat dan rawan
+                            salah.</li>
+                        <li><strong>Template</strong> — Buat desain 1x, masukkan data (nama, tanggal, dll) di tempat
+                            yang sudah ditandai.</li>
+                    </ul>
+                    <p style="margin-top:0.5rem;"><strong>Blade = template engine.</strong> Kamu desain halaman HTML
+                        sekali, lalu "isi" datanya dari Controller/database.</p>
+                </div>
+            </div>
+
+            <h3>PHP Biasa vs Blade</h3>
+
+            <table class="comparison-table">
+                <tr>
+                    <th>Aspek</th>
+                    <th>PHP Biasa</th>
+                    <th>Blade Laravel</th>
+                </tr>
+                <tr>
+                    <td>Tampilkan variabel</td>
+                    <td><code>&lt;?php echo $nama; ?&gt;</code></td>
+                    <td><code>{{ $nama }}</code></td>
+                </tr>
+                <tr>
+                    <td>Kondisi if</td>
+                    <td><code>&lt;?php if($x): ?&gt; ... &lt;?php endif; ?&gt;</code></td>
+                    <td><code>@if($x) ... @endif</code></td>
+                </tr>
+                <tr>
+                    <td>Loop foreach</td>
+                    <td><code>&lt;?php foreach($arr as $i): ?&gt;</code></td>
+                    <td><code>@foreach($arr as $i)</code></td>
+                </tr>
+                <tr>
+                    <td>Keamanan</td>
+                    <td>❌ Harus manual escape HTML</td>
+                    <td>✅ Otomatis escape (aman XSS)</td>
+                </tr>
+                <tr>
+                    <td>Readability</td>
+                    <td>❌ Tanda &lt;?php ... ?&gt; mengganggu</td>
+                    <td>✅ Bersih dan mudah dibaca</td>
+                </tr>
+            </table>
+
+            <!-- ==================== -->
+
+            <h2>📤 Menampilkan Data dengan Blade</h2>
+
+            <h3>1. Escaped Output — <code>{{ }}</code></h3>
+
+            <p>Cara paling umum dan <strong>paling aman</strong> untuk menampilkan data:</p>
+
             <div class="code-block">
                 <div class="code-header">
                     <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
@@ -88,100 +184,422 @@
                     <button class="code-copy">Salin</button>
                 </div>
                 <div class="code-body">
-                    <pre><span class="code-comment">&lt;!-- Tampilkan variabel --&gt;</span>
-<span class="code-tag">&lt;h1&gt;</span>Halo, {{ $nama }}<span class="code-tag">&lt;/h1&gt;</span>
+                    <pre><span class="code-comment">&lt;!-- Tampilkan variabel dari Controller --&gt;</span>
+<span class="code-tag">&lt;h1&gt;</span>Halo, {{ <span class="code-variable">$nama</span> }}!<span class="code-tag">&lt;/h1&gt;</span>
+<span class="code-tag">&lt;p&gt;</span>Kamu kelas {{ <span class="code-variable">$kelas</span> }}<span class="code-tag">&lt;/p&gt;</span>
 
-<span class="code-comment">&lt;!-- Tampilkan dengan default value --&gt;</span>
-<span class="code-tag">&lt;p&gt;</span>{{ $email ?? 'Tidak ada email' }}<span class="code-tag">&lt;/p&gt;</span></pre>
+<span class="code-comment">&lt;!-- Bisa juga ekspresi PHP --&gt;</span>
+<span class="code-tag">&lt;p&gt;</span>Nama huruf besar: {{ strtoupper(<span class="code-variable">$nama</span>) }}<span class="code-tag">&lt;/p&gt;</span>
+<span class="code-tag">&lt;p&gt;</span>Tahun sekarang: {{ date(<span class="code-string">'Y'</span>) }}<span class="code-tag">&lt;/p&gt;</span></pre>
                 </div>
             </div>
 
-            <h2>Kondisi @if</h2>
+            <div class="alert alert-info">
+                <span class="alert-icon">🛡️</span>
+                <div>
+                    <h4>Kenapa "Escaped"?</h4>
+                    <p><code>{{ }}</code> secara otomatis mengubah karakter berbahaya menjadi aman. Contoh:</p>
+                    <p style="margin-top:0.5rem;"><code>$nama = "&lt;script&gt;alert('hack')&lt;/script&gt;";</code></p>
+                    <p>Kalau pakai <code>&lt;?php echo $nama; ?&gt;</code> — JavaScript-nya akan
+                        <strong>dieksekusi</strong> (bahaya! disebut XSS attack).
+                    </p>
+                    <p>Kalau pakai <code>{{ $nama }}</code> — akan ditampilkan sebagai <strong>teks biasa</strong>
+                        (aman!).</p>
+                </div>
+            </div>
+
+            <h3>2. Unescaped Output — <code>{!! !!}</code></h3>
+
+            <p>Kalau kamu <strong>sengaja</strong> ingin menampilkan HTML mentah (misalnya dari WYSIWYG editor):</p>
+
             <div class="code-block">
                 <div class="code-header">
                     <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
                             class="code-dot"></span></div>
-                    <span class="code-filename">profile.blade.php</span>
+                    <span class="code-filename">artikel.blade.php</span>
                     <button class="code-copy">Salin</button>
                 </div>
                 <div class="code-body">
-                    <pre><span class="code-keyword">@if</span>($isAdmin)
-    <span class="code-tag">&lt;span&gt;</span>Kamu adalah Admin<span class="code-tag">&lt;/span&gt;</span>
+                    <pre><span class="code-comment">&lt;!-- $konten = "&lt;b&gt;Teks tebal&lt;/b&gt; dan &lt;i&gt;miring&lt;/i&gt;" --&gt;</span>
+
+<span class="code-comment">&lt;!-- Escaped: akan tampil sebagai teks "&lt;b&gt;Teks tebal&lt;/b&gt;" --&gt;</span>
+<span class="code-tag">&lt;div&gt;</span>{{ <span class="code-variable">$konten</span> }}<span class="code-tag">&lt;/div&gt;</span>
+
+<span class="code-comment">&lt;!-- Unescaped: akan tampil sebagai <b>Teks tebal</b> dan <i>miring</i> --&gt;</span>
+<span class="code-tag">&lt;div&gt;</span>{!! <span class="code-variable">$konten</span> !!}<span class="code-tag">&lt;/div&gt;</span></pre>
+                </div>
+            </div>
+
+            <div class="alert alert-warning">
+                <span class="alert-icon">⚠️</span>
+                <div>
+                    <h4>Hati-hati dengan {!! !!}</h4>
+                    <p>Jangan pernah pakai <code>{!! !!}</code> untuk data yang berasal dari <strong>input
+                            user</strong>! Hanya gunakan untuk data yang kamu kontrol sendiri (misalnya konten dari
+                        database yang sudah divalidasi).</p>
+                </div>
+            </div>
+
+            <!-- ==================== -->
+
+            <h2>🔀 Direktif Blade — Kontrol Alur</h2>
+
+            <p>Blade punya "direktif" (perintah shortcut) yang memudahkan menulis logika di template:</p>
+
+            <h3>@if — Kondisi</h3>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">dashboard.blade.php</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-keyword">@if</span>(<span class="code-variable">$role</span> == <span class="code-string">'admin'</span>)
+    <span class="code-tag">&lt;p&gt;</span>👑 Selamat datang, Admin!<span class="code-tag">&lt;/p&gt;</span>
+<span class="code-keyword">@elseif</span>(<span class="code-variable">$role</span> == <span class="code-string">'guru'</span>)
+    <span class="code-tag">&lt;p&gt;</span>👨‍🏫 Selamat datang, Bapak/Ibu Guru!<span class="code-tag">&lt;/p&gt;</span>
 <span class="code-keyword">@else</span>
-    <span class="code-tag">&lt;span&gt;</span>Kamu adalah User biasa<span class="code-tag">&lt;/span&gt;</span>
+    <span class="code-tag">&lt;p&gt;</span>👋 Selamat datang, Siswa!<span class="code-tag">&lt;/p&gt;</span>
 <span class="code-keyword">@endif</span></pre>
                 </div>
             </div>
 
-            <h2>Perulangan @foreach</h2>
+            <div class="alert alert-info">
+                <span class="alert-icon">🔍</span>
+                <div>
+                    <h4>Cara Baca</h4>
+                    <ul>
+                        <li><code>@if($role == 'admin')</code> — "Kalau rolenya admin, tampilkan ini..."</li>
+                        <li><code>@elseif</code> — "Kalau bukan admin tapi guru, tampilkan ini..."</li>
+                        <li><code>@else</code> — "Kalau bukan dua-duanya, tampilkan ini..."</li>
+                        <li><code>@endif</code> — "Selesai kondisi." (Wajib ada!)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>@foreach — Perulangan</h3>
+
             <div class="code-block">
                 <div class="code-header">
                     <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
                             class="code-dot"></span></div>
-                    <span class="code-filename">books.blade.php</span>
+                    <span class="code-filename">books/index.blade.php</span>
                     <button class="code-copy">Salin</button>
                 </div>
                 <div class="code-body">
-                    <pre><span class="code-tag">&lt;ul&gt;</span>
-<span class="code-keyword">@foreach</span>($books as $book)
-    <span class="code-tag">&lt;li&gt;</span>{{ $book->title }} - {{ $book->author }}<span class="code-tag">&lt;/li&gt;</span>
+                    <pre><span class="code-tag">&lt;h2&gt;</span>Daftar Buku ({{ count(<span class="code-variable">$books</span>) }} judul)<span class="code-tag">&lt;/h2&gt;</span>
+
+<span class="code-tag">&lt;ul&gt;</span>
+<span class="code-keyword">@foreach</span>(<span class="code-variable">$books</span> as <span class="code-variable">$book</span>)
+    <span class="code-tag">&lt;li&gt;</span>
+        <span class="code-tag">&lt;strong&gt;</span>{{ <span class="code-variable">$book</span>->title }}<span class="code-tag">&lt;/strong&gt;</span>
+        oleh {{ <span class="code-variable">$book</span>->author }}
+    <span class="code-tag">&lt;/li&gt;</span>
 <span class="code-keyword">@endforeach</span>
 <span class="code-tag">&lt;/ul&gt;</span></pre>
                 </div>
             </div>
 
-            <h2>Layout dengan @extends</h2>
-            <div class="code-block">
-                <div class="code-header">
-                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
-                            class="code-dot"></span></div>
-                    <span class="code-filename">layouts/app.blade.php</span>
-                    <button class="code-copy">Salin</button>
-                </div>
-                <div class="code-body">
-                    <pre><span class="code-tag">&lt;html&gt;</span>
-<span class="code-tag">&lt;head&gt;</span>
-    <span class="code-tag">&lt;title&gt;</span>@yield('title')<span class="code-tag">&lt;/title&gt;</span>
-<span class="code-tag">&lt;/head&gt;</span>
-<span class="code-tag">&lt;body&gt;</span>
-    @yield('content')
-<span class="code-tag">&lt;/body&gt;</span>
-<span class="code-tag">&lt;/html&gt;</span></pre>
-                </div>
-            </div>
+            <h3>@forelse — Loop dengan Fallback Kosong ⭐</h3>
+
+            <p>Ini fitur favorit! <code>@forelse</code> menangani kasus ketika data kosong:</p>
 
             <div class="code-block">
                 <div class="code-header">
                     <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
                             class="code-dot"></span></div>
-                    <span class="code-filename">home.blade.php</span>
+                    <span class="code-filename">books/index.blade.php</span>
                     <button class="code-copy">Salin</button>
                 </div>
                 <div class="code-body">
-                    <pre><span class="code-keyword">@extends</span>('layouts.app')
-
-<span class="code-keyword">@section</span>('title', 'Halaman Home')
-
-<span class="code-keyword">@section</span>('content')
-    <span class="code-tag">&lt;h1&gt;</span>Selamat Datang!<span class="code-tag">&lt;/h1&gt;</span>
-<span class="code-keyword">@endsection</span></pre>
+                    <pre><span class="code-keyword">@forelse</span>(<span class="code-variable">$books</span> as <span class="code-variable">$book</span>)
+    <span class="code-tag">&lt;div class="book-card"&gt;</span>
+        <span class="code-tag">&lt;h3&gt;</span>{{ <span class="code-variable">$book</span>->title }}<span class="code-tag">&lt;/h3&gt;</span>
+        <span class="code-tag">&lt;p&gt;</span>{{ <span class="code-variable">$book</span>->author }}<span class="code-tag">&lt;/p&gt;</span>
+    <span class="code-tag">&lt;/div&gt;</span>
+<span class="code-keyword">@empty</span>
+    <span class="code-comment">&lt;!-- Tampil kalau $books kosong --&gt;</span>
+    <span class="code-tag">&lt;p&gt;</span>📭 Belum ada buku. <span class="code-tag">&lt;a href="/books/create"&gt;</span>Tambah buku pertama<span class="code-tag">&lt;/a&gt;</span><span class="code-tag">&lt;/p&gt;</span>
+<span class="code-keyword">@endforelse</span></pre>
                 </div>
             </div>
 
             <div class="alert alert-tip">
                 <span class="alert-icon">💡</span>
                 <div>
-                    <h4>Tips</h4>
-                    <p>Gunakan layout untuk bagian yang sama di semua halaman (navbar, footer). Hemat kode!</p>
+                    <h4>Kapan Pakai @forelse?</h4>
+                    <p>Selalu gunakan <code>@forelse</code> daripada <code>@foreach</code> kalau datanya mungkin kosong.
+                        Lebih rapi daripada menulis <code>@if(count($books) > 0)</code> terpisah!</p>
                 </div>
             </div>
 
+            <!-- ==================== -->
+
+            <h2>🏗️ Layout — Template yang Bisa Dipakai Ulang</h2>
+
+            <p>Di aplikasi nyata, setiap halaman biasanya punya <strong>header, sidebar, dan footer yang sama</strong>.
+                Masa harus copy-paste di setiap halaman?</p>
+
+            <p>Blade punya solusinya: <strong>Layout + @extends + @section</strong>.</p>
+
+            <div class="alert alert-tip">
+                <span class="alert-icon">🧩</span>
+                <div>
+                    <h4>Analogi: Bingkai Foto</h4>
+                    <p>Layout = <strong>bingkai foto</strong>. Kamu buat bingkai sekali (dengan header, sidebar,
+                        footer), lalu <strong>ganti-ganti isi foto</strong>-nya (konten halaman) sesuai kebutuhan.</p>
+                </div>
+            </div>
+
+            <h3>Step 1: Buat Layout Utama</h3>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">resources/views/layouts/app.blade.php</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-tag">&lt;!DOCTYPE html&gt;</span>
+<span class="code-tag">&lt;html lang="id"&gt;</span>
+<span class="code-tag">&lt;head&gt;</span>
+    <span class="code-tag">&lt;meta charset="UTF-8"&gt;</span>
+    <span class="code-tag">&lt;title&gt;</span><span class="code-keyword">@yield</span>(<span class="code-string">'title'</span>, <span class="code-string">'Perpustakaan SMK'</span>)<span class="code-tag">&lt;/title&gt;</span>
+    <span class="code-tag">&lt;link rel="stylesheet" href="/css/app.css"&gt;</span>
+    <span class="code-keyword">@livewireStyles</span>
+<span class="code-tag">&lt;/head&gt;</span>
+<span class="code-tag">&lt;body&gt;</span>
+    <span class="code-comment">&lt;!-- Header yang sama di semua halaman --&gt;</span>
+    <span class="code-tag">&lt;nav&gt;</span>
+        <span class="code-tag">&lt;a href="/"&gt;</span>🏠 Beranda<span class="code-tag">&lt;/a&gt;</span>
+        <span class="code-tag">&lt;a href="/books"&gt;</span>📚 Buku<span class="code-tag">&lt;/a&gt;</span>
+    <span class="code-tag">&lt;/nav&gt;</span>
+
+    <span class="code-comment">&lt;!-- Konten berbeda di setiap halaman --&gt;</span>
+    <span class="code-tag">&lt;main&gt;</span>
+        <span class="code-keyword">@yield</span>(<span class="code-string">'content'</span>)
+    <span class="code-tag">&lt;/main&gt;</span>
+
+    <span class="code-comment">&lt;!-- Footer yang sama di semua halaman --&gt;</span>
+    <span class="code-tag">&lt;footer&gt;</span>
+        <span class="code-tag">&lt;p&gt;</span>&copy; 2025 Perpustakaan SMK<span class="code-tag">&lt;/p&gt;</span>
+    <span class="code-tag">&lt;/footer&gt;</span>
+
+    <span class="code-keyword">@livewireScripts</span>
+<span class="code-tag">&lt;/body&gt;</span>
+<span class="code-tag">&lt;/html&gt;</span></pre>
+                </div>
+            </div>
+
+            <div class="alert alert-info">
+                <span class="alert-icon">🔍</span>
+                <div>
+                    <h4>Penjelasan</h4>
+                    <ul>
+                        <li><code>@yield('title', 'Perpustakaan SMK')</code> — Tempat yang bisa diisi oleh halaman anak.
+                            Kalau tidak diisi, pakai default "Perpustakaan SMK"</li>
+                        <li><code>@yield('content')</code> — Di sinilah konten setiap halaman akan muncul</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>Step 2: Buat Halaman Anak</h3>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">resources/views/books/index.blade.php</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-keyword">@extends</span>(<span class="code-string">'layouts.app'</span>)
+
+<span class="code-keyword">@section</span>(<span class="code-string">'title'</span>, <span class="code-string">'Daftar Buku'</span>)
+
+<span class="code-keyword">@section</span>(<span class="code-string">'content'</span>)
+    <span class="code-tag">&lt;h1&gt;</span>📚 Daftar Buku<span class="code-tag">&lt;/h1&gt;</span>
+
+    <span class="code-keyword">@forelse</span>(<span class="code-variable">$books</span> as <span class="code-variable">$book</span>)
+        <span class="code-tag">&lt;div class="book-card"&gt;</span>
+            <span class="code-tag">&lt;h3&gt;</span>{{ <span class="code-variable">$book</span>->title }}<span class="code-tag">&lt;/h3&gt;</span>
+            <span class="code-tag">&lt;p&gt;</span>Penulis: {{ <span class="code-variable">$book</span>->author }}<span class="code-tag">&lt;/p&gt;</span>
+        <span class="code-tag">&lt;/div&gt;</span>
+    <span class="code-keyword">@empty</span>
+        <span class="code-tag">&lt;p&gt;</span>Belum ada buku.<span class="code-tag">&lt;/p&gt;</span>
+    <span class="code-keyword">@endforelse</span>
+<span class="code-keyword">@endsection</span></pre>
+                </div>
+            </div>
+
+            <div class="alert alert-info">
+                <span class="alert-icon">🔍</span>
+                <div>
+                    <h4>Cara Kerja</h4>
+                    <ul>
+                        <li><code>@extends('layouts.app')</code> — "Halaman ini pakai layout
+                            <code>layouts/app.blade.php</code>"
+                        </li>
+                        <li><code>@section('title', 'Daftar Buku')</code> — Isi <code>@yield('title')</code> dengan
+                            "Daftar Buku"</li>
+                        <li><code>@section('content') ... @endsection</code> — Isi <code>@yield('content')</code> dengan
+                            konten di dalamnya</li>
+                    </ul>
+                    <p style="margin-top:0.5rem;"><strong>Hasil:</strong> Halaman ini akan punya header, sidebar, dan
+                        footer dari layout, plus konten daftar buku yang unik!</p>
+                </div>
+            </div>
+
+            <!-- ==================== CHEATSHEET ==================== -->
+
+            <h2>📋 Blade Cheatsheet</h2>
+
+            <p>Simpan tabel ini sebagai referensi cepat:</p>
+
+            <table class="comparison-table">
+                <tr>
+                    <th>Direktif</th>
+                    <th>Fungsi</th>
+                    <th>Contoh</th>
+                </tr>
+                <tr>
+                    <td><code>{{ $var }}</code></td>
+                    <td>Tampilkan data (escaped/aman)</td>
+                    <td><code>{{ $nama }}</code></td>
+                </tr>
+                <tr>
+                    <td><code>{!! $var !!}</code></td>
+                    <td>Tampilkan HTML mentah</td>
+                    <td><code>{!! $kontenHtml !!}</code></td>
+                </tr>
+                <tr>
+                    <td><code>@if ... @endif</code></td>
+                    <td>Kondisi</td>
+                    <td><code>@if($admin) ... @endif</code></td>
+                </tr>
+                <tr>
+                    <td><code>@foreach ... @endforeach</code></td>
+                    <td>Loop/Perulangan</td>
+                    <td><code>@foreach($items as $item)</code></td>
+                </tr>
+                <tr>
+                    <td><code>@forelse ... @empty ... @endforelse</code></td>
+                    <td>Loop + fallback jika kosong</td>
+                    <td><code>@forelse($items as $item) ... @empty ...</code></td>
+                </tr>
+                <tr>
+                    <td><code>@extends('layout')</code></td>
+                    <td>Pakai layout tertentu</td>
+                    <td><code>@extends('layouts.app')</code></td>
+                </tr>
+                <tr>
+                    <td><code>@section ... @endsection</code></td>
+                    <td>Isi bagian layout</td>
+                    <td><code>@section('content') ... @endsection</code></td>
+                </tr>
+                <tr>
+                    <td><code>@yield('name')</code></td>
+                    <td>Tempat yang diisi oleh @section</td>
+                    <td><code>@yield('content')</code></td>
+                </tr>
+                <tr>
+                    <td><code>@include('partial')</code></td>
+                    <td>Masukkan file Blade lain</td>
+                    <td><code>@include('components.navbar')</code></td>
+                </tr>
+            </table>
+
+            <!-- ==================== KESALAHAN UMUM ==================== -->
+
+            <div class="common-mistakes">
+                <h3>⚠️ Kesalahan Umum Pemula</h3>
+
+                <div class="mistake-item">
+                    <h4>❌ Lupa @endif atau @endforeach</h4>
+                    <p>Setiap <code>@if</code> harus ditutup dengan <code>@endif</code>. Setiap <code>@foreach</code>
+                        harus ditutup dengan <code>@endforeach</code>.</p>
+                    <p class="solution">✅ Solusi: Biasakan langsung tulis tag pembuka DAN penutup, baru isi di
+                        tengahnya.</p>
+                </div>
+
+                <div class="mistake-item">
+                    <h4>❌ Pakai &lt;?php echo ?&gt; di file .blade.php</h4>
+                    <p>File Blade sudah punya <code>{{ }}</code> yang lebih ringkas dan aman. Jangan campur cara lama!
+                    </p>
+                    <p class="solution">✅ Solusi: Di file <code>.blade.php</code>, selalu pakai <code>{{ }}</code> untuk
+                        output.</p>
+                </div>
+
+                <div class="mistake-item">
+                    <h4>❌ Nama file tanpa .blade.php</h4>
+                    <p>File harus diakhiri <code>.blade.php</code> (bukan cuma <code>.php</code>) agar Blade
+                        directive-nya diproses.</p>
+                    <p class="solution">✅ Contoh benar: <code>index.blade.php</code>, bukan <code>index.php</code></p>
+                </div>
+            </div>
+
+            <!-- ==================== RINGKASAN ==================== -->
+
+            <div class="summary-box">
+                <h3>📋 Ringkasan Materi</h3>
+                <ul>
+                    <li><strong>Blade</strong> = template engine Laravel yang lebih ringkas, bersih, dan aman dari PHP
+                        biasa</li>
+                    <li><code>{{ }}</code> = tampilkan data dengan escape otomatis (aman XSS)</li>
+                    <li><code>{!! !!}</code> = tampilkan HTML mentah (hati-hati, hanya untuk data terpercaya)</li>
+                    <li><strong>@if, @foreach, @forelse</strong> = direktif untuk logika di template</li>
+                    <li><strong>Layout</strong> = template yang bisa dipakai ulang via @extends + @section + @yield</li>
+                    <li>File Blade harus berekstensi <code>.blade.php</code></li>
+                </ul>
+            </div>
+
+            <!-- ==================== LATIHAN ==================== -->
+
             <h2>📝 Latihan</h2>
-            <ol>
-                <li>Buat view baru <code>siswa.blade.php</code></li>
-                <li>Tampilkan daftar nama siswa dengan @foreach</li>
-                <li>Tambahkan kondisi: jika tidak ada siswa, tampilkan "Data kosong"</li>
-            </ol>
+
+            <div class="exercise-section">
+                <div class="exercise-level basic">
+                    <h4>🟢 Level 1 — Ubah Sintaks</h4>
+                    <ol>
+                        <li>Ubah kode PHP biasa ini menjadi sintaks Blade:<br>
+                            <code>&lt;?php echo $nama; ?&gt;</code> → jawab: <code>...</code>
+                        </li>
+                        <li>Ubah kode ini menjadi <code>@if</code> Blade:<br>
+                            <code>&lt;?php if($umur >= 17): ?&gt; Boleh SIM &lt;?php endif; ?&gt;</code>
+                        </li>
+                        <li>Sebutkan 3 keunggulan Blade dibanding PHP biasa.</li>
+                    </ol>
+                </div>
+
+                <div class="exercise-level intermediate">
+                    <h4>🔵 Level 2 — Praktik</h4>
+                    <ol>
+                        <li>Buat file layout di <code>resources/views/layouts/main.blade.php</code> dengan navbar dan
+                            footer.</li>
+                        <li>Buat halaman <code>about.blade.php</code> yang <strong>@extends</strong> layout tersebut dan
+                            menampilkan informasi tentang sekolahmu.</li>
+                        <li>Buat halaman yang menampilkan <strong>daftar 5 mata pelajaran</strong> menggunakan
+                            <code>@forelse</code>.
+                        </li>
+                    </ol>
+                </div>
+
+                <div class="exercise-level challenge">
+                    <h4>🟣 Level 3 — Tantangan</h4>
+                    <ol>
+                        <li>Buat layout yang menampilkan <strong>nama user yang sedang login</strong> di navbar (gunakan
+                            <code>@if</code> untuk cek apakah user sudah login atau belum).
+                        </li>
+                        <li>Kapan kamu harus pakai <code>{!! !!}</code> dan kapan tidak boleh? Berikan 2 contoh kasus
+                            masing-masing.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- ==================== NAVIGASI ==================== -->
 
             <div class="content-nav">
                 <a href="instalasi-laravel.html" class="nav-btn">
@@ -199,6 +617,9 @@
             </div>
         </main>
     </div>
+
+    <button class="sidebar-toggle-mobile"
+        onclick="document.querySelector('.sidebar').classList.toggle('active')">📚</button>
     <script src="../../js/app.js"></script>
 </body>
 

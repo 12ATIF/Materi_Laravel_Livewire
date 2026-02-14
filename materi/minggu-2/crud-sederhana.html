@@ -31,9 +31,10 @@
             <ul class="navbar-menu">
                 <li><a href="../../index.html">Beranda</a></li>
                 <li><a href="../../silabus.html">Silabus</a></li>
-                <li><a href="#" class="active">Materi</a></li>
+                <li><a href="../minggu-1/pengenalan-laravel.html" class="active">Materi</a></li>
                 <li><a href="../../demo.html">Demo</a></li>
             </ul>
+            <button class="navbar-toggle" aria-label="Toggle menu"><span>☰</span></button>
         </div>
     </nav>
 
@@ -45,10 +46,10 @@
                     <li><a href="../minggu-1/pengenalan-laravel.html">Pengenalan Laravel</a></li>
                     <li><a href="../minggu-1/mvc-sederhana.html">MVC Sederhana</a></li>
                     <li><a href="../minggu-1/instalasi-laravel.html">Instalasi Laravel</a></li>
-                    <li><a href="../minggu-1/autentikasi.html">🔐 Autentikasi</a></li>
                     <li><a href="../minggu-1/blade-template.html">Blade Template</a></li>
                     <li><a href="../minggu-1/pengenalan-livewire.html">Pengenalan Livewire</a></li>
                     <li><a href="../minggu-1/struktur-component.html">Struktur Component</a></li>
+                    <li><a href="../minggu-1/autentikasi.html">🔐 Autentikasi</a></li>
                 </ul>
             </div>
             <div class="sidebar-section">
@@ -56,91 +57,171 @@
                 <ul class="sidebar-nav">
                     <li><a href="wire-model.html">wire:model</a></li>
                     <li><a href="wire-click.html">wire:click</a></li>
+                    <li><a href="database-eloquent.html">Database & Eloquent</a></li>
                     <li><a href="validasi.html">Validasi</a></li>
                     <li><a href="crud-sederhana.html" class="active">CRUD Sederhana</a></li>
-                    <li><a href="database-eloquent.html">Database & Eloquent</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-title">📕 Minggu 3</div>
+                <ul class="sidebar-nav">
+                    <li><a href="../minggu-3/upload-file.html">Upload File</a></li>
+                    <li><a href="../minggu-3/pagination-search.html">Pagination & Search</a></li>
+                    <li><a href="../minggu-3/komponen-reusable.html">Komponen Reusable</a></li>
+                    <li><a href="../minggu-3/tampilan-dinamis.html">Tampilan Dinamis</a></li>
+                    <li><a href="../minggu-3/project-elibrary.html">📚 Tutorial E-Library</a></li>
                 </ul>
             </div>
         </aside>
 
         <main class="main-content">
             <div class="content-header">
-                <h1 class="content-title">2.4 CRUD Sederhana</h1>
+                <div class="content-breadcrumb">
+                    <a href="../../index.html">Beranda</a> / <a href="../../silabus.html">Silabus</a> / Minggu 2 / CRUD
+                    Sederhana
+                </div>
+                <h1 class="content-title">2.5 CRUD Sederhana dengan Livewire</h1>
                 <div class="content-meta">
                     <span>📘 Minggu 2</span>
-                    <span>⏱️ 35 menit</span>
-                    <span>🔧 Praktik</span>
+                    <span>⏱️ 40 menit</span>
+                    <span>🔧 Tutorial Step-by-Step</span>
                 </div>
             </div>
 
-            <div class="objectives">
-                <h3>🎯 Tujuan Belajar</h3>
+            <!-- Prasyarat -->
+            <div class="prerequisites">
+                <h3>📌 Prasyarat</h3>
                 <ul>
-                    <li>Memahami konsep CRUD (Create, Read, Update, Delete)</li>
-                    <li>Membuat to-do list sederhana dengan Livewire</li>
+                    <li>Sudah paham <a href="wire-model.html">wire:model</a> dan <a href="wire-click.html">wire:click /
+                            wire:submit</a></li>
+                    <li>Sudah paham <a href="database-eloquent.html">Database & Eloquent</a> (migration, model, CRUD)
+                    </li>
+                    <li>Sudah paham <a href="validasi.html">Validasi Form</a></li>
                 </ul>
             </div>
 
-            <h2>Apa itu CRUD?</h2>
+            <!-- Tujuan Belajar -->
+            <div class="objectives">
+                <h3>🎯 Tujuan Belajar</h3>
+                <p>Setelah menyelesaikan materi ini, kamu akan mampu:</p>
+                <ul>
+                    <li>Membangun <strong>CRUD lengkap</strong> (Create, Read, Update, Delete) dalam satu komponen
+                        Livewire</li>
+                    <li>Menerapkan <strong>mode edit</strong> dengan form yang bisa dipakai untuk tambah dan edit</li>
+                    <li>Menambahkan <strong>konfirmasi hapus</strong> dan <strong>flash message</strong></li>
+                    <li>Menggabungkan <strong>semua materi Minggu 2</strong> menjadi satu proyek utuh</li>
+                </ul>
+            </div>
+
+            <!-- ==================== KONTEN ==================== -->
+
+            <h2>🤔 Apa itu CRUD?</h2>
+
+            <p>CRUD adalah 4 operasi dasar yang pasti ada di <strong>setiap aplikasi</strong> yang menyimpan data:</p>
+
             <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin:1.5rem 0;">
-                <div style="padding:1rem;background:#D1FAE5;border-radius:12px;text-align:center;">
-                    <div style="font-size:1.5rem;">➕</div>
-                    <strong style="color:#059669;">Create</strong>
-                    <p style="font-size:0.8rem;margin:0.5rem 0 0;">Tambah data</p>
+                <div
+                    style="padding:1.25rem;background:#D1FAE5;border-radius:12px;text-align:center;border-left:4px solid #10B981;">
+                    <div style="font-size:2rem;">➕</div>
+                    <strong style="color:#059669;font-size:1.1rem;">CREATE</strong>
+                    <p style="font-size:0.85rem;margin:0.5rem 0 0;color:#065F46;">Tambah data baru</p>
                 </div>
-                <div style="padding:1rem;background:#DBEAFE;border-radius:12px;text-align:center;">
-                    <div style="font-size:1.5rem;">👁️</div>
-                    <strong style="color:#2563EB;">Read</strong>
-                    <p style="font-size:0.8rem;margin:0.5rem 0 0;">Baca data</p>
+                <div
+                    style="padding:1.25rem;background:#DBEAFE;border-radius:12px;text-align:center;border-left:4px solid #3B82F6;">
+                    <div style="font-size:2rem;">👁️</div>
+                    <strong style="color:#2563EB;font-size:1.1rem;">READ</strong>
+                    <p style="font-size:0.85rem;margin:0.5rem 0 0;color:#1E40AF;">Tampilkan data</p>
                 </div>
-                <div style="padding:1rem;background:#FEF3C7;border-radius:12px;text-align:center;">
-                    <div style="font-size:1.5rem;">✏️</div>
-                    <strong style="color:#D97706;">Update</strong>
-                    <p style="font-size:0.8rem;margin:0.5rem 0 0;">Ubah data</p>
+                <div
+                    style="padding:1.25rem;background:#FEF3C7;border-radius:12px;text-align:center;border-left:4px solid #F59E0B;">
+                    <div style="font-size:2rem;">✏️</div>
+                    <strong style="color:#D97706;font-size:1.1rem;">UPDATE</strong>
+                    <p style="font-size:0.85rem;margin:0.5rem 0 0;color:#92400E;">Edit data yang ada</p>
                 </div>
-                <div style="padding:1rem;background:#FEE2E2;border-radius:12px;text-align:center;">
-                    <div style="font-size:1.5rem;">🗑️</div>
-                    <strong style="color:#DC2626;">Delete</strong>
-                    <p style="font-size:0.8rem;margin:0.5rem 0 0;">Hapus data</p>
+                <div
+                    style="padding:1.25rem;background:#FEE2E2;border-radius:12px;text-align:center;border-left:4px solid #EF4444;">
+                    <div style="font-size:2rem;">🗑️</div>
+                    <strong style="color:#DC2626;font-size:1.1rem;">DELETE</strong>
+                    <p style="font-size:0.85rem;margin:0.5rem 0 0;color:#991B1B;">Hapus data</p>
                 </div>
             </div>
 
-            <h2>Contoh: To-Do List</h2>
+            <div class="alert alert-tip">
+                <span class="alert-icon">📚</span>
+                <div>
+                    <h4>Analogi: Buku Tamu Perpustakaan</h4>
+                    <ul style="margin-top:0.5rem;">
+                        <li><strong>CREATE</strong> = Tulis nama tamu baru di buku tamu</li>
+                        <li><strong>READ</strong> = Baca daftar tamu yang sudah terdaftar</li>
+                        <li><strong>UPDATE</strong> = Perbaiki nama yang salah tulis</li>
+                        <li><strong>DELETE</strong> = Coret nama tamu yang batal berkunjung</li>
+                    </ul>
+                    <p style="margin-top:0.5rem;">Kita akan buat CRUD <strong>Data Buku Perpustakaan</strong> step by
+                        step!</p>
+                </div>
+            </div>
+
+            <!-- ==================== -->
+
+            <h2>📋 Apa yang Akan Kita Buat?</h2>
+
+            <p>Satu komponen Livewire yang bisa:</p>
+            <ul>
+                <li>✅ Menampilkan <strong>daftar buku</strong> dalam tabel</li>
+                <li>✅ <strong>Menambahkan buku baru</strong> lewat form</li>
+                <li>✅ <strong>Mengedit buku</strong> — form berubah jadi mode edit</li>
+                <li>✅ <strong>Menghapus buku</strong> dengan konfirmasi</li>
+                <li>✅ <strong>Validasi</strong> semua input</li>
+                <li>✅ <strong>Flash message</strong> untuk feedback sukses</li>
+            </ul>
+
+            <!-- ==================== -->
+
+            <h2>🔨 Step 1: Model & Migration</h2>
+
+            <p>Kalau kamu sudah membuat model Book di materi sebelumnya, lewati langkah ini. Kalau belum:</p>
+
             <div class="code-block">
                 <div class="code-header">
                     <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
                             class="code-dot"></span></div>
-                    <span class="code-filename">TodoList.php</span>
+                    <span class="code-filename">Terminal</span>
                     <button class="code-copy">Salin</button>
                 </div>
                 <div class="code-body">
-                    <pre><span class="code-keyword">class</span> <span class="code-class">TodoList</span> <span class="code-keyword">extends</span> Component
+                    <pre>php artisan make:model Book -m</pre>
+                </div>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">database/migrations/xxxx_create_books_table.php</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre>Schema::create(<span class="code-string">'books'</span>, <span class="code-keyword">function</span> (Blueprint <span class="code-variable">$table</span>) {
+    <span class="code-variable">$table</span>->id();
+    <span class="code-variable">$table</span>->string(<span class="code-string">'title'</span>);
+    <span class="code-variable">$table</span>->string(<span class="code-string">'author'</span>);
+    <span class="code-variable">$table</span>->integer(<span class="code-string">'year'</span>);
+    <span class="code-variable">$table</span>->timestamps();
+});</pre>
+                </div>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">app/Models/Book.php</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-keyword">class</span> <span class="code-class">Book</span> <span class="code-keyword">extends</span> Model
 {
-    <span class="code-keyword">public</span> $todos = [];
-    <span class="code-keyword">public</span> $newTodo = <span class="code-string">''</span>;
-    
-    <span class="code-comment">// CREATE</span>
-    <span class="code-keyword">public function</span> <span class="code-function">addTodo</span>()
-    {
-        $this->todos[] = [
-            <span class="code-string">'text'</span> => $this->newTodo,
-            <span class="code-string">'done'</span> => <span class="code-keyword">false</span>
-        ];
-        $this->newTodo = <span class="code-string">''</span>;
-    }
-    
-    <span class="code-comment">// UPDATE</span>
-    <span class="code-keyword">public function</span> <span class="code-function">toggleTodo</span>($index)
-    {
-        $this->todos[$index][<span class="code-string">'done'</span>] = !$this->todos[$index][<span class="code-string">'done'</span>];
-    }
-    
-    <span class="code-comment">// DELETE</span>
-    <span class="code-keyword">public function</span> <span class="code-function">removeTodo</span>($index)
-    {
-        unset($this->todos[$index]);
-        $this->todos = array_values($this->todos);
-    }
+    <span class="code-keyword">protected</span> <span class="code-variable">$fillable</span> = [<span class="code-string">'title'</span>, <span class="code-string">'author'</span>, <span class="code-string">'year'</span>];
 }</pre>
                 </div>
             </div>
@@ -149,39 +230,464 @@
                 <div class="code-header">
                     <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
                             class="code-dot"></span></div>
-                    <span class="code-filename">todo-list.blade.php</span>
+                    <span class="code-filename">Terminal</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre>php artisan migrate</pre>
+                </div>
+            </div>
+
+            <!-- ==================== -->
+
+            <h2>🔨 Step 2: Buat Komponen Livewire</h2>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">Terminal</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre>php artisan make:livewire BookManager</pre>
+                </div>
+            </div>
+
+            <!-- ==================== -->
+
+            <h2>🔨 Step 3: Class PHP (Logika CRUD)</h2>
+
+            <p>Ini adalah <strong>inti</strong> dari materi ini — semua operasi CRUD dalam satu class:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">app/Livewire/BookManager.php</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-keyword">namespace</span> App\Livewire;
+
+<span class="code-keyword">use</span> Livewire\Component;
+<span class="code-keyword">use</span> App\Models\Book;
+
+<span class="code-keyword">class</span> <span class="code-class">BookManager</span> <span class="code-keyword">extends</span> Component
+{
+    <span class="code-comment">// ===== Property Form =====</span>
+    <span class="code-keyword">public</span> <span class="code-variable">$title</span> = <span class="code-string">''</span>;
+    <span class="code-keyword">public</span> <span class="code-variable">$author</span> = <span class="code-string">''</span>;
+    <span class="code-keyword">public</span> <span class="code-variable">$year</span> = <span class="code-string">''</span>;
+
+    <span class="code-comment">// ===== Property Mode Edit =====</span>
+    <span class="code-keyword">public</span> <span class="code-variable">$bookId</span> = <span class="code-keyword">null</span>;     <span class="code-comment">// null = mode tambah, ada ID = mode edit</span>
+    <span class="code-keyword">public</span> <span class="code-variable">$isEditing</span> = <span class="code-keyword">false</span>;
+
+    <span class="code-comment">// ===== Validasi =====</span>
+    <span class="code-keyword">protected</span> <span class="code-variable">$rules</span> = [
+        <span class="code-string">'title'</span>  => <span class="code-string">'required|min:3|max:200'</span>,
+        <span class="code-string">'author'</span> => <span class="code-string">'required|min:3'</span>,
+        <span class="code-string">'year'</span>   => <span class="code-string">'required|numeric|min:1900|max:2030'</span>,
+    ];
+
+    <span class="code-keyword">protected</span> <span class="code-variable">$messages</span> = [
+        <span class="code-string">'title.required'</span>  => <span class="code-string">'Judul buku wajib diisi.'</span>,
+        <span class="code-string">'title.min'</span>       => <span class="code-string">'Judul minimal 3 karakter.'</span>,
+        <span class="code-string">'author.required'</span> => <span class="code-string">'Nama penulis wajib diisi.'</span>,
+        <span class="code-string">'year.required'</span>   => <span class="code-string">'Tahun terbit wajib diisi.'</span>,
+        <span class="code-string">'year.numeric'</span>    => <span class="code-string">'Tahun harus berupa angka.'</span>,
+        <span class="code-string">'year.min'</span>        => <span class="code-string">'Tahun minimal 1900.'</span>,
+        <span class="code-string">'year.max'</span>        => <span class="code-string">'Tahun tidak boleh lebih dari 2030.'</span>,
+    ];
+
+    <span class="code-comment">// ① CREATE — Tambah buku baru</span>
+    <span class="code-keyword">public function</span> <span class="code-function">store</span>()
+    {
+        <span class="code-variable">$this</span>->validate();
+
+        Book::create([
+            <span class="code-string">'title'</span>  => <span class="code-variable">$this</span>->title,
+            <span class="code-string">'author'</span> => <span class="code-variable">$this</span>->author,
+            <span class="code-string">'year'</span>   => <span class="code-variable">$this</span>->year,
+        ]);
+
+        <span class="code-variable">$this</span>->resetForm();
+        session()->flash(<span class="code-string">'success'</span>, <span class="code-string">'✅ Buku berhasil ditambahkan!'</span>);
+    }
+
+    <span class="code-comment">// ② READ — ditangani di render()</span>
+
+    <span class="code-comment">// ③ EDIT — Masuk mode edit, isi form dengan data buku</span>
+    <span class="code-keyword">public function</span> <span class="code-function">edit</span>(<span class="code-variable">$id</span>)
+    {
+        <span class="code-variable">$book</span> = Book::find(<span class="code-variable">$id</span>);
+
+        <span class="code-variable">$this</span>->bookId    = <span class="code-variable">$book</span>->id;
+        <span class="code-variable">$this</span>->title     = <span class="code-variable">$book</span>->title;
+        <span class="code-variable">$this</span>->author    = <span class="code-variable">$book</span>->author;
+        <span class="code-variable">$this</span>->year      = <span class="code-variable">$book</span>->year;
+        <span class="code-variable">$this</span>->isEditing = <span class="code-keyword">true</span>;
+    }
+
+    <span class="code-comment">// ④ UPDATE — Simpan perubahan</span>
+    <span class="code-keyword">public function</span> <span class="code-function">update</span>()
+    {
+        <span class="code-variable">$this</span>->validate();
+
+        <span class="code-variable">$book</span> = Book::find(<span class="code-variable">$this</span>->bookId);
+        <span class="code-variable">$book</span>->update([
+            <span class="code-string">'title'</span>  => <span class="code-variable">$this</span>->title,
+            <span class="code-string">'author'</span> => <span class="code-variable">$this</span>->author,
+            <span class="code-string">'year'</span>   => <span class="code-variable">$this</span>->year,
+        ]);
+
+        <span class="code-variable">$this</span>->resetForm();
+        session()->flash(<span class="code-string">'success'</span>, <span class="code-string">'✅ Buku berhasil diperbarui!'</span>);
+    }
+
+    <span class="code-comment">// ⑤ DELETE — Hapus buku</span>
+    <span class="code-keyword">public function</span> <span class="code-function">delete</span>(<span class="code-variable">$id</span>)
+    {
+        Book::find(<span class="code-variable">$id</span>)->delete();
+        session()->flash(<span class="code-string">'success'</span>, <span class="code-string">'🗑️ Buku berhasil dihapus.'</span>);
+    }
+
+    <span class="code-comment">// Reset form ke mode tambah</span>
+    <span class="code-keyword">public function</span> <span class="code-function">resetForm</span>()
+    {
+        <span class="code-variable">$this</span>->title     = <span class="code-string">''</span>;
+        <span class="code-variable">$this</span>->author    = <span class="code-string">''</span>;
+        <span class="code-variable">$this</span>->year      = <span class="code-string">''</span>;
+        <span class="code-variable">$this</span>->bookId    = <span class="code-keyword">null</span>;
+        <span class="code-variable">$this</span>->isEditing = <span class="code-keyword">false</span>;
+        <span class="code-variable">$this</span>->resetValidation(); <span class="code-comment">// Hapus pesan error</span>
+    }
+
+    <span class="code-comment">// Validasi real-time</span>
+    <span class="code-keyword">public function</span> <span class="code-function">updated</span>(<span class="code-variable">$propertyName</span>)
+    {
+        <span class="code-variable">$this</span>->validateOnly(<span class="code-variable">$propertyName</span>);
+    }
+
+    <span class="code-keyword">public function</span> <span class="code-function">render</span>()
+    {
+        <span class="code-keyword">return</span> view(<span class="code-string">'livewire.book-manager'</span>, [
+            <span class="code-string">'books'</span> => Book::latest()->get()   <span class="code-comment">// READ: ambil semua buku</span>
+        ]);
+    }
+}</pre>
+                </div>
+            </div>
+
+            <div class="alert alert-info">
+                <span class="alert-icon">🔍</span>
+                <div>
+                    <h4>Pola Penting: Mode Tambah vs Edit</h4>
+                    <p>Perhatikan property <code>$isEditing</code> dan <code>$bookId</code>:</p>
+                    <ul style="margin-top:0.5rem;">
+                        <li><strong>Mode Tambah</strong>: <code>$isEditing = false</code>, <code>$bookId = null</code> →
+                            form kosong, tombol "Tambah"</li>
+                        <li><strong>Mode Edit</strong>: <code>$isEditing = true</code>, <code>$bookId = 5</code> → form
+                            terisi data buku #5, tombol "Update"</li>
+                        <li><strong>Setelah submit</strong>: <code>resetForm()</code> mengembalikan ke mode tambah</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- ==================== -->
+
+            <h2>🔨 Step 4: View Blade (Tampilan)</h2>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">resources/views/livewire/book-manager.blade.php</span>
                     <button class="code-copy">Salin</button>
                 </div>
                 <div class="code-body">
                     <pre><span class="code-tag">&lt;div&gt;</span>
-    <span class="code-comment">&lt;!-- Form tambah --&gt;</span>
-    <span class="code-tag">&lt;form</span> <span class="code-attr">wire:submit</span>=<span class="code-string">"addTodo"</span><span class="code-tag">&gt;</span>
-        <span class="code-tag">&lt;input</span> <span class="code-attr">wire:model</span>=<span class="code-string">"newTodo"</span> <span class="code-attr">placeholder</span>=<span class="code-string">"Tugas baru..."</span><span class="code-tag">&gt;</span>
-        <span class="code-tag">&lt;button&gt;</span>Tambah<span class="code-tag">&lt;/button&gt;</span>
-    <span class="code-tag">&lt;/form&gt;</span>
-    
-    <span class="code-comment">&lt;!-- List todos --&gt;</span>
-    <span class="code-keyword">@foreach</span>($todos as $index => $todo)
-        <span class="code-tag">&lt;div&gt;</span>
-            <span class="code-tag">&lt;input</span> <span class="code-attr">type</span>=<span class="code-string">"checkbox"</span> 
-                   <span class="code-attr">wire:click</span>=<span class="code-string">"toggleTodo({{ $index }})"</span>
-                   {{ $todo[<span class="code-string">'done'</span>] ? <span class="code-string">'checked'</span> : <span class="code-string">''</span> }}<span class="code-tag">&gt;</span>
-            <span class="code-tag">&lt;span&gt;</span>{{ $todo[<span class="code-string">'text'</span>] }}<span class="code-tag">&lt;/span&gt;</span>
-            <span class="code-tag">&lt;button</span> <span class="code-attr">wire:click</span>=<span class="code-string">"removeTodo({{ $index }})"</span><span class="code-tag">&gt;</span>🗑️<span class="code-tag">&lt;/button&gt;</span>
+    <span class="code-tag">&lt;h2&gt;</span>📚 Manajemen Buku Perpustakaan<span class="code-tag">&lt;/h2&gt;</span>
+
+    <span class="code-comment">&lt;!-- Flash message --&gt;</span>
+    <span class="code-keyword">@if</span>(session()->has(<span class="code-string">'success'</span>))
+        <span class="code-tag">&lt;div style="padding:1rem;background:#D1FAE5;color:#059669;
+                    border-radius:8px;margin-bottom:1rem;"&gt;</span>
+            {{ session(<span class="code-string">'success'</span>) }}
         <span class="code-tag">&lt;/div&gt;</span>
-    <span class="code-keyword">@endforeach</span>
+    <span class="code-keyword">@endif</span>
+
+    <span class="code-comment">&lt;!-- ===== FORM ===== --&gt;</span>
+    <span class="code-tag">&lt;div style="background:#F3F4F6;padding:1.5rem;border-radius:12px;
+                margin-bottom:2rem;"&gt;</span>
+        <span class="code-tag">&lt;h3&gt;</span>{{ <span class="code-variable">$isEditing</span> ? <span class="code-string">'✏️ Edit Buku'</span> : <span class="code-string">'➕ Tambah Buku Baru'</span> }}<span class="code-tag">&lt;/h3&gt;</span>
+
+        <span class="code-tag">&lt;form</span> <span class="code-attribute">wire:submit</span>=<span class="code-string">"{{ $isEditing ? 'update' : 'store' }}"</span><span class="code-tag">&gt;</span>
+            <span class="code-comment">&lt;!-- Judul --&gt;</span>
+            <span class="code-tag">&lt;div style="margin-bottom:1rem;"&gt;</span>
+                <span class="code-tag">&lt;label&gt;</span>Judul Buku<span class="code-tag">&lt;/label&gt;</span>
+                <span class="code-tag">&lt;input</span> <span class="code-attribute">wire:model.blur</span>=<span class="code-string">"title"</span>
+                       <span class="code-attribute">placeholder</span>=<span class="code-string">"Contoh: Laskar Pelangi"</span><span class="code-tag">&gt;</span>
+                <span class="code-keyword">@error</span>(<span class="code-string">'title'</span>)
+                    <span class="code-tag">&lt;span style="color:#DC2626;font-size:0.85rem;"&gt;</span>
+                        {{ <span class="code-variable">$message</span> }}
+                    <span class="code-tag">&lt;/span&gt;</span>
+                <span class="code-keyword">@enderror</span>
+            <span class="code-tag">&lt;/div&gt;</span>
+
+            <span class="code-comment">&lt;!-- Penulis --&gt;</span>
+            <span class="code-tag">&lt;div style="margin-bottom:1rem;"&gt;</span>
+                <span class="code-tag">&lt;label&gt;</span>Penulis<span class="code-tag">&lt;/label&gt;</span>
+                <span class="code-tag">&lt;input</span> <span class="code-attribute">wire:model.blur</span>=<span class="code-string">"author"</span>
+                       <span class="code-attribute">placeholder</span>=<span class="code-string">"Contoh: Andrea Hirata"</span><span class="code-tag">&gt;</span>
+                <span class="code-keyword">@error</span>(<span class="code-string">'author'</span>)
+                    <span class="code-tag">&lt;span style="color:#DC2626;font-size:0.85rem;"&gt;</span>
+                        {{ <span class="code-variable">$message</span> }}
+                    <span class="code-tag">&lt;/span&gt;</span>
+                <span class="code-keyword">@enderror</span>
+            <span class="code-tag">&lt;/div&gt;</span>
+
+            <span class="code-comment">&lt;!-- Tahun --&gt;</span>
+            <span class="code-tag">&lt;div style="margin-bottom:1rem;"&gt;</span>
+                <span class="code-tag">&lt;label&gt;</span>Tahun Terbit<span class="code-tag">&lt;/label&gt;</span>
+                <span class="code-tag">&lt;input</span> <span class="code-attribute">type</span>=<span class="code-string">"number"</span>
+                       <span class="code-attribute">wire:model.blur</span>=<span class="code-string">"year"</span>
+                       <span class="code-attribute">placeholder</span>=<span class="code-string">"Contoh: 2024"</span><span class="code-tag">&gt;</span>
+                <span class="code-keyword">@error</span>(<span class="code-string">'year'</span>)
+                    <span class="code-tag">&lt;span style="color:#DC2626;font-size:0.85rem;"&gt;</span>
+                        {{ <span class="code-variable">$message</span> }}
+                    <span class="code-tag">&lt;/span&gt;</span>
+                <span class="code-keyword">@enderror</span>
+            <span class="code-tag">&lt;/div&gt;</span>
+
+            <span class="code-comment">&lt;!-- Tombol --&gt;</span>
+            <span class="code-tag">&lt;div style="display:flex;gap:0.5rem;"&gt;</span>
+                <span class="code-tag">&lt;button</span> <span class="code-attribute">type</span>=<span class="code-string">"submit"</span><span class="code-tag">&gt;</span>
+                    {{ <span class="code-variable">$isEditing</span> ? <span class="code-string">'💾 Update'</span> : <span class="code-string">'➕ Tambah'</span> }}
+                <span class="code-tag">&lt;/button&gt;</span>
+
+                <span class="code-keyword">@if</span>(<span class="code-variable">$isEditing</span>)
+                    <span class="code-tag">&lt;button</span> <span class="code-attribute">type</span>=<span class="code-string">"button"</span>
+                            <span class="code-attribute">wire:click</span>=<span class="code-string">"resetForm"</span>
+                            <span class="code-attribute">style</span>=<span class="code-string">"background:#6B7280;"</span><span class="code-tag">&gt;</span>
+                        ❌ Batal
+                    <span class="code-tag">&lt;/button&gt;</span>
+                <span class="code-keyword">@endif</span>
+            <span class="code-tag">&lt;/div&gt;</span>
+        <span class="code-tag">&lt;/form&gt;</span>
+    <span class="code-tag">&lt;/div&gt;</span>
+
+    <span class="code-comment">&lt;!-- ===== TABEL DATA ===== --&gt;</span>
+    <span class="code-tag">&lt;table style="width:100%;border-collapse:collapse;"&gt;</span>
+        <span class="code-tag">&lt;thead&gt;</span>
+            <span class="code-tag">&lt;tr style="background:#F3F4F6;text-align:left;"&gt;</span>
+                <span class="code-tag">&lt;th style="padding:0.75rem;"&gt;</span>#<span class="code-tag">&lt;/th&gt;</span>
+                <span class="code-tag">&lt;th style="padding:0.75rem;"&gt;</span>Judul<span class="code-tag">&lt;/th&gt;</span>
+                <span class="code-tag">&lt;th style="padding:0.75rem;"&gt;</span>Penulis<span class="code-tag">&lt;/th&gt;</span>
+                <span class="code-tag">&lt;th style="padding:0.75rem;"&gt;</span>Tahun<span class="code-tag">&lt;/th&gt;</span>
+                <span class="code-tag">&lt;th style="padding:0.75rem;"&gt;</span>Aksi<span class="code-tag">&lt;/th&gt;</span>
+            <span class="code-tag">&lt;/tr&gt;</span>
+        <span class="code-tag">&lt;/thead&gt;</span>
+        <span class="code-tag">&lt;tbody&gt;</span>
+            <span class="code-keyword">@forelse</span>(<span class="code-variable">$books</span> as <span class="code-variable">$index</span> => <span class="code-variable">$book</span>)
+                <span class="code-tag">&lt;tr style="border-bottom:1px solid #E5E7EB;"&gt;</span>
+                    <span class="code-tag">&lt;td style="padding:0.75rem;"&gt;</span>{{ <span class="code-variable">$index</span> + <span class="code-number">1</span> }}<span class="code-tag">&lt;/td&gt;</span>
+                    <span class="code-tag">&lt;td style="padding:0.75rem;"&gt;</span>{{ <span class="code-variable">$book</span>->title }}<span class="code-tag">&lt;/td&gt;</span>
+                    <span class="code-tag">&lt;td style="padding:0.75rem;"&gt;</span>{{ <span class="code-variable">$book</span>->author }}<span class="code-tag">&lt;/td&gt;</span>
+                    <span class="code-tag">&lt;td style="padding:0.75rem;"&gt;</span>{{ <span class="code-variable">$book</span>->year }}<span class="code-tag">&lt;/td&gt;</span>
+                    <span class="code-tag">&lt;td style="padding:0.75rem;"&gt;</span>
+                        <span class="code-tag">&lt;button</span> <span class="code-attribute">wire:click</span>=<span class="code-string">"edit({{ $book->id }})"</span>
+                                <span class="code-attribute">style</span>=<span class="code-string">"background:#3B82F6;padding:0.25rem 0.75rem;
+                                       font-size:0.85rem;"</span><span class="code-tag">&gt;</span>
+                            ✏️ Edit
+                        <span class="code-tag">&lt;/button&gt;</span>
+                        <span class="code-tag">&lt;button</span> <span class="code-attribute">wire:click</span>=<span class="code-string">"delete({{ $book->id }})"</span>
+                                <span class="code-attribute">wire:confirm</span>=<span class="code-string">"Yakin ingin menghapus buku ini?"</span>
+                                <span class="code-attribute">style</span>=<span class="code-string">"background:#EF4444;padding:0.25rem 0.75rem;
+                                       font-size:0.85rem;"</span><span class="code-tag">&gt;</span>
+                            🗑️ Hapus
+                        <span class="code-tag">&lt;/button&gt;</span>
+                    <span class="code-tag">&lt;/td&gt;</span>
+                <span class="code-tag">&lt;/tr&gt;</span>
+            <span class="code-keyword">@empty</span>
+                <span class="code-tag">&lt;tr&gt;</span>
+                    <span class="code-tag">&lt;td</span> <span class="code-attribute">colspan</span>=<span class="code-string">"5"</span> <span class="code-attribute">style</span>=<span class="code-string">"padding:2rem;text-align:center;color:#9CA3AF;"</span><span class="code-tag">&gt;</span>
+                        📭 Belum ada data buku. Tambahkan buku pertamamu!
+                    <span class="code-tag">&lt;/td&gt;</span>
+                <span class="code-tag">&lt;/tr&gt;</span>
+            <span class="code-keyword">@endforelse</span>
+        <span class="code-tag">&lt;/tbody&gt;</span>
+    <span class="code-tag">&lt;/table&gt;</span>
 <span class="code-tag">&lt;/div&gt;</span></pre>
                 </div>
             </div>
 
             <div class="alert alert-info">
-                <span class="alert-icon">📌</span>
+                <span class="alert-icon">🔍</span>
                 <div>
-                    <h4>Catatan</h4>
-                    <p>Contoh di atas menyimpan data di property (hilang saat refresh). Di materi selanjutnya, kita akan
-                        simpan ke database!</p>
+                    <h4>Hal Menarik di View</h4>
+                    <ul>
+                        <li><code>wire:confirm="..."</code> — Livewire 3 built-in! Otomatis muncul dialog konfirmasi
+                            sebelum hapus</li>
+                        <li><code>{{ $isEditing ? 'update' : 'store' }}</code> — satu form untuk 2 fungsi (tambah &
+                            edit)</li>
+                        <li><code>wire:model.blur</code> — validasi real-time saat pindah field</li>
+                        <li><code>@forelse...@empty</code> — menampilkan pesan alternatif kalau data kosong</li>
+                    </ul>
                 </div>
             </div>
+
+            <!-- ==================== -->
+
+            <h2>🔨 Step 5: Tampilkan di Halaman</h2>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">routes/web.php</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-keyword">use</span> App\Livewire\BookManager;
+
+Route::get(<span class="code-string">'/books'</span>, BookManager::class);</pre>
+                </div>
+            </div>
+
+            <p>Buka browser: <code>http://localhost/books</code> → CRUD siap dipakai!</p>
+
+            <!-- ==================== -->
+
+            <h2>🗺️ Peta Alur CRUD</h2>
+
+            <p>Berikut alur lengkap dari setiap operasi:</p>
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1.5rem 0;">
+                <div style="padding:1rem;background:#D1FAE5;border-radius:12px;">
+                    <h4 style="margin:0 0 0.5rem;color:#059669;">➕ CREATE</h4>
+                    <ol style="font-size:0.85rem;padding-left:1.2rem;margin:0;">
+                        <li>User isi form (wire:model)</li>
+                        <li>Klik "Tambah" (wire:submit)</li>
+                        <li><code>store()</code> → validate → create</li>
+                        <li>resetForm + flash success</li>
+                    </ol>
+                </div>
+                <div style="padding:1rem;background:#DBEAFE;border-radius:12px;">
+                    <h4 style="margin:0 0 0.5rem;color:#2563EB;">👁️ READ</h4>
+                    <ol style="font-size:0.85rem;padding-left:1.2rem;margin:0;">
+                        <li><code>render()</code> dipanggil otomatis</li>
+                        <li><code>Book::latest()->get()</code></li>
+                        <li>Data dikirim ke view</li>
+                        <li>@forelse menampilkan tabel</li>
+                    </ol>
+                </div>
+                <div style="padding:1rem;background:#FEF3C7;border-radius:12px;">
+                    <h4 style="margin:0 0 0.5rem;color:#D97706;">✏️ UPDATE</h4>
+                    <ol style="font-size:0.85rem;padding-left:1.2rem;margin:0;">
+                        <li>Klik "Edit" (wire:click="edit(id)")</li>
+                        <li>Form terisi data buku</li>
+                        <li>User ubah data → klik "Update"</li>
+                        <li><code>update()</code> → validate → save</li>
+                    </ol>
+                </div>
+                <div style="padding:1rem;background:#FEE2E2;border-radius:12px;">
+                    <h4 style="margin:0 0 0.5rem;color:#DC2626;">🗑️ DELETE</h4>
+                    <ol style="font-size:0.85rem;padding-left:1.2rem;margin:0;">
+                        <li>Klik "Hapus" (wire:click)</li>
+                        <li>wire:confirm → dialog konfirmasi</li>
+                        <li><code>delete()</code> → Book::find→delete</li>
+                        <li>Flash success + tabel terupdate</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- ==================== KESALAHAN UMUM ==================== -->
+
+            <div class="common-mistakes">
+                <h3>⚠️ Kesalahan Umum Pemula</h3>
+
+                <div class="mistake-item">
+                    <h4>❌ Lupa resetForm() setelah submit</h4>
+                    <p>Data di form tetap terisi setelah submit → user bingung apakah berhasil atau belum.</p>
+                    <p class="solution">✅ Solusi: Panggil <code>$this->resetForm()</code> di akhir method store() dan
+                        update().</p>
+                </div>
+
+                <div class="mistake-item">
+                    <h4>❌ Membuat method bernama reset()</h4>
+                    <p><code>reset()</code> sudah ada di Livewire. Kalau kamu buat sendiri, terjadi konflik!</p>
+                    <p class="solution">✅ Solusi: Gunakan nama lain: <code>resetForm()</code>,
+                        <code>resetFields()</code>, dll.
+                    </p>
+                </div>
+
+                <div class="mistake-item">
+                    <h4>❌ Tidak ada konfirmasi sebelum hapus</h4>
+                    <p>Tanpa konfirmasi, user bisa tidak sengaja menghapus data penting.</p>
+                    <p class="solution">✅ Solusi: Gunakan <code>wire:confirm="Yakin hapus?"</code> di tombol delete.</p>
+                </div>
+
+                <div class="mistake-item">
+                    <h4>❌ Lupa resetValidation() saat batal edit</h4>
+                    <p>Error validasi dari mode edit masih muncul setelah klik "Batal".</p>
+                    <p class="solution">✅ Solusi: Panggil <code>$this->resetValidation()</code> di dalam resetForm().
+                    </p>
+                </div>
+            </div>
+
+            <!-- ==================== RINGKASAN ==================== -->
+
+            <div class="summary-box">
+                <h3>📋 Ringkasan Materi</h3>
+                <ul>
+                    <li>CRUD = Create + Read + Update + Delete — 4 operasi dasar semua aplikasi</li>
+                    <li>Gunakan <strong>satu form</strong> untuk tambah dan edit (pola <code>$isEditing</code>)</li>
+                    <li>Property <code>$bookId</code> menyimpan ID buku yang sedang diedit</li>
+                    <li><strong>wire:confirm</strong> = dialog konfirmasi bawaan Livewire 3</li>
+                    <li><strong>session()->flash()</strong> = menampilkan notifikasi sekali tampil</li>
+                    <li><strong>resetForm()</strong> = mengembalikan form ke mode default + hapus error validasi</li>
+                </ul>
+            </div>
+
+            <!-- ==================== LATIHAN ==================== -->
+
+            <h2>📝 Latihan</h2>
+
+            <div class="exercise-section">
+                <div class="exercise-level basic">
+                    <h4>🟢 Level 1 — Memahami</h4>
+                    <ol>
+                        <li>Sebutkan 4 operasi CRUD dan method yang menjalankannya di komponen BookManager!</li>
+                        <li>Apa fungsi property <code>$isEditing</code> dan <code>$bookId</code>?</li>
+                        <li>Kenapa kita memanggil <code>resetValidation()</code> di dalam <code>resetForm()</code>?</li>
+                    </ol>
+                </div>
+
+                <div class="exercise-level intermediate">
+                    <h4>🔵 Level 2 — Praktik</h4>
+                    <ol>
+                        <li>Buat CRUD <strong>"Manajemen Siswa"</strong> (field: nama, NIS, kelas, jurusan) dengan pola
+                            yang sama seperti BookManager. Tambahkan validasi dan pesan custom.</li>
+                        <li>Tambahkan kolom <strong>nomor urut</strong> otomatis (1, 2, 3...) di tabel data.</li>
+                    </ol>
+                </div>
+
+                <div class="exercise-level challenge">
+                    <h4>🟣 Level 3 — Tantangan</h4>
+                    <ol>
+                        <li>Tambahkan fitur <strong>search/filter</strong> di atas tabel — user bisa mencari buku
+                            berdasarkan judul. Gunakan <code>wire:model.live.debounce.300ms</code> dan filter di
+                            <code>render()</code>!
+                        </li>
+                        <li>Buat CRUD <strong>"Manajemen Anggota Perpustakaan"</strong> dengan field: nama, email
+                            (unique), no_telp, dan alamat. Kombinasikan semua yang sudah dipelajari di Minggu 2!</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- ==================== NAVIGASI ==================== -->
 
             <div class="content-nav">
                 <a href="validasi.html" class="nav-btn">
@@ -190,15 +696,18 @@
                         <div class="nav-btn-title">← Validasi</div>
                     </div>
                 </a>
-                <a href="database-eloquent.html" class="nav-btn">
+                <a href="../minggu-3/upload-file.html" class="nav-btn">
                     <div>
                         <div class="nav-btn-label">Selanjutnya</div>
-                        <div class="nav-btn-title">Database & Eloquent →</div>
+                        <div class="nav-btn-title">Upload File →</div>
                     </div>
                 </a>
             </div>
         </main>
     </div>
+
+    <button class="sidebar-toggle-mobile"
+        onclick="document.querySelector('.sidebar').classList.toggle('active')">📚</button>
     <script src="../../js/app.js"></script>
 </body>
 

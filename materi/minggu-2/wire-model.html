@@ -31,9 +31,10 @@
             <ul class="navbar-menu">
                 <li><a href="../../index.html">Beranda</a></li>
                 <li><a href="../../silabus.html">Silabus</a></li>
-                <li><a href="#" class="active">Materi</a></li>
+                <li><a href="../minggu-1/pengenalan-laravel.html" class="active">Materi</a></li>
                 <li><a href="../../demo.html">Demo</a></li>
             </ul>
+            <button class="navbar-toggle" aria-label="Toggle menu"><span>☰</span></button>
         </div>
     </nav>
 
@@ -45,10 +46,10 @@
                     <li><a href="../minggu-1/pengenalan-laravel.html">Pengenalan Laravel</a></li>
                     <li><a href="../minggu-1/mvc-sederhana.html">MVC Sederhana</a></li>
                     <li><a href="../minggu-1/instalasi-laravel.html">Instalasi Laravel</a></li>
-                    <li><a href="../minggu-1/autentikasi.html">🔐 Autentikasi</a></li>
                     <li><a href="../minggu-1/blade-template.html">Blade Template</a></li>
                     <li><a href="../minggu-1/pengenalan-livewire.html">Pengenalan Livewire</a></li>
                     <li><a href="../minggu-1/struktur-component.html">Struktur Component</a></li>
+                    <li><a href="../minggu-1/autentikasi.html">🔐 Autentikasi</a></li>
                 </ul>
             </div>
             <div class="sidebar-section">
@@ -56,56 +57,131 @@
                 <ul class="sidebar-nav">
                     <li><a href="wire-model.html" class="active">wire:model</a></li>
                     <li><a href="wire-click.html">wire:click</a></li>
+                    <li><a href="database-eloquent.html">Database & Eloquent</a></li>
                     <li><a href="validasi.html">Validasi</a></li>
                     <li><a href="crud-sederhana.html">CRUD Sederhana</a></li>
-                    <li><a href="database-eloquent.html">Database & Eloquent</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-title">📕 Minggu 3</div>
+                <ul class="sidebar-nav">
+                    <li><a href="../minggu-3/upload-file.html">Upload File</a></li>
+                    <li><a href="../minggu-3/pagination-search.html">Pagination & Search</a></li>
+                    <li><a href="../minggu-3/komponen-reusable.html">Komponen Reusable</a></li>
+                    <li><a href="../minggu-3/tampilan-dinamis.html">Tampilan Dinamis</a></li>
+                    <li><a href="../minggu-3/project-elibrary.html">📚 Tutorial E-Library</a></li>
                 </ul>
             </div>
         </aside>
 
         <main class="main-content">
             <div class="content-header">
+                <div class="content-breadcrumb">
+                    <a href="../../index.html">Beranda</a> / <a href="../../silabus.html">Silabus</a> / Minggu 2 /
+                    wire:model
+                </div>
                 <h1 class="content-title">2.1 Binding Data (wire:model)</h1>
                 <div class="content-meta">
                     <span>📘 Minggu 2</span>
                     <span>⏱️ 25 menit</span>
+                    <span>📖 Teori + Praktik</span>
                 </div>
             </div>
 
-            <div class="objectives">
-                <h3>🎯 Tujuan Belajar</h3>
+            <!-- Prasyarat -->
+            <div class="prerequisites">
+                <h3>📌 Prasyarat</h3>
                 <ul>
-                    <li>Memahami konsep data binding</li>
-                    <li>Menggunakan wire:model untuk input form</li>
-                    <li>Mengenal modifier .live, .blur, .debounce</li>
+                    <li>Sudah paham <a href="../minggu-1/struktur-component.html">Struktur Component Livewire</a>
+                        (property, method, render)</li>
+                    <li>Sudah paham <a href="../minggu-1/blade-template.html">Blade Template</a> ({{ }}, @if, @foreach)
+                    </li>
+                    <li>Mengerti HTML form dasar: input, textarea, select, checkbox</li>
                 </ul>
             </div>
 
-            <h2>Apa itu wire:model?</h2>
-            <p><code>wire:model</code> adalah cara Livewire untuk <strong>menyinkronkan</strong> nilai input dengan
-                property PHP. Ketika user mengetik, nilai langsung terupdate di server!</p>
+            <!-- Tujuan Belajar -->
+            <div class="objectives">
+                <h3>🎯 Tujuan Belajar</h3>
+                <p>Setelah menyelesaikan materi ini, kamu akan mampu:</p>
+                <ul>
+                    <li>Menjelaskan konsep <strong>data binding</strong> dan alur datanya</li>
+                    <li>Menggunakan <strong>wire:model</strong> untuk menyinkronkan input form dengan property PHP</li>
+                    <li>Memilih <strong>modifier</strong> yang tepat: <code>.live</code>, <code>.blur</code>,
+                        <code>.debounce</code>
+                    </li>
+                    <li>Menggunakan wire:model dengan <strong>berbagai jenis input</strong> (text, select, checkbox,
+                        dll)</li>
+                </ul>
+            </div>
+
+            <!-- ==================== KONTEN ==================== -->
+
+            <h2>🤔 Apa itu Data Binding?</h2>
+
+            <p>Di materi sebelumnya, kamu sudah belajar bahwa property di class PHP bisa ditampilkan di view pakai
+                <code>{{ $nama }}</code>. Tapi bagaimana kalau <strong>user ingin mengubah nilai property</strong> lewat
+                input form?
+            </p>
+
+            <p>Di sinilah <strong>wire:model</strong> berperan — dia menjadi "jembatan" yang menyinkronkan nilai input
+                di browser dengan property di server.</p>
 
             <div class="alert alert-tip">
-                <span class="alert-icon">💡</span>
+                <span class="alert-icon">📱</span>
                 <div>
-                    <h4>Analoginya</h4>
-                    <p>Seperti chat WhatsApp yang langsung terkirim saat kamu mengetik, tanpa perlu tekan tombol
-                        "Kirim".</p>
+                    <h4>Analogi: Google Docs</h4>
+                    <p>Bayangkan kamu sedang mengedit dokumen di <strong>Google Docs</strong>:</p>
+                    <ul style="margin-top:0.5rem;">
+                        <li>Kamu <strong>ketik</strong> di browser → teks <strong>otomatis tersimpan</strong> di cloud
+                            (server Google)</li>
+                        <li>Teman yang membuka dokumen yang sama → <strong>langsung melihat perubahanmu</strong></li>
+                    </ul>
+                    <p style="margin-top:0.5rem;"><code>wire:model</code> bekerja mirip: ketika user mengetik di input →
+                        nilai di server PHP <strong>otomatis terupdate</strong> → tampilan di browser <strong>ikut
+                            berubah</strong>!</p>
                 </div>
             </div>
 
-            <h2>Contoh Dasar</h2>
+            <h3>Alur Data wire:model</h3>
+
+            <div class="diagram-flow">
+                <div class="flow-item">⌨️ User Ketik<br><small>di &lt;input&gt;</small></div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-item highlight">🔗 wire:model<br><small>kirim ke server</small></div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-item">🖥️ Property PHP<br><small>$nama = "Budi"</small></div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-item highlight">🔄 Re-render<br><small>update tampilan</small></div>
+            </div>
+
+            <!-- ==================== -->
+
+            <h2>📝 Contoh Dasar: Salam Otomatis</h2>
+
+            <p>Kita buat komponen sederhana — user ketik nama, langsung muncul salam!</p>
+
             <div class="code-block">
                 <div class="code-header">
                     <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
                             class="code-dot"></span></div>
-                    <span class="code-filename">Greeting.php</span>
+                    <span class="code-filename">app/Livewire/Greeting.php</span>
                     <button class="code-copy">Salin</button>
                 </div>
                 <div class="code-body">
-                    <pre><span class="code-keyword">class</span> <span class="code-class">Greeting</span> <span class="code-keyword">extends</span> Component
+                    <pre><span class="code-keyword">namespace</span> App\Livewire;
+
+<span class="code-keyword">use</span> Livewire\Component;
+
+<span class="code-keyword">class</span> <span class="code-class">Greeting</span> <span class="code-keyword">extends</span> Component
 {
+    <span class="code-comment">// Property yang akan di-bind ke input</span>
     <span class="code-keyword">public</span> <span class="code-variable">$nama</span> = <span class="code-string">''</span>;
+
+    <span class="code-keyword">public function</span> <span class="code-function">render</span>()
+    {
+        <span class="code-keyword">return</span> view(<span class="code-string">'livewire.greeting'</span>);
+    }
 }</pre>
                 </div>
             </div>
@@ -114,79 +190,326 @@
                 <div class="code-header">
                     <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
                             class="code-dot"></span></div>
-                    <span class="code-filename">greeting.blade.php</span>
+                    <span class="code-filename">resources/views/livewire/greeting.blade.php</span>
                     <button class="code-copy">Salin</button>
                 </div>
                 <div class="code-body">
                     <pre><span class="code-tag">&lt;div&gt;</span>
-    <span class="code-tag">&lt;input</span> <span class="code-attr">type</span>=<span class="code-string">"text"</span> <span class="code-attr">wire:model</span>=<span class="code-string">"nama"</span> <span class="code-attr">placeholder</span>=<span class="code-string">"Ketik nama..."</span><span class="code-tag">&gt;</span>
-    <span class="code-tag">&lt;p&gt;</span>Halo, {{ $nama }}!<span class="code-tag">&lt;/p&gt;</span>
+    <span class="code-tag">&lt;label&gt;</span>Masukkan namamu:<span class="code-tag">&lt;/label&gt;</span>
+    <span class="code-tag">&lt;input</span> <span class="code-attribute">type</span>=<span class="code-string">"text"</span>
+           <span class="code-attribute">wire:model.live</span>=<span class="code-string">"nama"</span>
+           <span class="code-attribute">placeholder</span>=<span class="code-string">"Ketik nama..."</span><span class="code-tag">&gt;</span>
+
+    <span class="code-keyword">@if</span>(<span class="code-variable">$nama</span>)
+        <span class="code-tag">&lt;p style="font-size:1.5rem;margin-top:1rem;"&gt;</span>
+            👋 Halo, <span class="code-tag">&lt;strong&gt;</span>{{ <span class="code-variable">$nama</span> }}<span class="code-tag">&lt;/strong&gt;</span>! Selamat belajar!
+        <span class="code-tag">&lt;/p&gt;</span>
+    <span class="code-keyword">@endif</span>
 <span class="code-tag">&lt;/div&gt;</span></pre>
                 </div>
             </div>
 
-            <h2>Modifier wire:model</h2>
-            <table style="width:100%;border-collapse:collapse;margin:1.5rem 0;">
-                <tr style="background:#F3F4F6;">
-                    <th style="padding:1rem;text-align:left;border:1px solid #E5E7EB;">Modifier</th>
-                    <th style="padding:1rem;text-align:left;border:1px solid #E5E7EB;">Penjelasan</th>
+            <div class="alert alert-info">
+                <span class="alert-icon">🔍</span>
+                <div>
+                    <h4>Penjelasan</h4>
+                    <ul>
+                        <li><code>wire:model.live="nama"</code> — menghubungkan input ini ke property <code>$nama</code>
+                            di PHP. Setiap ketikan langsung dikirim ke server</li>
+                        <li><code>@if($nama)</code> — hanya tampilkan salam kalau user sudah mengetik sesuatu</li>
+                        <li><code>{{ $nama }}</code> — tampilkan nilai terbaru dari property</li>
+                    </ul>
+                    <p style="margin-top:0.5rem;font-weight:600;color:#059669;">✨ Hasilnya: Ketik "Budi" → langsung
+                        muncul "Halo, Budi! Selamat belajar!" tanpa reload!</p>
+                </div>
+            </div>
+
+            <!-- ==================== -->
+
+            <h2>⚙️ Modifier wire:model</h2>
+
+            <p>Secara default, <code>wire:model</code> di Livewire 3 hanya <strong>mengirim data saat form
+                    disubmit</strong> (deferred). Kamu bisa mengubah perilakunya dengan modifier:</p>
+
+            <table class="comparison-table">
+                <tr>
+                    <th>Modifier</th>
+                    <th>Kapan Data Dikirim</th>
+                    <th>Contoh Penggunaan</th>
                 </tr>
                 <tr>
-                    <td style="padding:1rem;border:1px solid #E5E7EB;"><code>wire:model</code></td>
-                    <td style="padding:1rem;border:1px solid #E5E7EB;">Default, update saat blur (pindah fokus)</td>
+                    <td><code>wire:model</code></td>
+                    <td>Saat form <strong>disubmit</strong> (default Livewire 3)</td>
+                    <td>Form registrasi, form kontak</td>
                 </tr>
                 <tr>
-                    <td style="padding:1rem;border:1px solid #E5E7EB;"><code>wire:model.live</code></td>
-                    <td style="padding:1rem;border:1px solid #E5E7EB;">Update <strong>real-time</strong> saat mengetik
-                    </td>
+                    <td><code>wire:model.live</code></td>
+                    <td><strong>Real-time</strong> setiap ketikan</td>
+                    <td>Search bar, preview langsung</td>
                 </tr>
                 <tr>
-                    <td style="padding:1rem;border:1px solid #E5E7EB;"><code>wire:model.blur</code></td>
-                    <td style="padding:1rem;border:1px solid #E5E7EB;">Update saat input kehilangan fokus</td>
+                    <td><code>wire:model.blur</code></td>
+                    <td>Saat input <strong>kehilangan fokus</strong> (klik di tempat lain)</td>
+                    <td>Validasi email saat pindah field</td>
                 </tr>
                 <tr>
-                    <td style="padding:1rem;border:1px solid #E5E7EB;"><code>wire:model.live.debounce.500ms</code></td>
-                    <td style="padding:1rem;border:1px solid #E5E7EB;">Update real-time tapi delay 500ms</td>
+                    <td><code>wire:model.live.debounce.500ms</code></td>
+                    <td>Real-time tapi <strong>delay 500ms</strong></td>
+                    <td>Search yang hemat request</td>
+                </tr>
+                <tr>
+                    <td><code>wire:model.live.debounce.1s</code></td>
+                    <td>Real-time tapi <strong>delay 1 detik</strong></td>
+                    <td>Auto-save draft</td>
                 </tr>
             </table>
+
+            <div class="alert alert-tip">
+                <span class="alert-icon">🎯</span>
+                <div>
+                    <h4>Kapan Pakai Modifier Mana?</h4>
+                    <ul style="margin-top:0.5rem;">
+                        <li><strong>Form biasa</strong> (registrasi, kontak) → <code>wire:model</code> saja. Hemat
+                            request!</li>
+                        <li><strong>Search bar</strong> → <code>wire:model.live.debounce.300ms</code>. Real-time tapi
+                            tidak terlalu sering kirim.</li>
+                        <li><strong>Preview live</strong> → <code>wire:model.live</code>. Langsung terlihat saat
+                            mengetik.</li>
+                        <li><strong>Validasi per field</strong> → <code>wire:model.blur</code>. Cek saat user pindah ke
+                            field berikutnya.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>Contoh: Search dengan Debounce</h3>
 
             <div class="code-block">
                 <div class="code-header">
                     <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
                             class="code-dot"></span></div>
-                    <span class="code-filename">Contoh Modifier</span>
+                    <span class="code-filename">app/Livewire/BookSearch.php</span>
                     <button class="code-copy">Salin</button>
                 </div>
                 <div class="code-body">
-                    <pre><span class="code-comment">&lt;!-- Real-time update --&gt;</span>
-<span class="code-tag">&lt;input</span> <span class="code-attr">wire:model.live</span>=<span class="code-string">"search"</span><span class="code-tag">&gt;</span>
+                    <pre><span class="code-keyword">class</span> <span class="code-class">BookSearch</span> <span class="code-keyword">extends</span> Component
+{
+    <span class="code-keyword">public</span> <span class="code-variable">$search</span> = <span class="code-string">''</span>;
 
-<span class="code-comment">&lt;!-- Dengan debounce 300ms --&gt;</span>
-<span class="code-tag">&lt;input</span> <span class="code-attr">wire:model.live.debounce.300ms</span>=<span class="code-string">"search"</span><span class="code-tag">&gt;</span></pre>
+    <span class="code-keyword">public function</span> <span class="code-function">render</span>()
+    {
+        <span class="code-variable">$books</span> = [];
+
+        <span class="code-keyword">if</span> (strlen(<span class="code-variable">$this</span>->search) >= <span class="code-number">2</span>) {
+            <span class="code-variable">$books</span> = Book::where(<span class="code-string">'title'</span>, <span class="code-string">'like'</span>, <span class="code-string">'%'</span> . <span class="code-variable">$this</span>->search . <span class="code-string">'%'</span>)->get();
+        }
+
+        <span class="code-keyword">return</span> view(<span class="code-string">'livewire.book-search'</span>, [
+            <span class="code-string">'books'</span> => <span class="code-variable">$books</span>
+        ]);
+    }
+}</pre>
+                </div>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">resources/views/livewire/book-search.blade.php</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-tag">&lt;div&gt;</span>
+    <span class="code-tag">&lt;input</span> <span class="code-attribute">type</span>=<span class="code-string">"text"</span>
+           <span class="code-attribute">wire:model.live.debounce.300ms</span>=<span class="code-string">"search"</span>
+           <span class="code-attribute">placeholder</span>=<span class="code-string">"🔍 Cari judul buku..."</span><span class="code-tag">&gt;</span>
+
+    <span class="code-keyword">@forelse</span>(<span class="code-variable">$books</span> as <span class="code-variable">$book</span>)
+        <span class="code-tag">&lt;div class="book-item"&gt;</span>
+            <span class="code-tag">&lt;strong&gt;</span>{{ <span class="code-variable">$book</span>->title }}<span class="code-tag">&lt;/strong&gt;</span>
+            <span class="code-tag">&lt;span&gt;</span>oleh {{ <span class="code-variable">$book</span>->author }}<span class="code-tag">&lt;/span&gt;</span>
+        <span class="code-tag">&lt;/div&gt;</span>
+    <span class="code-keyword">@empty</span>
+        <span class="code-keyword">@if</span>(strlen(<span class="code-variable">$search</span>) >= <span class="code-number">2</span>)
+            <span class="code-tag">&lt;p&gt;</span>😕 Buku tidak ditemukan.<span class="code-tag">&lt;/p&gt;</span>
+        <span class="code-keyword">@endif</span>
+    <span class="code-keyword">@endforelse</span>
+<span class="code-tag">&lt;/div&gt;</span></pre>
+                </div>
+            </div>
+
+            <!-- ==================== -->
+
+            <h2>🔤 wire:model dengan Berbagai Jenis Input</h2>
+
+            <p>wire:model tidak hanya untuk <code>&lt;input type="text"&gt;</code>! Berikut contoh lengkapnya:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">Form lengkap — berbagai jenis input</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-comment">&lt;!-- Text input --&gt;</span>
+<span class="code-tag">&lt;input</span> <span class="code-attribute">type</span>=<span class="code-string">"text"</span> <span class="code-attribute">wire:model</span>=<span class="code-string">"nama"</span><span class="code-tag">&gt;</span>
+
+<span class="code-comment">&lt;!-- Email input --&gt;</span>
+<span class="code-tag">&lt;input</span> <span class="code-attribute">type</span>=<span class="code-string">"email"</span> <span class="code-attribute">wire:model</span>=<span class="code-string">"email"</span><span class="code-tag">&gt;</span>
+
+<span class="code-comment">&lt;!-- Number input --&gt;</span>
+<span class="code-tag">&lt;input</span> <span class="code-attribute">type</span>=<span class="code-string">"number"</span> <span class="code-attribute">wire:model</span>=<span class="code-string">"umur"</span><span class="code-tag">&gt;</span>
+
+<span class="code-comment">&lt;!-- Textarea --&gt;</span>
+<span class="code-tag">&lt;textarea</span> <span class="code-attribute">wire:model</span>=<span class="code-string">"pesan"</span><span class="code-tag">&gt;&lt;/textarea&gt;</span>
+
+<span class="code-comment">&lt;!-- Select / Dropdown --&gt;</span>
+<span class="code-tag">&lt;select</span> <span class="code-attribute">wire:model</span>=<span class="code-string">"kelas"</span><span class="code-tag">&gt;</span>
+    <span class="code-tag">&lt;option value=""&gt;</span>-- Pilih Kelas --<span class="code-tag">&lt;/option&gt;</span>
+    <span class="code-tag">&lt;option value="X"&gt;</span>Kelas X<span class="code-tag">&lt;/option&gt;</span>
+    <span class="code-tag">&lt;option value="XI"&gt;</span>Kelas XI<span class="code-tag">&lt;/option&gt;</span>
+    <span class="code-tag">&lt;option value="XII"&gt;</span>Kelas XII<span class="code-tag">&lt;/option&gt;</span>
+<span class="code-tag">&lt;/select&gt;</span>
+
+<span class="code-comment">&lt;!-- Checkbox --&gt;</span>
+<span class="code-tag">&lt;input</span> <span class="code-attribute">type</span>=<span class="code-string">"checkbox"</span> <span class="code-attribute">wire:model</span>=<span class="code-string">"setuju"</span><span class="code-tag">&gt;</span> Saya setuju
+
+<span class="code-comment">&lt;!-- Radio buttons --&gt;</span>
+<span class="code-tag">&lt;input</span> <span class="code-attribute">type</span>=<span class="code-string">"radio"</span> <span class="code-attribute">wire:model</span>=<span class="code-string">"gender"</span> <span class="code-attribute">value</span>=<span class="code-string">"L"</span><span class="code-tag">&gt;</span> Laki-laki
+<span class="code-tag">&lt;input</span> <span class="code-attribute">type</span>=<span class="code-string">"radio"</span> <span class="code-attribute">wire:model</span>=<span class="code-string">"gender"</span> <span class="code-attribute">value</span>=<span class="code-string">"P"</span><span class="code-tag">&gt;</span> Perempuan</pre>
                 </div>
             </div>
 
             <div class="alert alert-info">
-                <span class="alert-icon">📌</span>
+                <span class="alert-icon">🔍</span>
                 <div>
-                    <h4>Kapan pakai .live?</h4>
-                    <p>Gunakan .live untuk fitur search real-time. Untuk form biasa, cukup wire:model saja supaya hemat
-                        request.</p>
+                    <h4>Tipe Data Property</h4>
+                    <table class="comparison-table" style="margin-top:0.5rem;">
+                        <tr>
+                            <th>Jenis Input</th>
+                            <th>Tipe Property PHP</th>
+                            <th>Nilai Default</th>
+                        </tr>
+                        <tr>
+                            <td>text, email, textarea</td>
+                            <td><code>string</code></td>
+                            <td><code>''</code> (string kosong)</td>
+                        </tr>
+                        <tr>
+                            <td>number</td>
+                            <td><code>int</code> atau <code>float</code></td>
+                            <td><code>0</code></td>
+                        </tr>
+                        <tr>
+                            <td>checkbox</td>
+                            <td><code>bool</code></td>
+                            <td><code>false</code></td>
+                        </tr>
+                        <tr>
+                            <td>select, radio</td>
+                            <td><code>string</code></td>
+                            <td><code>''</code></td>
+                        </tr>
+                    </table>
                 </div>
             </div>
 
+            <!-- ==================== KESALAHAN UMUM ==================== -->
+
+            <div class="common-mistakes">
+                <h3>⚠️ Kesalahan Umum Pemula</h3>
+
+                <div class="mistake-item">
+                    <h4>❌ Mengira wire:model langsung real-time (Livewire 3)</h4>
+                    <p>Di Livewire 3, <code>wire:model</code> default-nya adalah <strong>deferred</strong> (data dikirim
+                        saat submit). Di Livewire 2, default-nya real-time.</p>
+                    <p class="solution">✅ Solusi: Tambahkan <code>.live</code> kalau mau real-time:
+                        <code>wire:model.live="search"</code>
+                    </p>
+                </div>
+
+                <div class="mistake-item">
+                    <h4>❌ Nama property tidak cocok dengan wire:model</h4>
+                    <p><code>wire:model="nama"</code> harus persis sesuai dengan <code>public $nama</code> di class.
+                        Typo = error!</p>
+                    <p class="solution">✅ Solusi: Pastikan nama di wire:model 100% sama dengan nama property di PHP.
+                        Case-sensitive!</p>
+                </div>
+
+                <div class="mistake-item">
+                    <h4>❌ Pakai .live di semua input form</h4>
+                    <p>Menambahkan <code>.live</code> di setiap input = banyak request ke server. Bikin lambat!</p>
+                    <p class="solution">✅ Solusi: Gunakan <code>.live</code> hanya untuk search atau preview. Untuk form
+                        biasa, <code>wire:model</code> tanpa modifier sudah cukup.</p>
+                </div>
+            </div>
+
+            <!-- ==================== RINGKASAN ==================== -->
+
+            <div class="summary-box">
+                <h3>📋 Ringkasan Materi</h3>
+                <ul>
+                    <li><code>wire:model</code> = menyinkronkan input HTML dengan property PHP di server</li>
+                    <li>Default Livewire 3: data dikirim saat <strong>submit</strong> (deferred)</li>
+                    <li><code>.live</code> = real-time, <code>.blur</code> = saat pindah fokus, <code>.debounce</code> =
+                        delay</li>
+                    <li>Bisa dipakai untuk semua jenis input: text, email, textarea, select, checkbox, radio</li>
+                    <li>Nama di <code>wire:model</code> harus <strong>persis sama</strong> dengan nama property di class
+                        PHP</li>
+                </ul>
+            </div>
+
+            <!-- ==================== LATIHAN ==================== -->
+
             <h2>📝 Latihan</h2>
-            <ol>
-                <li>Buat component "Profil" dengan input nama dan email</li>
-                <li>Tampilkan preview "Nama: [nama], Email: [email]"</li>
-                <li>Coba bedakan wire:model biasa dengan wire:model.live</li>
-            </ol>
+
+            <div class="exercise-section">
+                <div class="exercise-level basic">
+                    <h4>🟢 Level 1 — Praktik Dasar</h4>
+                    <ol>
+                        <li>Buat komponen <strong>"Profil"</strong> dengan input nama dan email. Tampilkan preview:
+                            "Nama: [nama], Email: [email]"</li>
+                        <li>Coba ketik di input — apakah preview langsung berubah? Kalau tidak, tambahkan modifier apa?
+                        </li>
+                        <li>Apa perbedaan <code>wire:model</code> dan <code>wire:model.live</code>? Jelaskan!</li>
+                    </ol>
+                </div>
+
+                <div class="exercise-level intermediate">
+                    <h4>🔵 Level 2 — Form Registrasi</h4>
+                    <ol>
+                        <li>Buat komponen <strong>"FormSiswa"</strong> dengan input: nama, kelas (dropdown X/XI/XII),
+                            jurusan, dan checkbox "Setuju dengan peraturan".</li>
+                        <li>Tampilkan preview data yang diisi secara <strong>real-time</strong> di bagian bawah form.
+                        </li>
+                        <li>Tambahkan <code>@if($setuju)</code> untuk menampilkan tombol submit hanya kalau checkbox
+                            dicentang.</li>
+                    </ol>
+                </div>
+
+                <div class="exercise-level challenge">
+                    <h4>🟣 Level 3 — Tantangan</h4>
+                    <ol>
+                        <li>Buat komponen <strong>"SearchBar"</strong> dengan
+                            <code>wire:model.live.debounce.300ms</code>. Filter array sederhana (bisa pakai property
+                            array, belum perlu database). Coba ganti delay dari 300ms ke 1s — apa efeknya?
+                        </li>
+                        <li>Bandingkan jumlah request yang dikirim ke server antara <code>.live</code> dan
+                            <code>.live.debounce.500ms</code>. Tool apa yang bisa kamu pakai untuk mengeceknya?
+                            (Petunjuk: buka Developer Tools di browser!)
+                        </li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- ==================== NAVIGASI ==================== -->
 
             <div class="content-nav">
-                <a href="../minggu-1/struktur-component.html" class="nav-btn">
+                <a href="../minggu-1/autentikasi.html" class="nav-btn">
                     <div>
-                        <div class="nav-btn-label">Sebelumnya</div>
-                        <div class="nav-btn-title">← Struktur Component</div>
+                        <div class="nav-btn-label">Minggu 1</div>
+                        <div class="nav-btn-title">← 🔐 Autentikasi</div>
                     </div>
                 </a>
                 <a href="wire-click.html" class="nav-btn">
@@ -198,6 +521,9 @@
             </div>
         </main>
     </div>
+
+    <button class="sidebar-toggle-mobile"
+        onclick="document.querySelector('.sidebar').classList.toggle('active')">📚</button>
     <script src="../../js/app.js"></script>
 </body>
 
