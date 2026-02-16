@@ -49,7 +49,6 @@
                     <li><a href="../minggu-1/blade-template.html">Blade Template</a></li>
                     <li><a href="../minggu-1/pengenalan-livewire.html">Pengenalan Livewire</a></li>
                     <li><a href="../minggu-1/struktur-component.html">Struktur Component</a></li>
-                    <li><a href="../minggu-1/autentikasi.html">🔐 Autentikasi</a></li>
                 </ul>
             </div>
             <div class="sidebar-section">
@@ -60,6 +59,8 @@
                     <li><a href="database-eloquent.html">Database & Eloquent</a></li>
                     <li><a href="validasi.html">Validasi</a></li>
                     <li><a href="crud-sederhana.html">CRUD Sederhana</a></li>
+                    <li><a href="autentikasi.html">🔐 Autentikasi</a></li>
+                    <li><a href="lifecycle-events.html">🔄 Lifecycle & Events</a></li>
                 </ul>
             </div>
             <div class="sidebar-section">
@@ -69,6 +70,7 @@
                     <li><a href="../minggu-3/pagination-search.html">Pagination & Search</a></li>
                     <li><a href="../minggu-3/komponen-reusable.html">Komponen Reusable</a></li>
                     <li><a href="../minggu-3/tampilan-dinamis.html">Tampilan Dinamis</a></li>
+                                        <li><a href="../minggu-3/form-object.html">📋 Form Objects</a></li>
                     <li><a href="../minggu-3/project-elibrary.html">📚 Tutorial E-Library</a></li>
                 </ul>
             </div>
@@ -468,6 +470,233 @@
                     <td>button, div, span, dll</td>
                 </tr>
             </table>
+
+            <!-- ==================== MAGIC ACTIONS ==================== -->
+
+            <h2>🪄 Magic Actions</h2>
+
+            <p>Livewire menyediakan beberapa <strong>"magic actions"</strong> — aksi bawaan yang bisa langsung kamu
+                pakai di view <em>tanpa membuat method di PHP</em>!</p>
+
+            <table class="comparison-table">
+                <tr>
+                    <th>Magic Action</th>
+                    <th>Fungsi</th>
+                    <th>Contoh</th>
+                </tr>
+                <tr>
+                    <td><code>$set('prop', value)</code></td>
+                    <td>Set nilai property langsung dari view</td>
+                    <td><code>wire:click="$set('activeTab', 'profil')"</code></td>
+                </tr>
+                <tr>
+                    <td><code>$toggle('prop')</code></td>
+                    <td>Toggle boolean true ↔ false</td>
+                    <td><code>wire:click="$toggle('showDetail')"</code></td>
+                </tr>
+                <tr>
+                    <td><code>$refresh</code></td>
+                    <td>Re-render komponen tanpa aksi</td>
+                    <td><code>wire:click="$refresh"</code></td>
+                </tr>
+                <tr>
+                    <td><code>$dispatch('event')</code></td>
+                    <td>Kirim event ke komponen lain</td>
+                    <td><code>wire:click="$dispatch('refresh-list')"</code></td>
+                </tr>
+            </table>
+
+            <h3>Contoh Magic Actions</h3>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">Magic Actions di View (tanpa method PHP!)</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-comment">&lt;!-- $set — ganti property langsung --&gt;</span>
+<span class="code-tag">&lt;button</span> <span class="code-attribute">wire:click</span>=<span class="code-string">"$set('status', 'aktif')"</span><span class="code-tag">&gt;</span>✅ Aktifkan<span class="code-tag">&lt;/button&gt;</span>
+<span class="code-tag">&lt;button</span> <span class="code-attribute">wire:click</span>=<span class="code-string">"$set('status', 'nonaktif')"</span><span class="code-tag">&gt;</span>❌ Nonaktifkan<span class="code-tag">&lt;/button&gt;</span>
+
+<span class="code-comment">&lt;!-- $toggle — toggle boolean --&gt;</span>
+<span class="code-tag">&lt;button</span> <span class="code-attribute">wire:click</span>=<span class="code-string">"$toggle('showModal')"</span><span class="code-tag">&gt;</span>
+    {{ <span class="code-variable">$showModal</span> ? 'Tutup' : 'Buka' }} Modal
+<span class="code-tag">&lt;/button&gt;</span>
+
+<span class="code-comment">&lt;!-- $refresh — refresh komponen --&gt;</span>
+<span class="code-tag">&lt;button</span> <span class="code-attribute">wire:click</span>=<span class="code-string">"$refresh"</span><span class="code-tag">&gt;</span>🔄 Refresh Data<span class="code-tag">&lt;/button&gt;</span></pre>
+                </div>
+            </div>
+
+            <div class="alert alert-tip">
+                <span class="alert-icon">💡</span>
+                <div>
+                    <h4>Kapan Pakai Magic Action vs Method Biasa?</h4>
+                    <ul style="margin-top:0.5rem;">
+                        <li><strong>Magic action</strong> → untuk aksi sederhana (ganti 1 property, toggle, refresh)
+                        </li>
+                        <li><strong>Method biasa</strong> → untuk aksi yang butuh logika (validasi, hitung, query
+                            database)</li>
+                    </ul>
+                    <p style="margin-top:0.5rem;">Gunakan <code>$set</code> dan <code>$toggle</code> untuk mengurangi
+                        method kecil-kecil yang tidak perlu di class PHP!</p>
+                </div>
+            </div>
+
+            <!-- ==================== WIRE:CONFIRM ==================== -->
+
+            <h2>⚠️ wire:confirm — Konfirmasi Sebelum Aksi</h2>
+
+            <p>Untuk aksi berbahaya seperti <strong>delete</strong>, kamu bisa menambahkan dialog konfirmasi langsung
+                tanpa JavaScript:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">Contoh wire:confirm</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-comment">&lt;!-- Konfirmasi sederhana --&gt;</span>
+<span class="code-tag">&lt;button</span>
+    <span class="code-attribute">wire:click</span>=<span class="code-string">"delete({{ $buku->id }})"</span>
+    <span class="code-attribute">wire:confirm</span>=<span class="code-string">"Yakin mau menghapus buku ini?"</span><span class="code-tag">&gt;</span>
+    🗑️ Hapus
+<span class="code-tag">&lt;/button&gt;</span>
+
+<span class="code-comment">&lt;!-- Tanpa wire:confirm, user langsung menghapus tanpa bertanya --&gt;</span>
+<span class="code-comment">&lt;!-- Ini BERBAHAYA untuk data penting! --&gt;</span></pre>
+                </div>
+            </div>
+
+            <div class="alert alert-warning">
+                <span class="alert-icon">📢</span>
+                <div>
+                    <h4>Catatan Guru RPL — Best Practice</h4>
+                    <p>Selalu gunakan <code>wire:confirm</code> untuk aksi yang <strong>tidak bisa di-undo</strong>:</p>
+                    <ul style="margin-top:0.5rem;">
+                        <li>🗑️ Hapus data</li>
+                        <li>🔓 Reset password</li>
+                        <li>📤 Kirim email massal</li>
+                        <li>🚫 Nonaktifkan akun</li>
+                    </ul>
+                    <p style="margin-top:0.5rem;">Ini melindungi user dari klik tidak sengaja. Kebiasaan baik sebagai
+                        developer!</p>
+                </div>
+            </div>
+
+            <!-- ==================== EVENT MODIFIERS ==================== -->
+
+            <h2>🎚️ Event Modifiers</h2>
+
+            <p>Modifier menambahkan perilaku khusus pada event Livewire. Cara pakainya: tambahkan <strong>titik (.) dan
+                    nama modifier</strong>.</p>
+
+            <table class="comparison-table">
+                <tr>
+                    <th>Modifier</th>
+                    <th>Fungsi</th>
+                    <th>Contoh</th>
+                </tr>
+                <tr>
+                    <td><code>.prevent</code></td>
+                    <td>Mencegah aksi default browser</td>
+                    <td><code>wire:submit.prevent="simpan"</code></td>
+                </tr>
+                <tr>
+                    <td><code>.stop</code></td>
+                    <td>Menghentikan event bubbling</td>
+                    <td><code>wire:click.stop="tutupModal"</code></td>
+                </tr>
+                <tr>
+                    <td><code>.self</code></td>
+                    <td>Hanya trigger jika elemen itu sendiri diklik</td>
+                    <td><code>wire:click.self="tutupOverlay"</code></td>
+                </tr>
+                <tr>
+                    <td><code>.debounce.300ms</code></td>
+                    <td>Tunda eksekusi (cegah spam klik)</td>
+                    <td><code>wire:click.debounce.300ms="search"</code></td>
+                </tr>
+                <tr>
+                    <td><code>.throttle.1s</code></td>
+                    <td>Maksimal 1x per detik</td>
+                    <td><code>wire:click.throttle.1s="loadMore"</code></td>
+                </tr>
+            </table>
+
+            <h3>Contoh: Modal dengan .self</h3>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">Modal yang tertutup saat klik luar</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-comment">&lt;!-- Overlay: klik HANYA di area gelap akan tutup modal --&gt;</span>
+<span class="code-keyword">@if</span>(<span class="code-variable">$showModal</span>)
+<span class="code-tag">&lt;div</span>
+    <span class="code-attribute">style</span>=<span class="code-string">"position:fixed;inset:0;background:rgba(0,0,0,0.5)"</span>
+    <span class="code-attribute">wire:click.self</span>=<span class="code-string">"$set('showModal', false)"</span><span class="code-tag">&gt;</span>
+
+    <span class="code-comment">&lt;!-- Klik di sini TIDAK akan tutup modal (karena .self) --&gt;</span>
+    <span class="code-tag">&lt;div</span> <span class="code-attribute">style</span>=<span class="code-string">"background:white;padding:2rem;border-radius:12px;"</span><span class="code-tag">&gt;</span>
+        <span class="code-tag">&lt;h3&gt;</span>Detail Buku<span class="code-tag">&lt;/h3&gt;</span>
+        <span class="code-tag">&lt;p&gt;</span>Konten modal...<span class="code-tag">&lt;/p&gt;</span>
+    <span class="code-tag">&lt;/div&gt;</span>
+<span class="code-tag">&lt;/div&gt;</span>
+<span class="code-keyword">@endif</span></pre>
+                </div>
+            </div>
+
+            <!-- ==================== SECURITY ==================== -->
+
+            <h3>🔒 Keamanan: Action Parameters</h3>
+
+            <p>Karena parameter dikirim dari browser, user bisa <strong>memanipulasi nilainya</strong> lewat Dev Tools.
+                Selalu validasi di sisi server!</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">Contoh Validasi Parameter</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-comment">// ❌ BERBAHAYA — langsung pakai parameter tanpa cek</span>
+<span class="code-keyword">public function</span> <span class="code-function">delete</span>(<span class="code-variable">$id</span>)
+{
+    Buku::find(<span class="code-variable">$id</span>)->delete(); <span class="code-comment">// User bisa hapus buku orang lain!</span>
+}
+
+<span class="code-comment">// ✅ AMAN — cek kepemilikan/otoritas dulu</span>
+<span class="code-keyword">public function</span> <span class="code-function">delete</span>(<span class="code-variable">$id</span>)
+{
+    <span class="code-variable">$buku</span> = Buku::findOrFail(<span class="code-variable">$id</span>);
+
+    <span class="code-comment">// Pastikan user punya hak hapus</span>
+    <span class="code-variable">$this</span>->authorize(<span class="code-string">'delete'</span>, <span class="code-variable">$buku</span>);
+
+    <span class="code-variable">$buku</span>->delete();
+}</pre>
+                </div>
+            </div>
+
+            <div class="alert alert-info">
+                <span class="alert-icon">📢</span>
+                <div>
+                    <h4>Catatan Guru RPL — Prinsip Keamanan</h4>
+                    <p>Ini sama seperti di PHP biasa: jangan pernah percaya data dari <code>$_GET</code> atau
+                        <code>$_POST</code> tanpa validasi. Di Livewire, <strong>parameter action</strong> sama saja —
+                        bisa dimanipulasi user. Biasakan validasi dan cek otorisasi!</p>
+                </div>
+            </div>
 
             <!-- ==================== KESALAHAN UMUM ==================== -->
 

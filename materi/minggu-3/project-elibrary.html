@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 
 <head>
@@ -48,7 +48,6 @@
                     <li><a href="../minggu-1/blade-template.html">Blade Template</a></li>
                     <li><a href="../minggu-1/pengenalan-livewire.html">Pengenalan Livewire</a></li>
                     <li><a href="../minggu-1/struktur-component.html">Struktur Component</a></li>
-                    <li><a href="../minggu-1/autentikasi.html">🔐 Autentikasi</a></li>
                 </ul>
             </div>
             <div class="sidebar-section">
@@ -59,6 +58,8 @@
                     <li><a href="../minggu-2/database-eloquent.html">Database & Eloquent</a></li>
                     <li><a href="../minggu-2/validasi.html">Validasi</a></li>
                     <li><a href="../minggu-2/crud-sederhana.html">CRUD Sederhana</a></li>
+                    <li><a href="../minggu-2/autentikasi.html">🔐 Autentikasi</a></li>
+                    <li><a href="../minggu-2/lifecycle-events.html">🔄 Lifecycle & Events</a></li>
                 </ul>
             </div>
             <div class="sidebar-section">
@@ -68,6 +69,7 @@
                     <li><a href="pagination-search.html">Pagination & Search</a></li>
                     <li><a href="komponen-reusable.html">Komponen Reusable</a></li>
                     <li><a href="tampilan-dinamis.html">Tampilan Dinamis</a></li>
+                    <li><a href="form-object.html">📋 Form Objects</a></li>
                     <li><a href="project-elibrary.html" class="active">📚 Tutorial E-Library</a></li>
                 </ul>
             </div>
@@ -616,6 +618,41 @@ Route::middleware(<span class="code-string">'auth'</span>)-&gt;group(<span class
                 </div>
             </div>
 
+            <h3>3.4 Layout Navigasi (Menu)</h3>
+            <p>Buka file <code>resources/views/layouts/navigation.blade.php</code> (file ini dibuat oleh Breeze).
+                Tambahkan menu navigasi kita:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">resources/views/layouts/navigation.blade.php</span>
+                    <button class="code-copy" onclick="copyCode(this)">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-comment">&lt;!-- ... kode Breeze lainnya ... --&gt;</span>
+<span class="code-comment">&lt;!-- Navigation Links --&gt;</span>
+<span class="code-tag">&lt;div</span> <span class="code-attribute">class</span>=<span class="code-string">"hidden space-x-8 sm:-my-px sm:ms-10 sm:flex"</span><span class="code-tag">&gt;</span>
+    <span class="code-tag">&lt;x-nav-link</span> <span class="code-attribute">:href</span>=<span class="code-string">"route('dashboard')"</span> <span class="code-attribute">:active</span>=<span class="code-string">"request()->routeIs('dashboard')"</span><span class="code-tag">&gt;</span>
+        {{ __('Dashboard') }}
+    <span class="code-tag">&lt;/x-nav-link&gt;</span>
+
+    <span class="code-comment">&lt;!-- Menu Admin: Buku & Peminjaman --&gt;</span>
+    <span class="code-keyword">@if</span>(auth()->user()->role === 'admin')
+        <span class="code-tag">&lt;x-nav-link</span> <span class="code-attribute">:href</span>=<span class="code-string">"route('books')"</span> <span class="code-attribute">:active</span>=<span class="code-string">"request()->routeIs('books')"</span><span class="code-tag">&gt;</span>
+            {{ __('Kelola Buku') }}
+        <span class="code-tag">&lt;/x-nav-link&gt;</span>
+        <span class="code-tag">&lt;x-nav-link</span> <span class="code-attribute">:href</span>=<span class="code-string">"route('loans')"</span> <span class="code-attribute">:active</span>=<span class="code-string">"request()->routeIs('loans')"</span><span class="code-tag">&gt;</span>
+            {{ __('Peminjaman') }}
+        <span class="code-tag">&lt;/x-nav-link&gt;</span>
+        <span class="code-tag">&lt;x-nav-link</span> <span class="code-attribute">:href</span>=<span class="code-string">"route('returns')"</span> <span class="code-attribute">:active</span>=<span class="code-string">"request()->routeIs('returns')"</span><span class="code-tag">&gt;</span>
+            {{ __('Pengembalian') }}
+        <span class="code-tag">&lt;/x-nav-link&gt;</span>
+    <span class="code-keyword">@endif</span>
+<span class="code-tag">&lt;/div&gt;</span></pre>
+                </div>
+            </div>
+
             <!--===========================================-->
             <!-- STEP 4: CRUD BUKU                         -->
             <!--===========================================-->
@@ -805,6 +842,118 @@ Route::middleware(<span class="code-string">'auth'</span>)-&gt;group(<span class
                 </div>
             </div>
 
+            <h3>4.4 View Blade — Tampilan CRUD</h3>
+            <p>Buka <code>resources/views/livewire/books/index.blade.php</code> dan salin kode lengkap ini:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">resources/views/livewire/books/index.blade.php</span>
+                    <button class="code-copy" onclick="copyCode(this)">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-tag">&lt;div</span> <span class="code-attribute">class</span>=<span class="code-string">"p-6"</span><span class="code-tag">&gt;</span>
+    <span class="code-comment">&lt;!-- 1. Header & Tombol Tambah --&gt;</span>
+    <span class="code-tag">&lt;div</span> <span class="code-attribute">class</span>=<span class="code-string">"flex justify-between items-center mb-4"</span><span class="code-tag">&gt;</span>
+        <span class="code-tag">&lt;h2</span> <span class="code-attribute">class</span>=<span class="code-string">"text-xl font-bold text-gray-800"</span><span class="code-tag">&gt;</span>📚 Daftar Buku<span class="code-tag">&lt;/h2&gt;</span>
+        <span class="code-tag">&lt;button</span> <span class="code-attribute">wire:click</span>=<span class="code-string">"openModal"</span> <span class="code-attribute">class</span>=<span class="code-string">"bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"</span><span class="code-tag">&gt;</span>
+            + Tambah Buku
+        <span class="code-tag">&lt;/button&gt;</span>
+    <span class="code-tag">&lt;/div&gt;</span>
+
+    <span class="code-comment">&lt;!-- 2. Search & Filter --&gt;</span>
+    <span class="code-tag">&lt;div</span> <span class="code-attribute">class</span>=<span class="code-string">"flex gap-4 mb-4"</span><span class="code-tag">&gt;</span>
+        <span class="code-tag">&lt;input</span> <span class="code-attribute">wire:model.live.debounce.300ms</span>=<span class="code-string">"search"</span> <span class="code-attribute">type</span>=<span class="code-string">"text"</span> 
+            <span class="code-attribute">placeholder</span>=<span class="code-string">"🔍 Cari judul/penulis..."</span> <span class="code-attribute">class</span>=<span class="code-string">"border p-2 rounded w-full"</span><span class="code-tag">&gt;</span>
+        
+        <span class="code-tag">&lt;select</span> <span class="code-attribute">wire:model.live</span>=<span class="code-string">"kategori"</span> <span class="code-attribute">class</span>=<span class="code-string">"border p-2 rounded"</span><span class="code-tag">&gt;</span>
+            <span class="code-tag">&lt;option</span> <span class="code-attribute">value</span>=<span class="code-string">""</span><span class="code-tag">&gt;</span>Semua Kategori<span class="code-tag">&lt;/option&gt;</span>
+            <span class="code-keyword">@foreach</span>($kategoris as $cat)
+                <span class="code-tag">&lt;option</span> <span class="code-attribute">value</span>=<span class="code-string">"{{ $cat }}"</span><span class="code-tag">&gt;</span>{{ $cat }}<span class="code-tag">&lt;/option&gt;</span>
+            <span class="code-keyword">@endforeach</span>
+        <span class="code-tag">&lt;/select&gt;</span>
+    <span class="code-tag">&lt;/div&gt;</span>
+
+    <span class="code-comment">&lt;!-- 3. Tabel Data --&gt;</span>
+    <span class="code-tag">&lt;div</span> <span class="code-attribute">class</span>=<span class="code-string">"bg-white shadow rounded-lg overflow-hidden"</span><span class="code-tag">&gt;</span>
+        <span class="code-tag">&lt;table</span> <span class="code-attribute">class</span>=<span class="code-string">"w-full text-left"</span><span class="code-tag">&gt;</span>
+            <span class="code-tag">&lt;thead</span> <span class="code-attribute">class</span>=<span class="code-string">"bg-gray-100 border-b"</span><span class="code-tag">&gt;</span>
+                <span class="code-tag">&lt;tr&gt;</span>
+                    <span class="code-tag">&lt;th</span> <span class="code-attribute">class</span>=<span class="code-string">"p-3"</span><span class="code-tag">&gt;</span>No<span class="code-tag">&lt;/th&gt;</span>
+                    <span class="code-tag">&lt;th</span> <span class="code-attribute">class</span>=<span class="code-string">"p-3"</span><span class="code-tag">&gt;</span>Judul<span class="code-tag">&lt;/th&gt;</span>
+                    <span class="code-tag">&lt;th</span> <span class="code-attribute">class</span>=<span class="code-string">"p-3"</span><span class="code-tag">&gt;</span>Penulis<span class="code-tag">&lt;/th&gt;</span>
+                    <span class="code-tag">&lt;th</span> <span class="code-attribute">class</span>=<span class="code-string">"p-3"</span><span class="code-tag">&gt;</span>Stok<span class="code-tag">&lt;/th&gt;</span>
+                    <span class="code-tag">&lt;th</span> <span class="code-attribute">class</span>=<span class="code-string">"p-3"</span><span class="code-tag">&gt;</span>Aksi<span class="code-tag">&lt;/th&gt;</span>
+                <span class="code-tag">&lt;/tr&gt;</span>
+            <span class="code-tag">&lt;/thead&gt;</span>
+            <span class="code-tag">&lt;tbody&gt;</span>
+                <span class="code-keyword">@forelse</span>($books as $book)
+                    <span class="code-tag">&lt;tr</span> <span class="code-attribute">class</span>=<span class="code-string">"border-b hover:bg-gray-50"</span><span class="code-tag">&gt;</span>
+                        <span class="code-tag">&lt;td</span> <span class="code-attribute">class</span>=<span class="code-string">"p-3"</span><span class="code-tag">&gt;</span>{{ $loop->iteration }}<span class="code-tag">&lt;/td&gt;</span>
+                        <span class="code-tag">&lt;td</span> <span class="code-attribute">class</span>=<span class="code-string">"p-3"</span><span class="code-tag">&gt;</span>
+                            <span class="code-tag">&lt;div</span> <span class="code-attribute">class</span>=<span class="code-string">"font-bold"</span><span class="code-tag">&gt;</span>{{ $book->judul }}<span class="code-tag">&lt;/div&gt;</span>
+                            <span class="code-tag">&lt;div</span> <span class="code-attribute">class</span>=<span class="code-string">"text-xs text-gray-500"</span><span class="code-tag">&gt;</span>{{ $book->isbn }}<span class="code-tag">&lt;/div&gt;</span>
+                        <span class="code-tag">&lt;/td&gt;</span>
+                        <span class="code-tag">&lt;td</span> <span class="code-attribute">class</span>=<span class="code-string">"p-3"</span><span class="code-tag">&gt;</span>{{ $book->penulis }}<span class="code-tag">&lt;/td&gt;</span>
+                        <span class="code-tag">&lt;td</span> <span class="code-attribute">class</span>=<span class="code-string">"p-3"</span><span class="code-tag">&gt;</span>
+                            <span class="code-tag">&lt;span</span> <span class="code-attribute">class</span>=<span class="code-string">"px-2 py-1 rounded text-xs {{ $book->stok > 0 ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}"</span><span class="code-tag">&gt;</span>
+                                {{ $book->stok }} eks
+                            <span class="code-tag">&lt;/span&gt;</span>
+                        <span class="code-tag">&lt;/td&gt;</span>
+                        <span class="code-tag">&lt;td</span> <span class="code-attribute">class</span>=<span class="code-string">"p-3"</span><span class="code-tag">&gt;</span>
+                            <span class="code-tag">&lt;button</span> <span class="code-attribute">wire:click</span>=<span class="code-string">"editBook({{ $book->id }})"</span> <span class="code-attribute">class</span>=<span class="code-string">"text-blue-600 hover:underline mr-2"</span><span class="code-tag">&gt;</span>Edit<span class="code-tag">&lt;/button&gt;</span>
+                            <span class="code-tag">&lt;button</span> <span class="code-attribute">wire:click</span>=<span class="code-string">"confirmDelete({{ $book->id }})"</span> <span class="code-attribute">class</span>=<span class="code-string">"text-red-600 hover:underline"</span><span class="code-tag">&gt;</span>Hapus<span class="code-tag">&lt;/button&gt;</span>
+                        <span class="code-tag">&lt;/td&gt;</span>
+                    <span class="code-tag">&lt;/tr&gt;</span>
+                <span class="code-keyword">@empty</span>
+                    <span class="code-tag">&lt;tr&gt;</span><span class="code-tag">&lt;td</span> <span class="code-attribute">colspan</span>=<span class="code-string">"5"</span> <span class="code-attribute">class</span>=<span class="code-string">"p-4 text-center text-gray-500"</span><span class="code-tag">&gt;</span>Tidak ada buku ditemukan.<span class="code-tag">&lt;/td&gt;</span><span class="code-tag">&lt;/tr&gt;</span>
+                <span class="code-keyword">@endforelse</span>
+            <span class="code-tag">&lt;/tbody&gt;</span>
+        <span class="code-tag">&lt;/table&gt;</span>
+        <span class="code-tag">&lt;div</span> <span class="code-attribute">class</span>=<span class="code-string">"p-4"</span><span class="code-tag">&gt;</span>{{ $books->links() }}<span class="code-tag">&lt;/div&gt;</span>
+    <span class="code-tag">&lt;/div&gt;</span>
+
+    <span class="code-comment">&lt;!-- 4. Modal Form (Create/Edit) --&gt;</span>
+    <span class="code-keyword">@if</span>($showModal)
+        <span class="code-tag">&lt;div</span> <span class="code-attribute">class</span>=<span class="code-string">"fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"</span><span class="code-tag">&gt;</span>
+            <span class="code-tag">&lt;div</span> <span class="code-attribute">class</span>=<span class="code-string">"bg-white p-6 rounded-lg w-1/2"</span><span class="code-tag">&gt;</span>
+                <span class="code-tag">&lt;h3</span> <span class="code-attribute">class</span>=<span class="code-string">"text-lg font-bold mb-4"</span><span class="code-tag">&gt;</span>{{ $isEdit ? 'Edit Buku' : 'Tambah Buku' }}<span class="code-tag">&lt;/h3&gt;</span>
+                
+                <span class="code-tag">&lt;form</span> <span class="code-attribute">wire:submit.prevent</span>=<span class="code-string">"save"</span><span class="code-tag">&gt;</span>
+                    <span class="code-tag">&lt;div</span> <span class="code-attribute">class</span>=<span class="code-string">"grid grid-cols-2 gap-4"</span><span class="code-tag">&gt;</span>
+                        <span class="code-tag">&lt;div&gt;</span>
+                            <span class="code-tag">&lt;label</span><span class="code-tag">&gt;</span>Judul<span class="code-tag">&lt;/label&gt;</span>
+                            <span class="code-tag">&lt;input</span> <span class="code-attribute">type</span>=<span class="code-string">"text"</span> <span class="code-attribute">wire:model</span>=<span class="code-string">"judul"</span> <span class="code-attribute">class</span>=<span class="code-string">"border p-2 w-full rounded"</span><span class="code-tag">&gt;</span>
+                            <span class="code-keyword">@error</span>('judul') <span class="code-tag">&lt;span</span> <span class="code-attribute">class</span>=<span class="code-string">"text-red-500 text-sm"</span><span class="code-tag">&gt;</span>{{ $message }}<span class="code-tag">&lt;/span&gt;</span> <span class="code-keyword">@enderror</span>
+                        <span class="code-tag">&lt;/div&gt;</span>
+                        <span class="code-tag">&lt;div&gt;</span>
+                            <span class="code-tag">&lt;label</span><span class="code-tag">&gt;</span>Penulis<span class="code-tag">&lt;/label&gt;</span>
+                            <span class="code-tag">&lt;input</span> <span class="code-attribute">type</span>=<span class="code-string">"text"</span> <span class="code-attribute">wire:model</span>=<span class="code-string">"penulis"</span> <span class="code-attribute">class</span>=<span class="code-string">"border p-2 w-full rounded"</span><span class="code-tag">&gt;</span>
+                            <span class="code-keyword">@error</span>('penulis') <span class="code-tag">&lt;span</span> <span class="code-attribute">class</span>=<span class="code-string">"text-red-500 text-sm"</span><span class="code-tag">&gt;</span>{{ $message }}<span class="code-tag">&lt;/span&gt;</span> <span class="code-keyword">@enderror</span>
+                        <span class="code-tag">&lt;/div&gt;</span>
+                        <span class="code-tag">&lt;div&gt;</span>
+                            <span class="code-tag">&lt;label</span><span class="code-tag">&gt;</span>Stok<span class="code-tag">&lt;/label&gt;</span>
+                            <span class="code-tag">&lt;input</span> <span class="code-attribute">type</span>=<span class="code-string">"number"</span> <span class="code-attribute">wire:model</span>=<span class="code-string">"stok"</span> <span class="code-attribute">class</span>=<span class="code-string">"border p-2 w-full rounded"</span><span class="code-tag">&gt;</span>
+                            <span class="code-keyword">@error</span>('stok') <span class="code-tag">&lt;span</span> <span class="code-attribute">class</span>=<span class="code-string">"text-red-500 text-sm"</span><span class="code-tag">&gt;</span>{{ $message }}<span class="code-tag">&lt;/span&gt;</span> <span class="code-keyword">@enderror</span>
+                        <span class="code-tag">&lt;/div&gt;</span>
+                        <span class="code-tag">&lt;div&gt;</span>
+                            <span class="code-tag">&lt;label</span><span class="code-tag">&gt;</span>Kategori<span class="code-tag">&lt;/label&gt;</span>
+                            <span class="code-tag">&lt;input</span> <span class="code-attribute">type</span>=<span class="code-string">"text"</span> <span class="code-attribute">wire:model</span>=<span class="code-string">"kategori"</span> <span class="code-attribute">placeholder</span>=<span class="code-string">"Contoh: Fiksi"</span> <span class="code-attribute">class</span>=<span class="code-string">"border p-2 w-full rounded"</span><span class="code-tag">&gt;</span>
+                        <span class="code-tag">&lt;/div&gt;</span>
+                    <span class="code-tag">&lt;/div&gt;</span>
+                    <span class="code-tag">&lt;div</span> <span class="code-attribute">class</span>=<span class="code-string">"flex justify-end gap-2 mt-4"</span><span class="code-tag">&gt;</span>
+                        <span class="code-tag">&lt;button</span> <span class="code-attribute">type</span>=<span class="code-string">"button"</span> <span class="code-attribute">wire:click</span>=<span class="code-string">"$set('showModal', false)"</span> <span class="code-attribute">class</span>=<span class="code-string">"px-4 py-2 bg-gray-200 rounded"</span><span class="code-tag">&gt;</span>Batal<span class="code-tag">&lt;/button&gt;</span>
+                        <span class="code-tag">&lt;button</span> <span class="code-attribute">type</span>=<span class="code-string">"submit"</span> <span class="code-attribute">class</span>=<span class="code-string">"px-4 py-2 bg-blue-600 text-white rounded"</span><span class="code-tag">&gt;</span>Simpan<span class="code-tag">&lt;/button&gt;</span>
+                    <span class="code-tag">&lt;/div&gt;</span>
+                <span class="code-tag">&lt;/form&gt;</span>
+            <span class="code-tag">&lt;/div&gt;</span>
+        <span class="code-tag">&lt;/div&gt;</span>
+    <span class="code-keyword">@endif</span>
+<span class="code-tag">&lt;/div&gt;</span></pre>
+                </div>
+            </div>
+
             <div style="padding:1.5rem;background:#F9FAFB;border-radius:12px;border:1px solid #E5E7EB;margin:1.5rem 0">
                 <h4 style="margin-bottom:0.75rem">📐 Peta Fitur CRUD Buku</h4>
                 <table class="comparison-table" style="margin:0">
@@ -954,6 +1103,89 @@ Route::middleware(<span class="code-string">'auth'</span>)-&gt;group(<span class
                 </div>
             </div>
 
+            <h3>5.2 View Blade — Tampilan Peminjaman</h3>
+            <p>Buka <code>resources/views/livewire/loans/index.blade.php</code>:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">resources/views/livewire/loans/index.blade.php</span>
+                    <button class="code-copy" onclick="copyCode(this)">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-tag">&lt;div</span> <span class="code-attribute">class</span>=<span class="code-string">"p-6"</span><span class="code-tag">&gt;</span>
+    <span class="code-tag">&lt;div</span> <span class="code-attribute">class</span>=<span class="code-string">"flex justify-between items-center mb-4"</span><span class="code-tag">&gt;</span>
+        <span class="code-tag">&lt;h2</span> <span class="code-attribute">class</span>=<span class="code-string">"text-xl font-bold"</span><span class="code-tag">&gt;</span>📋 Data Peminjaman<span class="code-tag">&lt;/h2&gt;</span>
+        <span class="code-tag">&lt;button</span> <span class="code-attribute">wire:click</span>=<span class="code-string">"$set('showModal', true)"</span> <span class="code-attribute">class</span>=<span class="code-string">"bg-blue-600 text-white px-4 py-2 rounded-lg"</span><span class="code-tag">&gt;</span>
+            + Catat Peminjaman
+        <span class="code-tag">&lt;/button&gt;</span>
+    <span class="code-tag">&lt;/div&gt;</span>
+
+    <span class="code-comment">&lt;!-- Table --&gt;</span>
+    <span class="code-tag">&lt;div</span> <span class="code-attribute">class</span>=<span class="code-string">"bg-white shadow rounded-lg overflow-hidden"</span><span class="code-tag">&gt;</span>
+        <span class="code-tag">&lt;table</span> <span class="code-attribute">class</span>=<span class="code-string">"w-full text-left"</span><span class="code-tag">&gt;</span>
+            <span class="code-tag">&lt;thead</span> <span class="code-attribute">class</span>=<span class="code-string">"bg-gray-100 border-b"</span><span class="code-tag">&gt;</span>
+                <span class="code-tag">&lt;tr&gt;</span>
+                    <span class="code-tag">&lt;th</span> <span class="code-attribute">class</span>=<span class="code-string">"p-3"</span><span class="code-tag">&gt;</span>Peminjam<span class="code-tag">&lt;/th&gt;</span>
+                    <span class="code-tag">&lt;th</span> <span class="code-attribute">class</span>=<span class="code-string">"p-3"</span><span class="code-tag">&gt;</span>Buku<span class="code-tag">&lt;/th&gt;</span>
+                    <span class="code-tag">&lt;th</span> <span class="code-attribute">class</span>=<span class="code-string">"p-3"</span><span class="code-tag">&gt;</span>Tanggal<span class="code-tag">&lt;/th&gt;</span>
+                    <span class="code-tag">&lt;th</span> <span class="code-attribute">class</span>=<span class="code-string">"p-3"</span><span class="code-tag">&gt;</span>Status<span class="code-tag">&lt;/th&gt;</span>
+                <span class="code-tag">&lt;/tr&gt;</span>
+            <span class="code-tag">&lt;/thead&gt;</span>
+            <span class="code-tag">&lt;tbody&gt;</span>
+                <span class="code-keyword">@foreach</span>($loans as $loan)
+                    <span class="code-tag">&lt;tr</span> <span class="code-attribute">class</span>=<span class="code-string">"border-b"</span><span class="code-tag">&gt;</span>
+                        <span class="code-tag">&lt;td</span> <span class="code-attribute">class</span>=<span class="code-string">"p-3"</span><span class="code-tag">&gt;</span>{{ $loan->user->name }}<span class="code-tag">&lt;/td&gt;</span>
+                        <span class="code-tag">&lt;td</span> <span class="code-attribute">class</span>=<span class="code-string">"p-3"</span><span class="code-tag">&gt;</span>{{ $loan->book->judul }}<span class="code-tag">&lt;/td&gt;</span>
+                        <span class="code-tag">&lt;td</span> <span class="code-attribute">class</span>=<span class="code-string">"p-3 text-sm"</span><span class="code-tag">&gt;</span>
+                            <span class="code-tag">&lt;div&gt;</span>Pinjam: {{ $loan->tanggal_pinjam->format('d M Y') }}<span class="code-tag">&lt;/div&gt;</span>
+                            <span class="code-tag">&lt;div</span> <span class="code-attribute">class</span>=<span class="code-string">"text-red-500"</span><span class="code-tag">&gt;</span>Kembali: {{ $loan->tanggal_kembali->format('d M Y') }}<span class="code-tag">&lt;/div&gt;</span>
+                        <span class="code-tag">&lt;/td&gt;</span>
+                        <span class="code-tag">&lt;td</span> <span class="code-attribute">class</span>=<span class="code-string">"p-3"</span><span class="code-tag">&gt;</span>
+                            <span class="code-tag">&lt;span</span> <span class="code-attribute">class</span>=<span class="code-string">"px-2 py-1 rounded text-xs {{ $loan->status == 'dipinjam' ? 'bg-yellow-100 text-yellow-800' : 'bg-green-100 text-green-800' }}"</span><span class="code-tag">&gt;</span>
+                                {{ ucfirst($loan->status) }}
+                            <span class="code-tag">&lt;/span&gt;</span>
+                        <span class="code-tag">&lt;/td&gt;</span>
+                    <span class="code-tag">&lt;/tr&gt;</span>
+                <span class="code-keyword">@endforeach</span>
+            <span class="code-tag">&lt;/tbody&gt;</span>
+        <span class="code-tag">&lt;/table&gt;</span>
+    <span class="code-tag">&lt;/div&gt;</span>
+
+    <span class="code-comment">&lt;!-- Modal Form --&gt;</span>
+    <span class="code-keyword">@if</span>($showModal)
+        <span class="code-tag">&lt;div</span> <span class="code-attribute">class</span>=<span class="code-string">"fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"</span><span class="code-tag">&gt;</span>
+            <span class="code-tag">&lt;div</span> <span class="code-attribute">class</span>=<span class="code-string">"bg-white p-6 rounded-lg w-1/2"</span><span class="code-tag">&gt;</span>
+                <span class="code-tag">&lt;h3</span> <span class="code-attribute">class</span>=<span class="code-string">"font-bold text-lg mb-4"</span><span class="code-tag">&gt;</span>Catat Peminjaman<span class="code-tag">&lt;/h3&gt;</span>
+                <span class="code-tag">&lt;form</span> <span class="code-attribute">wire:submit.prevent</span>=<span class="code-string">"save"</span><span class="code-tag">&gt;</span>
+                    <span class="code-tag">&lt;div</span> <span class="code-attribute">class</span>=<span class="code-string">"mb-3"</span><span class="code-tag">&gt;</span>
+                        <span class="code-tag">&lt;label&gt;</span>Peminjam<span class="code-tag">&lt;/label&gt;</span>
+                        <span class="code-tag">&lt;select</span> <span class="code-attribute">wire:model</span>=<span class="code-string">"userId"</span> <span class="code-attribute">class</span>=<span class="code-string">"border p-2 w-full rounded"</span><span class="code-tag">&gt;</span>
+                            <span class="code-tag">&lt;option</span> <span class="code-attribute">value</span>=<span class="code-string">""</span><span class="code-tag">&gt;</span>Pilih User<span class="code-tag">&lt;/option&gt;</span>
+                            <span class="code-keyword">@foreach</span>($users as $user)
+                                <span class="code-tag">&lt;option</span> <span class="code-attribute">value</span>=<span class="code-string">"{{ $user->id }}"</span><span class="code-tag">&gt;</span>{{ $user->name }}<span class="code-tag">&lt;/option&gt;</span>
+                            <span class="code-keyword">@endforeach</span>
+                        <span class="code-tag">&lt;/select&gt;</span>
+                    <span class="code-tag">&lt;/div&gt;</span>
+                    <span class="code-tag">&lt;div</span> <span class="code-attribute">class</span>=<span class="code-string">"mb-3"</span><span class="code-tag">&gt;</span>
+                        <span class="code-tag">&lt;label&gt;</span>Buku<span class="code-tag">&lt;/label&gt;</span>
+                        <span class="code-tag">&lt;select</span> <span class="code-attribute">wire:model</span>=<span class="code-string">"bookId"</span> <span class="code-attribute">class</span>=<span class="code-string">"border p-2 w-full rounded"</span><span class="code-tag">&gt;</span>
+                            <span class="code-tag">&lt;option</span> <span class="code-attribute">value</span>=<span class="code-string">""</span><span class="code-tag">&gt;</span>Pilih Buku<span class="code-tag">&lt;/option&gt;</span>
+                            <span class="code-keyword">@foreach</span>($books as $book)
+                                <span class="code-tag">&lt;option</span> <span class="code-attribute">value</span>=<span class="code-string">"{{ $book->id }}"</span><span class="code-tag">&gt;</span>{{ $book->judul }} (Sisa: {{ $book->stok }})<span class="code-tag">&lt;/option&gt;</span>
+                            <span class="code-keyword">@endforeach</span>
+                        <span class="code-tag">&lt;/select&gt;</span>
+                    <span class="code-tag">&lt;/div&gt;</span>
+                    <span class="code-tag">&lt;button</span> <span class="code-attribute">type</span>=<span class="code-string">"submit"</span> <span class="code-attribute">class</span>=<span class="code-string">"bg-blue-600 text-white px-4 py-2 rounded"</span><span class="code-tag">&gt;</span>Simpan<span class="code-tag">&lt;/button&gt;</span>
+                <span class="code-tag">&lt;/form&gt;</span>
+            <span class="code-tag">&lt;/div&gt;</span>
+        <span class="code-tag">&lt;/div&gt;</span>
+    <span class="code-keyword">@endif</span>
+<span class="code-tag">&lt;/div&gt;</span></pre>
+                </div>
+            </div>
+
             <!-- DIAGRAM ALUR PEMINJAMAN -->
             <div
                 style="padding:1.5rem;background:#F9FAFB;border-radius:12px;border:1px solid #E5E7EB;margin:1.5rem 0;text-align:center">
@@ -1055,6 +1287,78 @@ Route::middleware(<span class="code-string">'auth'</span>)-&gt;group(<span class
             -&gt;layout(<span class="code-string">'layouts.app'</span>);
     }
 }</pre>
+                </div>
+            </div>
+
+            <h3>6.2 View Blade — Tampilan Pengembalian</h3>
+            <p>Buka <code>resources/views/livewire/returns/index.blade.php</code>:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">resources/views/livewire/returns/index.blade.php</span>
+                    <button class="code-copy" onclick="copyCode(this)">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-tag">&lt;div</span> <span class="code-attribute">class</span>=<span class="code-string">"p-6"</span><span class="code-tag">&gt;</span>
+    <span class="code-tag">&lt;h2</span> <span class="code-attribute">class</span>=<span class="code-string">"text-xl font-bold mb-4"</span><span class="code-tag">&gt;</span>🔄 Proses Pengembalian<span class="code-tag">&lt;/h2&gt;</span>
+    
+    <span class="code-comment">&lt;!-- Search Bar --&gt;</span>
+    <span class="code-tag">&lt;input</span> <span class="code-attribute">wire:model.live</span>=<span class="code-string">"search"</span> <span class="code-attribute">type</span>=<span class="code-string">"text"</span> <span class="code-attribute">placeholder</span>=<span class="code-string">"Cari nama peminjam..."</span> <span class="code-attribute">class</span>=<span class="code-string">"border p-2 rounded w-full mb-4"</span><span class="code-tag">&gt;</span>
+
+    <span class="code-comment">&lt;!-- Table --&gt;</span>
+    <span class="code-tag">&lt;div</span> <span class="code-attribute">class</span>=<span class="code-string">"bg-white shadow rounded-lg overflow-hidden"</span><span class="code-tag">&gt;</span>
+        <span class="code-tag">&lt;table</span> <span class="code-attribute">class</span>=<span class="code-string">"w-full text-left"</span><span class="code-tag">&gt;</span>
+            <span class="code-tag">&lt;thead</span> <span class="code-attribute">class</span>=<span class="code-string">"bg-gray-100 border-b"</span><span class="code-tag">&gt;</span>
+                <span class="code-tag">&lt;tr&gt;</span>
+                    <span class="code-tag">&lt;th</span> <span class="code-attribute">class</span>=<span class="code-string">"p-3"</span><span class="code-tag">&gt;</span>Peminjam<span class="code-tag">&lt;/th&gt;</span>
+                    <span class="code-tag">&lt;th</span> <span class="code-attribute">class</span>=<span class="code-string">"p-3"</span><span class="code-tag">&gt;</span>Buku<span class="code-tag">&lt;/th&gt;</span>
+                    <span class="code-tag">&lt;th</span> <span class="code-attribute">class</span>=<span class="code-string">"p-3"</span><span class="code-tag">&gt;</span>Jatuh Tempo<span class="code-tag">&lt;/th&gt;</span>
+                    <span class="code-tag">&lt;th</span> <span class="code-attribute">class</span>=<span class="code-string">"p-3"</span><span class="code-tag">&gt;</span>Aksi<span class="code-tag">&lt;/th&gt;</span>
+                <span class="code-tag">&lt;/tr&gt;</span>
+            <span class="code-tag">&lt;/thead&gt;</span>
+            <span class="code-tag">&lt;tbody&gt;</span>
+                <span class="code-keyword">@forelse</span>($loans as $loan)
+                    <span class="code-tag">&lt;tr</span> <span class="code-attribute">class</span>=<span class="code-string">"border-b hover:bg-gray-50"</span><span class="code-tag">&gt;</span>
+                        <span class="code-tag">&lt;td</span> <span class="code-attribute">class</span>=<span class="code-string">"p-3"</span><span class="code-tag">&gt;</span>{{ $loan->user->name }}<span class="code-tag">&lt;/td&gt;</span>
+                        <span class="code-tag">&lt;td</span> <span class="code-attribute">class</span>=<span class="code-string">"p-3"</span><span class="code-tag">&gt;</span>{{ $loan->book->judul }}<span class="code-tag">&lt;/td&gt;</span>
+                        <span class="code-tag">&lt;td</span> <span class="code-attribute">class</span>=<span class="code-string">"p-3"</span><span class="code-tag">&gt;</span>
+                            <span class="code-tag">&lt;span</span> <span class="code-attribute">class</span>=<span class="code-string">"{{ $loan->isOverdue() ? 'text-red-600 font-bold' : 'text-gray-600' }}"</span><span class="code-tag">&gt;</span>
+                                {{ $loan->tanggal_kembali->format('d M Y') }}
+                            <span class="code-tag">&lt;/span&gt;</span>
+                            <span class="code-keyword">@if</span>($loan->isOverdue()) <span class="code-tag">&lt;span</span> <span class="code-attribute">class</span>=<span class="code-string">"text-xs bg-red-100 text-red-800 px-1 rounded"</span><span class="code-tag">&gt;</span>Terlambat<span class="code-tag">&lt;/span&gt;</span> <span class="code-keyword">@endif</span>
+                        <span class="code-tag">&lt;/td&gt;</span>
+                        <span class="code-tag">&lt;td</span> <span class="code-attribute">class</span>=<span class="code-string">"p-3"</span><span class="code-tag">&gt;</span>
+                            <span class="code-tag">&lt;button</span> <span class="code-attribute">wire:click</span>=<span class="code-string">"confirmReturn({{ $loan->id }})"</span> <span class="code-attribute">class</span>=<span class="code-string">"bg-green-600 text-white px-3 py-1 rounded text-sm hover:bg-green-700"</span><span class="code-tag">&gt;</span>
+                                Proses Kembali
+                            <span class="code-tag">&lt;/button&gt;</span>
+                        <span class="code-tag">&lt;/td&gt;</span>
+                    <span class="code-tag">&lt;/tr&gt;</span>
+                <span class="code-keyword">@empty</span>
+                    <span class="code-tag">&lt;tr&gt;</span><span class="code-tag">&lt;td</span> <span class="code-attribute">colspan</span>=<span class="code-string">"4"</span> <span class="code-attribute">class</span>=<span class="code-string">"p-4 text-center"</span><span class="code-tag">&gt;</span>Tidak ada yang dipinjam.<span class="code-tag">&lt;/td&gt;</span><span class="code-tag">&lt;/tr&gt;</span>
+                <span class="code-keyword">@endforelse</span>
+            <span class="code-tag">&lt;/tbody&gt;</span>
+        <span class="code-tag">&lt;/table&gt;</span>
+    <span class="code-tag">&lt;/div&gt;</span>
+
+    <span class="code-comment">&lt;!-- Modal Konfirmasi --&gt;</span>
+    <span class="code-keyword">@if</span>($showModal && $selectedLoan)
+        <span class="code-tag">&lt;div</span> <span class="code-attribute">class</span>=<span class="code-string">"fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"</span><span class="code-tag">&gt;</span>
+            <span class="code-tag">&lt;div</span> <span class="code-attribute">class</span>=<span class="code-string">"bg-white p-6 rounded-lg w-1/3 text-center"</span><span class="code-tag">&gt;</span>
+                <span class="code-tag">&lt;h3</span> <span class="code-attribute">class</span>=<span class="code-string">"text-lg font-bold mb-2"</span><span class="code-tag">&gt;</span>Konfirmasi Pengembalian<span class="code-tag">&lt;/h3&gt;</span>
+                <span class="code-tag">&lt;p</span> <span class="code-attribute">class</span>=<span class="code-string">"mb-4"</span><span class="code-tag">&gt;</span>
+                    Terima buku <span class="code-tag">&lt;strong&gt;</span>{{ $selectedLoan->book->judul }}<span class="code-tag">&lt;/strong&gt;</span> <span class="code-tag">&lt;br&gt;</span>
+                    dari <span class="code-tag">&lt;strong&gt;</span>{{ $selectedLoan->user->name }}<span class="code-tag">&lt;/strong&gt;</span>?
+                <span class="code-tag">&lt;/p&gt;</span>
+                <span class="code-tag">&lt;div</span> <span class="code-attribute">class</span>=<span class="code-string">"flex justify-center gap-4"</span><span class="code-tag">&gt;</span>
+                    <span class="code-tag">&lt;button</span> <span class="code-attribute">wire:click</span>=<span class="code-string">"$set('showModal', false)"</span> <span class="code-attribute">class</span>=<span class="code-string">"bg-gray-300 px-4 py-2 rounded"</span><span class="code-tag">&gt;</span>Batal<span class="code-tag">&lt;/button&gt;</span>
+                    <span class="code-tag">&lt;button</span> <span class="code-attribute">wire:click</span>=<span class="code-string">"processReturn"</span> <span class="code-attribute">class</span>=<span class="code-string">"bg-green-600 text-white px-4 py-2 rounded"</span><span class="code-tag">&gt;</span>Ya, Terima Buku<span class="code-tag">&lt;/button&gt;</span>
+                <span class="code-tag">&lt;/div&gt;</span>
+            <span class="code-tag">&lt;/div&gt;</span>
+        <span class="code-tag">&lt;/div&gt;</span>
+    <span class="code-keyword">@endif</span>
+<span class="code-tag">&lt;/div&gt;</span></pre>
                 </div>
             </div>
 
@@ -1183,6 +1487,95 @@ Route::middleware(<span class="code-string">'auth'</span>)-&gt;group(<span class
 }</pre>
                 </div>
             </div>
+
+            <h3>7.3 View Blade — Halaman Dashboard</h3>
+            <p>Kita butuh 2 file view berbeda untuk Admin dan User.</p>
+
+            <h4>A. Tampilan Admin Dashboard</h4>
+            <p>Buka <code>resources/views/livewire/admin/dashboard.blade.php</code>:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">resources/views/livewire/admin/dashboard.blade.php</span>
+                    <button class="code-copy" onclick="copyCode(this)">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-tag">&lt;div</span> <span class="code-attribute">class</span>=<span class="code-string">"p-6"</span><span class="code-tag">&gt;</span>
+    <span class="code-tag">&lt;h2</span> <span class="code-attribute">class</span>=<span class="code-string">"text-xl font-bold mb-6"</span><span class="code-tag">&gt;</span>📊 Dashboard Admin<span class="code-tag">&lt;/h2&gt;</span>
+    
+    <span class="code-tag">&lt;div</span> <span class="code-attribute">class</span>=<span class="code-string">"grid grid-cols-1 md:grid-cols-3 gap-6"</span><span class="code-tag">&gt;</span>
+        <span class="code-comment">&lt;!-- Card 1: Total Buku --&gt;</span>
+        <span class="code-tag">&lt;div</span> <span class="code-attribute">class</span>=<span class="code-string">"bg-blue-500 text-white p-6 rounded-lg shadow"</span><span class="code-tag">&gt;</span>
+            <span class="code-tag">&lt;div</span> <span class="code-attribute">class</span>=<span class="code-string">"text-4xl font-bold"</span><span class="code-tag">&gt;</span>{{ $totalBuku }}<span class="code-tag">&lt;/div&gt;</span>
+            <span class="code-tag">&lt;div</span> <span class="code-attribute">class</span>=<span class="code-string">"text-blue-100"</span><span class="code-tag">&gt;</span>Total Judul Buku<span class="code-tag">&lt;/div&gt;</span>
+        <span class="code-tag">&lt;/div&gt;</span>
+
+        <span class="code-comment">&lt;!-- Card 2: Total User --&gt;</span>
+        <span class="code-tag">&lt;div</span> <span class="code-attribute">class</span>=<span class="code-string">"bg-green-500 text-white p-6 rounded-lg shadow"</span><span class="code-tag">&gt;</span>
+            <span class="code-tag">&lt;div</span> <span class="code-attribute">class</span>=<span class="code-string">"text-4xl font-bold"</span><span class="code-tag">&gt;</span>{{ $totalUser }}<span class="code-tag">&lt;/div&gt;</span>
+            <span class="code-tag">&lt;div</span> <span class="code-attribute">class</span>=<span class="code-string">"text-green-100"</span><span class="code-tag">&gt;</span>Anggota Terdaftar<span class="code-tag">&lt;/div&gt;</span>
+        <span class="code-tag">&lt;/div&gt;</span>
+
+        <span class="code-comment">&lt;!-- Card 3: Peminjaman Aktif --&gt;</span>
+        <span class="code-tag">&lt;div</span> <span class="code-attribute">class</span>=<span class="code-string">"bg-yellow-500 text-white p-6 rounded-lg shadow"</span><span class="code-tag">&gt;</span>
+            <span class="code-tag">&lt;div</span> <span class="code-attribute">class</span>=<span class="code-string">"text-4xl font-bold"</span><span class="code-tag">&gt;</span>{{ $totalPeminjamanAktif }}<span class="code-tag">&lt;/div&gt;</span>
+            <span class="code-tag">&lt;div</span> <span class="code-attribute">class</span>=<span class="code-string">"text-yellow-100"</span><span class="code-tag">&gt;</span>Sedang Dipinjam<span class="code-tag">&lt;/div&gt;</span>
+        <span class="code-tag">&lt;/div&gt;</span>
+    <span class="code-tag">&lt;/div&gt;</span>
+<span class="code-tag">&lt;/div&gt;</span></pre>
+                </div>
+            </div>
+
+            <h4>B. Tampilan User Dashboard</h4>
+            <p>Buka <code>resources/views/livewire/user/dashboard.blade.php</code>:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">resources/views/livewire/user/dashboard.blade.php</span>
+                    <button class="code-copy" onclick="copyCode(this)">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-tag">&lt;div</span> <span class="code-attribute">class</span>=<span class="code-string">"p-6"</span><span class="code-tag">&gt;</span>
+    <span class="code-tag">&lt;div</span> <span class="code-attribute">class</span>=<span class="code-string">"bg-purple-600 text-white p-6 rounded-lg shadow mb-6"</span><span class="code-tag">&gt;</span>
+        <span class="code-tag">&lt;h2</span> <span class="code-attribute">class</span>=<span class="code-string">"text-xl font-bold"</span><span class="code-tag">&gt;</span>Halo, {{ auth()->user()->name }}! 👋<span class="code-tag">&lt;/h2&gt;</span>
+        <span class="code-tag">&lt;p</span> <span class="code-attribute">class</span>=<span class="code-string">"mt-2"</span><span class="code-tag">&gt;</span>
+            Kamu sedang meminjam <span class="code-tag">&lt;strong</span> <span class="code-attribute">class</span>=<span class="code-string">"text-2xl"</span><span class="code-tag">&gt;</span>{{ $bukuDipinjam }}<span class="code-tag">&lt;/strong&gt;</span> buku.
+        <span class="code-tag">&lt;/p&gt;</span>
+    <span class="code-tag">&lt;/div&gt;</span>
+
+    <span class="code-tag">&lt;h3</span> <span class="code-attribute">class</span>=<span class="code-string">"font-bold text-gray-700 mb-3"</span><span class="code-tag">&gt;</span>📜 Riwayat Peminjaman Terakhir<span class="code-tag">&lt;/h3&gt;</span>
+    
+    <span class="code-tag">&lt;div</span> <span class="code-attribute">class</span>=<span class="code-string">"bg-white shadow rounded-lg overflow-hidden"</span><span class="code-tag">&gt;</span>
+        <span class="code-tag">&lt;table</span> <span class="code-attribute">class</span>=<span class="code-string">"w-full text-left"</span><span class="code-tag">&gt;</span>
+            <span class="code-tag">&lt;thead</span> <span class="code-attribute">class</span>=<span class="code-string">"bg-gray-50 border-b"</span><span class="code-tag">&gt;</span>
+                <span class="code-tag">&lt;tr&gt;</span>
+                    <span class="code-tag">&lt;th</span> <span class="code-attribute">class</span>=<span class="code-string">"p-3"</span><span class="code-tag">&gt;</span>Buku<span class="code-tag">&lt;/th&gt;</span>
+                    <span class="code-tag">&lt;th</span> <span class="code-attribute">class</span>=<span class="code-string">"p-3"</span><span class="code-tag">&gt;</span>Tanggal Pinjam<span class="code-tag">&lt;/th&gt;</span>
+                    <span class="code-tag">&lt;th</span> <span class="code-attribute">class</span>=<span class="code-string">"p-3"</span><span class="code-tag">&gt;</span>Status<span class="code-tag">&lt;/th&gt;</span>
+                <span class="code-tag">&lt;/tr&gt;</span>
+            <span class="code-tag">&lt;/thead&gt;</span>
+            <span class="code-tag">&lt;tbody&gt;</span>
+                <span class="code-keyword">@forelse</span>($riwayatPeminjaman as $loan)
+                    <span class="code-tag">&lt;tr</span> <span class="code-attribute">class</span>=<span class="code-string">"border-b"</span><span class="code-tag">&gt;</span>
+                        <span class="code-tag">&lt;td</span> <span class="code-attribute">class</span>=<span class="code-string">"p-3 text-sm"</span><span class="code-tag">&gt;</span>{{ $loan->book->judul }}<span class="code-tag">&lt;/td&gt;</span>
+                        <span class="code-tag">&lt;td</span> <span class="code-attribute">class</span>=<span class="code-string">"p-3 text-sm"</span><span class="code-tag">&gt;</span>{{ $loan->tanggal_pinjam->format('d M Y') }}<span class="code-tag">&lt;/td&gt;</span>
+                        <span class="code-tag">&lt;td</span> <span class="code-attribute">class</span>=<span class="code-string">"p-3 text-sm"</span><span class="code-tag">&gt;</span>
+                            <span class="code-tag">&lt;span</span> <span class="code-attribute">class</span>=<span class="code-string">"px-2 py-1 rounded-full text-xs {{ $loan->status == 'dipinjam' ? 'bg-yellow-100 text-yellow-800' : 'bg-green-100 text-green-800' }}"</span><span class="code-tag">&gt;</span>
+                                {{ ucfirst($loan->status) }}
+                            <span class="code-tag">&lt;/span&gt;</span>
+                        <span class="code-tag">&lt;/td&gt;</span>
+                    <span class="code-tag">&lt;/tr&gt;</span>
+                <span class="code-keyword">@empty</span>
+                    <span class="code-tag">&lt;tr&gt;</span><span class="code-tag">&lt;td</span> <span class="code-attribute">colspan</span>=<span class="code-string">"3"</span> <span class="code-attribute">class</span>=<span class="code-string">"p-4 text-center text-gray-500"</span><span class="code-tag">&gt;</span>Belum ada riwayat.<span class="code-tag">&lt;/td&gt;</span><span class="code-tag">&lt;/tr&gt;</span>
+                <span class="code-keyword">@endforelse</span>
+            <span class="code-tag">&lt;/tbody&gt;</span>
+        <span class="code-tag">&lt;/table&gt;</span>
+    <span class="code-tag">&lt;/div&gt;</span>
+<span class="code-tag">&lt;/div&gt;</span>
 
             <!--===========================================-->
             <!-- STEP 8: INSTALASI & UJI COBA              -->

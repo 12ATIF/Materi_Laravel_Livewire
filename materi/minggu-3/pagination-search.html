@@ -48,7 +48,6 @@
                     <li><a href="../minggu-1/blade-template.html">Blade Template</a></li>
                     <li><a href="../minggu-1/pengenalan-livewire.html">Pengenalan Livewire</a></li>
                     <li><a href="../minggu-1/struktur-component.html">Struktur Component</a></li>
-                    <li><a href="../minggu-1/autentikasi.html">🔐 Autentikasi</a></li>
                 </ul>
             </div>
             <div class="sidebar-section">
@@ -59,6 +58,8 @@
                     <li><a href="../minggu-2/database-eloquent.html">Database & Eloquent</a></li>
                     <li><a href="../minggu-2/validasi.html">Validasi</a></li>
                     <li><a href="../minggu-2/crud-sederhana.html">CRUD Sederhana</a></li>
+                    <li><a href="../minggu-2/autentikasi.html">🔐 Autentikasi</a></li>
+                    <li><a href="../minggu-2/lifecycle-events.html">🔄 Lifecycle & Events</a></li>
                 </ul>
             </div>
             <div class="sidebar-section">
@@ -68,6 +69,7 @@
                     <li><a href="pagination-search.html" class="active">Pagination & Search</a></li>
                     <li><a href="komponen-reusable.html">Komponen Reusable</a></li>
                     <li><a href="tampilan-dinamis.html">Tampilan Dinamis</a></li>
+                    <li><a href="form-object.html">📋 Form Objects</a></li>
                     <li><a href="project-elibrary.html">📚 Tutorial E-Library</a></li>
                 </ul>
             </div>
@@ -346,6 +348,50 @@
                     <p><code>updatingSearch()</code> = dipanggil <strong>sebelum</strong> $search berubah (tepat waktu
                         untuk reset page)</p>
                     <p><code>updatedSearch()</code> = dipanggil <strong>setelah</strong> $search berubah</p>
+                </div>
+            </div>
+
+            <!-- ==================== QUERY STRING ==================== -->
+
+            <h2>🔗 Query String — Simpan Status di URL</h2>
+
+            <p>Secara default, saat kamu search atau pindah halaman, URL tidak berubah. Jika halaman di-refresh,
+                <strong>posisi hilang</strong>!</p>
+            <p>Gunakan <code>$queryString</code> agar status tersimpan di URL (contoh:
+                <code>?search=laravel&page=2</code>).</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">app/Livewire/BookList.php</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-keyword">class</span> <span class="code-class">BookList</span> <span class="code-keyword">extends</span> Component
+{
+    <span class="code-keyword">use</span> WithPagination;
+
+    <span class="code-keyword">public</span> <span class="code-variable">$search</span> = <span class="code-string">''</span>;
+
+    <span class="code-comment">// Tambahkan property ini 👇</span>
+    <span class="code-keyword">protected</span> <span class="code-variable">$queryString</span> = [
+        <span class="code-string">'search'</span> => [<span class="code-string">'except'</span> => <span class="code-string">''</span>], <span class="code-comment">// Jangan tampilkan jika kosong</span>
+        <span class="code-string">'page'</span> => [<span class="code-string">'except'</span> => <span class="code-number">1</span>],    <span class="code-comment">// Jangan tampilkan jika halaman 1</span>
+    ];
+
+    <span class="code-comment">// ... method lainnya</span>
+}</pre>
+                </div>
+            </div>
+
+            <div class="alert alert-tip">
+                <span class="alert-icon">💡</span>
+                <div>
+                    <h4>Kenapa ini Penting?</h4>
+                    <p>Dengan Query String, user bisa <strong>copy-paste link</strong> ke teman mereka. Teman yang
+                        membuka link akan melihat <strong>halaman dan hasil pencarian yang sama persis</strong>. Ini
+                        standar aplikasi web modern!</p>
                 </div>
             </div>
 

@@ -49,7 +49,6 @@
                     <li><a href="../minggu-1/blade-template.html">Blade Template</a></li>
                     <li><a href="../minggu-1/pengenalan-livewire.html">Pengenalan Livewire</a></li>
                     <li><a href="../minggu-1/struktur-component.html">Struktur Component</a></li>
-                    <li><a href="../minggu-1/autentikasi.html">🔐 Autentikasi</a></li>
                 </ul>
             </div>
             <div class="sidebar-section">
@@ -60,6 +59,8 @@
                     <li><a href="database-eloquent.html">Database & Eloquent</a></li>
                     <li><a href="validasi.html" class="active">Validasi</a></li>
                     <li><a href="crud-sederhana.html">CRUD Sederhana</a></li>
+                    <li><a href="autentikasi.html">🔐 Autentikasi</a></li>
+                    <li><a href="lifecycle-events.html">🔄 Lifecycle & Events</a></li>
                 </ul>
             </div>
             <div class="sidebar-section">
@@ -69,6 +70,7 @@
                     <li><a href="../minggu-3/pagination-search.html">Pagination & Search</a></li>
                     <li><a href="../minggu-3/komponen-reusable.html">Komponen Reusable</a></li>
                     <li><a href="../minggu-3/tampilan-dinamis.html">Tampilan Dinamis</a></li>
+                                        <li><a href="../minggu-3/form-object.html">📋 Form Objects</a></li>
                     <li><a href="../minggu-3/project-elibrary.html">📚 Tutorial E-Library</a></li>
                 </ul>
             </div>
@@ -471,6 +473,147 @@
         ⚠️ {{ <span class="code-variable">$message</span> }}
     <span class="code-tag">&lt;/span&gt;</span>
 <span class="code-keyword">@enderror</span></pre>
+                </div>
+            </div>
+
+            <!-- ==================== VALIDATE ATTRIBUTE ==================== -->
+
+            <h2>🏷️ Cara Modern: #[Validate] Attribute</h2>
+
+            <p>Di <strong>Livewire 3</strong>, ada cara yang lebih bersih untuk menulis rules — langsung di atas
+                property menggunakan attribute <code>#[Validate]</code>:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">#[Validate] — lebih rapi dari $rules</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-keyword">use</span> Livewire\Attributes\Validate;
+
+<span class="code-keyword">class</span> <span class="code-class">ContactForm</span> <span class="code-keyword">extends</span> Component
+{
+    <span class="code-comment">// Cara lama: $rules terpisah dari property</span>
+    <span class="code-comment">// Cara baru: rules LANGSUNG di atas property ⬇️</span>
+
+    <span class="code-attribute">#[Validate('required|min:3', message: 'Nama harus diisi minimal 3 karakter')]</span>
+    <span class="code-keyword">public</span> <span class="code-variable">$name</span> = <span class="code-string">''</span>;
+
+    <span class="code-attribute">#[Validate('required|email', message: 'Email harus format yang valid')]</span>
+    <span class="code-keyword">public</span> <span class="code-variable">$email</span> = <span class="code-string">''</span>;
+
+    <span class="code-attribute">#[Validate('required|min:10|max:500')]</span>
+    <span class="code-keyword">public</span> <span class="code-variable">$message</span> = <span class="code-string">''</span>;
+
+    <span class="code-keyword">public function</span> <span class="code-function">submit</span>()
+    {
+        <span class="code-variable">$this</span>->validate(); <span class="code-comment">// Tetap sama!</span>
+        <span class="code-comment">// ...</span>
+    }
+}</pre>
+                </div>
+            </div>
+
+            <div class="alert alert-tip">
+                <span class="alert-icon">💡</span>
+                <div>
+                    <h4>#[Validate] vs $rules — Mana yang Lebih Baik?</h4>
+                    <table class="comparison-table" style="margin-top:0.5rem;">
+                        <tr>
+                            <th>Aspek</th>
+                            <th>$rules (lama)</th>
+                            <th>#[Validate] (baru)</th>
+                        </tr>
+                        <tr>
+                            <td>Posisi rules</td>
+                            <td>Terpisah dari property</td>
+                            <td><strong>Langsung di atas property ✅</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Pesan custom</td>
+                            <td>Di array $messages terpisah</td>
+                            <td><strong>Parameter message: langsung ✅</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Membaca kode</td>
+                            <td>Harus scroll bolak-balik</td>
+                            <td><strong>Langsung terlihat ✅</strong></td>
+                        </tr>
+                    </table>
+                    <p style="margin-top:0.5rem;">Kedua cara tetap valid. Untuk <strong>project baru</strong>,
+                        disarankan pakai <code>#[Validate]</code>.</p>
+                </div>
+            </div>
+
+            <!-- ==================== WIRE:MODEL.LIVE ==================== -->
+
+            <h2>⚡ wire:model.live — Validasi Saat Mengetik</h2>
+
+            <p>Selain <code>wire:model.blur</code> (validasi saat pindah field), ada juga <code>wire:model.live</code>
+                yang memvalidasi <strong>saat user mengetik</strong> — lebih responsif tapi lebih banyak request ke
+                server:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">Perbandingan mode wire:model</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-comment">&lt;!-- 1. Default (Livewire 3): update saat submit/aksi saja --&gt;</span>
+<span class="code-tag">&lt;input</span> <span class="code-attribute">wire:model</span>=<span class="code-string">"email"</span><span class="code-tag">&gt;</span>
+
+<span class="code-comment">&lt;!-- 2. Blur: update saat pindah field (fokus hilang) --&gt;</span>
+<span class="code-tag">&lt;input</span> <span class="code-attribute">wire:model.blur</span>=<span class="code-string">"email"</span><span class="code-tag">&gt;</span>
+
+<span class="code-comment">&lt;!-- 3. Live: update saat mengetik (real-time) --&gt;</span>
+<span class="code-tag">&lt;input</span> <span class="code-attribute">wire:model.live</span>=<span class="code-string">"email"</span><span class="code-tag">&gt;</span>
+
+<span class="code-comment">&lt;!-- 4. Live dengan debounce (tunda 500ms) — DIREKOMENDASIKAN --&gt;</span>
+<span class="code-tag">&lt;input</span> <span class="code-attribute">wire:model.live.debounce.500ms</span>=<span class="code-string">"email"</span><span class="code-tag">&gt;</span></pre>
+                </div>
+            </div>
+
+            <div class="alert alert-warning">
+                <span class="alert-icon">📢</span>
+                <div>
+                    <h4>Catatan Guru RPL — Performa</h4>
+                    <p><code>wire:model.live</code> mengirim request ke server <strong>setiap ketukan keyboard</strong>.
+                        Kalau form punya banyak field, ini bisa memperlambat. Gunakan <code>.debounce.500ms</code> untuk
+                        memberi jeda, atau pakai <code>.blur</code> yang lebih hemat.</p>
+                </div>
+            </div>
+
+            <!-- ==================== RESET VALIDATION ==================== -->
+
+            <h3>🔄 resetValidation() — Hapus Pesan Error</h3>
+
+            <p>Kadang kamu perlu menghapus pesan error secara manual, misalnya saat user membuka modal edit baru:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">resetValidation()</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-keyword">public function</span> <span class="code-function">openEditForm</span>(Buku <span class="code-variable">$buku</span>)
+{
+    <span class="code-comment">// Hapus semua error sebelumnya</span>
+    <span class="code-variable">$this</span>->resetValidation();
+
+    <span class="code-comment">// Isi form dengan data buku</span>
+    <span class="code-variable">$this</span>->judul = <span class="code-variable">$buku</span>->judul;
+    <span class="code-variable">$this</span>->penulis = <span class="code-variable">$buku</span>->penulis;
+    <span class="code-variable">$this</span>->showModal = <span class="code-keyword">true</span>;
+}
+
+<span class="code-comment">// Bisa juga hapus error untuk field tertentu saja:</span>
+<span class="code-variable">$this</span>->resetValidation(<span class="code-string">'email'</span>);</pre>
                 </div>
             </div>
 

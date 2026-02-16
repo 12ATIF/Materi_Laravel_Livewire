@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lifecycle & Events - Minggu 2 | Livewire SMK</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../../css/style.css">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="../../index.html" class="navbar-logo">
+                <svg viewBox="0 0 50 50" fill="none">
+                    <rect width="50" height="50" rx="12" fill="url(#g)" />
+                    <path d="M15 35V15L25 25L35 15V35" stroke="#fff" stroke-width="3" />
+                    <defs>
+                        <linearGradient id="g" x1="0" y1="0" x2="50" y2="50">
+                            <stop stop-color="#10B981" />
+                            <stop offset="1" stop-color="#3B82F6" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <span>Livewire SMK</span>
+            </a>
+            <ul class="navbar-menu">
+                <li><a href="../../index.html">Beranda</a></li>
+                <li><a href="../../silabus.html">Silabus</a></li>
+                <li><a href="../minggu-1/pengenalan-laravel.html" class="active">Materi</a></li>
+                <li><a href="../../demo.html">Demo</a></li>
+            </ul>
+            <button class="navbar-toggle" aria-label="Toggle menu"><span>☰</span></button>
+        </div>
+    </nav>
+
+    <div class="content-layout">
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <div class="sidebar-title">📗 Minggu 1</div>
+                <ul class="sidebar-nav">
+                    <li><a href="../minggu-1/pengenalan-laravel.html">Pengenalan Laravel</a></li>
+                    <li><a href="../minggu-1/mvc-sederhana.html">MVC Sederhana</a></li>
+                    <li><a href="../minggu-1/instalasi-laravel.html">Instalasi Laravel</a></li>
+                    <li><a href="../minggu-1/blade-template.html">Blade Template</a></li>
+                    <li><a href="../minggu-1/pengenalan-livewire.html">Pengenalan Livewire</a></li>
+                    <li><a href="../minggu-1/struktur-component.html">Struktur Component</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-title">📘 Minggu 2</div>
+                <ul class="sidebar-nav">
+                    <li><a href="wire-model.html">wire:model</a></li>
+                    <li><a href="wire-click.html">wire:click</a></li>
+                    <li><a href="database-eloquent.html">Database & Eloquent</a></li>
+                    <li><a href="validasi.html">Validasi</a></li>
+                    <li><a href="crud-sederhana.html">CRUD Sederhana</a></li>
+                    <li><a href="autentikasi.html">🔐 Autentikasi</a></li>
+                    <li><a href="lifecycle-events.html" class="active">🔄 Lifecycle & Events</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-title">📕 Minggu 3</div>
+                <ul class="sidebar-nav">
+                    <li><a href="../minggu-3/upload-file.html">Upload File</a></li>
+                    <li><a href="../minggu-3/pagination-search.html">Pagination & Search</a></li>
+                    <li><a href="../minggu-3/komponen-reusable.html">Komponen Reusable</a></li>
+                    <li><a href="../minggu-3/tampilan-dinamis.html">Tampilan Dinamis</a></li>
+                    <li><a href="../minggu-3/form-object.html">📋 Form Objects</a></li>
+                    <li><a href="../minggu-3/project-elibrary.html">📚 Tutorial E-Library</a></li>
+                </ul>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="content-header">
+                <div class="content-breadcrumb">
+                    <a href="../../index.html">Beranda</a> / <a href="../../silabus.html">Silabus</a> / Minggu 2 /
+                    Lifecycle & Events
+                </div>
+                <h1 class="content-title">2.7 Lifecycle Hooks & Event System</h1>
+                <div class="content-meta">
+                    <span>📘 Minggu 2</span>
+                    <span>⏱️ 35 menit</span>
+                    <span>📖 Teori + Praktik</span>
+                </div>
+            </div>
+
+            <!-- Prasyarat -->
+            <div class="prerequisites">
+                <h3>📌 Prasyarat</h3>
+                <ul>
+                    <li>Sudah paham <a href="../minggu-1/struktur-component.html">Struktur Component</a> (property,
+                        method, render, mount)</li>
+                    <li>Sudah paham <a href="wire-click.html">wire:click</a> (memanggil method dari view)</li>
+                    <li>Sudah paham <a href="crud-sederhana.html">CRUD Sederhana</a> (operasi database dasar)</li>
+                </ul>
+            </div>
+
+            <!-- Tujuan Belajar -->
+            <div class="objectives">
+                <h3>🎯 Tujuan Belajar</h3>
+                <p>Setelah menyelesaikan materi ini, kamu akan mampu:</p>
+                <ul>
+                    <li>Memahami <strong>semua Lifecycle Hooks</strong> Livewire dan kapan masing-masing dipanggil</li>
+                    <li>Menggunakan <code>updated()</code> dan <code>updating()</code> untuk validasi real-time</li>
+                    <li>Menggunakan <strong>Event System</strong> untuk komunikasi antar komponen</li>
+                    <li>Mengirim dan menangkap event dengan <code>$dispatch()</code> dan <code>#[On]</code></li>
+                    <li>Memahami perbedaan <strong>event antar komponen</strong> dan <strong>browser event</strong></li>
+                </ul>
+            </div>
+
+            <!-- ==================== BAGIAN 1: LIFECYCLE ==================== -->
+
+            <h2>🔄 Bagian 1: Lifecycle Hooks</h2>
+
+            <p>Lifecycle hooks adalah <strong>method spesial</strong> yang Livewire panggil secara otomatis di
+                titik-titik tertentu selama "kehidupan" komponen. Bayangkan seperti <strong>titik checkpoint</strong> di
+                sebuah game — di setiap checkpoint, kamu bisa melakukan sesuatu.</p>
+
+            <div class="alert alert-tip">
+                <span class="alert-icon">🎮</span>
+                <div>
+                    <h4>Analogi: Hari Sekolah</h4>
+                    <p>Bayangkan siklus hari sekolah:</p>
+                    <ul style="margin-top:0.5rem;">
+                        <li>🟢 <strong>boot()</strong> = Bangun pagi & siap-siap (setiap hari)</li>
+                        <li>🏫 <strong>mount()</strong> = Hari pertama masuk kelas baru (sekali saja)</li>
+                        <li>📖 <strong>hydrate()</strong> = Buka buku catatan kemarin (lanjutan dari tinggalan)</li>
+                        <li>✏️ <strong>updating()</strong> = Sebelum mengisi jawaban di ujian</li>
+                        <li>📝 <strong>updated()</strong> = Setelah mengisi jawaban di ujian</li>
+                        <li>🎨 <strong>render()</strong> = Mengerjakan tugas dan melihat hasilnya</li>
+                        <li>📕 <strong>dehydrate()</strong> = Tutup buku & simpan catatan (sebelum pulang)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- ==================== -->
+
+            <h3>📋 Daftar Lengkap Lifecycle Hooks</h3>
+
+            <table class="comparison-table">
+                <tr>
+                    <th>Hook</th>
+                    <th>Kapan Dipanggil</th>
+                    <th>Contoh Penggunaan</th>
+                    <th>Prioritas Belajar</th>
+                </tr>
+                <tr>
+                    <td><code>boot()</code></td>
+                    <td>Setiap request, sebelum hook lain</td>
+                    <td>Setup global, logging</td>
+                    <td>⭐⭐</td>
+                </tr>
+                <tr>
+                    <td><code>mount($params)</code></td>
+                    <td>Sekali — saat pertama kali dimuat</td>
+                    <td>Inisialisasi data, terima parameter</td>
+                    <td>⭐⭐⭐</td>
+                </tr>
+                <tr>
+                    <td><code>hydrate()</code></td>
+                    <td>Setiap request — setelah data dipulihkan</td>
+                    <td>Reinisialisasi object non-serializable</td>
+                    <td>⭐</td>
+                </tr>
+                <tr>
+                    <td><code>updating($name, $value)</code></td>
+                    <td>Sebelum property berubah</td>
+                    <td>Mencegah/memodifikasi perubahan</td>
+                    <td>⭐⭐</td>
+                </tr>
+                <tr>
+                    <td><code>updated($name, $value)</code></td>
+                    <td>Setelah property berubah</td>
+                    <td>Validasi real-time, auto-save</td>
+                    <td>⭐⭐⭐</td>
+                </tr>
+                <tr>
+                    <td><code>render()</code></td>
+                    <td>Setiap kali komponen perlu di-render</td>
+                    <td>Mengembalikan view (WAJIB)</td>
+                    <td>⭐⭐⭐</td>
+                </tr>
+                <tr>
+                    <td><code>dehydrate()</code></td>
+                    <td>Sebelum data disimpan ke snapshot</td>
+                    <td>Cleanup, formatting data</td>
+                    <td>⭐</td>
+                </tr>
+            </table>
+
+            <div class="alert alert-info">
+                <span class="alert-icon">📢</span>
+                <div>
+                    <h4>Catatan Guru RPL</h4>
+                    <p>Jangan panik melihat banyaknya hook! Untuk <strong>90% kebutuhan programming</strong>, kamu hanya
+                        butuh 3 hook: <code>mount()</code>, <code>render()</code>, dan <code>updated()</code>. Hook
+                        lainnya untuk kasus-kasus lanjutan yang jarang ditemui di project sekolah.</p>
+                </div>
+            </div>
+
+            <!-- ==================== CONTOH UPDATED ==================== -->
+
+            <h3>📝 Contoh: updated() — Validasi Real-time</h3>
+
+            <p>Hook <code>updated()</code> dipanggil setiap kali <strong>property berubah</strong>. Ini sangat berguna
+                untuk validasi input saat user mengetik:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">app/Livewire/FormPendaftaran.php</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-keyword">class</span> <span class="code-class">FormPendaftaran</span> <span class="code-keyword">extends</span> Component
+{
+    <span class="code-keyword">public</span> <span class="code-variable">$nama</span> = <span class="code-string">''</span>;
+    <span class="code-keyword">public</span> <span class="code-variable">$email</span> = <span class="code-string">''</span>;
+    <span class="code-keyword">public</span> <span class="code-variable">$password</span> = <span class="code-string">''</span>;
+    <span class="code-keyword">public</span> <span class="code-variable">$passwordStrength</span> = <span class="code-string">''</span>;
+
+    <span class="code-comment">// Dipanggil setiap kali ADA property yang berubah</span>
+    <span class="code-keyword">public function</span> <span class="code-function">updated</span>(<span class="code-variable">$propertyName</span>)
+    {
+        <span class="code-comment">// Validasi field yang berubah saja</span>
+        <span class="code-variable">$this</span>->validateOnly(<span class="code-variable">$propertyName</span>, [
+            <span class="code-string">'nama'</span> => <span class="code-string">'required|min:3'</span>,
+            <span class="code-string">'email'</span> => <span class="code-string">'required|email|unique:users'</span>,
+            <span class="code-string">'password'</span> => <span class="code-string">'required|min:8'</span>,
+        ]);
+    }
+
+    <span class="code-comment">// Lebih spesifik: hanya untuk property 'password'</span>
+    <span class="code-keyword">public function</span> <span class="code-function">updatedPassword</span>(<span class="code-variable">$value</span>)
+    {
+        <span class="code-keyword">if</span> (strlen(<span class="code-variable">$value</span>) < <span class="code-number">6</span>) {
+            <span class="code-variable">$this</span>->passwordStrength = <span class="code-string">'Lemah 🔴'</span>;
+        } <span class="code-keyword">elseif</span> (strlen(<span class="code-variable">$value</span>) < <span class="code-number">10</span>) {
+            <span class="code-variable">$this</span>->passwordStrength = <span class="code-string">'Sedang 🟡'</span>;
+        } <span class="code-keyword">else</span> {
+            <span class="code-variable">$this</span>->passwordStrength = <span class="code-string">'Kuat 🟢'</span>;
+        }
+    }
+}</pre>
+                </div>
+            </div>
+
+            <div class="alert alert-warning">
+                <span class="alert-icon">⚠️</span>
+                <div>
+                    <h4>Dua Cara Menulis updated()</h4>
+                    <ul style="margin-top:0.5rem;">
+                        <li><code>updated($name)</code> → menangkap perubahan <strong>semua property</strong>. Parameter
+                            <code>$name</code> berisi nama property yang berubah.</li>
+                        <li><code>updatedNamaProperty($value)</code> → menangkap perubahan <strong>property
+                                spesifik</strong>. Contoh: <code>updatedPassword()</code> hanya untuk
+                            <code>$password</code>.</li>
+                    </ul>
+                    <p style="margin-top:0.5rem;">Format kedua lebih direkomendasikan — lebih jelas dan terorganisir!
+                    </p>
+                </div>
+            </div>
+
+            <!-- ==================== CONTOH BOOT ==================== -->
+
+            <h3>🥾 Contoh: boot() — Setup Setiap Request</h3>
+
+            <p>Berbeda dengan <code>mount()</code> yang hanya dipanggil sekali, <code>boot()</code> dipanggil di
+                <strong>setiap request</strong>. Berguna untuk setup yang perlu dijalankan ulang:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">app/Livewire/Dashboard.php</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-keyword">class</span> <span class="code-class">Dashboard</span> <span class="code-keyword">extends</span> Component
+{
+    <span class="code-keyword">public</span> <span class="code-variable">$user</span>;
+
+    <span class="code-comment">// Dipanggil SETIAP request</span>
+    <span class="code-keyword">public function</span> <span class="code-function">boot</span>()
+    {
+        <span class="code-comment">// Pastikan user masih login di setiap request</span>
+        <span class="code-keyword">if</span> (!auth()->check()) {
+            <span class="code-keyword">return</span> redirect()->route(<span class="code-string">'login'</span>);
+        }
+    }
+
+    <span class="code-comment">// Dipanggil SEKALI di awal</span>
+    <span class="code-keyword">public function</span> <span class="code-function">mount</span>()
+    {
+        <span class="code-variable">$this</span>->user = auth()->user();
+    }
+}</pre>
+                </div>
+            </div>
+
+            <div class="alert alert-tip">
+                <span class="alert-icon">💡</span>
+                <div>
+                    <h4>boot() vs mount() — Apa Bedanya?</h4>
+                    <table style="width:100%;margin-top:0.5rem;">
+                        <tr>
+                            <td style="padding:0.5rem;"><strong>mount()</strong></td>
+                            <td style="padding:0.5rem;">Dipanggil <strong>SEKALI</strong> saat komponen pertama dimuat.
+                                Untuk inisialisasi.</td>
+                        </tr>
+                        <tr>
+                            <td style="padding:0.5rem;"><strong>boot()</strong></td>
+                            <td style="padding:0.5rem;">Dipanggil <strong>SETIAP REQUEST</strong> (termasuk saat mount).
+                                Untuk pengecekan yang harus selalu jalan.</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ==================== BAGIAN 2: EVENTS ==================== -->
+
+            <h2>📡 Bagian 2: Event System</h2>
+
+            <p>Sampai sekarang, setiap komponen Livewire bekerja <strong>sendiri-sendiri</strong>. Tapi bagaimana kalau
+                kita butuh komponen yang <strong>saling berkomunikasi</strong>?</p>
+
+            <div class="alert alert-tip">
+                <span class="alert-icon">📻</span>
+                <div>
+                    <h4>Analogi: Walkie-Talkie Sekolah</h4>
+                    <p>Bayangkan komponen seperti <strong>guru-guru di sekolah</strong> dengan walkie-talkie:</p>
+                    <ul style="margin-top:0.5rem;">
+                        <li>📤 <strong>$dispatch()</strong> = Guru A bicara lewat walkie-talkie: <em>"Murid baru sudah
+                                didaftarkan!"</em></li>
+                        <li>📥 <strong>#[On()]</strong> = Guru B yang mendengarkan: <em>"Oke, saya update daftar
+                                kelas!"</em></li>
+                    </ul>
+                    <p style="margin-top:0.5rem;">Event = cara komponen "berbicara" satu sama lain tanpa harus saling
+                        mengenal langsung.</p>
+                </div>
+            </div>
+
+            <!-- ==================== DISPATCH ==================== -->
+
+            <h3>📤 Mengirim Event: $this->dispatch()</h3>
+
+            <p>Untuk mengirim event dari satu komponen, gunakan <code>$this->dispatch('nama-event')</code>:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">app/Livewire/FormTambahBuku.php (Pengirim Event)</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-keyword">class</span> <span class="code-class">FormTambahBuku</span> <span class="code-keyword">extends</span> Component
+{
+    <span class="code-keyword">public</span> <span class="code-variable">$judul</span> = <span class="code-string">''</span>;
+    <span class="code-keyword">public</span> <span class="code-variable">$penulis</span> = <span class="code-string">''</span>;
+
+    <span class="code-keyword">public function</span> <span class="code-function">simpan</span>()
+    {
+        Buku::create([
+            <span class="code-string">'judul'</span> => <span class="code-variable">$this</span>->judul,
+            <span class="code-string">'penulis'</span> => <span class="code-variable">$this</span>->penulis,
+        ]);
+
+        <span class="code-comment">// Kirim event ke komponen lain!</span>
+        <span class="code-variable">$this</span>->dispatch(<span class="code-string">'buku-ditambahkan'</span>);
+
+        <span class="code-comment">// Bisa juga kirim data bersama event</span>
+        <span class="code-variable">$this</span>->dispatch(<span class="code-string">'buku-ditambahkan'</span>, 
+            judul: <span class="code-variable">$this</span>->judul
+        );
+
+        <span class="code-comment">// Reset form</span>
+        <span class="code-variable">$this</span>->reset([<span class="code-string">'judul'</span>, <span class="code-string">'penulis'</span>]);
+    }
+}</pre>
+                </div>
+            </div>
+
+            <!-- ==================== ON LISTENER ==================== -->
+
+            <h3>📥 Menangkap Event: #[On()]</h3>
+
+            <p>Komponen lain bisa "mendengarkan" event menggunakan attribute <code>#[On('nama-event')]</code>:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">app/Livewire/DaftarBuku.php (Penerima Event)</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-keyword">use</span> Livewire\Attributes\On;
+
+<span class="code-keyword">class</span> <span class="code-class">DaftarBuku</span> <span class="code-keyword">extends</span> Component
+{
+    <span class="code-comment">// Method ini OTOMATIS dipanggil saat event 'buku-ditambahkan' terjadi</span>
+    <span class="code-attribute">#[On('buku-ditambahkan')]</span>
+    <span class="code-keyword">public function</span> <span class="code-function">refreshDaftar</span>(<span class="code-variable">$judul</span> = <span class="code-keyword">null</span>)
+    {
+        <span class="code-comment">// Komponen akan otomatis re-render</span>
+        <span class="code-comment">// Data buku terbaru akan ditampilkan</span>
+        
+        <span class="code-keyword">if</span> (<span class="code-variable">$judul</span>) {
+            session()->flash(<span class="code-string">'message'</span>, <span class="code-string">"Buku '$judul' berhasil ditambahkan!"</span>);
+        }
+    }
+
+    <span class="code-keyword">public function</span> <span class="code-function">render</span>()
+    {
+        <span class="code-keyword">return</span> view(<span class="code-string">'livewire.daftar-buku'</span>, [
+            <span class="code-string">'books'</span> => Buku::latest()->get(),
+        ]);
+    }
+}</pre>
+                </div>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">Halaman yang menggunakan kedua komponen</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-comment">&lt;!-- kedua komponen ini di halaman yang sama --&gt;</span>
+<span class="code-tag">&lt;div style="display:grid;grid-template-columns:1fr 2fr;gap:2rem;"&gt;</span>
+    <span class="code-comment">&lt;!-- Komponen form (pengirim) --&gt;</span>
+    <span class="code-tag">&lt;livewire:form-tambah-buku /&gt;</span>
+
+    <span class="code-comment">&lt;!-- Komponen daftar (penerima) --&gt;</span>
+    <span class="code-tag">&lt;livewire:daftar-buku /&gt;</span>
+<span class="code-tag">&lt;/div&gt;</span>
+
+<span class="code-comment">&lt;!-- Saat form submit → event 'buku-ditambahkan' dikirim --&gt;</span>
+<span class="code-comment">&lt;!-- → DaftarBuku mendengar dan refresh otomatis! --&gt;</span></pre>
+                </div>
+            </div>
+
+            <!-- ==================== DIAGRAM ==================== -->
+
+            <h3>📊 Diagram Alur Event</h3>
+
+            <div
+                style="padding:2rem;background:linear-gradient(135deg,#F8FAFC,#EFF6FF);border-radius:16px;border:1px solid #E2E8F0;margin:1.5rem 0;">
+                <div style="display:flex;flex-direction:column;gap:0.75rem;align-items:center;">
+                    <div
+                        style="display:grid;grid-template-columns:1fr auto 1fr;gap:1rem;align-items:center;width:100%;max-width:600px;">
+                        <div
+                            style="padding:1rem;background:#FEF3C7;border-radius:12px;border:2px solid #F59E0B;text-align:center;">
+                            <strong style="color:#D97706;">📋 FormTambahBuku</strong><br>
+                            <small>$this->dispatch('buku-ditambahkan')</small>
+                        </div>
+                        <div style="font-size:2rem;color:#10B981;">📡→</div>
+                        <div
+                            style="padding:1rem;background:#DBEAFE;border-radius:12px;border:2px solid #3B82F6;text-align:center;">
+                            <strong style="color:#1E40AF;">📚 DaftarBuku</strong><br>
+                            <small>#[On('buku-ditambahkan')]</small>
+                        </div>
+                    </div>
+                    <div
+                        style="padding:0.75rem 1.5rem;background:#D1FAE5;border-radius:8px;border:1px solid #10B981;font-size:0.9rem;text-align:center;">
+                        ✅ DaftarBuku otomatis refresh — menampilkan buku baru!
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== DISPATCH DARI VIEW ==================== -->
+
+            <h3>🖱️ Dispatch dari View (tanpa PHP)</h3>
+
+            <p>Kamu juga bisa mengirim event langsung dari Blade view menggunakan <code>$dispatch</code>:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">Dispatch dari View</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-comment">&lt;!-- Dispatch event langsung dari tombol --&gt;</span>
+<span class="code-tag">&lt;button</span> <span class="code-attribute">wire:click</span>=<span class="code-string">"$dispatch('refresh-daftar')"</span><span class="code-tag">&gt;</span>
+    🔄 Refresh Daftar
+<span class="code-tag">&lt;/button&gt;</span>
+
+<span class="code-comment">&lt;!-- Dispatch dengan data --&gt;</span>
+<span class="code-tag">&lt;button</span> <span class="code-attribute">wire:click</span>=<span class="code-string">"$dispatch('filter-berubah', { kategori: 'fiksi' })"</span><span class="code-tag">&gt;</span>
+    📖 Filter Fiksi
+<span class="code-tag">&lt;/button&gt;</span></pre>
+                </div>
+            </div>
+
+            <!-- ==================== DISPATCH TO ==================== -->
+
+            <h3>🎯 Mengirim Event ke Komponen Tertentu</h3>
+
+            <p>Secara default, <code>dispatch()</code> mengirim event ke <strong>semua komponen</strong> di halaman.
+                Kalau kamu ingin kirim ke <strong>satu komponen saja</strong>, gunakan
+                <code>$this->dispatch('event')->to(KomponenTarget::class)</code>:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">Kirim event ke komponen tertentu</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-comment">// Kirim ke semua komponen (broadcast)</span>
+<span class="code-variable">$this</span>->dispatch(<span class="code-string">'buku-ditambahkan'</span>);
+
+<span class="code-comment">// Kirim ke komponen tertentu saja</span>
+<span class="code-variable">$this</span>->dispatch(<span class="code-string">'buku-ditambahkan'</span>)->to(DaftarBuku::class);
+
+<span class="code-comment">// Kirim ke diri sendiri (self)</span>
+<span class="code-variable">$this</span>->dispatch(<span class="code-string">'buku-ditambahkan'</span>)->self();</pre>
+                </div>
+            </div>
+
+            <!-- ==================== CONTOH REAL WORLD ==================== -->
+
+            <h2>🌍 Contoh Real-World: Sistem Notifikasi</h2>
+
+            <p>Berikut contoh praktis: saat siswa menambahkan buku, <strong>notifikasi muncul</strong> dan
+                <strong>daftar ter-refresh</strong>:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">app/Livewire/NotifikasiGlobal.php</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-keyword">use</span> Livewire\Attributes\On;
+
+<span class="code-keyword">class</span> <span class="code-class">NotifikasiGlobal</span> <span class="code-keyword">extends</span> Component
+{
+    <span class="code-keyword">public</span> <span class="code-variable">$notifications</span> = [];
+
+    <span class="code-attribute">#[On('notifikasi')]</span>
+    <span class="code-keyword">public function</span> <span class="code-function">tambahNotifikasi</span>(<span class="code-variable">$pesan</span>, <span class="code-variable">$tipe</span> = <span class="code-string">'info'</span>)
+    {
+        <span class="code-variable">$this</span>->notifications[] = [
+            <span class="code-string">'pesan'</span> => <span class="code-variable">$pesan</span>,
+            <span class="code-string">'tipe'</span> => <span class="code-variable">$tipe</span>,
+            <span class="code-string">'waktu'</span> => now()->format(<span class="code-string">'H:i'</span>),
+        ];
+    }
+}</pre>
+                </div>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">resources/views/livewire/notifikasi-global.blade.php</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-tag">&lt;div style="position:fixed;top:1rem;right:1rem;z-index:50;"&gt;</span>
+    <span class="code-keyword">@foreach</span>(<span class="code-variable">$notifications</span> <span class="code-keyword">as</span> <span class="code-variable">$notif</span>)
+        <span class="code-tag">&lt;div style="background:{{ $notif['tipe'] === 'success' ? '#D1FAE5' : '#DBEAFE' }};
+                    padding:1rem;border-radius:8px;margin-bottom:0.5rem;
+                    box-shadow:0 2px 8px rgba(0,0,0,0.1);"&gt;</span>
+            <span class="code-tag">&lt;strong&gt;</span>{{ <span class="code-variable">$notif</span>[<span class="code-string">'waktu'</span>] }}<span class="code-tag">&lt;/strong&gt;</span> — {{ <span class="code-variable">$notif</span>[<span class="code-string">'pesan'</span>] }}
+        <span class="code-tag">&lt;/div&gt;</span>
+    <span class="code-keyword">@endforeach</span>
+<span class="code-tag">&lt;/div&gt;</span></pre>
+                </div>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">Cara dispatch dari komponen manapun</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-comment">// Dari FormTambahBuku setelah berhasil simpan:</span>
+<span class="code-variable">$this</span>->dispatch(<span class="code-string">'notifikasi'</span>, 
+    pesan: <span class="code-string">'Buku berhasil ditambahkan!'</span>, 
+    tipe: <span class="code-string">'success'</span>
+);
+
+<span class="code-comment">// Dari mana saja — NotifikasiGlobal akan menangkapnya</span></pre>
+                </div>
+            </div>
+
+            <!-- ==================== KESALAHAN UMUM ==================== -->
+
+            <div class="common-mistakes">
+                <h3>⚠️ Kesalahan Umum</h3>
+
+                <div class="mistake-item">
+                    <h4>❌ Typo di nama event</h4>
+                    <p><code>dispatch('buku-ditambahkan')</code> dan <code>#[On('buku-ditambah')]</code> — event tidak
+                        nyambung karena nama berbeda!</p>
+                    <p class="solution">✅ Solusi: Pastikan nama event <strong>persis sama</strong> di pengirim dan
+                        penerima. Gunakan kebab-case konsisten.</p>
+                </div>
+
+                <div class="mistake-item">
+                    <h4>❌ Lupa import attribute #[On]</h4>
+                    <p>Kalau tidak import <code>use Livewire\Attributes\On;</code>, attribute
+                        <code>#[On('event')]</code> tidak akan bekerja.</p>
+                    <p class="solution">✅ Solusi: Selalu tambahkan <code>use Livewire\Attributes\On;</code> di atas
+                        class.</p>
+                </div>
+
+                <div class="mistake-item">
+                    <h4>❌ Mengira mount() dipanggil setiap klik</h4>
+                    <p><code>mount()</code> hanya dipanggil <strong>sekali</strong> saat komponen pertama kali dimuat.
+                        Kalau ingin hook yang jalan setiap request, pakai <code>boot()</code>.</p>
+                    <p class="solution">✅ Solusi: Pahami perbedaan <code>mount()</code> (sekali) vs <code>boot()</code>
+                        (setiap request).</p>
+                </div>
+            </div>
+
+            <!-- ==================== RINGKASAN ==================== -->
+
+            <div class="summary-box">
+                <h3>📋 Ringkasan Materi</h3>
+                <ul>
+                    <li><strong>Lifecycle Hooks</strong> = method spesial yang Livewire panggil otomatis di titik-titik
+                        tertentu</li>
+                    <li>Yang paling penting: <code>mount()</code> (sekali), <code>render()</code> (setiap render),
+                        <code>updated()</code> (setelah property berubah)</li>
+                    <li><code>updatedNamaProperty()</code> = validasi real-time untuk field tertentu</li>
+                    <li><strong>Event System</strong> = cara komponen berkomunikasi satu sama lain</li>
+                    <li><code>$this->dispatch('event')</code> = mengirim event</li>
+                    <li><code>#[On('event')]</code> = menangkap event di komponen lain</li>
+                    <li>Event bisa membawa data: <code>dispatch('event', data: $value)</code></li>
+                </ul>
+            </div>
+
+            <!-- ==================== LATIHAN ==================== -->
+
+            <h2>📝 Latihan</h2>
+
+            <div class="exercise-section">
+                <div class="exercise-level basic">
+                    <h4>🟢 Level 1 — Memahami</h4>
+                    <ol>
+                        <li>Apa perbedaan <code>mount()</code> dan <code>boot()</code>? Kapan masing-masing dipanggil?
+                        </li>
+                        <li>Jelaskan perbedaan <code>updated($name)</code> dan <code>updatedEmail($value)</code>.</li>
+                        <li>Apa yang terjadi kalau nama event di <code>dispatch()</code> dan <code>#[On()]</code>
+                            berbeda?</li>
+                    </ol>
+                </div>
+
+                <div class="exercise-level intermediate">
+                    <h4>🔵 Level 2 — Praktik</h4>
+                    <ol>
+                        <li>Buat komponen <strong>"PasswordChecker"</strong> yang menampilkan kekuatan password
+                            (Lemah/Sedang/Kuat) menggunakan <code>updatedPassword()</code>.</li>
+                        <li>Buat 2 komponen: <strong>"FormSiswa"</strong> (form input) dan <strong>"TabelSiswa"</strong>
+                            (menampilkan daftar). Gunakan event untuk me-refresh tabel saat siswa baru ditambahkan.</li>
+                    </ol>
+                </div>
+
+                <div class="exercise-level challenge">
+                    <h4>🟣 Level 3 — Tantangan</h4>
+                    <ol>
+                        <li>Buat sistem <strong>notifikasi sederhana</strong>: komponen NotifikasiBar yang menampilkan
+                            pesan di pojok kanan atas. Dispatch event dari beberapa komponen berbeda (Form Buku, Form
+                            Siswa, dll) dan semuanya muncul di NotifikasiBar.</li>
+                        <li>Gabungkan <code>updated()</code> dengan validasi: buat form registrasi yang langsung
+                            menampilkan error saat user mengetik (tanpa tekan submit). Gunakan
+                            <code>validateOnly()</code>.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- ==================== NAVIGASI ==================== -->
+
+            <div class="content-nav">
+                <a href="autentikasi.html" class="nav-btn">
+                    <div>
+                        <div class="nav-btn-label">Sebelumnya</div>
+                        <div class="nav-btn-title">← 🔐 Autentikasi</div>
+                    </div>
+                </a>
+                <a href="../minggu-3/upload-file.html" class="nav-btn">
+                    <div>
+                        <div class="nav-btn-label">Minggu 3</div>
+                        <div class="nav-btn-title">Upload File →</div>
+                    </div>
+                </a>
+            </div>
+        </main>
+    </div>
+
+    <button class="sidebar-toggle-mobile"
+        onclick="document.querySelector('.sidebar').classList.toggle('active')">📚</button>
+    <script src="../../js/app.js"></script>
+</body>
+
+</html>

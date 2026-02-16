@@ -48,7 +48,6 @@
                     <li><a href="../minggu-1/blade-template.html">Blade Template</a></li>
                     <li><a href="../minggu-1/pengenalan-livewire.html">Pengenalan Livewire</a></li>
                     <li><a href="../minggu-1/struktur-component.html">Struktur Component</a></li>
-                    <li><a href="../minggu-1/autentikasi.html">🔐 Autentikasi</a></li>
                 </ul>
             </div>
             <div class="sidebar-section">
@@ -59,6 +58,8 @@
                     <li><a href="../minggu-2/database-eloquent.html">Database & Eloquent</a></li>
                     <li><a href="../minggu-2/validasi.html">Validasi</a></li>
                     <li><a href="../minggu-2/crud-sederhana.html">CRUD Sederhana</a></li>
+                    <li><a href="../minggu-2/autentikasi.html">🔐 Autentikasi</a></li>
+                    <li><a href="../minggu-2/lifecycle-events.html">🔄 Lifecycle & Events</a></li>
                 </ul>
             </div>
             <div class="sidebar-section">
@@ -68,6 +69,7 @@
                     <li><a href="pagination-search.html">Pagination & Search</a></li>
                     <li><a href="komponen-reusable.html">Komponen Reusable</a></li>
                     <li><a href="tampilan-dinamis.html" class="active">Tampilan Dinamis</a></li>
+                                        <li><a href="form-object.html">📋 Form Objects</a></li>
                     <li><a href="project-elibrary.html">📚 Tutorial E-Library</a></li>
                 </ul>
             </div>
@@ -394,6 +396,121 @@
         <span class="code-tag">&lt;p&gt;</span>📚 Daftar tugas yang perlu dikerjakan...<span class="code-tag">&lt;/p&gt;</span>
     <span class="code-keyword">@endif</span>
 <span class="code-tag">&lt;/div&gt;</span></pre>
+                </div>
+            </div>
+
+            <!-- ==================== WIRE:POLL ==================== -->
+
+            <h2>⏱️ wire:poll — Auto Refresh</h2>
+
+            <p>Ingin data yang <strong>otomatis ter-update</strong> tanpa user harus klik? Gunakan
+                <code>wire:poll</code>! Komponen akan otomatis refresh setiap beberapa detik.</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">Auto-refresh setiap 5 detik</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-comment">&lt;!-- Komponen ini otomatis refresh setiap 5 detik --&gt;</span>
+<span class="code-tag">&lt;div</span> <span class="code-attribute">wire:poll.5s</span><span class="code-tag">&gt;</span>
+    <span class="code-tag">&lt;p&gt;</span>🕐 Terakhir update: {{ now()->format('H:i:s') }}<span class="code-tag">&lt;/p&gt;</span>
+    <span class="code-tag">&lt;p&gt;</span>📚 Jumlah buku: {{ $totalBuku }}<span class="code-tag">&lt;/p&gt;</span>
+<span class="code-tag">&lt;/div&gt;</span>
+
+<span class="code-comment">&lt;!-- Bisa juga panggil method spesifik --&gt;</span>
+<span class="code-tag">&lt;div</span> <span class="code-attribute">wire:poll.10s</span>=<span class="code-string">"refreshData"</span><span class="code-tag">&gt;</span>
+    <span class="code-comment">&lt;!-- Memanggil method refreshData() setiap 10 detik --&gt;</span>
+    <span class="code-tag">&lt;p&gt;</span>Notifikasi baru: {{ $unreadCount }}<span class="code-tag">&lt;/p&gt;</span>
+<span class="code-tag">&lt;/div&gt;</span>
+
+<span class="code-comment">&lt;!-- Hanya polling saat tab aktif (visible) --&gt;</span>
+<span class="code-tag">&lt;div</span> <span class="code-attribute">wire:poll.5s.visible</span><span class="code-tag">&gt;</span>
+    <span class="code-comment">&lt;!-- Tidak memakan resource saat tab di background --&gt;</span>
+<span class="code-tag">&lt;/div&gt;</span></pre>
+                </div>
+            </div>
+
+            <div class="alert alert-warning">
+                <span class="alert-icon">📢</span>
+                <div>
+                    <h4>Catatan Guru RPL — Jangan Berlebihan!</h4>
+                    <p><code>wire:poll</code> mengirim request ke server <strong>terus-menerus</strong>. Gunakan hanya
+                        jika benar-benar perlu (dashboard monitoring, notifikasi). Tambahkan <code>.visible</code> agar
+                        hanya aktif saat tab terlihat.</p>
+                </div>
+            </div>
+
+            <!-- ==================== WIRE:NAVIGATE ==================== -->
+
+            <h2>🧭 wire:navigate — Navigasi SPA</h2>
+
+            <p>Secara default, pindah halaman di Laravel = <strong>full page reload</strong>. Dengan
+                <code>wire:navigate</code>, perpindahan halaman terasa seperti <strong>Single Page Application
+                    (SPA)</strong> — kilat tanpa loading putih!</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">wire:navigate</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-comment">&lt;!-- Link biasa: full page reload (lambat) --&gt;</span>
+<span class="code-tag">&lt;a</span> <span class="code-attribute">href</span>=<span class="code-string">"/dashboard"</span><span class="code-tag">&gt;</span>Dashboard<span class="code-tag">&lt;/a&gt;</span>
+
+<span class="code-comment">&lt;!-- Dengan wire:navigate: SPA-like (kilat!) --&gt;</span>
+<span class="code-tag">&lt;a</span> <span class="code-attribute">href</span>=<span class="code-string">"/dashboard"</span> <span class="code-attribute">wire:navigate</span><span class="code-tag">&gt;</span>Dashboard<span class="code-tag">&lt;/a&gt;</span>
+
+<span class="code-comment">&lt;!-- Prefetch saat hover — lebih cepat lagi! --&gt;</span>
+<span class="code-tag">&lt;a</span> <span class="code-attribute">href</span>=<span class="code-string">"/books"</span> <span class="code-attribute">wire:navigate.hover</span><span class="code-tag">&gt;</span>📚 Daftar Buku<span class="code-tag">&lt;/a&gt;</span></pre>
+                </div>
+            </div>
+
+            <div class="alert alert-tip">
+                <span class="alert-icon">🚀</span>
+                <div>
+                    <h4>Bagaimana wire:navigate Bekerja?</h4>
+                    <ul style="margin-top:0.5rem;">
+                        <li>Livewire <strong>mengambil halaman baru di background</strong> (AJAX)</li>
+                        <li>Hanya <strong>mengganti isi &lt;body&gt;</strong>, tidak reload seluruh halaman</li>
+                        <li>CSS & JS yang sudah dimuat <strong>tidak perlu diunduh ulang</strong></li>
+                        <li>Terasa <strong>instan</strong> — seperti React/Vue tapi tanpa build step!</li>
+                    </ul>
+                    <p style="margin-top:0.5rem;">Tambahkan <code>@persist</code> di layout untuk menyimpan elemen yang
+                        tidak berubah (sidebar, player musik, dll).</p>
+                </div>
+            </div>
+
+            <!-- ==================== WIRE:TRANSITION ==================== -->
+
+            <h3>🎨 wire:transition — Animasi Halus</h3>
+
+            <p>Tambahkan animasi saat elemen muncul/menghilang menggunakan <code>wire:transition</code>:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">Contoh wire:transition</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-comment">&lt;!-- Elemen ini muncul/hilang dengan animasi fade --&gt;</span>
+<span class="code-keyword">@if</span>(<span class="code-variable">$showNotification</span>)
+    <span class="code-tag">&lt;div</span> <span class="code-attribute">wire:transition</span>
+         <span class="code-attribute">style</span>=<span class="code-string">"padding:1rem;background:#D1FAE5;border-radius:8px;"</span><span class="code-tag">&gt;</span>
+        ✅ Berhasil disimpan!
+    <span class="code-tag">&lt;/div&gt;</span>
+<span class="code-keyword">@endif</span>
+
+<span class="code-comment">&lt;!-- Hanya animasi saat masuk (enter) --&gt;</span>
+<span class="code-keyword">@if</span>(<span class="code-variable">$showDetail</span>)
+    <span class="code-tag">&lt;div</span> <span class="code-attribute">wire:transition.in</span><span class="code-tag">&gt;</span>Detail buku...<span class="code-tag">&lt;/div&gt;</span>
+<span class="code-keyword">@endif</span></pre>
                 </div>
             </div>
 

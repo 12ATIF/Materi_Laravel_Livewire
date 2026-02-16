@@ -49,7 +49,6 @@
                     <li><a href="blade-template.html">Blade Template</a></li>
                     <li><a href="pengenalan-livewire.html">Pengenalan Livewire</a></li>
                     <li><a href="struktur-component.html" class="active">Struktur Component</a></li>
-                    <li><a href="autentikasi.html">🔐 Autentikasi</a></li>
                 </ul>
             </div>
             <div class="sidebar-section">
@@ -60,6 +59,8 @@
                     <li><a href="../minggu-2/database-eloquent.html">Database & Eloquent</a></li>
                     <li><a href="../minggu-2/validasi.html">Validasi</a></li>
                     <li><a href="../minggu-2/crud-sederhana.html">CRUD Sederhana</a></li>
+                    <li><a href="../minggu-2/autentikasi.html">🔐 Autentikasi</a></li>
+                    <li><a href="../minggu-2/lifecycle-events.html">🔄 Lifecycle & Events</a></li>
                 </ul>
             </div>
             <div class="sidebar-section">
@@ -69,6 +70,7 @@
                     <li><a href="../minggu-3/pagination-search.html">Pagination & Search</a></li>
                     <li><a href="../minggu-3/komponen-reusable.html">Komponen Reusable</a></li>
                     <li><a href="../minggu-3/tampilan-dinamis.html">Tampilan Dinamis</a></li>
+                                        <li><a href="../minggu-3/form-object.html">📋 Form Objects</a></li>
                     <li><a href="../minggu-3/project-elibrary.html">📚 Tutorial E-Library</a></li>
                 </ul>
             </div>
@@ -386,16 +388,103 @@ php artisan make:livewire Counter</pre>
                     <td>Set nilai awal, ambil data dari URL</td>
                 </tr>
                 <tr>
+                    <td><code>boot()</code></td>
+                    <td>Setiap request (termasuk mount)</td>
+                    <td>Setup yang diperlukan di setiap request</td>
+                </tr>
+                <tr>
                     <td><code>render()</code></td>
                     <td>Setiap kali ada perubahan data</td>
                     <td>Mengembalikan view Blade (wajib ada)</td>
                 </tr>
                 <tr>
-                    <td><code>updated()</code></td>
-                    <td>Setiap kali property berubah</td>
+                    <td><code>updated($name)</code></td>
+                    <td>Setelah property berubah</td>
                     <td>Validasi input real-time</td>
                 </tr>
+                <tr>
+                    <td><code>updating($name)</code></td>
+                    <td>Sebelum property berubah</td>
+                    <td>Mencegah perubahan yang tidak valid</td>
+                </tr>
+                <tr>
+                    <td><code>hydrate()</code></td>
+                    <td>Setelah komponen di-refresh dari snapshot</td>
+                    <td>Reinisialisasi object yang tidak bisa di-serialize</td>
+                </tr>
+                <tr>
+                    <td><code>dehydrate()</code></td>
+                    <td>Sebelum komponen disimpan ke snapshot</td>
+                    <td>Cleanup sebelum response dikirim</td>
+                </tr>
             </table>
+
+            <div class="alert alert-info">
+                <span class="alert-icon">📢</span>
+                <div>
+                    <h4>Catatan Guru RPL</h4>
+                    <p>Untuk saat ini, kamu cukup menguasai <strong>mount()</strong>, <strong>render()</strong>, dan
+                        <strong>updated()</strong>. Tiga method ini sudah mencakup 90% kebutuhan development. Hook
+                        lainnya (<code>boot</code>, <code>hydrate</code>, <code>dehydrate</code>) akan kamu perlukan
+                        saat membuat aplikasi yang lebih kompleks nanti — kita bahas detail di <strong>materi Lifecycle
+                            & Events</strong>.</p>
+                </div>
+            </div>
+
+            <h3>📊 Diagram Lifecycle Lengkap</h3>
+
+            <p>Berikut urutan lengkap lifecycle sebuah komponen Livewire:</p>
+
+            <div
+                style="padding:2rem;background:linear-gradient(135deg,#F8FAFC,#EFF6FF);border-radius:16px;border:1px solid #E2E8F0;margin:1.5rem 0;">
+                <div style="display:flex;flex-direction:column;gap:0.5rem;align-items:center;">
+                    <div
+                        style="padding:0.75rem 1.5rem;background:#DBEAFE;border-radius:12px;border:2px solid #3B82F6;font-weight:600;color:#1E40AF;text-align:center;">
+                        🟢 Pertama Kali Dimuat
+                    </div>
+                    <div style="font-size:1.5rem;color:#94A3B8;">↓</div>
+                    <div
+                        style="padding:0.5rem 1.25rem;background:#FEF3C7;border-radius:8px;border:1px solid #F59E0B;font-size:0.9rem;">
+                        boot()</div>
+                    <div style="font-size:1.5rem;color:#94A3B8;">↓</div>
+                    <div
+                        style="padding:0.5rem 1.25rem;background:#D1FAE5;border-radius:8px;border:1px solid #10B981;font-size:0.9rem;font-weight:600;">
+                        mount()</div>
+                    <div style="font-size:1.5rem;color:#94A3B8;">↓</div>
+                    <div
+                        style="padding:0.5rem 1.25rem;background:#E0E7FF;border-radius:8px;border:1px solid #6366F1;font-size:0.9rem;font-weight:600;">
+                        render()</div>
+                    <div style="font-size:1.5rem;color:#94A3B8;">↓</div>
+                    <div
+                        style="padding:0.5rem 1.25rem;background:#FCE7F3;border-radius:8px;border:1px solid #EC4899;font-size:0.9rem;">
+                        dehydrate() — simpan snapshot</div>
+                    <div style="font-size:1.5rem;color:#94A3B8;">↓</div>
+                    <div
+                        style="padding:0.75rem 1.5rem;background:#FEF2F2;border-radius:12px;border:2px dashed #EF4444;font-weight:600;color:#DC2626;text-align:center;">
+                        ⏳ User Beraksi (klik, ketik, dll)
+                    </div>
+                    <div style="font-size:1.5rem;color:#94A3B8;">↓</div>
+                    <div
+                        style="padding:0.5rem 1.25rem;background:#FEF3C7;border-radius:8px;border:1px solid #F59E0B;font-size:0.9rem;">
+                        boot()</div>
+                    <div style="font-size:1.5rem;color:#94A3B8;">↓</div>
+                    <div
+                        style="padding:0.5rem 1.25rem;background:#CCFBF1;border-radius:8px;border:1px solid #14B8A6;font-size:0.9rem;">
+                        hydrate() — pulihkan dari snapshot</div>
+                    <div style="font-size:1.5rem;color:#94A3B8;">↓</div>
+                    <div
+                        style="padding:0.5rem 1.25rem;background:#FFF7ED;border-radius:8px;border:1px solid #F97316;font-size:0.9rem;">
+                        updating() → <strong>Method()</strong> → updated()</div>
+                    <div style="font-size:1.5rem;color:#94A3B8;">↓</div>
+                    <div
+                        style="padding:0.5rem 1.25rem;background:#E0E7FF;border-radius:8px;border:1px solid #6366F1;font-size:0.9rem;font-weight:600;">
+                        render() — ulang</div>
+                    <div style="font-size:1.5rem;color:#94A3B8;">↓</div>
+                    <div
+                        style="padding:0.5rem 1.25rem;background:#FCE7F3;border-radius:8px;border:1px solid #EC4899;font-size:0.9rem;">
+                        dehydrate() — simpan snapshot ulang</div>
+                </div>
+            </div>
 
             <h3>Contoh mount() — Inisialisasi Data</h3>
 
@@ -447,6 +536,170 @@ php artisan make:livewire Counter</pre>
 <span class="code-tag">&lt;livewire:greeting</span> <span class="code-attribute">nama</span>=<span class="code-string">"Budi"</span> <span class="code-tag">/&gt;</span>
 
 <span class="code-comment">&lt;!-- Hasil di browser: "Selamat Pagi, Budi!" --&gt;</span></pre>
+                </div>
+            </div>
+
+            <!-- ==================== COMPUTED PROPERTIES ==================== -->
+
+            <h2>🧮 Computed Properties (Baru!)</h2>
+
+            <p>Kadang kamu butuh property yang <strong>nilainya dihitung dari property lain</strong>. Misalnya,
+                menampilkan "total harga" yang dihitung dari array belanja. Untuk ini, Livewire punya fitur
+                <strong>Computed Properties</strong>.</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">app/Livewire/KeranjangBelanja.php</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-keyword">use</span> Livewire\Attributes\Computed;
+
+<span class="code-keyword">class</span> <span class="code-class">KeranjangBelanja</span> <span class="code-keyword">extends</span> Component
+{
+    <span class="code-keyword">public</span> <span class="code-variable">$items</span> = [
+        [<span class="code-string">'nama'</span> => <span class="code-string">'Buku PHP'</span>, <span class="code-string">'harga'</span> => <span class="code-number">75000</span>],
+        [<span class="code-string">'nama'</span> => <span class="code-string">'Buku Laravel'</span>, <span class="code-string">'harga'</span> => <span class="code-number">95000</span>],
+    ];
+
+    <span class="code-comment">// Computed Property — dihitung otomatis!</span>
+    <span class="code-attribute">#[Computed]</span>
+    <span class="code-keyword">public function</span> <span class="code-function">totalHarga</span>()
+    {
+        <span class="code-keyword">return</span> collect(<span class="code-variable">$this</span>->items)->sum(<span class="code-string">'harga'</span>);
+    }
+
+    <span class="code-attribute">#[Computed]</span>
+    <span class="code-keyword">public function</span> <span class="code-function">jumlahItem</span>()
+    {
+        <span class="code-keyword">return</span> count(<span class="code-variable">$this</span>->items);
+    }
+}</pre>
+                </div>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">resources/views/livewire/keranjang-belanja.blade.php</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-tag">&lt;div&gt;</span>
+    <span class="code-tag">&lt;h3&gt;</span>🛒 Keranjang (<span class="code-blade">{{ $this->jumlahItem }}</span> item)<span class="code-tag">&lt;/h3&gt;</span>
+    <span class="code-tag">&lt;p&gt;</span>Total: Rp <span class="code-blade">{{ number_format($this->totalHarga) }}</span><span class="code-tag">&lt;/p&gt;</span>
+
+    <span class="code-comment">&lt;!-- Perhatikan: pakai $this-> bukan $totalHarga --&gt;</span>
+<span class="code-tag">&lt;/div&gt;</span></pre>
+                </div>
+            </div>
+
+            <div class="alert alert-warning">
+                <span class="alert-icon">⚠️</span>
+                <div>
+                    <h4>Perbedaan Penting!</h4>
+                    <ul style="margin-top:0.5rem;">
+                        <li><strong>Property biasa</strong> → akses dengan <code>{{ $nama }}</code></li>
+                        <li><strong>Computed property</strong> → akses dengan <code>{{ $this->totalHarga }}</code>
+                            (pakai <code>$this-></code>)</li>
+                    </ul>
+                    <p style="margin-top:0.5rem;">Computed property <strong>di-cache</strong> per render, jadi kalau
+                        dipanggil 3x di view, method-nya hanya dijalankan 1x. Hemat performa!</p>
+                </div>
+            </div>
+
+            <!-- ==================== DATA DARI RENDER ==================== -->
+
+            <h3>📤 Mengirim Data Tambahan dari render()</h3>
+
+            <p>Selain property, kamu juga bisa mengirim data dari <code>render()</code> ke view, mirip seperti
+                controller di Laravel biasa:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">app/Livewire/DaftarSiswa.php</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-keyword">public function</span> <span class="code-function">render</span>()
+{
+    <span class="code-comment">// Kirim data tambahan ke view</span>
+    <span class="code-keyword">return</span> view(<span class="code-string">'livewire.daftar-siswa'</span>, [
+        <span class="code-string">'siswa'</span> => Siswa::orderBy(<span class="code-string">'nama'</span>)->get(),
+        <span class="code-string">'totalSiswa'</span> => Siswa::count(),
+    ]);
+}</pre>
+                </div>
+            </div>
+
+            <div class="alert alert-tip">
+                <span class="alert-icon">💡</span>
+                <div>
+                    <h4>Kapan Pakai Apa?</h4>
+                    <ul style="margin-top:0.5rem;">
+                        <li><strong>Property public</strong> → untuk data yang bisa <em>diubah oleh user</em> (input
+                            form, counter, dll)</li>
+                        <li><strong>Data dari render()</strong> → untuk data yang <em>hanya ditampilkan</em> (daftar
+                            dari database, statistik)</li>
+                        <li><strong>Computed property</strong> → untuk <em>kalkulasi</em> dari property lain (total
+                            harga, rata-rata nilai)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- ==================== LAZY COMPONENTS ==================== -->
+
+            <h3>⏳ Lazy Components (Pengenalan)</h3>
+
+            <p>Kalau halaman punya banyak komponen Livewire, loading bisa lambat. Dengan <strong>Lazy
+                    Components</strong>, komponen bisa di-load <em>setelah halaman selesai dimuat</em>:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">app/Livewire/DaftarSiswa.php</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-keyword">use</span> Livewire\Attributes\Lazy;
+
+<span class="code-attribute">#[Lazy]</span>  <span class="code-comment">// Tambahkan ini saja!</span>
+<span class="code-keyword">class</span> <span class="code-class">DaftarSiswa</span> <span class="code-keyword">extends</span> Component
+{
+    <span class="code-comment">// ... kode seperti biasa</span>
+}</pre>
+                </div>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">Di halaman Blade</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-comment">&lt;!-- Komponen ini akan muncul setelah halaman selesai dimuat --&gt;</span>
+<span class="code-tag">&lt;livewire:daftar-siswa /&gt;</span>
+
+<span class="code-comment">&lt;!-- Saat loading, akan tampil placeholder --&gt;</span>
+<span class="code-comment">&lt;!-- Kamu bisa custom placeholder di method placeholder() --&gt;</span></pre>
+                </div>
+            </div>
+
+            <div class="alert alert-info">
+                <span class="alert-icon">📝</span>
+                <div>
+                    <h4>Catatan Guru RPL</h4>
+                    <p>Lazy Components berguna untuk halaman yang punya banyak komponen berat (misalnya: dashboard
+                        dengan chart + tabel + notifikasi). Untuk saat ini cukup tahu konsepnya saja, nanti praktikkan
+                        di materi lanjutan.</p>
                 </div>
             </div>
 
@@ -598,10 +851,10 @@ php artisan make:livewire Counter</pre>
                         <div class="nav-btn-title">← Pengenalan Livewire</div>
                     </div>
                 </a>
-                <a href="autentikasi.html" class="nav-btn">
+                <a href="../minggu-2/wire-model.html" class="nav-btn">
                     <div>
-                        <div class="nav-btn-label">Selanjutnya</div>
-                        <div class="nav-btn-title">🔐 Autentikasi →</div>
+                        <div class="nav-btn-label">Minggu 2</div>
+                        <div class="nav-btn-title">wire:model →</div>
                     </div>
                 </a>
             </div>

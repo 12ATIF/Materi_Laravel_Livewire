@@ -48,7 +48,6 @@
                     <li><a href="../minggu-1/blade-template.html">Blade Template</a></li>
                     <li><a href="../minggu-1/pengenalan-livewire.html">Pengenalan Livewire</a></li>
                     <li><a href="../minggu-1/struktur-component.html">Struktur Component</a></li>
-                    <li><a href="../minggu-1/autentikasi.html">🔐 Autentikasi</a></li>
                 </ul>
             </div>
             <div class="sidebar-section">
@@ -59,6 +58,8 @@
                     <li><a href="../minggu-2/database-eloquent.html">Database & Eloquent</a></li>
                     <li><a href="../minggu-2/validasi.html">Validasi</a></li>
                     <li><a href="../minggu-2/crud-sederhana.html">CRUD Sederhana</a></li>
+                    <li><a href="../minggu-2/autentikasi.html">🔐 Autentikasi</a></li>
+                    <li><a href="../minggu-2/lifecycle-events.html">🔄 Lifecycle & Events</a></li>
                 </ul>
             </div>
             <div class="sidebar-section">
@@ -68,6 +69,7 @@
                     <li><a href="pagination-search.html">Pagination & Search</a></li>
                     <li><a href="komponen-reusable.html">Komponen Reusable</a></li>
                     <li><a href="tampilan-dinamis.html">Tampilan Dinamis</a></li>
+                                        <li><a href="form-object.html">📋 Form Objects</a></li>
                     <li><a href="project-elibrary.html">📚 Tutorial E-Library</a></li>
                 </ul>
             </div>
@@ -335,6 +337,100 @@
                 </div>
             </div>
 
+            <!-- ==================== MULTIPLE UPLOAD ==================== -->
+
+            <h2>📎 Upload Multiple Files</h2>
+
+            <p>Livewire juga mendukung upload <strong>banyak file sekaligus</strong>:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">Multiple File Upload</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-comment">// Di class PHP</span>
+<span class="code-keyword">public</span> <span class="code-variable">$photos</span> = [];  <span class="code-comment">// Array, bukan single</span>
+
+<span class="code-keyword">protected</span> <span class="code-variable">$rules</span> = [
+    <span class="code-string">'photos'</span>   => <span class="code-string">'required'</span>,
+    <span class="code-string">'photos.*'</span> => <span class="code-string">'image|max:2048'</span>,  <span class="code-comment">// Validasi TIAP file</span>
+];
+
+<span class="code-keyword">public function</span> <span class="code-function">save</span>()
+{
+    <span class="code-variable">$this</span>->validate();
+    <span class="code-keyword">foreach</span> (<span class="code-variable">$this</span>->photos <span class="code-keyword">as</span> <span class="code-variable">$photo</span>) {
+        <span class="code-variable">$photo</span>->store(<span class="code-string">'gallery'</span>, <span class="code-string">'public'</span>);
+    }
+}
+
+<span class="code-comment">// Di view (tambahkan "multiple")</span>
+<span class="code-tag">&lt;input</span> <span class="code-attribute">type</span>=<span class="code-string">"file"</span> <span class="code-attribute">wire:model</span>=<span class="code-string">"photos"</span> <span class="code-attribute">multiple</span> <span class="code-attribute">accept</span>=<span class="code-string">"image/*"</span><span class="code-tag">&gt;</span>
+
+<span class="code-comment">&lt;!-- Preview semua file --&gt;</span>
+<span class="code-keyword">@foreach</span>(<span class="code-variable">$photos</span> as <span class="code-variable">$photo</span>)
+    <span class="code-tag">&lt;img</span> <span class="code-attribute">src</span>=<span class="code-string">"{{ $photo->temporaryUrl() }}"</span> <span class="code-attribute">style</span>=<span class="code-string">"width:100px"</span><span class="code-tag">&gt;</span>
+<span class="code-keyword">@endforeach</span></pre>
+                </div>
+            </div>
+
+            <div class="alert alert-tip">
+                <span class="alert-icon">💡</span>
+                <div>
+                    <h4>Perhatikan: photos.* (wildcard)</h4>
+                    <p>Rule <code>'photos.*'</code> artinya "validasi <strong>setiap item</strong> di dalam array
+                        photos". Tanda <code>*</code> = wildcard untuk semua index.</p>
+                </div>
+            </div>
+
+            <!-- ==================== PROGRESS ==================== -->
+
+            <h3>📊 Upload Progress Indicator</h3>
+
+            <p>Untuk file besar, tunjukkan <strong>progress bar</strong> agar user tahu proses upload-nya:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">Progress bar menggunakan Alpine.js + Livewire events</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-tag">&lt;div</span>
+    <span class="code-attribute">x-data</span>=<span class="code-string">"{ uploading: false, progress: 0 }"</span>
+    <span class="code-attribute">x-on:livewire-upload-start</span>=<span class="code-string">"uploading = true"</span>
+    <span class="code-attribute">x-on:livewire-upload-finish</span>=<span class="code-string">"uploading = false"</span>
+    <span class="code-attribute">x-on:livewire-upload-cancel</span>=<span class="code-string">"uploading = false"</span>
+    <span class="code-attribute">x-on:livewire-upload-error</span>=<span class="code-string">"uploading = false"</span>
+    <span class="code-attribute">x-on:livewire-upload-progress</span>=<span class="code-string">"progress = $event.detail.progress"</span>
+<span class="code-tag">&gt;</span>
+    <span class="code-tag">&lt;input</span> <span class="code-attribute">type</span>=<span class="code-string">"file"</span> <span class="code-attribute">wire:model</span>=<span class="code-string">"cover"</span><span class="code-tag">&gt;</span>
+
+    <span class="code-comment">&lt;!-- Progress Bar --&gt;</span>
+    <span class="code-tag">&lt;div</span> <span class="code-attribute">x-show</span>=<span class="code-string">"uploading"</span><span class="code-tag">&gt;</span>
+        <span class="code-tag">&lt;div</span> <span class="code-attribute">style</span>=<span class="code-string">"background:#E5E7EB;border-radius:8px;overflow:hidden;height:8px"</span><span class="code-tag">&gt;</span>
+            <span class="code-tag">&lt;div</span> <span class="code-attribute">:style</span>=<span class="code-string">"'width:'+progress+'%;background:#3B82F6;height:100%'"</span><span class="code-tag">&gt;&lt;/div&gt;</span>
+        <span class="code-tag">&lt;/div&gt;</span>
+        <span class="code-tag">&lt;span</span> <span class="code-attribute">x-text</span>=<span class="code-string">"progress+'%'"</span><span class="code-tag">&gt;&lt;/span&gt;</span>
+    <span class="code-tag">&lt;/div&gt;</span>
+<span class="code-tag">&lt;/div&gt;</span></pre>
+                </div>
+            </div>
+
+            <div class="alert alert-info">
+                <span class="alert-icon">📝</span>
+                <div>
+                    <h4>Catatan Guru RPL</h4>
+                    <p>Progress indicator ini menggunakan <strong>Alpine.js</strong> (sudah termasuk di Livewire v3).
+                        Event <code>livewire-upload-progress</code> otomatis dikirim oleh Livewire selama proses upload.
+                    </p>
+                </div>
+            </div>
+
             <div class="common-mistakes">
                 <h3>⚠️ Kesalahan Umum Pemula</h3>
                 <div class="mistake-item">
@@ -393,10 +489,10 @@
             </div>
 
             <div class="content-nav">
-                <a href="../minggu-2/crud-sederhana.html" class="nav-btn">
+                <a href="../minggu-2/autentikasi.html" class="nav-btn">
                     <div>
                         <div class="nav-btn-label">Sebelumnya</div>
-                        <div class="nav-btn-title">← CRUD Sederhana</div>
+                        <div class="nav-btn-title">← 🔐 Autentikasi</div>
                     </div>
                 </a>
                 <a href="pagination-search.html" class="nav-btn">

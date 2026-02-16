@@ -48,7 +48,6 @@
                     <li><a href="../minggu-1/blade-template.html">Blade Template</a></li>
                     <li><a href="../minggu-1/pengenalan-livewire.html">Pengenalan Livewire</a></li>
                     <li><a href="../minggu-1/struktur-component.html">Struktur Component</a></li>
-                    <li><a href="../minggu-1/autentikasi.html">🔐 Autentikasi</a></li>
                 </ul>
             </div>
             <div class="sidebar-section">
@@ -59,6 +58,8 @@
                     <li><a href="../minggu-2/database-eloquent.html">Database & Eloquent</a></li>
                     <li><a href="../minggu-2/validasi.html">Validasi</a></li>
                     <li><a href="../minggu-2/crud-sederhana.html">CRUD Sederhana</a></li>
+                    <li><a href="../minggu-2/autentikasi.html">🔐 Autentikasi</a></li>
+                    <li><a href="../minggu-2/lifecycle-events.html">🔄 Lifecycle & Events</a></li>
                 </ul>
             </div>
             <div class="sidebar-section">
@@ -68,6 +69,7 @@
                     <li><a href="pagination-search.html">Pagination & Search</a></li>
                     <li><a href="komponen-reusable.html" class="active">Komponen Reusable</a></li>
                     <li><a href="tampilan-dinamis.html">Tampilan Dinamis</a></li>
+                                        <li><a href="form-object.html">📋 Form Objects</a></li>
                     <li><a href="project-elibrary.html">📚 Tutorial E-Library</a></li>
                 </ul>
             </div>
@@ -363,6 +365,125 @@
                     <td><code>app/Livewire/</code> + <code>views/livewire/</code></td>
                 </tr>
             </table>
+
+            <!-- ==================== NAMED SLOTS ==================== -->
+
+            <h2>🏷️ Named Slots — Konten Multi-Bagian</h2>
+
+            <p>Kadang satu <code>$slot</code> tidak cukup. Misalnya modal yang punya <strong>header, body, dan
+                    footer</strong> terpisah. Gunakan <strong>named slots</strong>!</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">resources/views/components/card.blade.php — Named Slots</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-keyword">@props</span>([<span class="code-string">'title'</span> => <span class="code-string">''</span>])
+
+<span class="code-tag">&lt;div</span> <span class="code-attribute">style</span>=<span class="code-string">"border:1px solid #E5E7EB;border-radius:12px;overflow:hidden"</span><span class="code-tag">&gt;</span>
+    <span class="code-comment">&lt;!-- Header --&gt;</span>
+    <span class="code-tag">&lt;div</span> <span class="code-attribute">style</span>=<span class="code-string">"padding:1rem;background:#F9FAFB;border-bottom:1px solid #E5E7EB"</span><span class="code-tag">&gt;</span>
+        <span class="code-tag">&lt;h3&gt;</span>{{ <span class="code-variable">$title</span> }}<span class="code-tag">&lt;/h3&gt;</span>
+    <span class="code-tag">&lt;/div&gt;</span>
+
+    <span class="code-comment">&lt;!-- Body — default slot --&gt;</span>
+    <span class="code-tag">&lt;div</span> <span class="code-attribute">style</span>=<span class="code-string">"padding:1rem"</span><span class="code-tag">&gt;</span>
+        {{ <span class="code-variable">$slot</span> }}
+    <span class="code-tag">&lt;/div&gt;</span>
+
+    <span class="code-comment">&lt;!-- Footer — named slot --&gt;</span>
+    <span class="code-keyword">@isset</span>(<span class="code-variable">$footer</span>)
+        <span class="code-tag">&lt;div</span> <span class="code-attribute">style</span>=<span class="code-string">"padding:1rem;background:#F9FAFB;border-top:1px solid #E5E7EB"</span><span class="code-tag">&gt;</span>
+            {{ <span class="code-variable">$footer</span> }}
+        <span class="code-tag">&lt;/div&gt;</span>
+    <span class="code-keyword">@endisset</span>
+<span class="code-tag">&lt;/div&gt;</span></pre>
+                </div>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">Cara pakai Named Slots</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-tag">&lt;x-card</span> <span class="code-attribute">title</span>=<span class="code-string">"📚 Daftar Buku"</span><span class="code-tag">&gt;</span>
+    <span class="code-comment">&lt;!-- Default slot → masuk ke $slot --&gt;</span>
+    <span class="code-tag">&lt;p&gt;</span>Total: 42 buku<span class="code-tag">&lt;/p&gt;</span>
+    <span class="code-tag">&lt;table&gt;</span>...<span class="code-tag">&lt;/table&gt;</span>
+
+    <span class="code-comment">&lt;!-- Named slot → masuk ke $footer --&gt;</span>
+    <span class="code-tag">&lt;x-slot:footer&gt;</span>
+        <span class="code-tag">&lt;button&gt;</span>📥 Export PDF<span class="code-tag">&lt;/button&gt;</span>
+        <span class="code-tag">&lt;button&gt;</span>➕ Tambah Buku<span class="code-tag">&lt;/button&gt;</span>
+    <span class="code-tag">&lt;/x-slot:footer&gt;</span>
+<span class="code-tag">&lt;/x-card&gt;</span></pre>
+                </div>
+            </div>
+
+            <div class="alert alert-tip">
+                <span class="alert-icon">💡</span>
+                <div>
+                    <h4>Kapan Pakai Named Slots?</h4>
+                    <ul style="margin-top:0.5rem;">
+                        <li><code>$slot</code> → untuk bagian utama (body/konten)</li>
+                        <li><code>$header</code>, <code>$footer</code>, <code>$actions</code> → untuk bagian tambahan
+                            yang opsional</li>
+                        <li>Gunakan <code>@isset($footer)</code> agar slot opsional — tidak error jika tidak diisi</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- ==================== NESTING LIVEWIRE ==================== -->
+
+            <h2>🪆 Nesting Livewire Components</h2>
+
+            <p>Livewire component bisa <strong>dimuat di dalam</strong> Livewire component lain. Setiap komponen punya
+                <strong>state independen</strong> — tidak saling mengganggu!</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">Nesting Livewire Components</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-comment">&lt;!-- Parent: halaman-buku.blade.php --&gt;</span>
+<span class="code-tag">&lt;div&gt;</span>
+    <span class="code-tag">&lt;h1&gt;</span>📚 Manajemen Buku<span class="code-tag">&lt;/h1&gt;</span>
+
+    <span class="code-comment">&lt;!-- Child 1: Form tambah buku --&gt;</span>
+    <span class="code-tag">&lt;livewire:book-form /&gt;</span>
+
+    <span class="code-comment">&lt;!-- Child 2: Tabel daftar buku --&gt;</span>
+    <span class="code-tag">&lt;livewire:book-table /&gt;</span>
+
+    <span class="code-comment">&lt;!-- Child 3: Statistik --&gt;</span>
+    <span class="code-tag">&lt;livewire:book-stats /&gt;</span>
+<span class="code-tag">&lt;/div&gt;</span>
+
+<span class="code-comment">&lt;!-- Dengan key (PENTING saat rendering loop) --&gt;</span>
+<span class="code-keyword">@foreach</span>(<span class="code-variable">$books</span> as <span class="code-variable">$book</span>)
+    <span class="code-tag">&lt;livewire:book-card</span> <span class="code-attribute">:book</span>=<span class="code-string">"$book"</span> <span class="code-attribute">:key</span>=<span class="code-string">"$book->id"</span> <span class="code-tag">/&gt;</span>
+<span class="code-keyword">@endforeach</span></pre>
+                </div>
+            </div>
+
+            <div class="alert alert-warning">
+                <span class="alert-icon">⚠️</span>
+                <div>
+                    <h4>Catatan Guru RPL — :key Wajib di Loop!</h4>
+                    <p>Saat merender Livewire component di dalam <code>@foreach</code>, WAJIB tambahkan
+                        <code>:key</code> yang unik. Tanpa key, Livewire bingung membedakan instance satu dengan yang
+                        lain.</p>
+                </div>
+            </div>
 
             <div class="common-mistakes">
                 <h3>⚠️ Kesalahan Umum Pemula</h3>

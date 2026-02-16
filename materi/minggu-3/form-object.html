@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Objects - Minggu 3 | Livewire SMK</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../../css/style.css">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="../../index.html" class="navbar-logo">
+                <svg viewBox="0 0 50 50" fill="none">
+                    <rect width="50" height="50" rx="12" fill="url(#g)" />
+                    <path d="M15 35V15L25 25L35 15V35" stroke="#fff" stroke-width="3" />
+                    <defs>
+                        <linearGradient id="g" x1="0" y1="0" x2="50" y2="50">
+                            <stop stop-color="#10B981" />
+                            <stop offset="1" stop-color="#3B82F6" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <span>Livewire SMK</span>
+            </a>
+            <ul class="navbar-menu">
+                <li><a href="../../index.html">Beranda</a></li>
+                <li><a href="../../silabus.html">Silabus</a></li>
+                <li><a href="../minggu-1/pengenalan-laravel.html" class="active">Materi</a></li>
+                <li><a href="../../demo.html">Demo</a></li>
+            </ul>
+            <button class="navbar-toggle" aria-label="Toggle menu"><span>☰</span></button>
+        </div>
+    </nav>
+
+    <div class="content-layout">
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <div class="sidebar-title">📗 Minggu 1</div>
+                <ul class="sidebar-nav">
+                    <li><a href="../minggu-1/pengenalan-laravel.html">Pengenalan Laravel</a></li>
+                    <li><a href="../minggu-1/mvc-sederhana.html">MVC Sederhana</a></li>
+                    <li><a href="../minggu-1/instalasi-laravel.html">Instalasi Laravel</a></li>
+                    <li><a href="../minggu-1/blade-template.html">Blade Template</a></li>
+                    <li><a href="../minggu-1/pengenalan-livewire.html">Pengenalan Livewire</a></li>
+                    <li><a href="../minggu-1/struktur-component.html">Struktur Component</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-title">📘 Minggu 2</div>
+                <ul class="sidebar-nav">
+                    <li><a href="../minggu-2/wire-model.html">wire:model</a></li>
+                    <li><a href="../minggu-2/wire-click.html">wire:click</a></li>
+                    <li><a href="../minggu-2/database-eloquent.html">Database & Eloquent</a></li>
+                    <li><a href="../minggu-2/validasi.html">Validasi</a></li>
+                    <li><a href="../minggu-2/crud-sederhana.html">CRUD Sederhana</a></li>
+                    <li><a href="../minggu-2/autentikasi.html">🔐 Autentikasi</a></li>
+                    <li><a href="../minggu-2/lifecycle-events.html">🔄 Lifecycle & Events</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-title">📕 Minggu 3</div>
+                <ul class="sidebar-nav">
+                    <li><a href="upload-file.html">Upload File</a></li>
+                    <li><a href="pagination-search.html">Pagination & Search</a></li>
+                    <li><a href="komponen-reusable.html">Komponen Reusable</a></li>
+                    <li><a href="tampilan-dinamis.html">Tampilan Dinamis</a></li>
+                    <li><a href="form-object.html" class="active">📋 Form Objects</a></li>
+                    <li><a href="project-elibrary.html">📚 Tutorial E-Library</a></li>
+                </ul>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="content-header">
+                <div class="content-breadcrumb">
+                    <a href="../../index.html">Beranda</a> / <a href="../../silabus.html">Silabus</a> / Minggu 3 /
+                    Form Objects
+                </div>
+                <h1 class="content-title">3.5 Form Objects — Organisasi Form Profesional</h1>
+                <div class="content-meta">
+                    <span>📕 Minggu 3</span>
+                    <span>⏱️ 30 menit</span>
+                    <span>📖 Teori + Praktik</span>
+                </div>
+            </div>
+
+            <!-- Prasyarat -->
+            <div class="prerequisites">
+                <h3>📌 Prasyarat</h3>
+                <ul>
+                    <li>Sudah paham <a href="../minggu-2/wire-model.html">wire:model</a> (binding data ke form)</li>
+                    <li>Sudah paham <a href="../minggu-2/validasi.html">Validasi</a> (rules, messages, validate())</li>
+                    <li>Sudah paham <a href="../minggu-2/crud-sederhana.html">CRUD Sederhana</a> (create, read, update,
+                        delete)</li>
+                </ul>
+            </div>
+
+            <!-- Tujuan Belajar -->
+            <div class="objectives">
+                <h3>🎯 Tujuan Belajar</h3>
+                <p>Setelah menyelesaikan materi ini, kamu akan mampu:</p>
+                <ul>
+                    <li>Memahami <strong>masalah</strong> yang dipecahkan oleh Form Objects</li>
+                    <li>Membuat Form Object menggunakan <code>php artisan livewire:form</code></li>
+                    <li>Memindahkan <strong>property dan rules</strong> dari komponen ke Form Object</li>
+                    <li>Menggunakan <code>fill()</code>, <code>validate()</code>, dan <code>reset()</code> di Form
+                        Object</li>
+                    <li>Membuat form <strong>Create dan Edit</strong> yang bersih dan terorganisir</li>
+                </ul>
+            </div>
+
+            <!-- ==================== MASALAH ==================== -->
+
+            <h2>😵 Masalah: Komponen Jadi "Gemuk"</h2>
+
+            <p>Perhatikan komponen CRUD yang sudah kita buat sebelumnya. Semua property form, validation rules, dan
+                logika penyimpanan ada di <strong>satu class</strong>:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">❌ Komponen "Gemuk" — Sebelum Form Objects</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-keyword">class</span> <span class="code-class">ManajemenBuku</span> <span class="code-keyword">extends</span> Component
+{
+    <span class="code-comment">// 😵 Property form — makin banyak field, makin panjang</span>
+    <span class="code-keyword">public</span> <span class="code-variable">$judul</span> = <span class="code-string">''</span>;
+    <span class="code-keyword">public</span> <span class="code-variable">$penulis</span> = <span class="code-string">''</span>;
+    <span class="code-keyword">public</span> <span class="code-variable">$isbn</span> = <span class="code-string">''</span>;
+    <span class="code-keyword">public</span> <span class="code-variable">$tahun</span> = <span class="code-string">''</span>;
+    <span class="code-keyword">public</span> <span class="code-variable">$kategori</span> = <span class="code-string">''</span>;
+    <span class="code-keyword">public</span> <span class="code-variable">$stok</span> = <span class="code-number">0</span>;
+    <span class="code-keyword">public</span> <span class="code-variable">$deskripsi</span> = <span class="code-string">''</span>;
+
+    <span class="code-comment">// 😵 Juga punya property state</span>
+    <span class="code-keyword">public</span> <span class="code-variable">$isEditing</span> = <span class="code-keyword">false</span>;
+    <span class="code-keyword">public</span> <span class="code-variable">$editId</span>;
+    <span class="code-keyword">public</span> <span class="code-variable">$search</span> = <span class="code-string">''</span>;
+
+    <span class="code-comment">// 😵 Rules validasi campur jadi satu</span>
+    <span class="code-keyword">protected</span> <span class="code-variable">$rules</span> = [
+        <span class="code-string">'judul'</span> => <span class="code-string">'required|min:3'</span>,
+        <span class="code-string">'penulis'</span> => <span class="code-string">'required'</span>,
+        <span class="code-string">'isbn'</span> => <span class="code-string">'required|unique:bukus'</span>,
+        <span class="code-comment">// ... dsb</span>
+    ];
+
+    <span class="code-comment">// 😵 Method simpan + update + delete + search</span>
+    <span class="code-comment">// File jadi 100+ baris — susah dibaca!</span>
+}</pre>
+                </div>
+            </div>
+
+            <div class="alert alert-warning">
+                <span class="alert-icon">📢</span>
+                <div>
+                    <h4>Catatan Guru RPL — Prinsip Clean Code</h4>
+                    <p>Di dunia kerja, kode yang "berhasil jalan" saja <strong>tidak cukup</strong>. Kode harus
+                        <strong>mudah dibaca, dipahami, dan dimaintain</strong> oleh orang lain. Kalau satu class punya
+                        100+ baris dan banyak tanggung jawab, itu tanda harus dipecah. Ini disebut prinsip
+                        <strong>Single Responsibility Principle (SRP)</strong>.</p>
+                </div>
+            </div>
+
+            <!-- ==================== SOLUSI ==================== -->
+
+            <h2>✅ Solusi: Livewire Form Objects</h2>
+
+            <p>Form Objects memisahkan <strong>logika form</strong> (property, rules, messages) ke class tersendiri.
+                Komponen jadi bersih, form bisa dipakai ulang (reusable)!</p>
+
+            <h3>🛠️ Membuat Form Object</h3>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">Terminal</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-comment"># Buat Form Object baru</span>
+php artisan livewire:form BukuForm
+
+<span class="code-comment"># File akan dibuat di: app/Livewire/Forms/BukuForm.php</span></pre>
+                </div>
+            </div>
+
+            <h3>📋 Struktur Form Object</h3>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">app/Livewire/Forms/BukuForm.php</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-keyword">namespace</span> App\Livewire\Forms;
+
+<span class="code-keyword">use</span> Livewire\Form;
+<span class="code-keyword">use</span> Livewire\Attributes\Validate;
+
+<span class="code-keyword">class</span> <span class="code-class">BukuForm</span> <span class="code-keyword">extends</span> Form
+{
+    <span class="code-comment">// Property dengan validasi inline</span>
+    <span class="code-attribute">#[Validate('required|min:3', message: 'Judul harus diisi minimal 3 karakter')]</span>
+    <span class="code-keyword">public</span> <span class="code-variable">$judul</span> = <span class="code-string">''</span>;
+
+    <span class="code-attribute">#[Validate('required', message: 'Penulis harus diisi')]</span>
+    <span class="code-keyword">public</span> <span class="code-variable">$penulis</span> = <span class="code-string">''</span>;
+
+    <span class="code-attribute">#[Validate('required|unique:bukus,isbn', message: 'ISBN harus unik')]</span>
+    <span class="code-keyword">public</span> <span class="code-variable">$isbn</span> = <span class="code-string">''</span>;
+
+    <span class="code-attribute">#[Validate('required|integer|min:1900|max:2030')]</span>
+    <span class="code-keyword">public</span> <span class="code-variable">$tahun</span> = <span class="code-string">''</span>;
+
+    <span class="code-attribute">#[Validate('required')]</span>
+    <span class="code-keyword">public</span> <span class="code-variable">$kategori</span> = <span class="code-string">''</span>;
+
+    <span class="code-attribute">#[Validate('required|integer|min:0')]</span>
+    <span class="code-keyword">public</span> <span class="code-variable">$stok</span> = <span class="code-number">0</span>;
+
+    <span class="code-attribute">#[Validate('nullable|max:500')]</span>
+    <span class="code-keyword">public</span> <span class="code-variable">$deskripsi</span> = <span class="code-string">''</span>;
+}</pre>
+                </div>
+            </div>
+
+            <div class="alert alert-tip">
+                <span class="alert-icon">💡</span>
+                <div>
+                    <h4>Perhatikan Perbedaannya!</h4>
+                    <ul style="margin-top:0.5rem;">
+                        <li>Form Object <strong>extends Form</strong>, bukan <code>extends Component</code></li>
+                        <li>Validasi menggunakan <strong>#[Validate]</strong> attribute langsung di atas property</li>
+                        <li>Hanya berisi property dan rules — <strong>tidak ada render()</strong></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- ==================== PENGGUNAAN ==================== -->
+
+            <h3>🔌 Menggunakan Form Object di Komponen</h3>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">app/Livewire/ManajemenBuku.php — ✅ Setelah Form Objects</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-keyword">use</span> App\Livewire\Forms\BukuForm;
+
+<span class="code-keyword">class</span> <span class="code-class">ManajemenBuku</span> <span class="code-keyword">extends</span> Component
+{
+    <span class="code-comment">// ✅ Satu property saja menggantikan 7 property!</span>
+    <span class="code-keyword">public</span> BukuForm <span class="code-variable">$form</span>;
+
+    <span class="code-keyword">public</span> <span class="code-variable">$search</span> = <span class="code-string">''</span>;
+
+    <span class="code-keyword">public function</span> <span class="code-function">simpan</span>()
+    {
+        <span class="code-comment">// ✅ Validasi semua field sekaligus</span>
+        <span class="code-variable">$this</span>->form->validate();
+
+        <span class="code-comment">// ✅ Ambil semua data dari form</span>
+        Buku::create(
+            <span class="code-variable">$this</span>->form->all()
+        );
+
+        <span class="code-comment">// ✅ Reset form dalam 1 baris</span>
+        <span class="code-variable">$this</span>->form->reset();
+
+        session()->flash(<span class="code-string">'message'</span>, <span class="code-string">'Buku berhasil ditambahkan!'</span>);
+    }
+}</pre>
+                </div>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">resources/views/livewire/manajemen-buku.blade.php</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-tag">&lt;div&gt;</span>
+    <span class="code-tag">&lt;form</span> <span class="code-attribute">wire:submit</span>=<span class="code-string">"simpan"</span><span class="code-tag">&gt;</span>
+        <span class="code-comment">&lt;!-- Perhatikan: wire:model="form.judul" bukan "judul" --&gt;</span>
+        <span class="code-tag">&lt;input</span> <span class="code-attribute">wire:model</span>=<span class="code-string">"form.judul"</span> <span class="code-attribute">placeholder</span>=<span class="code-string">"Judul Buku"</span><span class="code-tag">&gt;</span>
+        <span class="code-keyword">@error</span>(<span class="code-string">'form.judul'</span>) <span class="code-tag">&lt;span style="color:red"&gt;</span>{{ <span class="code-variable">$message</span> }}<span class="code-tag">&lt;/span&gt;</span> <span class="code-keyword">@enderror</span>
+
+        <span class="code-tag">&lt;input</span> <span class="code-attribute">wire:model</span>=<span class="code-string">"form.penulis"</span> <span class="code-attribute">placeholder</span>=<span class="code-string">"Penulis"</span><span class="code-tag">&gt;</span>
+        <span class="code-keyword">@error</span>(<span class="code-string">'form.penulis'</span>) <span class="code-tag">&lt;span style="color:red"&gt;</span>{{ <span class="code-variable">$message</span> }}<span class="code-tag">&lt;/span&gt;</span> <span class="code-keyword">@enderror</span>
+
+        <span class="code-tag">&lt;input</span> <span class="code-attribute">wire:model</span>=<span class="code-string">"form.isbn"</span> <span class="code-attribute">placeholder</span>=<span class="code-string">"ISBN"</span><span class="code-tag">&gt;</span>
+        <span class="code-tag">&lt;input</span> <span class="code-attribute">wire:model</span>=<span class="code-string">"form.tahun"</span> <span class="code-attribute">type</span>=<span class="code-string">"number"</span> <span class="code-attribute">placeholder</span>=<span class="code-string">"Tahun"</span><span class="code-tag">&gt;</span>
+
+        <span class="code-tag">&lt;select</span> <span class="code-attribute">wire:model</span>=<span class="code-string">"form.kategori"</span><span class="code-tag">&gt;</span>
+            <span class="code-tag">&lt;option value=""&gt;</span>-- Pilih Kategori --<span class="code-tag">&lt;/option&gt;</span>
+            <span class="code-tag">&lt;option value="fiksi"&gt;</span>Fiksi<span class="code-tag">&lt;/option&gt;</span>
+            <span class="code-tag">&lt;option value="sains"&gt;</span>Sains<span class="code-tag">&lt;/option&gt;</span>
+            <span class="code-tag">&lt;option value="sejarah"&gt;</span>Sejarah<span class="code-tag">&lt;/option&gt;</span>
+        <span class="code-tag">&lt;/select&gt;</span>
+
+        <span class="code-tag">&lt;button</span> <span class="code-attribute">type</span>=<span class="code-string">"submit"</span><span class="code-tag">&gt;</span>💾 Simpan Buku<span class="code-tag">&lt;/button&gt;</span>
+    <span class="code-tag">&lt;/form&gt;</span>
+<span class="code-tag">&lt;/div&gt;</span></pre>
+                </div>
+            </div>
+
+            <div class="alert alert-warning">
+                <span class="alert-icon">⚠️</span>
+                <div>
+                    <h4>Perhatikan Prefix "form."!</h4>
+                    <p>Saat menggunakan Form Object, semua <code>wire:model</code> dan <code>@error</code> harus pakai
+                        prefix <strong>form.</strong>:</p>
+                    <ul style="margin-top:0.5rem;">
+                        <li>Sebelum: <code>wire:model="judul"</code> → Sesudah: <code>wire:model="form.judul"</code>
+                        </li>
+                        <li>Sebelum: <code>@error('judul')</code> → Sesudah: <code>@error('form.judul')</code></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- ==================== EDIT MODE ==================== -->
+
+            <h2>✏️ Form Object untuk Edit (fill)</h2>
+
+            <p>Salah satu keunggulan Form Object adalah method <code>fill()</code> untuk mengisi data dari model
+                Eloquent saat mode edit:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">app/Livewire/Forms/BukuForm.php — Tambahan method</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-keyword">class</span> <span class="code-class">BukuForm</span> <span class="code-keyword">extends</span> Form
+{
+    <span class="code-keyword">public</span> ?Buku <span class="code-variable">$buku</span>;  <span class="code-comment">// Model yang sedang diedit</span>
+
+    <span class="code-comment">// ... property dan validate seperti sebelumnya ...</span>
+
+    <span class="code-comment">// Method untuk set data dari model ke form</span>
+    <span class="code-keyword">public function</span> <span class="code-function">setBuku</span>(Buku <span class="code-variable">$buku</span>)
+    {
+        <span class="code-variable">$this</span>->buku = <span class="code-variable">$buku</span>;
+
+        <span class="code-comment">// fill() mengisi semua property dari model</span>
+        <span class="code-variable">$this</span>->fill(
+            <span class="code-variable">$buku</span>->only([<span class="code-string">'judul'</span>, <span class="code-string">'penulis'</span>, <span class="code-string">'isbn'</span>, <span class="code-string">'tahun'</span>, <span class="code-string">'kategori'</span>, <span class="code-string">'stok'</span>, <span class="code-string">'deskripsi'</span>])
+        );
+    }
+
+    <span class="code-comment">// Method untuk update data</span>
+    <span class="code-keyword">public function</span> <span class="code-function">update</span>()
+    {
+        <span class="code-variable">$this</span>->validate();
+
+        <span class="code-variable">$this</span>->buku->update(
+            <span class="code-variable">$this</span>->all()
+        );
+    }
+
+    <span class="code-comment">// Method untuk create data</span>
+    <span class="code-keyword">public function</span> <span class="code-function">store</span>()
+    {
+        <span class="code-variable">$this</span>->validate();
+
+        <span class="code-keyword">return</span> Buku::create(
+            <span class="code-variable">$this</span>->all()
+        );
+    }
+}</pre>
+                </div>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">app/Livewire/ManajemenBuku.php — Create & Edit</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-keyword">class</span> <span class="code-class">ManajemenBuku</span> <span class="code-keyword">extends</span> Component
+{
+    <span class="code-keyword">public</span> BukuForm <span class="code-variable">$form</span>;
+    <span class="code-keyword">public</span> <span class="code-variable">$showForm</span> = <span class="code-keyword">false</span>;
+    <span class="code-keyword">public</span> <span class="code-variable">$isEditing</span> = <span class="code-keyword">false</span>;
+
+    <span class="code-comment">// Buka form untuk tambah buku baru</span>
+    <span class="code-keyword">public function</span> <span class="code-function">create</span>()
+    {
+        <span class="code-variable">$this</span>->form->reset();  <span class="code-comment">// Kosongkan form</span>
+        <span class="code-variable">$this</span>->isEditing = <span class="code-keyword">false</span>;
+        <span class="code-variable">$this</span>->showForm = <span class="code-keyword">true</span>;
+    }
+
+    <span class="code-comment">// Buka form untuk edit buku</span>
+    <span class="code-keyword">public function</span> <span class="code-function">edit</span>(Buku <span class="code-variable">$buku</span>)
+    {
+        <span class="code-variable">$this</span>->form->setBuku(<span class="code-variable">$buku</span>);  <span class="code-comment">// Isi form dari model</span>
+        <span class="code-variable">$this</span>->isEditing = <span class="code-keyword">true</span>;
+        <span class="code-variable">$this</span>->showForm = <span class="code-keyword">true</span>;
+    }
+
+    <span class="code-comment">// Simpan (create atau update)</span>
+    <span class="code-keyword">public function</span> <span class="code-function">simpan</span>()
+    {
+        <span class="code-keyword">if</span> (<span class="code-variable">$this</span>->isEditing) {
+            <span class="code-variable">$this</span>->form->update();
+            session()->flash(<span class="code-string">'message'</span>, <span class="code-string">'Buku berhasil diupdate!'</span>);
+        } <span class="code-keyword">else</span> {
+            <span class="code-variable">$this</span>->form->store();
+            session()->flash(<span class="code-string">'message'</span>, <span class="code-string">'Buku berhasil ditambahkan!'</span>);
+        }
+
+        <span class="code-variable">$this</span>->showForm = <span class="code-keyword">false</span>;
+        <span class="code-variable">$this</span>->form->reset();
+    }
+}</pre>
+                </div>
+            </div>
+
+            <!-- ==================== PERBANDINGAN ==================== -->
+
+            <h2>⚖️ Perbandingan: Tanpa vs Dengan Form Object</h2>
+
+            <table class="comparison-table">
+                <tr>
+                    <th>Aspek</th>
+                    <th>❌ Tanpa Form Object</th>
+                    <th>✅ Dengan Form Object</th>
+                </tr>
+                <tr>
+                    <td><strong>Property</strong></td>
+                    <td>7+ property di komponen</td>
+                    <td>1 property (<code>$form</code>)</td>
+                </tr>
+                <tr>
+                    <td><strong>Validasi</strong></td>
+                    <td>Array $rules di komponen</td>
+                    <td>#[Validate] di Form class</td>
+                </tr>
+                <tr>
+                    <td><strong>Reset</strong></td>
+                    <td><code>$this->reset(['judul', 'penulis', ...])</code></td>
+                    <td><code>$this->form->reset()</code></td>
+                </tr>
+                <tr>
+                    <td><strong>Fill (Edit)</strong></td>
+                    <td>Set 1-1 manual</td>
+                    <td><code>$this->form->fill($data)</code></td>
+                </tr>
+                <tr>
+                    <td><strong>Reusable</strong></td>
+                    <td>Tidak — terikat ke komponen</td>
+                    <td>Ya — bisa dipakai di komponen lain</td>
+                </tr>
+                <tr>
+                    <td><strong>Membaca Kode</strong></td>
+                    <td>Campur aduk — susah dibaca</td>
+                    <td>Terpisah rapi — mudah dipahami</td>
+                </tr>
+            </table>
+
+            <div class="alert alert-info">
+                <span class="alert-icon">📢</span>
+                <div>
+                    <h4>Catatan Guru RPL — Kapan Pakai Form Object?</h4>
+                    <ul style="margin-top:0.5rem;">
+                        <li><strong>Form sederhana</strong> (1-3 field) → tidak perlu Form Object, biasa saja cukup</li>
+                        <li><strong>Form menengah</strong> (4-7 field) → direkomendasikan pakai Form Object</li>
+                        <li><strong>Form kompleks</strong> (8+ field) → WAJIB pakai Form Object</li>
+                        <li><strong>Form yang sama dipakai di banyak tempat</strong> → WAJIB pakai Form Object</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- ==================== KESALAHAN UMUM ==================== -->
+
+            <div class="common-mistakes">
+                <h3>⚠️ Kesalahan Umum</h3>
+
+                <div class="mistake-item">
+                    <h4>❌ Lupa prefix "form." di view</h4>
+                    <p><code>wire:model="judul"</code> tidak akan bekerja. Harus <code>wire:model="form.judul"</code>.
+                    </p>
+                    <p class="solution">✅ Solusi: Selalu pakai <code>form.</code> prefix untuk wire:model dan @error
+                        saat menggunakan Form Object.</p>
+                </div>
+
+                <div class="mistake-item">
+                    <h4>❌ Form Object extends Component (bukan Form)</h4>
+                    <p>Form Object harus <code>extends Form</code>, bukan <code>extends Component</code>.</p>
+                    <p class="solution">✅ Solusi: Pastikan gunakan <code>use Livewire\Form;</code> dan
+                        <code>extends Form</code>.</p>
+                </div>
+
+                <div class="mistake-item">
+                    <h4>❌ Lupa reset form setelah simpan</h4>
+                    <p>Kalau tidak di-reset, form akan tetap berisi data lama setelah berhasil menyimpan.</p>
+                    <p class="solution">✅ Solusi: Selalu panggil <code>$this->form->reset()</code> setelah berhasil
+                        simpan data.</p>
+                </div>
+            </div>
+
+            <!-- ==================== RINGKASAN ==================== -->
+
+            <div class="summary-box">
+                <h3>📋 Ringkasan Materi</h3>
+                <ul>
+                    <li><strong>Form Objects</strong> = class terpisah untuk mengelola property form, validasi, dan
+                        logika simpan</li>
+                    <li>Buat dengan: <code>php artisan livewire:form NamaForm</code></li>
+                    <li>Form Object <code>extends Form</code> (bukan Component)</li>
+                    <li>Validasi inline: <code>#[Validate('required|min:3')]</code></li>
+                    <li>Di view: pakai prefix <code>form.</code> → <code>wire:model="form.judul"</code></li>
+                    <li>Method penting: <code>validate()</code>, <code>reset()</code>, <code>fill()</code>,
+                        <code>all()</code></li>
+                    <li>Cocok untuk form 4+ field dan form yang dipakai ulang</li>
+                </ul>
+            </div>
+
+            <!-- ==================== LATIHAN ==================== -->
+
+            <h2>📝 Latihan</h2>
+
+            <div class="exercise-section">
+                <div class="exercise-level basic">
+                    <h4>🟢 Level 1 — Memahami</h4>
+                    <ol>
+                        <li>Apa perbedaan <code>extends Form</code> dan <code>extends Component</code>?</li>
+                        <li>Kenapa di view harus pakai <code>wire:model="form.judul"</code> bukan
+                            <code>wire:model="judul"</code>?</li>
+                        <li>Apa fungsi <code>$this->form->fill()</code> dan kapan digunakan?</li>
+                    </ol>
+                </div>
+
+                <div class="exercise-level intermediate">
+                    <h4>🔵 Level 2 — Praktik</h4>
+                    <ol>
+                        <li>Buat <strong>SiswaForm</strong> dengan field: nama, kelas, nis, alamat, telepon. Gunakan di
+                            komponen ManajemenSiswa untuk Create dan Edit.</li>
+                        <li>Tambahkan <strong>custom validation messages</strong> dalam Bahasa Indonesia di SiswaForm
+                            (contoh: "Nama harus diisi minimal 3 karakter").</li>
+                    </ol>
+                </div>
+
+                <div class="exercise-level challenge">
+                    <h4>🟣 Level 3 — Tantangan</h4>
+                    <ol>
+                        <li>Buat Form Object yang <strong>dipakai oleh 2 komponen berbeda</strong>: FormTambahBuku
+                            (halaman khusus) dan ModalTambahBuku (popup modal). Bukti bahwa Form Object bisa reusable!
+                        </li>
+                        <li>Gabungkan Form Object dengan <strong>real-time validation</strong>: error muncul saat user
+                            mengetik (<code>wire:model.live</code>) tanpa perlu klik submit.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- ==================== NAVIGASI ==================== -->
+
+            <div class="content-nav">
+                <a href="tampilan-dinamis.html" class="nav-btn">
+                    <div>
+                        <div class="nav-btn-label">Sebelumnya</div>
+                        <div class="nav-btn-title">← Tampilan Dinamis</div>
+                    </div>
+                </a>
+                <a href="project-elibrary.html" class="nav-btn">
+                    <div>
+                        <div class="nav-btn-label">Selanjutnya</div>
+                        <div class="nav-btn-title">📚 Tutorial E-Library →</div>
+                    </div>
+                </a>
+            </div>
+        </main>
+    </div>
+
+    <button class="sidebar-toggle-mobile"
+        onclick="document.querySelector('.sidebar').classList.toggle('active')">📚</button>
+    <script src="../../js/app.js"></script>
+</body>
+
+</html>
