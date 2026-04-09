@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tahap 6: Laporan & PDF Ekspor - Tutorial Payroll | Livewire SMK</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../../css/style.css">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="../../index.html" class="navbar-logo">
+                <svg viewBox="0 0 50 50" fill="none">
+                    <rect width="50" height="50" rx="12" fill="url(#g)" />
+                    <path d="M15 35V15L25 25L35 15V35" stroke="#fff" stroke-width="3" />
+                    <defs>
+                        <linearGradient id="g" x1="0" y1="0" x2="50" y2="50">
+                            <stop stop-color="#10B981" />
+                            <stop offset="1" stop-color="#3B82F6" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <span>Livewire SMK</span>
+            </a>
+            <ul class="navbar-menu">
+                <li><a href="../../index.html">Beranda</a></li>
+                <li><a href="../../silabus.html">Silabus</a></li>
+                <li><a href="../minggu-1/pengenalan-laravel.html" class="active">Materi</a></li>
+                <li><a href="../../demo.html">Demo</a></li>
+            </ul>
+            <button class="navbar-toggle" aria-label="Toggle menu"><span>☰</span></button>
+        </div>
+    </nav>
+
+    <div class="content-layout">
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <div class="sidebar-title">📗 Minggu 1</div>
+                <ul class="sidebar-nav">
+                    <li><a href="../minggu-1/pengenalan-laravel.html">Pengenalan Laravel</a></li>
+                    <li><a href="../minggu-1/mvc-sederhana.html">MVC Sederhana</a></li>
+                    <li><a href="../minggu-1/instalasi-laravel.html">Instalasi Laravel</a></li>
+                    <li><a href="../minggu-1/blade-template.html">Blade Template</a></li>
+                    <li><a href="../minggu-1/pengenalan-livewire.html">Pengenalan Livewire</a></li>
+                    <li><a href="../minggu-1/struktur-component.html">Struktur Component</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-title">📘 Minggu 2</div>
+                <ul class="sidebar-nav">
+                    <li><a href="../minggu-2/wire-model.html">wire:model</a></li>
+                    <li><a href="../minggu-2/wire-click.html">wire:click</a></li>
+                    <li><a href="../minggu-2/database-eloquent.html">Database & Eloquent</a></li>
+                    <li><a href="../minggu-2/validasi.html">Validasi</a></li>
+                    <li><a href="../minggu-2/crud-sederhana.html">CRUD Sederhana</a></li>
+                    <li><a href="../minggu-2/autentikasi.html">🔐 Autentikasi</a></li>
+                    <li><a href="../minggu-2/lifecycle-events.html">🔄 Lifecycle & Events</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-title">📕 Minggu 3</div>
+                <ul class="sidebar-nav">
+                    <li><a href="../minggu-3/upload-file.html">Upload File</a></li>
+                    <li><a href="../minggu-3/pagination-search.html">Pagination & Search</a></li>
+                    <li><a href="../minggu-3/komponen-reusable.html">Komponen Reusable</a></li>
+                    <li><a href="../minggu-3/tampilan-dinamis.html">Tampilan Dinamis</a></li>
+                    <li><a href="../minggu-3/form-object.html">📋 Form Objects</a></li>
+                    <li><a href="../minggu-3/project-elibrary.html">📚 Tutorial E-Library</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-title">🚀 Project Payroll</div>
+                <ul class="sidebar-nav">
+                    <li><a href="tahap-1-frontend.html">Tahap 1: Frontend Statis</a></li>
+                    <li><a href="tahap-2-autentikasi.html">Tahap 2: Autentikasi</a></li>
+                    <li><a href="tahap-3-crud.html">Tahap 3: CRUD Karyawan</a></li>
+                    <li><a href="tahap-4-logika-payroll.html">Tahap 4: Logika Payroll</a></li>
+                    <li><a href="tahap-5-integrasi.html">Tahap 5: Integrasi Akhir</a></li>
+                    <li><a href="tahap-6-laporan-pdf.html" class="active">Tahap 6: Laporan PDF (Bonus)</a></li>
+                </ul>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="content-header">
+                <div class="content-breadcrumb">
+                    <a href="../../index.html">Beranda</a> / <a href="../../silabus.html">Silabus</a> / Project Payroll /
+                    Tahap 6: Cetak PDF
+                </div>
+                <h1 class="content-title">Tahap 6: Ekspor Data ke PDF & Report</h1>
+                <div class="content-meta">
+                    <span>🚀 Tutorial Proyek (Bonus Lanjutan)</span>
+                    <span>⏱️ 40 menit</span>
+                    <span>🖨️ Praktik Integrasi Package</span>
+                </div>
+            </div>
+
+            <div class="objectives">
+                <h3>🎯 Tujuan Belajar</h3>
+                <p>Bagian ini adalah persembahan khusus untuk merubah aplikasi Anda menjadi standar Dunia Industri:</p>
+                <ul>
+                    <li>Menggunakan <strong>Composer</strong> untuk mengunduh package alat pihak ketiga (DOMPDF Laravel).</li>
+                    <li>Memahami kelemahan desain CSS rumit milik Tailwind yang tidak kompatibel penuh dengan PDF Engine tipe lama (HTML ke PDF).</li>
+                    <li>Menciptakan rute (*route*) murni laravel untuk mengunduh (*download*) berkas bukti otentik slip gaji bulanan karyawan.</li>
+                </ul>
+            </div>
+
+            <!-- ============================================== -->
+            <!-- MULAI MATERI -->
+
+            <h2>📦 1. Instalasi Library DOMPDF</h2>
+
+            <p>Sistem *core* Laravel tidak memiliki fitur *convert* PDF bawaan pabrik. Kita perlu mengunduh salah satu Pustaka (*Library*) terpopuler sedunia yang sering dipakai dev-dev handal, yakni <strong>barryvdh/laravel-dompdf</strong>.</p>
+            
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-filename">Terminal</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-comment"># Unduh package melalui composer</span>
+composer require barryvdh/laravel-dompdf</pre>
+                </div>
+            </div>
+
+            <h2>🧾 2. Komponen Riwayat (Histori) Penggajian</h2>
+            <p>Seusai meng-input form di materi tahap 4, perusahaan pasti butuh halaman daftar riwayat Slip. Mari kita buat komponen kilat untuk <strong>Tabel Histori Gaji</strong>.</p>
+            
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-filename">Terminal</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-comment"># Bikin Komponen Baru</span>
+php artisan make:livewire PayrollHistory</pre>
+                </div>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span class="code-dot"></span></div>
+                    <span class="code-filename">app/Livewire/PayrollHistory.php</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-keyword">namespace</span> App\Livewire;
+
+<span class="code-keyword">use</span> Livewire\Component;
+<span class="code-keyword">use</span> Livewire\WithPagination;
+<span class="code-keyword">use</span> App\Models\Payroll;
+
+<span class="code-keyword">class</span> <span class="code-class">PayrollHistory</span> <span class="code-keyword">extends</span> Component
+{
+    <span class="code-keyword">use</span> WithPagination;
+
+    <span class="code-keyword">public function</span> <span class="code-function">render</span>()
+    {
+        <span class="code-keyword">return</span> view(<span class="code-string">'livewire.payroll-history'</span>, [
+            <span class="code-comment">// Inner join relationship `employee` otomatis</span>
+            <span class="code-string">'payrolls'</span> => Payroll::with(<span class="code-string">'employee'</span>)->orderBy(<span class="code-string">'created_at'</span>, <span class="code-string">'desc'</span>)->paginate(<span class="code-number">10</span>)
+        ]);
+    }
+}</pre>
+                </div>
+            </div>
+
+            <p>Jangan lupa mendesain *Blade View*-nya dengan struktur tabel Tailwind seperti pada Tahap 1. Namun, yang terpenting, tambahkan tautan (`&lt;a href="..."&gt;`) menuju Route Cetak PDF pada kolom Aksinya, seperti ini:</p>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-filename">Potongan Tabel di payroll-history.blade.php</span>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-tag">&lt;td&gt;</span>
+    <span class="code-comment">&lt;!-- Target URL: /cetak-slip/ID_PAYROLL --&gt;</span>
+    <span class="code-tag">&lt;a href="/cetak-slip/{{ $item->id }}" target="_blank" class="text-blue-500 hover:underline"&gt;</span>
+      🖨️ Cetak Slip PDF
+    <span class="code-tag">&lt;/a&gt;</span>
+<span class="code-tag">&lt;/td&gt;</span></pre>
+                </div>
+            </div>
+
+            <h2>🖨️ 3. Mendesain Layout Kertas PDF</h2>
+            <div class="alert alert-warning" style="margin-top: 1rem;">
+                <h3>⚠️ Perhatian! PDF tidak suka Tailwind Modern!</h3>
+                <p>Engine `dompdf` adalah konverter berbasis HTML4 dan CSS lama konvensional. Ia <strong>AKAN BERANTAKAN</strong> jika dipaksa menelan class buatan modern seperti `flex`, `grid`, dsb dari Tailwind. Oleh sebab itu kita harus menggunakan <strong>CSS Table Kuno (Vanilla HTML & Inline CSS)</strong> untuk menjamin presisi posisi garis dan teks di dalam PDF.</p>
+            </div>
+
+            <p>Buat folder & file baru: <code>resources/views/pdf/slip-gaji.blade.php</code>.</p>
+            
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span class="code-dot"></span></div>
+                    <span class="code-filename">resources/views/pdf/slip-gaji.blade.php</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-tag">&lt;!DOCTYPE html&gt;</span>
+<span class="code-tag">&lt;html&gt;</span>
+<span class="code-tag">&lt;head&gt;</span>
+    <span class="code-tag">&lt;meta charset="utf-8"&gt;</span>
+    <span class="code-tag">&lt;title&gt;</span>Slip Gaji - {{ $data-&gt;employee-&gt;name }}<span class="code-tag">&lt;/title&gt;</span>
+    <span class="code-tag">&lt;style&gt;</span><span class="code-css">
+        <span class="code-comment">/* Menggunakan CSS Klasik Standar */</span>
+        <span class="code-tag">body</span> { <span class="code-property">font-family</span>: <span class="code-string">Arial, sans-serif</span>; <span class="code-property">font-size</span>: <span class="code-number">14px</span>; }
+        <span class="code-tag">.header</span> { <span class="code-property">text-align</span>: <span class="code-number">center</span>; <span class="code-property">border-bottom</span>: <span class="code-number">2px</span> <span class="code-string">solid</span> <span class="code-number">#333</span>; <span class="code-property">padding-bottom</span>: <span class="code-number">10px</span>; }
+        <span class="code-tag">.title</span> { <span class="code-property">font-size</span>: <span class="code-number">20px</span>; <span class="code-property">font-weight</span>: <span class="code-number">bold</span>; }
+        <span class="code-tag">table</span> { <span class="code-property">width</span>: <span class="code-number">100%</span>; <span class="code-property">border-collapse</span>: <span class="code-number">collapse</span>; <span class="code-property">margin-top</span>: <span class="code-number">20px</span>; }
+        <span class="code-tag">td</span> { <span class="code-property">padding</span>: <span class="code-number">8px</span>; }
+        <span class="code-tag">.jumlah</span> { <span class="code-property">text-align</span>: <span class="code-number">right</span>; <span class="code-property">font-weight</span>: <span class="code-number">bold</span>; }
+        <span class="code-tag">.total-area</span> { <span class="code-property">background-color</span>: <span class="code-number">#f2f2f2</span>; }
+    </span><span class="code-tag">&lt;/style&gt;</span>
+<span class="code-tag">&lt;/head&gt;</span>
+<span class="code-tag">&lt;body&gt;</span>
+    <span class="code-tag">&lt;div class="header"&gt;</span>
+        <span class="code-tag">&lt;div class="title"&gt;</span>KODAKARSA CORPS<span class="code-tag">&lt;/div&gt;</span>
+        <span class="code-tag">&lt;div&gt;</span>SLIP GAJI KARYAWAN<span class="code-tag">&lt;/div&gt;</span>
+        <span class="code-tag">&lt;div&gt;</span>Periode: {{ $data-&gt;month_year }}<span class="code-tag">&lt;/div&gt;</span>
+    <span class="code-tag">&lt;/div&gt;</span>
+
+    <span class="code-tag">&lt;table&gt;</span>
+        <span class="code-tag">&lt;tr&gt;</span>
+            <span class="code-tag">&lt;td width="150"&gt;</span><span class="code-tag">&lt;strong&gt;</span>NIK<span class="code-tag">&lt;/strong&gt;</span><span class="code-tag">&lt;/td&gt;</span> <span class="code-tag">&lt;td&gt;</span>: {{ $data-&gt;employee-&gt;nik }}<span class="code-tag">&lt;/td&gt;</span>
+        <span class="code-tag">&lt;/tr&gt;</span>
+        <span class="code-tag">&lt;tr&gt;</span>
+            <span class="code-tag">&lt;td&gt;</span><span class="code-tag">&lt;strong&gt;</span>Nama Karyawan<span class="code-tag">&lt;/strong&gt;</span><span class="code-tag">&lt;/td&gt;</span> <span class="code-tag">&lt;td&gt;</span>: {{ $data-&gt;employee-&gt;name }}<span class="code-tag">&lt;/td&gt;</span>
+        <span class="code-tag">&lt;/tr&gt;</span>
+        <span class="code-tag">&lt;tr&gt;</span>
+            <span class="code-tag">&lt;td&gt;</span><span class="code-tag">&lt;strong&gt;</span>Jabatan<span class="code-tag">&lt;/strong&gt;</span><span class="code-tag">&lt;/td&gt;</span> <span class="code-tag">&lt;td&gt;</span>: {{ $data-&gt;employee-&gt;position }}<span class="code-tag">&lt;/td&gt;</span>
+        <span class="code-tag">&lt;/tr&gt;</span>
+    <span class="code-tag">&lt;/table&gt;</span>
+
+    <span class="code-tag">&lt;br&gt;</span><span class="code-tag">&lt;hr&gt;</span><span class="code-tag">&lt;br&gt;</span>
+
+    <span class="code-tag">&lt;table border="1" cellpadding="8"&gt;</span>
+        <span class="code-tag">&lt;tr&gt;</span>
+            <span class="code-tag">&lt;th align="left"&gt;</span>Rincian Komponen<span class="code-tag">&lt;/th&gt;</span>
+            <span class="code-tag">&lt;th align="right"&gt;</span>Nominal<span class="code-tag">&lt;/th&gt;</span>
+        <span class="code-tag">&lt;/tr&gt;</span>
+        <span class="code-tag">&lt;tr&gt;</span>
+            <span class="code-tag">&lt;td&gt;</span>Gaji Pokok<span class="code-tag">&lt;/td&gt;</span>
+            <span class="code-tag">&lt;td class="jumlah"&gt;</span>Rp {{ number_format($data-&gt;basic_salary, 0, ',', '.') }}<span class="code-tag">&lt;/td&gt;</span>
+        <span class="code-tag">&lt;/tr&gt;</span>
+        <span class="code-tag">&lt;tr&gt;</span>
+            <span class="code-tag">&lt;td&gt;</span>Tunjangan Tambahan (Transportasi, dll)<span class="code-tag">&lt;/td&gt;</span>
+            <span class="code-tag">&lt;td class="jumlah"&gt;</span>Rp {{ number_format($data-&gt;allowance, 0, ',', '.') }}<span class="code-tag">&lt;/td&gt;</span>
+        <span class="code-tag">&lt;/tr&gt;</span>
+        <span class="code-tag">&lt;tr&gt;</span>
+            <span class="code-tag">&lt;td&gt;</span>Potongan / Pajak<span class="code-tag">&lt;/td&gt;</span>
+            <span class="code-tag">&lt;td class="jumlah" style="color:red;"&gt;</span>- Rp {{ number_format($data-&gt;deduction, 0, ',', '.') }}<span class="code-tag">&lt;/td&gt;</span>
+        <span class="code-tag">&lt;/tr&gt;</span>
+        <span class="code-tag">&lt;tr class="total-area"&gt;</span>
+            <span class="code-tag">&lt;td&gt;</span><span class="code-tag">&lt;strong&gt;</span>TAKE HOME PAY (TOTAL)<span class="code-tag">&lt;/strong&gt;</span><span class="code-tag">&lt;/td&gt;</span>
+            <span class="code-tag">&lt;td class="jumlah"&gt;</span><span class="code-tag">&lt;h3 style="margin:0;"&gt;</span>Rp {{ number_format($data-&gt;net_salary, 0, ',', '.') }}<span class="code-tag">&lt;/h3&gt;</span><span class="code-tag">&lt;/td&gt;</span>
+        <span class="code-tag">&lt;/tr&gt;</span>
+    <span class="code-tag">&lt;/table&gt;</span>
+
+    <span class="code-tag">&lt;p style="text-align:right; margin-top:50px;"&gt;</span>Manajer HRD<span class="code-tag">&lt;br&gt;&lt;br&gt;&lt;br&gt;</span>(_________________)<span class="code-tag">&lt;/p&gt;</span>
+<span class="code-tag">&lt;/body&gt;</span>
+<span class="code-tag">&lt;/html&gt;</span></pre>
+                </div>
+            </div>
+
+            <h2>🔗 4. Mendaftarkan Route Mesin Pembuat PDF</h2>
+            <p>Terakhir, hubungkan semuanya ke dalam alur router agar *Request* dari tombol Cetak tadi diterjemahkan oleh DOMPDF.</p>
+            <p>Buka <code>routes/web.php</code> dan tambahkan baris berikut:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span class="code-dot"></span></div>
+                    <span class="code-filename">routes/web.php</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-comment">// Sisipkan class PDF</span>
+<span class="code-keyword">use</span> Barryvdh\DomPDF\Facade\Pdf;
+<span class="code-keyword">use</span> App\Models\Payroll;
+
+<span class="code-comment">// ... rute lain milikmu ...</span>
+
+<span class="code-comment">// Rute untuk mencetak Slip Gaji spesifik</span>
+Route::get(<span class="code-string">'/cetak-slip/{id}'</span>, <span class="code-keyword">function</span> (<span class="code-variable">$id</span>) {
+    <span class="code-comment">// 1. Cari data payroll bersangkutan</span>
+    <span class="code-variable">$payroll</span> = Payroll::with(<span class="code-string">'employee'</span>)->findOrFail(<span class="code-variable">$id</span>);
+
+    <span class="code-comment">// 2. Ambil HTML Blade tadi (slip-gaji.blade.php) lalu lemparkan Datanya</span>
+    <span class="code-variable">$pdf</span> = Pdf::loadView(<span class="code-string">'pdf.slip-gaji'</span>, [<span class="code-string">'data'</span> => <span class="code-variable">$payroll</span>]);
+
+    <span class="code-comment">// 3. Download atau tampilkan PDF secara langsung pada Tab baru di-browser (.stream)</span>
+    <span class="code-keyword">return</span> <span class="code-variable">$pdf</span>->stream(<span class="code-string">'Slip_Gaji_'</span> . <span class="code-variable">$payroll</span>->employee->nik . <span class="code-string">'.pdf'</span>);
+})-&gt;middleware([<span class="code-string">'auth'</span>]); <span class="code-comment">// Pastikan rute dilindungi wajib login!</span></pre>
+                </div>
+            </div>
+
+
+            <!-- ==================== RINGKASAN ==================== -->
+
+            <div class="summary-box">
+                <h3>🎉 SELAMAT! KURIKULUM ANDA 100% SELESAI SKS-NYA</h3>
+                <ul>
+                    <li>Aplikasi penggajian ini sekarang <strong>benar-benar siap tempur</strong>. Agan sudah melengkapi pilar penting bisnis: Input Data, Logika Matematis, dan Laporan Kertas Audit (Physical Audit Trial lewat PDF).</li>
+                    <li>Sistem <code>$pdf-&gt;stream()</code> tidak langsung mengunduh paksa file (seperti <code>$pdf-&gt;download()</code>), melainkan menampilkannya (*Preview*) secara elegan di tab PDF Viewer bawaan Chrome/Firefox, yang akan sangat disukai oleh *user kantoran*.</li>
+                </ul>
+            </div>
+
+            <div class="content-nav">
+                <a href="tahap-5-integrasi.html" class="nav-btn">
+                    <div>
+                        <div class="nav-btn-label">Sebelumnya</div>
+                        <div class="nav-btn-title">← Tahap 5: Integrasi Akhir</div>
+                    </div>
+                </a>
+                <a href="../../index.html" class="nav-btn" style="background:#10B981;color:white;border:none;">
+                    <div>
+                        <div class="nav-btn-label" style="color:white;opacity:0.8;">Tamat Sempurna</div>
+                        <div class="nav-btn-title">Kembali ke Beranda 🏠</div>
+                    </div>
+                </a>
+            </div>
+        </main>
+    </div>
+
+    <button class="sidebar-toggle-mobile"
+        onclick="document.querySelector('.sidebar').classList.toggle('active')">📚</button>
+    <script src="../../js/app.js"></script>
+</body>
+
+</html>

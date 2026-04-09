@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mastering Payroll App | Livewire SMK</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/style.css">
+    
+    <!-- Syntax Highlighting (Highlight.js) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+
+    <style>
+        .step-container { margin-bottom: 4rem; }
+        .step-number { 
+            display: inline-block; 
+            background: linear-gradient(135deg, #10B981, #3B82F6); 
+            color: white; 
+            width: 32px; 
+            height: 32px; 
+            text-align: center; 
+            line-height: 32px; 
+            border-radius: 50%;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .step-title {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            color: #1F2937;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #E5E7EB;
+            padding-bottom: 0.5rem;
+        }
+        .code-explanation {
+            background: #F8FAFC;
+            border-left: 4px solid #3B82F6;
+            padding: 1rem;
+            margin-top: 1rem;
+            border-radius: 0 8px 8px 0;
+            font-size: 0.95rem;
+        }
+        pre { max-height: 500px; overflow-y: auto; border-radius: 8px; margin-top: 0.5rem; }
+        code { font-family: 'Fira Code', monospace, Consolas; font-size: 0.9rem; line-height: 1.5; }
+        h3 { margin-top: 1.5rem; font-size: 1.1rem; color: #4B5563; }
+        .badge { background: #E0E7FF; color: #4F46E5; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: bold; border: 1px solid #C7D2FE;}
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="../../index.html" class="navbar-logo">
+                 <svg viewBox="0 0 50 50" fill="none">
+                    <rect width="50" height="50" rx="12" fill="url(#g)" />
+                    <path d="M15 35V15L25 25L35 15V35" stroke="#fff" stroke-width="3" />
+                    <defs>
+                        <linearGradient id="g" x1="0" y1="0" x2="50" y2="50">
+                            <stop stop-color="#10B981" />
+                            <stop offset="1" stop-color="#3B82F6" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <span>Livewire SMK</span>
+            </a>
+            <ul class="navbar-menu">
+                <li><a href="../../index.html">Beranda</a></li>
+                <li><a href="../../silabus.html">Silabus</a></li>
+                <li><a href="../minggu-1/pengenalan-laravel.html" class="active">Materi</a></li>
+                <li><a href="../../demo.html">Demo</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="content-layout">
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <div class="sidebar-title">📕 Minggu 3</div>
+                <ul class="sidebar-nav">
+                    <li><a href="upload-file.html">Upload File</a></li>
+                    <li><a href="pagination-search.html">Pagination & Search</a></li>
+                    <li><a href="komponen-reusable.html">Komponen Reusable</a></li>
+                    <li><a href="tampilan-dinamis.html">Tampilan Dinamis</a></li>
+                    <li><a href="form-object.html">📋 Form Objects</a></li>
+                    <li><a href="project-elibrary.html">📚 Tutorial E-Library</a></li>
+                    <li><a href="studi-kasus-payroll.html" class="active">💼 Tutorial Build Payroll</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-title">🚀 Project Payroll</div>
+                <ul class="sidebar-nav">
+                    <li><a href="../tutorial-payroll/tahap-1-frontend.html">Tahap 1: Frontend Statis</a></li>
+                    <li><a href="../tutorial-payroll/tahap-2-autentikasi.html">Tahap 2: Autentikasi</a></li>
+                    <li><a href="../tutorial-payroll/tahap-3-crud.html">Tahap 3: CRUD Karyawan</a></li>
+                    <li><a href="../tutorial-payroll/tahap-4-logika-payroll.html">Tahap 4: Logika Payroll</a></li>
+                    <li><a href="../tutorial-payroll/tahap-5-integrasi.html">Tahap 5: Integrasi Akhir</a></li>
+                    <li><a href="../tutorial-payroll/tahap-6-laporan-pdf.html">Tahap 6: Laporan PDF (Bonus)</a></li>
+                </ul>
+            </div>
+        </aside>
+        
+        <main class="main-content">
+            <div class="content-header">
+                <div class="content-breadcrumb">
+                    <a href="../../index.html">Beranda</a> / Minggu 3 / Full Source Code Payroll
+                </div>
+                <h1 class="content-title">3.7 THE MASTERCLASS: Aplikasi Payroll (Full Code + Export PDF)</h1>
+                <div class="content-meta">
+                    <span>📕 Minggu 3</span>
+                    <span>⏱️ 200 menit</span>
+                    <span>👨‍💻 Mega Project SMK Terarah</span>
+                </div>
+            </div>
+
+            <div class="summary-box">
+                <p><strong>Alur Lengkap Pembuatan Website!</strong> Banyak tutorial di Internet yang membingungkan karena kodenya separuh-separuh. Di halaman keramat ini, kita membongkar seluruh File Project asli (Sesuai Standar Software House), mulai dari <strong>Install Plugin, Migrasi Database, Layouting Induk, 4 Komponen Utama, Fitur Download Cetak PDF, sampai Rute Aksesnya!</strong> Ikuti secara kronologis.</p>
+            </div>
+
+            <!-- ======================= STEP 1 ======================= -->
+            <div class="step-container">
+                <h2 class="step-title"><span class="step-number">1</span> Persiapan Plugin & Fitur PDF</h2>
+                <p>Sebelum ngoding, pastikan Laravel kita dilengkapi senjata tambahan. Disini aplikasi Payroll kita mewajibkan fitur Export PDF Slip Gaji Karyawan.</p>
+                <div class="code-explanation">
+                    Jalankan terminal dan ketik perintah ini untuk mendownload DOMPDF ciptaan Barryvdh: <br>
+                    <strong><code>composer require barryvdh/laravel-dompdf</code></strong> <br>
+                    Setelah itu instal Livewire: <br>
+                    <strong><code>composer require livewire/livewire</code></strong>
+                </div>
+            </div>
+
+            <!-- ======================= STEP 2 ======================= -->
+            <div class="step-container">
+                <h2 class="step-title"><span class="step-number">2</span> Database & Migrations</h2>
+                <p>Aturan pertama ngoding: <strong>Atur tempat tidurnya dulu (Database).</strong> Jalankan <code>php artisan make:model Employee -m</code> dan <code>php artisan make:model Payroll -m</code></p>
+                
+                <h3>A. Tabel Karyawan <span class="badge">..._create_employees_table.php</span></h3>
+<pre><code class="language-php">Schema::create('employees', function (Blueprint $table) {
+    $table-&gt;id();
+    $table-&gt;string('name');           // Nama karyawan
+    $table-&gt;string('position');       // Jabatan
+    $table-&gt;decimal('base_salary', 15, 2); // Gaji pokok
+    $table-&gt;timestamps();
+});</code></pre>
+
+                <h3>B. Tabel Payroll <span class="badge">..._create_payrolls_table.php</span></h3>
+<pre><code class="language-php">Schema::create('payrolls', function (Blueprint $table) {
+    $table-&gt;id();
+    $table-&gt;foreignId('employee_id')-&gt;constrained()-&gt;cascadeOnDelete();
+    $table-&gt;decimal('allowance', 15, 2)-&gt;default(0);    // Pinjaman/Tunjangan
+    $table-&gt;decimal('deduction', 15, 2)-&gt;default(0);    // Potongan
+    $table-&gt;decimal('total_salary', 15, 2); 
+    $table-&gt;date('pay_date');                            // Tgl pencairan
+    $table-&gt;string('status')-&gt;default('unpaid');         // paid atau unpaid
+    $table-&gt;timestamps();
+});</code></pre>
+
+                <div class="code-explanation">
+                    Jika file di atas berhasil kamu buat, langsung tancap gas perintah <strong><code>php artisan migrate</code></strong>.
+                </div>
+            </div>
+
+            <!-- ======================= STEP 3 ======================= -->
+            <div class="step-container">
+                <h2 class="step-title"><span class="step-number">3</span> Logika Relasi Database (Models)</h2>
+                <p>Laravel butuh file model agar tahu cara ngobrol satu sama lain antar tabel.</p>
+
+                <h3>A. Model Employee <span class="badge">app/Models/Employee.php</span></h3>
+<pre><code class="language-php">&lt;?php
+namespace App\Models;
+use Illuminate\Database\Eloquent\Model;
+
+class Employee extends Model {
+    protected $fillable = ['name', 'position', 'base_salary'];
+
+    // Info Relasi: "Karyawan ini punya banyak (HasMany) data slip gaji loh"
+    public function payrolls() {
+        return $this-&gt;hasMany(Payroll::class);
+    }
+}</code></pre>
+
+                <h3>B. Model Payroll <span class="badge">app/Models/Payroll.php</span></h3>
+<pre><code class="language-php">&lt;?php
+namespace App\Models;
+use Illuminate\Database\Eloquent\Model;
+
+class Payroll extends Model {
+    protected $fillable = ['employee_id', 'allowance', 'deduction', 'total_salary', 'pay_date', 'status'];
+    protected $casts = ['pay_date' =&gt; 'date'];
+
+    // Info Relasi: "Slip gaji ini miliknya (BelongsTo) Siapa?"
+    public function employee() {
+        return $this-&gt;belongsTo(Employee::class);
+    }
+}</code></pre>
+            </div>
+
+            <!-- ======================= STEP 4 ======================= -->
+            <div class="step-container">
+                <h2 class="step-title"><span class="step-number">4</span> Layouting Induk (Template Master)</h2>
+                <p>Desain Sidebar menu letaknya ada disini, sehingga gak perlu dikoding berulang kali tiap pindah halaman. Kamu cukup siapkan tag spesial <code>&#123;&#123; $slot &#125;&#125;</code> di tengah konten!</p>
+
+                <h3>Layout Master <span class="badge">resources/views/layouts/app.blade.php</span></h3>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Sistem Payroll PT Livewire&lt;/title&gt;
+    &lt;script src="https://cdn.tailwindcss.com"&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body class="bg-gray-50 flex min-h-screen"&gt;
+
+    &lt;!-- SIDEBAR TETAP --&gt;
+    &lt;aside class="w-64 bg-slate-900 text-white flex flex-col"&gt;
+        &lt;div class="px-6 py-4 font-bold text-xl border-b border-gray-800"&gt;🏢 Web Payroll&lt;/div&gt;
+        &lt;nav class="flex-1 p-4 space-y-2"&gt;
+            &lt;!-- Gunakan wire:navigate agar pindah halaman gak ada Loading 1 detik! (SPA) --&gt;
+            &lt;a href="&#123;&#123; route('dashboard') &#125;&#125;" wire:navigate class="block p-3 rounded bg-indigo-600"&gt;🏠 Dashboard&lt;/a&gt;
+            &lt;a href="&#123;&#123; route('employees') &#125;&#125;" wire:navigate class="block p-3 rounded hover:bg-slate-700"&gt;🧑‍💼 Karyawan&lt;/a&gt;
+            &lt;a href="&#123;&#123; route('payroll') &#125;&#125;" wire:navigate class="block p-3 rounded hover:bg-slate-700"&gt;💰 Hitung Gaji&lt;/a&gt;
+            &lt;a href="&#123;&#123; route('payroll.history') &#125;&#125;" wire:navigate class="block p-3 rounded hover:bg-slate-700"&gt;📄 Riwayat&lt;/a&gt;
+        &lt;/nav&gt;
+    &lt;/aside&gt;
+
+    &lt;!-- AREA KANAN (Dimana Komponen Livewire Masuk) --&gt;
+    &lt;main class="flex-1 p-8"&gt;
+        &#123;&#123; $slot &#125;&#125;
+    &lt;/main&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+            </div>
+
+            <!-- ======================= STEP 5 ======================= -->
+            <div class="step-container">
+                <h2 class="step-title"><span class="step-number">5</span> Buat 4 Modul Livewire Sekaligus</h2>
+                <div class="code-explanation mb-4">
+                    Ketik perintah magis ini di terminal mu: <br>
+                    <code>php artisan make:livewire Dashboard</code> <br>
+                    <code>php artisan make:livewire EmployeeManager</code> <br>
+                    <code>php artisan make:livewire PayrollCalculator</code> <br>
+                    <code>php artisan make:livewire PayrollHistory</code> <br>
+                    Mereka akan langsung membuatkan File Logika di folder <code>app/Livewire</code>, sekaligus UI di <code>resources/views/livewire</code>.
+                </div>
+
+                <h3>🟡 Modul A: Dashboard Ringkasan</h3>
+                <p class="text-sm text-gray-500 mb-2">Backend Logika (Dashboard.php)</p>
+<pre><code class="language-php">class Dashboard extends Component {
+    public function render() {
+        $bulanIni = now()-&gt;format('Y-m');
+        $payrollDb = Payroll::whereRaw("DATE_FORMAT(pay_date, '%Y-%m') = ?", [$bulanIni]);
+
+        return view('livewire.dashboard', [
+            'totalEmployees' =&gt; Employee::count(),
+            'totalPaid' =&gt; (clone $payrollDb)-&gt;where('status', 'paid')-&gt;count(),
+            'totalUnpaid' =&gt; (clone $payrollDb)-&gt;where('status', 'unpaid')-&gt;count(),
+        ])-&gt;layout('layouts.app'); // Memakai parent template tadi!
+    }
+}</code></pre>
+                
+                <p class="text-sm text-gray-500 mt-4 mb-2">Frontend HTML (dashboard.blade.php)</p>
+<pre><code class="language-html">&lt;div&gt;
+    &lt;h2 class="text-2xl font-bold mb-4"&gt;Selamat Datang!&lt;/h2&gt;
+    &lt;div class="grid grid-cols-3 gap-4"&gt;
+        &lt;div class="p-6 bg-white border rounded shadow"&gt;Total Karyawan: &#123;&#123; $totalEmployees &#125;&#125;&lt;/div&gt;
+        &lt;div class="p-6 bg-white border rounded shadow text-green-500"&gt;Lunas Bulan Ini: &#123;&#123; $totalPaid &#125;&#125;&lt;/div&gt;
+        &lt;div class="p-6 bg-white border rounded shadow text-red-500"&gt;Nunggak Bulan Ini: &#123;&#123; $totalUnpaid &#125;&#125;&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+
+                <hr class="my-8">
+
+                <h3>🟡 Modul B: Employee Manager (Daftar Karyawan)</h3>
+                <p class="text-sm text-gray-500 mb-2">Logika: Bisa Tambah, Ngabari Pesan Sukses, Validasi Form, dan Live Cari!</p>
+<pre><code class="language-php">class EmployeeManager extends Component {
+    // Variable public wajib
+    public $name = '', $position = '', $base_salary = '', $search = '';
+    public $editingId = null, $showForm = false, $successMessage = '';
+
+    // Validator laravel biasa
+    protected function rules() {
+        return [
+            'name' =&gt; 'required', 'position' =&gt; 'required', 'base_salary' =&gt; 'required|numeric'
+        ];
+    }
+
+    public function create() { $this-&gt;showForm = true; $this-&gt;editingId = null; }
+
+    public function save() {
+        $this-&gt;validate(); // Validasi mati!
+        if ($this-&gt;editingId) {
+            Employee::find($this-&gt;editingId)-&gt;update(['name'=&gt;$this-&gt;name, 'position'=&gt;$this-&gt;position, 'base_salary'=&gt;$this-&gt;base_salary]);
+            $this-&gt;successMessage = 'Diperbarui!';
+        } else {
+            Employee::create(['name'=&gt;$this-&gt;name, 'position'=&gt;$this-&gt;position, 'base_salary'=&gt;$this-&gt;base_salary]);
+            $this-&gt;successMessage = 'Dibuat!';
+        }
+        $this-&gt;showForm = false; // Tutup menu form
+    }
+
+    public function edit($id) {
+        $e = Employee::find($id);
+        $this-&gt;editingId = $e-&gt;id; $this-&gt;name = $e-&gt;name; 
+        $this-&gt;position = $e-&gt;position; $this-&gt;base_salary = $e-&gt;base_salary;
+        $this-&gt;showForm = true;
+    }
+
+    public function delete($id) { Employee::find($id)-&gt;delete(); }
+
+    public function render() {
+        $db = Employee::latest();
+        if($this-&gt;search) $db-&gt;where('name', 'like', "%{$this-&gt;search}%");
+
+        return view('livewire.employee-manager', ['employees' =&gt; $db-&gt;get()])-&gt;layout('layouts.app');
+    }
+}</code></pre>
+                
+<pre><code class="language-html">&lt;div&gt;
+    &lt;button wire:click="create" class="bg-indigo-600 text-white p-2 mb-4"&gt;Tambah Orang&lt;/button&gt;
+    
+    @if($showForm)
+        &lt;form wire:submit="save" class="border p-4 mb-4 bg-white"&gt;
+            &lt;input wire:model="name" placeholder="Nama" class="border p-2"&gt;
+            &lt;input wire:model="position" placeholder="Jabatan" class="border p-2"&gt;
+            &lt;input wire:model="base_salary" placeholder="Gaji Misal 5000000" class="border p-2"&gt;
+            &lt;button type="submit" class="bg-green-500 text-white p-2"&gt;Submit&lt;/button&gt;
+        &lt;/form&gt;
+    @endif
+
+    &lt;input wire:model.live="search" placeholder="Cari..." class="border p-2 w-full mb-4"&gt;
+
+    &lt;table class="w-full bg-white border"&gt;
+        @foreach($employees as $e)
+        &lt;tr&gt;
+            &lt;td class="p-2 border"&gt;&#123;&#123; $e->name &#125;&#125;&lt;/td&gt;
+            &lt;td class="p-2 border"&gt;Rp &#123;&#123; number_format($e->base_salary) &#125;&#125;&lt;/td&gt;
+            &lt;td class="p-2 border"&gt;
+                &lt;button wire:click="edit(&#123;&#123; $e->id &#125;&#125;)" class="text-blue-500"&gt;Edit&lt;/button&gt;
+                &lt;button wire:click="delete(&#123;&#123; $e->id &#125;&#125;)" wire:confirm="Hapus data ini?" class="text-red-500"&gt;Hapus&lt;/button&gt;
+            &lt;/td&gt;
+        &lt;/tr&gt;
+        @endforeach
+    &lt;/table&gt;
+&lt;/div&gt;</code></pre>
+
+                <hr class="my-8">
+
+                <h3>🟡 Modul C: Payroll Calculator (Hitung Otomatis)</h3>
+                <p class="text-sm text-gray-500 mb-2">Backend Logika (PayrollCalculator.php). Disini menarik: Setiap kali kita ketik besaran potongan, totalnya bisa menghitung real-time.</p>
+<pre><code class="language-php">class PayrollCalculator extends Component {
+    public $employee_id = '', $allowance = '0', $deduction = '0', $status = 'unpaid';
+    public $baseSalary = 0, $totalSalary = 0;
+
+    // Ajaib! Saat Select Box berubah, Fungsi updatedEmployeeId otomatis terpanggil
+    public function updatedEmployeeId($value) {
+        $e = Employee::find($value);
+        $this-&gt;baseSalary = $e ? $e-&gt;base_salary : 0;
+        $this-&gt;calculateTotal();
+    }
+
+    public function updatedAllowance() { $this-&gt;calculateTotal(); }
+    public function updatedDeduction() { $this-&gt;calculateTotal(); }
+
+    private function calculateTotal() {
+        $this-&gt;totalSalary = $this-&gt;baseSalary + (int)$this-&gt;allowance - (int)$this-&gt;deduction;
+    }
+
+    public function save() {
+        Payroll::create([
+            'employee_id' =&gt; $this-&gt;employee_id,
+            'allowance' =&gt; $this-&gt;allowance, 'deduction' =&gt; $this-&gt;deduction,
+            'total_salary' =&gt; $this-&gt;totalSalary, 'status' =&gt; $this-&gt;status,
+            'pay_date' =&gt; now()
+        ]);
+        $this-&gt;reset();
+    }
+
+    public function render() { return view('livewire.payroll-calculator', ['employees' =&gt; Employee::all()])-&gt;layout('layouts.app'); }
+}</code></pre>
+                
+<pre><code class="language-html">&lt;div class="grid grid-cols-2 gap-6"&gt;
+    &lt;form wire:submit="save" class="bg-white p-6 border"&gt;
+        &lt;select wire:model.live="employee_id" class="border p-2 w-full mb-4"&gt;
+            &lt;option value=""&gt;Pilih Karyawan Dulu&lt;/option&gt;
+            @foreach($employees as $e) &lt;option value="&#123;&#123;$e->id&#125;&#125;"&gt;&#123;&#123;$e->name&#125;&#125;&lt;/option&gt; @endforeach
+        &lt;/select&gt;
+
+        &lt;label&gt;Ditambah Tunjangan Rp&lt;/label&gt;
+        &lt;input wire:model.live="allowance" type="number" class="border p-2 w-full mb-4"&gt;
+        
+        &lt;label&gt;Dipotong Kasbon Rp&lt;/label&gt;
+        &lt;input wire:model.live="deduction" type="number" class="border p-2 w-full mb-4"&gt;
+        
+        &lt;button type="submit" class="bg-indigo-600 text-white p-3 w-full"&gt;Simpan Data Transaksi&lt;/button&gt;
+    &lt;/form&gt;
+
+    &lt;!-- MONITOR BUKTI --&gt;
+    &lt;div class="bg-slate-900 text-white p-6"&gt;
+        &lt;h3 class="text-xl"&gt;Gaji Pokok: Rp &#123;&#123; number_format($baseSalary) &#125;&#125;&lt;/h3&gt;
+        &lt;hr class="my-4"&gt;
+        &lt;h1 class="text-4xl text-green-400 font-bold"&gt;Terima: Rp &#123;&#123; number_format($totalSalary) &#125;&#125;&lt;/h1&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+
+                <hr class="my-8">
+
+                <h3>🟡 Modul D: Payroll History (Menampilkan Data + Tombol Status)</h3>
+                <p class="text-sm text-gray-500 mb-2">Logika: Flip Status Paid / Unpaid Hanya dengan menekan tombol (toggle).</p>
+<pre><code class="language-php">class PayrollHistory extends Component {
+    public $filterStatus = '';
+
+    public function toggleStatus($id) {
+        $p = Payroll::find($id);
+        $p-&gt;status = ($p-&gt;status == 'paid') ? 'unpaid' : 'paid';
+        $p-&gt;save();
+    }
+
+    public function render() {
+        $db = Payroll::with('employee')-&gt;latest();
+        if ($this-&gt;filterStatus) $db-&gt;where('status', $this-&gt;filterStatus);
+
+        return view('livewire.payroll-history', ['payrolls' =&gt; $db-&gt;get()])-&gt;layout('layouts.app');
+    }
+}</code></pre>
+
+<pre><code class="language-html">&lt;div class="bg-white p-6"&gt;
+    &lt;select wire:model.live="filterStatus" class="border p-2 mb-4"&gt;
+        &lt;option value=""&gt;Lihat Semua Lunas / Hutang&lt;/option&gt;
+        &lt;option value="paid"&gt;Hanya Lunas&lt;/option&gt;
+        &lt;option value="unpaid"&gt;Hanya Hutang/Belum&lt;/option&gt;
+    &lt;/select&gt;
+
+    &lt;table class="w-full border"&gt;
+        @foreach($payrolls as $p)
+        &lt;tr&gt;
+            &lt;td class="p-3 border"&gt;&#123;&#123; $p->employee->name &#125;&#125;&lt;/td&gt;
+            &lt;td class="p-3 border font-bold text-lg"&gt;Rp &#123;&#123; number_format($p->total_salary) &#125;&#125;&lt;/td&gt;
+            &lt;td class="p-3 border"&gt;
+                &lt;button wire:click="toggleStatus(&#123;&#123; $p->id &#125;&#125;)" class="px-3 py-1 text-white &#123;&#123; $p->status == 'paid' ? 'bg-green-500' : 'bg-red-500' &#125;&#125;"&gt;
+                    &#123;&#123; strtoupper($p->status) &#125;&#125;
+                &lt;/button&gt;
+            &lt;/td&gt;
+            &lt;td class="p-3 border"&gt;
+                &lt;!-- LINK DOWNLOAD MENUJU CONTROLLER PDF PDF --&gt;
+                &lt;a href="&#123;&#123; route('payroll.pdf', $p->id) &#125;&#125;" class="text-indigo-600 underline"&gt;Download Slip.pdf&lt;/a&gt;
+            &lt;/td&gt;
+        &lt;/tr&gt;
+        @endforeach
+    &lt;/table&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+
+            <!-- ======================= STEP 6 ======================= -->
+            <div class="step-container">
+                <h2 class="step-title"><span class="step-number">6</span> Fitur Spesial: Export Slip PDF</h2>
+                <p>Bagian inilah mengapa kita tadi menginstal DOMPDF. Berbeda dari Livewire, untuk membuat file cetak PDF, Laravel menyarankan memakai Controller Tradisional.</p>
+                <div class="code-explanation mb-4">
+                    Ketik perintah: <code>php artisan make:controller PayrollPdfController</code>
+                </div>
+
+                <h3>A. Logika Pembuat File PDF <span class="badge">app/Http/Controllers/PayrollPdfController.php</span></h3>
+<pre><code class="language-php">&lt;?php
+namespace App\Http\Controllers;
+
+use App\Models\Payroll;
+use Barryvdh\DomPDF\Facade\Pdf;
+
+class PayrollPdfController extends Controller
+{
+    public function download(Payroll $payroll)
+    {
+        // Panggil relasi nama orangnya
+        $payroll-&gt;load('employee');
+
+        // Render PDF dari Desain HTML bernama 'slip-gaji.blade.php' 
+        $pdf = Pdf::loadView('pdf.slip-gaji', ['payroll' =&gt; $payroll]);
+
+        // Tetapkan nama file yang didownload Otomatis!
+        $filename = 'slip-gaji-' . $payroll-&gt;employee-&gt;name . '-' . $payroll-&gt;pay_date-&gt;format('F-Y') . '.pdf';
+
+        return $pdf-&gt;download($filename);
+    }
+}</code></pre>
+
+                <h3>B. Desain Kertas Kosong PDF <span class="badge">resources/views/pdf/slip-gaji.blade.php</span></h3>
+                <p class="text-sm text-gray-500">Buat folder <code>pdf</code> di dalam folder views, lalu buat file tersebut. Ini CSS Tradisional tanpa Tailwind untuk keperluan rendering Printer.</p>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Slip &#123;&#123; $payroll->employee->name &#125;&#125;&lt;/title&gt;
+    &lt;style&gt;
+        body { font-family: sans-serif; padding: 20px; }
+        .header { text-align: center; border-bottom: 2px solid black; padding-bottom: 10px; }
+        table { width: 100%; margin-top: 20px; border-collapse: collapse; }
+        td, th { padding: 10px; border: 1px solid #ddd; }
+        .total { font-weight: bold; font-size: 18px; color: blue; }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class="header"&gt;
+        &lt;h1&gt;Slip Gaji Resmi&lt;/h1&gt;
+        &lt;p&gt;Bulan: &#123;&#123; $payroll->pay_date->format('F Y') &#125;&#125;&lt;/p&gt;
+    &lt;/div&gt;
+
+    &lt;p&gt;&lt;strong&gt;Diberikan kepada:&lt;/strong&gt; &#123;&#123; $payroll->employee->name &#125;&#125; (&#123;&#123; $payroll->employee->position &#125;&#125;)&lt;/p&gt;
+
+    &lt;table&gt;
+        &lt;tr&gt; &lt;td&gt;Gaji Murni&lt;/td&gt;       &lt;td&gt;Rp &#123;&#123; number_format($payroll->employee->base_salary) &#125;&#125;&lt;/td&gt; &lt;/tr&gt;
+        &lt;tr&gt; &lt;td&gt;+ Tunjangan&lt;/td&gt;      &lt;td&gt;Rp &#123;&#123; number_format($payroll->allowance) &#125;&#125;&lt;/td&gt; &lt;/tr&gt;
+        &lt;tr&gt; &lt;td&gt;- Potongan&lt;/td&gt;       &lt;td&gt;Rp &#123;&#123; number_format($payroll->deduction) &#125;&#125;&lt;/td&gt; &lt;/tr&gt;
+        &lt;tr&gt; &lt;td class="total"&gt;TOTAL BERSIH&lt;/td&gt; &lt;td class="total"&gt;Rp &#123;&#123; number_format($payroll->total_salary) &#125;&#125;&lt;/td&gt; &lt;/tr&gt;
+    &lt;/table&gt;
+
+    &lt;p style="text-align:right"&gt;&lt;br&gt;Tembusan HRD&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+            </div>
+
+            <!-- ======================= STEP 7 ======================= -->
+            <div class="step-container">
+                <h2 class="step-title"><span class="step-number">7</span> Final: Register Web Routes</h2>
+                <p>Tempel semua yang telah kita rancang ke gerbang utama Routing Laravel. Buka <span class="badge">routes/web.php</span>.</p>
+
+<pre><code class="language-php">&lt;?php
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PayrollPdfController;
+use App\Livewire\Dashboard;
+use App\Livewire\EmployeeManager;
+use App\Livewire\PayrollCalculator;
+use App\Livewire\PayrollHistory;
+
+// 4 Rute Untuk Menampilkan Component Livewire
+Route::get('/', Dashboard::class)-&gt;name('dashboard');
+Route::get('/employees', EmployeeManager::class)-&gt;name('employees');
+Route::get('/payroll', PayrollCalculator::class)-&gt;name('payroll');
+Route::get('/payroll-history', PayrollHistory::class)-&gt;name('payroll.history');
+
+// 1 Rute Tradisional PDF Download
+Route::get('/payroll/{payroll}/pdf', [PayrollPdfController::class, 'download'])-&gt;name('payroll.pdf');
+</code></pre>
+
+                <div class="summary-box mt-6">
+                    <h3>🎉 AKHIRNYA! (Jalankan Aplikasinya)</h3>
+                    Jika semua file di atas telah ditulis, cukup jalankan <code>php artisan serve</code>. Kamu sudah memiliki aplikasi korporat utuh mulai dari <strong>Database Relasi, SPA Front-End (Gak pake sedetik loading-nya!), Kalkulasi Rumus Akuntansi, dan Sistem Cetak PDF Bukti bayar!</strong>
+                </div>
+            </div>
+
+            <div class="content-nav mt-8">
+                <a href="project-elibrary.html" class="nav-btn">
+                    <div>
+                        <div class="nav-btn-label">Sebelumnya</div>
+                        <div class="nav-btn-title">← Tutorial E-Library</div>
+                    </div>
+                </a>
+                <a href="#" class="nav-btn" style="visibility: hidden;"></a>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Script toggle sidebar -->
+    <script>
+        // Custom js to toggle Mobile (optional Alpine fallback)
+    </script>
+    <script src="../../js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tahap 5: Menerapkan Backend ke Frontend - Tutorial Payroll | Livewire SMK</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../../css/style.css">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="../../index.html" class="navbar-logo">
+                <svg viewBox="0 0 50 50" fill="none">
+                    <rect width="50" height="50" rx="12" fill="url(#g)" />
+                    <path d="M15 35V15L25 25L35 15V35" stroke="#fff" stroke-width="3" />
+                    <defs>
+                        <linearGradient id="g" x1="0" y1="0" x2="50" y2="50">
+                            <stop stop-color="#10B981" />
+                            <stop offset="1" stop-color="#3B82F6" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <span>Livewire SMK</span>
+            </a>
+            <ul class="navbar-menu">
+                <li><a href="../../index.html">Beranda</a></li>
+                <li><a href="../../silabus.html">Silabus</a></li>
+                <li><a href="../minggu-1/pengenalan-laravel.html" class="active">Materi</a></li>
+                <li><a href="../../demo.html">Demo</a></li>
+            </ul>
+            <button class="navbar-toggle" aria-label="Toggle menu"><span>☰</span></button>
+        </div>
+    </nav>
+
+    <div class="content-layout">
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <div class="sidebar-title">📗 Minggu 1</div>
+                <ul class="sidebar-nav">
+                    <li><a href="../minggu-1/pengenalan-laravel.html">Pengenalan Laravel</a></li>
+                    <li><a href="../minggu-1/mvc-sederhana.html">MVC Sederhana</a></li>
+                    <li><a href="../minggu-1/instalasi-laravel.html">Instalasi Laravel</a></li>
+                    <li><a href="../minggu-1/blade-template.html">Blade Template</a></li>
+                    <li><a href="../minggu-1/pengenalan-livewire.html">Pengenalan Livewire</a></li>
+                    <li><a href="../minggu-1/struktur-component.html">Struktur Component</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-title">📘 Minggu 2</div>
+                <ul class="sidebar-nav">
+                    <li><a href="../minggu-2/wire-model.html">wire:model</a></li>
+                    <li><a href="../minggu-2/wire-click.html">wire:click</a></li>
+                    <li><a href="../minggu-2/database-eloquent.html">Database & Eloquent</a></li>
+                    <li><a href="../minggu-2/validasi.html">Validasi</a></li>
+                    <li><a href="../minggu-2/crud-sederhana.html">CRUD Sederhana</a></li>
+                    <li><a href="../minggu-2/autentikasi.html">🔐 Autentikasi</a></li>
+                    <li><a href="../minggu-2/lifecycle-events.html">🔄 Lifecycle & Events</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-title">📕 Minggu 3</div>
+                <ul class="sidebar-nav">
+                    <li><a href="../minggu-3/upload-file.html">Upload File</a></li>
+                    <li><a href="../minggu-3/pagination-search.html">Pagination & Search</a></li>
+                    <li><a href="../minggu-3/komponen-reusable.html">Komponen Reusable</a></li>
+                    <li><a href="../minggu-3/tampilan-dinamis.html">Tampilan Dinamis</a></li>
+                    <li><a href="../minggu-3/form-object.html">📋 Form Objects</a></li>
+                    <li><a href="../minggu-3/project-elibrary.html">📚 Tutorial E-Library</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-title">🚀 Project Payroll</div>
+                <ul class="sidebar-nav">
+                    <li><a href="tahap-1-frontend.html">Tahap 1: Frontend Statis</a></li>
+                    <li><a href="tahap-2-autentikasi.html">Tahap 2: Autentikasi</a></li>
+                    <li><a href="tahap-3-crud.html">Tahap 3: CRUD Karyawan</a></li>
+                    <li><a href="tahap-4-logika-payroll.html">Tahap 4: Logika Payroll</a></li>
+                    <li><a href="tahap-5-integrasi.html" class="active">Tahap 5: Integrasi Akhir</a></li>
+                    <li><a href="tahap-6-laporan-pdf.html">Tahap 6: Laporan PDF (Bonus)</a></li>
+                </ul>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="content-header">
+                <div class="content-breadcrumb">
+                    <a href="../../index.html">Beranda</a> / <a href="../../silabus.html">Silabus</a> / Project Payroll /
+                    Tahap 5: Integrasi Akhir
+                </div>
+                <h1 class="content-title">Tahap 5: Menerapkan Backend ke Frontend</h1>
+                <div class="content-meta">
+                    <span>🚀 Tutorial Proyek</span>
+                    <span>⏱️ 40 menit</span>
+                    <span>🔮 Praktik Perbandingan Code</span>
+                </div>
+            </div>
+
+            <div class="objectives">
+                <h3>🎯 Tujuan Belajar</h3>
+                <p>Welcome to the Finale! Setelah melalui seluruh fase pembuatan arsitektur di tahap sebelumnya, mari kita bedah *What exactly happened* (Apa yang sesungguhnya terjadi). Pada materi ini kita akan:</p>
+                <ul>
+                    <li>Mengkaji ulang (*Review*) perbandingan drastis antara kode HTML statis (Tahap 1) dengan kode Blade + Livewire dinamis terbaru (Tahap 2-4).</li>
+                    <li>Memahami kedahsyatan `wire:model` dalam menyambung input form dengan PHP secara tanpa kelim (*seamless*).</li>
+                    <li>Mengganti metrik dummy di Dashboard menjadi nilai Query Eloquent asli.</li>
+                </ul>
+            </div>
+
+            <!-- ============================================== -->
+            <!-- MULAI MATERI -->
+
+            <h2>🔍 1. Anatomi Perubahan: Form Payroll (Sebelum vs Sesudah)</h2>
+
+            <p>Mari sandingkan perubahan rancangan UI Kalkulator Payroll yang awalnya "mati" tanpa nyawa di <strong>Tahap 1</strong> melawan versi "hidup"-nya yang kita desain di <strong>Tahap 4</strong>.</p>
+            
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-filename">❌ Tahap 1 (Statis - HTML Murni biasa)</span>
+                </div>
+                <div class="code-body line-numbers">
+                    <pre><span class="code-comment">&lt;!-- Dropdown Karyawan Mati (Hardcoded) --&gt;</span>
+<span class="code-tag">&lt;select class="w-full rounded-md border-gray-300"&gt;</span>
+    <span class="code-tag">&lt;option disabled selected&gt;</span>-- Cari Karyawan --<span class="code-tag">&lt;/option&gt;</span>
+    <span class="code-tag">&lt;option&gt;</span>EMP-001 | Budi Santoso<span class="code-tag">&lt;/option&gt;</span>
+<span class="code-tag">&lt;/select&gt;</span>
+
+<span class="code-comment">&lt;!-- Input Nominal Mati --&gt;</span>
+<span class="code-tag">&lt;input type="number" class="w-full rounded border-gray-300" placeholder="Rp 0"&gt;</span>
+
+<span class="code-comment">&lt;!-- Take Home Pay Hasil Angka Mati --&gt;</span>
+<span class="code-tag">&lt;div class="text-3xl font-extrabold text-blue-600"&gt;</span>
+    Rp 0
+<span class="code-tag">&lt;/div&gt;</span>
+</pre>
+                </div>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-filename">✅ TAHAP 4 (Dinamis - Livewire Component Blade)</span>
+                </div>
+                <div class="code-body line-numbers">
+                    <pre><span class="code-comment">&lt;!-- Dropdown Dinamis mengambil referensi dari properti $employees dari DB --&gt;</span>
+<span class="code-tag">&lt;select wire:model="employee_id" class="w-full rounded-md border-gray-300"&gt;</span>
+    <span class="code-tag">&lt;option value=""&gt;</span>-- Cari Karyawan --<span class="code-tag">&lt;/option&gt;</span>
+    <span class="code-keyword">@foreach</span>($employees <span class="code-keyword">as</span> $emp)
+        <span class="code-tag">&lt;option value="{{ $emp->id }}"&gt;</span>{{ $emp-&gt;nik }} | {{ $emp-&gt;name }}<span class="code-tag">&lt;/option&gt;</span>
+    <span class="code-keyword">@endforeach</span>
+<span class="code-tag">&lt;/select&gt;</span>
+
+<span class="code-comment">&lt;!-- Input hidup diikat ke Backend, menembakkan Hook updated() saat diubah --&gt;</span>
+<span class="code-tag">&lt;input wire:model.live="basic_salary" type="number" class="w-full rounded border-gray-300"&gt;</span>
+
+<span class="code-comment">&lt;!-- Take Home Pay tercetak otomatis merubah digit merespons state property PHP --&gt;</span>
+<span class="code-tag">&lt;div class="text-3xl font-extrabold text-blue-600"&gt;</span>
+    Rp {{ number_format($net_salary, 0, ',', '.') }}
+<span class="code-tag">&lt;/div&gt;</span></pre>
+                </div>
+            </div>
+
+            <div class="alert alert-info">
+                <h3>💡 Penjelasan: Apa fungsi `wire:model`?</h3>
+                <p>Singkatnya: <strong>Jembatan Dua Arah (Two-Way Binding)</strong>.</p>
+                <p>Ketika kamu memberikan atribut <code>wire:model.live="basic_salary"</code> pada input teks HTML, nilai yang diketik oleh pengguna akan langsung menyebrang jaringan internet menuju Variabel Public di PHP (<code>public $basic_salary</code>). Begitu juga sebaliknya, jika kamu memerintahkan PHP mengubah nilainya, angka di layar browser pengguna otomatis tergantikan tanpa kedipan layar (<em>Page Reload</em>).</p>
+            </div>
+
+            <h2>📊 2. Finalisasi Metrik Halaman Dashboard</h2>
+
+            <p>Pada file statis awal (<code>static/dashboard.blade.php</code>) kita mengisikan angka palsu (seperti "24 Orang" Karyawan). Kini mari kita terapkan perhitungan nyata. Kamu disarankan untuk merubah Dashboard bawaan Breeze lalu melemparkan kalkulasi data nyata lewat komponen Livewire.</p>
+            
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-filename">Mengekstrak data Realtime di Dashboard Component Anda</span>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-comment">// Query PHP yang disisipkan:</span>
+<span class="code-keyword">public function</span> <span class="code-function">render</span>() {
+    <span class="code-keyword">return</span> view(<span class="code-string">'livewire.dashboard'</span>, [
+        <span class="code-string">'total_employee'</span> => \App\Models\Employee::count(), 
+        <span class="code-string">'total_payroll_month'</span> => \App\Models\Payroll::whereMonth(<span class="code-string">'created_at'</span>, date(<span class="code-string">'m'</span>))-&gt;sum(<span class="code-string">'net_salary'</span>)
+    ]);
+}</pre>
+                </div>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-filename">Merubah tag HTML di resources/views/livewire/dashboard.blade.php</span>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-comment">&lt;!-- Angka Palsu Terdahulu --&gt;</span>
+<span class="code-tag">&lt;p class="text-3xl font-bold text-gray-800"&gt;</span>24 Orang<span class="code-tag">&lt;/p&gt;</span>
+
+<span class="code-comment">&lt;!-- Menjadi Dinamis (Terkoneksi Backend) --&gt;</span>
+<span class="code-tag">&lt;p class="text-3xl font-bold text-gray-800"&gt;</span>{{ $total_employee }} Orang<span class="code-tag">&lt;/p&gt;</span>
+
+<span class="code-comment">&lt;!-- Menampilkan Agregat Keuangan Bulan Ini --&gt;</span>
+<span class="code-tag">&lt;p class="text-3xl font-bold text-gray-800"&gt;</span>Rp {{ number_format($total_payroll_month, 0, ',', '.') }}<span class="code-tag">&lt;/p&gt;</span></pre>
+                </div>
+            </div>
+
+
+            <!-- ==================== RINGKASAN ==================== -->
+
+            <div class="summary-box">
+                <h3>🎉 KESIMPULAN TUTORIAL PAYROLL</h3>
+                <ul>
+                    <li>Selamat! Anda telah me-<em>refactoring</em> desain sistem UI statis menjadi Aplikasi Penggajian dengan tumpukan teknologi modern: <strong>TALL Stack</strong> (Tailwind, Alpine.JS, Laravel, Livewire).</li>
+                    <li>Sistem Data Binding Livewire merupakakan metode tercanggih untuk para dominasi pengembang PHP dalam bersaing dengan teknologi Front-End berat seperti React JS yang membutuhkan instalasi berbelit-belit.</li>
+                    <li>Aplikasi ini adalah tapak mula (<em>steopping stone</em>). Pada dunia kerja kalian dapat memolesnya lebih jauh, menyisipkan Login <em>Role/Multi-auth</em>, Modul Cetak PDF (*menggunakan facade DOMPDF*), dan masih banyak lagi kemungkinan lainnya!</li>
+                </ul>
+            </div>
+
+            <div class="content-nav">
+                <a href="tahap-4-logika-payroll.html" class="nav-btn">
+                    <div>
+                        <div class="nav-btn-label">Sebelumnya</div>
+                        <div class="nav-btn-title">← Tahap 4: Logika Payroll</div>
+                    </div>
+                </a>
+                <a href="tahap-6-laporan-pdf.html" class="nav-btn">
+                    <div>
+                        <div class="nav-btn-label">Tahap Selanjutnya</div>
+                        <div class="nav-btn-title">Tahap 6: Laporan PDF (Bonus) →</div>
+                    </div>
+                </a>
+            </div>
+        </main>
+    </div>
+
+    <button class="sidebar-toggle-mobile"
+        onclick="document.querySelector('.sidebar').classList.toggle('active')">📚</button>
+    <script src="../../js/app.js"></script>
+</body>
+
+</html>

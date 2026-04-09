@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tahap 4: Logika Payroll - Tutorial Payroll | Livewire SMK</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../../css/style.css">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="../../index.html" class="navbar-logo">
+                <svg viewBox="0 0 50 50" fill="none">
+                    <rect width="50" height="50" rx="12" fill="url(#g)" />
+                    <path d="M15 35V15L25 25L35 15V35" stroke="#fff" stroke-width="3" />
+                    <defs>
+                        <linearGradient id="g" x1="0" y1="0" x2="50" y2="50">
+                            <stop stop-color="#10B981" />
+                            <stop offset="1" stop-color="#3B82F6" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <span>Livewire SMK</span>
+            </a>
+            <ul class="navbar-menu">
+                <li><a href="../../index.html">Beranda</a></li>
+                <li><a href="../../silabus.html">Silabus</a></li>
+                <li><a href="../minggu-1/pengenalan-laravel.html" class="active">Materi</a></li>
+                <li><a href="../../demo.html">Demo</a></li>
+            </ul>
+            <button class="navbar-toggle" aria-label="Toggle menu"><span>☰</span></button>
+        </div>
+    </nav>
+
+    <div class="content-layout">
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <div class="sidebar-title">📗 Minggu 1</div>
+                <ul class="sidebar-nav">
+                    <li><a href="../minggu-1/pengenalan-laravel.html">Pengenalan Laravel</a></li>
+                    <li><a href="../minggu-1/mvc-sederhana.html">MVC Sederhana</a></li>
+                    <li><a href="../minggu-1/instalasi-laravel.html">Instalasi Laravel</a></li>
+                    <li><a href="../minggu-1/blade-template.html">Blade Template</a></li>
+                    <li><a href="../minggu-1/pengenalan-livewire.html">Pengenalan Livewire</a></li>
+                    <li><a href="../minggu-1/struktur-component.html">Struktur Component</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-title">📘 Minggu 2</div>
+                <ul class="sidebar-nav">
+                    <li><a href="../minggu-2/wire-model.html">wire:model</a></li>
+                    <li><a href="../minggu-2/wire-click.html">wire:click</a></li>
+                    <li><a href="../minggu-2/database-eloquent.html">Database & Eloquent</a></li>
+                    <li><a href="../minggu-2/validasi.html">Validasi</a></li>
+                    <li><a href="../minggu-2/crud-sederhana.html">CRUD Sederhana</a></li>
+                    <li><a href="../minggu-2/autentikasi.html">🔐 Autentikasi</a></li>
+                    <li><a href="../minggu-2/lifecycle-events.html">🔄 Lifecycle & Events</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-title">📕 Minggu 3</div>
+                <ul class="sidebar-nav">
+                    <li><a href="../minggu-3/upload-file.html">Upload File</a></li>
+                    <li><a href="../minggu-3/pagination-search.html">Pagination & Search</a></li>
+                    <li><a href="../minggu-3/komponen-reusable.html">Komponen Reusable</a></li>
+                    <li><a href="../minggu-3/tampilan-dinamis.html">Tampilan Dinamis</a></li>
+                    <li><a href="../minggu-3/form-object.html">📋 Form Objects</a></li>
+                    <li><a href="../minggu-3/project-elibrary.html">📚 Tutorial E-Library</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-title">🚀 Project Payroll</div>
+                <ul class="sidebar-nav">
+                    <li><a href="tahap-1-frontend.html">Tahap 1: Frontend Statis</a></li>
+                    <li><a href="tahap-2-autentikasi.html">Tahap 2: Autentikasi</a></li>
+                    <li><a href="tahap-3-crud.html">Tahap 3: CRUD Karyawan</a></li>
+                    <li><a href="tahap-4-logika-payroll.html" class="active">Tahap 4: Logika Payroll</a></li>
+                    <li><a href="tahap-5-integrasi.html">Tahap 5: Integrasi Akhir</a></li>
+                    <li><a href="tahap-6-laporan-pdf.html">Tahap 6: Laporan PDF (Bonus)</a></li>
+                </ul>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="content-header">
+                <div class="content-breadcrumb">
+                    <a href="../../index.html">Beranda</a> / <a href="../../silabus.html">Silabus</a> / Project Payroll /
+                    Tahap 4: Logika Payroll
+                </div>
+                <h1 class="content-title">Tahap 4: Kalkulasi & Logika Payroll</h1>
+                <div class="content-meta">
+                    <span>🚀 Tutorial Proyek</span>
+                    <span>⏱️ 50 menit</span>
+                    <span>🧮 Praktik Lifecycle Hook</span>
+                </div>
+            </div>
+
+            <div class="prerequisites">
+                <h3>📌 Prasyarat</h3>
+                <ul>
+                    <li>Konsep <strong>Lifecycle Hooks</strong> Livewire (<code>updated()</code>).</li>
+                    <li>Berhasil menyelesaikan Tahap 3 sehingga tabel Karyawan di *database* sudah terbentuk.</li>
+                </ul>
+            </div>
+
+            <div class="objectives">
+                <h3>🎯 Tujuan Belajar</h3>
+                <p>Materi tahap 4 ini adalah <strong>Core / Inti</strong> dari nama aplikasi kita. Kamu akan mampu:</p>
+                <ul>
+                    <li>Menggunakan Lifecycle Hook <code>updated()</code> untuk menciptakan kalkulator perhitungan otomatis layaknya Microsoft Excel (Gaji Pokok + Tunjangan - Potongan).</li>
+                    <li>Membuat skema database untuk merekam riwayat penggajian karyawan per bulan.</li>
+                </ul>
+            </div>
+
+            <!-- ============================================== -->
+            <!-- MULAI MATERI -->
+
+            <h2>📂 1. Tabel Database Penggajian (Payroll)</h2>
+
+            <p>Kita memerlukan satu tabel lagi untuk merekam struk gaji yang nantinya akan dibayarkan setiap bulan kepada karyawan.</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-filename">Terminal</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-comment"># Membuat Model Payroll beserta migrasinya</span>
+php artisan make:model Payroll -m</pre>
+                </div>
+            </div>
+
+            <p>Buka file <code>*_create_payrolls_table.php</code> di folder `database/migrations` dan tambahkan struktur berikut:</p>
+            
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span class="code-dot"></span></div>
+                    <span class="code-filename">*_create_payrolls_table.php</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-keyword">public function</span> <span class="code-function">up</span>(): <span class="code-keyword">void</span>
+{
+    Schema::create(<span class="code-string">'payrolls'</span>, <span class="code-keyword">function</span> (Blueprint <span class="code-variable">$table</span>) {
+        <span class="code-variable">$table</span>->id();
+        <span class="code-comment">// Menyambungkan tabel ini dengan tabel employees (Foreign Key)</span>
+        <span class="code-variable">$table</span>->foreignId(<span class="code-string">'employee_id'</span>)->constrained()->cascadeOnDelete();
+        
+        <span class="code-comment">// Komponen angka - Decimal 15 digit dengan 2 angka di belakang koma untuk presisi Uang</span>
+        <span class="code-variable">$table</span>->decimal(<span class="code-string">'basic_salary'</span>, <span class="code-number">15</span>, <span class="code-number">2</span>)->default(<span class="code-number">0</span>);   <span class="code-comment">// Gaji Pokok</span>
+        <span class="code-variable">$table</span>->decimal(<span class="code-string">'allowance'</span>, <span class="code-number">15</span>, <span class="code-number">2</span>)->default(<span class="code-number">0</span>);      <span class="code-comment">// Total Tunjangan</span>
+        <span class="code-variable">$table</span>->decimal(<span class="code-string">'deduction'</span>, <span class="code-number">15</span>, <span class="code-number">2</span>)->default(<span class="code-number">0</span>);      <span class="code-comment">// Total Potongan</span>
+        <span class="code-variable">$table</span>->decimal(<span class="code-string">'net_salary'</span>, <span class="code-number">15</span>, <span class="code-number">2</span>)->default(<span class="code-number">0</span>);     <span class="code-comment">// Gaji Bersih Terakhir (Take Home Pay)</span>
+        
+        <span class="code-variable">$table</span>->string(<span class="code-string">'month_year'</span>);                         <span class="code-comment">// Contoh: "April 2026"</span>
+        <span class="code-variable">$table</span>->timestamps();
+    });
+}</pre>
+                </div>
+            </div>
+
+            <p>Buka <code>app/Models/Payroll.php</code> dan pasang <code>$fillable</code> serta Relasi Balik ke Employee:</p>
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span class="code-dot"></span></div>
+                    <span class="code-filename">app/Models/Payroll.php</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-keyword">class</span> <span class="code-class">Payroll</span> <span class="code-keyword">extends</span> Model
+{
+    <span class="code-keyword">protected</span> <span class="code-variable">$fillable</span> = [<span class="code-string">'employee_id'</span>, <span class="code-string">'basic_salary'</span>, <span class="code-string">'allowance'</span>, <span class="code-string">'deduction'</span>, <span class="code-string">'net_salary'</span>, <span class="code-string">'month_year'</span>];
+
+    <span class="code-comment">// Setiap slip gaji ini adalah kepunyaan SATU karyawan.</span>
+    <span class="code-keyword">public function</span> <span class="code-function">employee</span>()
+    {
+        <span class="code-keyword">return</span> <span class="code-variable">$this</span>->belongsTo(Employee::class);
+    }
+}</pre>
+                </div>
+            </div>
+
+            <p>Jalankan <code>php artisan migrate</code> untuk memproses perintah ini ke tabel MySQL Anda.</p>
+
+
+            <h2>🧮 2. Sihir Kalkulator Pada Livewire Component</h2>
+            <p>Di Tahap 1 kita sudah mendesain <code>static/payroll.blade.php</code> di mana terdapat form Gaji Pokok, Tunjangan, dan Potongan. Tugas kita sekarang adalah membuat otak di baliknya sehingga Gaji Bersih otomatis terhitung saat angkanya diketik.</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-filename">Terminal</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-comment"># Membuat komponen transaksi Gaji</span>
+php artisan make:livewire PayrollCalculator</pre>
+                </div>
+            </div>
+
+            <h3>Penggunaan Hook <code>updated()</code> untuk Agregasi:</h3>
+            <p>Buka <code>app/Livewire/PayrollCalculator.php</code>:</p>
+            
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span class="code-dot"></span></div>
+                    <span class="code-filename">app/Livewire/PayrollCalculator.php</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-keyword">namespace</span> App\Livewire;
+
+<span class="code-keyword">use</span> Livewire\Component;
+<span class="code-keyword">use</span> App\Models\Employee;
+<span class="code-keyword">use</span> App\Models\Payroll;
+
+<span class="code-keyword">class</span> <span class="code-class">PayrollCalculator</span> <span class="code-keyword">extends</span> Component
+{
+    <span class="code-comment">// Deklarasi input variable</span>
+    <span class="code-keyword">public</span> <span class="code-variable">$employee_id</span>;
+    <span class="code-keyword">public</span> <span class="code-variable">$basic_salary</span> = <span class="code-number">0</span>;
+    <span class="code-keyword">public</span> <span class="code-variable">$allowance</span> = <span class="code-number">0</span>;
+    <span class="code-keyword">public</span> <span class="code-variable">$deduction</span> = <span class="code-number">0</span>;
+    
+    <span class="code-comment">// Output Variable (read-only secara logika)</span>
+    <span class="code-keyword">public</span> <span class="code-variable">$net_salary</span> = <span class="code-number">0</span>;
+
+    <span class="code-comment">// =======================================================================</span>
+    <span class="code-comment">// LIFECYCLE HOOKS SAKTI DARI LIVEWIRE</span>
+    <span class="code-comment">// =======================================================================</span>
+    <span class="code-comment">// Fungsi di bawah ini dipanggil OTOMATIS detik demi detik </span>
+    <span class="code-comment">// setiap kali user mengubah nilai di input HTML!</span>
+    <span class="code-keyword">public function</span> <span class="code-function">updated</span>(<span class="code-variable">$propertyName</span>)
+    {
+        <span class="code-comment">// Lakukan Kalkulasi: THP = (Gaji + Tunjangan) - Potongan</span>
+        <span class="code-comment">// Cast ke (int) untuk memastikan matematika berjalan lancar meski valuenya string kosong.</span>
+        <span class="code-variable">$this</span>->net_salary = ((int)<span class="code-variable">$this</span>->basic_salary + (int)<span class="code-variable">$this</span>->allowance) - (int)<span class="code-variable">$this</span>->deduction;
+    }
+
+    <span class="code-comment">// Proses Menyimpan Data Struk ke Database MySQL</span>
+    <span class="code-keyword">public function</span> <span class="code-function">savePayroll</span>()
+    {
+        <span class="code-variable">$this</span>->validate([
+            <span class="code-string">'employee_id'</span> => <span class="code-string">'required|exists:employees,id'</span>,
+            <span class="code-string">'basic_salary'</span> => <span class="code-string">'required|numeric|min:0'</span>,
+        ]);
+
+        Payroll::create([
+            <span class="code-string">'employee_id'</span> => <span class="code-variable">$this</span>->employee_id,
+            <span class="code-string">'basic_salary'</span> => <span class="code-variable">$this</span>->basic_salary,
+            <span class="code-string">'allowance'</span> => <span class="code-variable">$this</span>->allowance,
+            <span class="code-string">'deduction'</span> => <span class="code-variable">$this</span>->deduction,
+            <span class="code-string">'net_salary'</span> => <span class="code-variable">$this</span>->net_salary,
+            <span class="code-string">'month_year'</span> => date(<span class="code-string">'F Y'</span>), <span class="code-comment">// Ambil bulan & tahun hari ini</span>
+        ]);
+
+        <span class="code-comment">// Tampilkan alert sukses dan kosongkan kalkulator</span>
+        session()->flash(<span class="code-string">'success'</span>, <span class="code-string">'Berhasil menerbitkan Slip Gaji!'</span>);
+        <span class="code-variable">$this</span>->reset([<span class="code-string">'employee_id'</span>, <span class="code-string">'basic_salary'</span>, <span class="code-string">'allowance'</span>, <span class="code-string">'deduction'</span>, <span class="code-string">'net_salary'</span>]);
+    }
+
+    <span class="code-keyword">public function</span> <span class="code-function">render</span>()
+    {
+        <span class="code-keyword">return</span> view(<span class="code-string">'livewire.payroll-calculator'</span>, [
+            <span class="code-comment">// Melempar list Karyawan agar bisa ditampilkan di <select> Option pilihan data form</span>
+            <span class="code-string">'employees'</span> => Employee::orderBy(<span class="code-string">'name'</span>, <span class="code-string">'asc'</span>)->get()
+        ])-&gt;layout('layouts.app');
+    }
+}</pre>
+                </div>
+            </div>
+
+            <h2>📚 Kenapa <code>updated()</code> Sangat Krusial?</h2>
+            <div class="alert alert-info" style="margin-top: 1rem;">
+                <p>Ingat kembali materi <em>Lifecycle Hooks</em> di Minggu ke-2. Pada PHP murni (vanilla/murni Controller Laravel reguler), untuk menghitung nilai otomatis antara form input di Front end, kamu biasanya <strong>HARUS</strong> menulis kode menggunakan <strong>Javascript (seperti DOM event listener 'onkeyup')</strong>.</p>
+                <p>Di Livewire, kamu tidak perlu campur tangan barisan Javascript! Cukup buat fungsi konvensi bernama <code>updated()</code>. Keuntungannya:</p>
+                <ol>
+                    <li>Logika bisnis (rumus matematika) tetap tersimpan aman di Backend (PHP), tidak bocor bisa diotak-atik di *Inspect Element*.</li>
+                    <li>Sistem *Binding* Livewire mereplika kesan Instan dari framework Javascript semacam Vue/ReactJS.</li>
+                </ol>
+            </div>
+
+            <!-- ==================== RINGKASAN ==================== -->
+
+            <div class="summary-box">
+                <h3>📋 Ringkasan Tahap 4</h3>
+                <ul>
+                    <li>Tabel `payrolls` kita desain untuk punya sifat relasi ke satu `employee_id`.</li>
+                    <li>Kita tak perlu menulis Javascript panjang lebar untuk membuat kalkulator. <code>public function updated()</code> otomatis ditembak memicu matematika rumus PHP sederhana tiap kali kotak *input form* di-*typing* dari web.</li>
+                </ul>
+            </div>
+
+            <div class="content-nav">
+                <a href="tahap-3-crud.html" class="nav-btn">
+                    <div>
+                        <div class="nav-btn-label">Sebelumnya</div>
+                        <div class="nav-btn-title">← Tahap 3: CRUD Karyawan</div>
+                    </div>
+                </a>
+                <a href="tahap-5-integrasi.html" class="nav-btn">
+                    <div>
+                        <div class="nav-btn-label">Tahap Selanjutnya</div>
+                        <div class="nav-btn-title">Tahap 5: Integrasi Akhir →</div>
+                    </div>
+                </a>
+            </div>
+        </main>
+    </div>
+
+    <button class="sidebar-toggle-mobile"
+        onclick="document.querySelector('.sidebar').classList.toggle('active')">📚</button>
+    <script src="../../js/app.js"></script>
+</body>
+
+</html>

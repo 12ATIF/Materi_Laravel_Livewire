@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tahap 3: CRUD Karyawan - Tutorial Payroll | Livewire SMK</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../../css/style.css">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="../../index.html" class="navbar-logo">
+                <svg viewBox="0 0 50 50" fill="none">
+                    <rect width="50" height="50" rx="12" fill="url(#g)" />
+                    <path d="M15 35V15L25 25L35 15V35" stroke="#fff" stroke-width="3" />
+                    <defs>
+                        <linearGradient id="g" x1="0" y1="0" x2="50" y2="50">
+                            <stop stop-color="#10B981" />
+                            <stop offset="1" stop-color="#3B82F6" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <span>Livewire SMK</span>
+            </a>
+            <ul class="navbar-menu">
+                <li><a href="../../index.html">Beranda</a></li>
+                <li><a href="../../silabus.html">Silabus</a></li>
+                <li><a href="../minggu-1/pengenalan-laravel.html" class="active">Materi</a></li>
+                <li><a href="../../demo.html">Demo</a></li>
+            </ul>
+            <button class="navbar-toggle" aria-label="Toggle menu"><span>☰</span></button>
+        </div>
+    </nav>
+
+    <div class="content-layout">
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <div class="sidebar-title">📗 Minggu 1</div>
+                <ul class="sidebar-nav">
+                    <li><a href="../minggu-1/pengenalan-laravel.html">Pengenalan Laravel</a></li>
+                    <li><a href="../minggu-1/mvc-sederhana.html">MVC Sederhana</a></li>
+                    <li><a href="../minggu-1/instalasi-laravel.html">Instalasi Laravel</a></li>
+                    <li><a href="../minggu-1/blade-template.html">Blade Template</a></li>
+                    <li><a href="../minggu-1/pengenalan-livewire.html">Pengenalan Livewire</a></li>
+                    <li><a href="../minggu-1/struktur-component.html">Struktur Component</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-title">📘 Minggu 2</div>
+                <ul class="sidebar-nav">
+                    <li><a href="../minggu-2/wire-model.html">wire:model</a></li>
+                    <li><a href="../minggu-2/wire-click.html">wire:click</a></li>
+                    <li><a href="../minggu-2/database-eloquent.html">Database & Eloquent</a></li>
+                    <li><a href="../minggu-2/validasi.html">Validasi</a></li>
+                    <li><a href="../minggu-2/crud-sederhana.html">CRUD Sederhana</a></li>
+                    <li><a href="../minggu-2/autentikasi.html">🔐 Autentikasi</a></li>
+                    <li><a href="../minggu-2/lifecycle-events.html">🔄 Lifecycle & Events</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-title">📕 Minggu 3</div>
+                <ul class="sidebar-nav">
+                    <li><a href="../minggu-3/upload-file.html">Upload File</a></li>
+                    <li><a href="../minggu-3/pagination-search.html">Pagination & Search</a></li>
+                    <li><a href="../minggu-3/komponen-reusable.html">Komponen Reusable</a></li>
+                    <li><a href="../minggu-3/tampilan-dinamis.html">Tampilan Dinamis</a></li>
+                    <li><a href="../minggu-3/form-object.html">📋 Form Objects</a></li>
+                    <li><a href="../minggu-3/project-elibrary.html">📚 Tutorial E-Library</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-title">🚀 Project Payroll</div>
+                <ul class="sidebar-nav">
+                    <li><a href="tahap-1-frontend.html">Tahap 1: Frontend Statis</a></li>
+                    <li><a href="tahap-2-autentikasi.html">Tahap 2: Autentikasi</a></li>
+                    <li><a href="tahap-3-crud.html" class="active">Tahap 3: CRUD Karyawan</a></li>
+                    <li><a href="tahap-4-logika-payroll.html">Tahap 4: Logika Payroll</a></li>
+                    <li><a href="tahap-5-integrasi.html">Tahap 5: Integrasi Akhir</a></li>
+                    <li><a href="tahap-6-laporan-pdf.html">Tahap 6: Laporan PDF (Bonus)</a></li>
+                </ul>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="content-header">
+                <div class="content-breadcrumb">
+                    <a href="../../index.html">Beranda</a> / <a href="../../silabus.html">Silabus</a> / Project Payroll /
+                    Tahap 3: CRUD Karyawan
+                </div>
+                <h1 class="content-title">Tahap 3: CRUD Master Data Karyawan</h1>
+                <div class="content-meta">
+                    <span>🚀 Tutorial Proyek</span>
+                    <span>⏱️ 60 menit</span>
+                    <span>⚙️ Database & Livewire</span>
+                </div>
+            </div>
+
+            <div class="prerequisites">
+                <h3>📌 Prasyarat</h3>
+                <ul>
+                    <li>Pemahaman dasar tentang Model dan Migrasi Database di Laravel.</li>
+                    <li>Sudah menguasai materi penggunaan dasar <code>wire:click</code> dan <code>wire:model</code> dari Minggu ke-2.</li>
+                </ul>
+            </div>
+
+            <div class="objectives">
+                <h3>🎯 Tujuan Belajar</h3>
+                <p>Setelah menyelesaikan materi tahap 3 ini, kamu akan mampu:</p>
+                <ul>
+                    <li>Mengimplementasikan konsep <i>Create, Read, Update, Delete</i> (CRUD) utuh dalam satu komponen Livewire saja (<i>Single Page Application</i>).</li>
+                    <li>Menghubungkan rancangan Mockup HTML menjadi komponen yang benar-benar bisa menympan data ke MySQL.</li>
+                    <li>Memahami sifat "Reaktif" (State) pada Public Property di dalam Livewire Controller.</li>
+                </ul>
+            </div>
+
+            <!-- ============================================== -->
+            <!-- MULAI MATERI -->
+
+            <h2>📂 1. Membuat Model & Database Migration</h2>
+
+            <p>Sistem aplikasi penggajian tidak akan berjalan tanpa adanya entitas <strong>Karyawan (Employee)</strong>. Mari kita siapkan Model dan *tabel* databasenya terlebih dahulu.</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-filename">Terminal</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-comment"># Membuat Model sekaligus Migration (-m)</span>
+php artisan make:model Employee -m</pre>
+                </div>
+            </div>
+
+            <p>Buka file migrasi yang barusan terbuat di <code>database/migrations/xxxx_xx_xx_xxxxxx_create_employees_table.php</code> dan lengkapi kolom-kolomnya:</p>
+            
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span class="code-dot"></span></div>
+                    <span class="code-filename">*_create_employees_table.php</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-keyword">public function</span> <span class="code-function">up</span>(): <span class="code-keyword">void</span>
+{
+    Schema::create(<span class="code-string">'employees'</span>, <span class="code-keyword">function</span> (Blueprint <span class="code-variable">$table</span>) {
+        <span class="code-variable">$table</span>->id();
+        <span class="code-variable">$table</span>->string(<span class="code-string">'nik'</span>)->unique();      <span class="code-comment">// Nomor Induk Karyawan</span>
+        <span class="code-variable">$table</span>->string(<span class="code-string">'name'</span>);             <span class="code-comment">// Nama Lengkap</span>
+        <span class="code-variable">$table</span>->string(<span class="code-string">'position'</span>);         <span class="code-comment">// Jabatan (HRD/Staff/Keuangan dll)</span>
+        <span class="code-variable">$table</span>->timestamps();
+    });
+}</pre>
+                </div>
+            </div>
+
+            <p>Tambahkan <strong>Fillable</strong> pada Model. Buka <code>app/Models/Employee.php</code>:</p>
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span class="code-dot"></span></div>
+                    <span class="code-filename">app/Models/Employee.php</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-keyword">class</span> <span class="code-class">Employee</span> <span class="code-keyword">extends</span> Model
+{
+    <span class="code-keyword">protected</span> <span class="code-variable">$fillable</span> = [<span class="code-string">'nik'</span>, <span class="code-string">'name'</span>, <span class="code-string">'position'</span>];
+}</pre>
+                </div>
+            </div>
+
+            <p>Jangan lupa eksekusi perubahan database dengan mengetikkan perintah `php artisan migrate` di terminal.</p>
+
+
+            <h2>⚡ 2. Membuat Komponen Livewire Manajemen Karyawan</h2>
+            <p>Kita akan membuat otak yang membawahi form tambah karyawan beserta tabel data yang tadi kita buat di *Tahap 1* ke dalam satu komponen sakti: <code>EmployeeManager</code>.</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-filename">Terminal</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-comment"># Membuat komponen Livewire Karyawan</span>
+php artisan make:livewire EmployeeManager</pre>
+                </div>
+            </div>
+
+            <h3>A. Mendefinisikan Logika Backend Karyawan (Class Livewire)</h3>
+            <p>Buka <code>app/Livewire/EmployeeManager.php</code>. Di sini kita membuat fungsi Tambah, Edit, Hapus (CRUD).</p>
+            
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span class="code-dot"></span></div>
+                    <span class="code-filename">app/Livewire/EmployeeManager.php</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-keyword">namespace</span> App\Livewire;
+
+<span class="code-keyword">use</span> Livewire\Component;
+<span class="code-keyword">use</span> App\Models\Employee;
+
+<span class="code-keyword">class</span> <span class="code-class">EmployeeManager</span> <span class="code-keyword">extends</span> Component
+{
+    <span class="code-comment">// Property form input yang kita ikat (bound) ke HTML</span>
+    <span class="code-keyword">public</span> <span class="code-variable">$employee_id</span>, <span class="code-variable">$nik</span>, <span class="code-variable">$name</span>, <span class="code-variable">$position</span>;
+    <span class="code-keyword">public</span> <span class="code-variable">$isEditMode</span> = <span class="code-keyword">false</span>; <span class="code-comment">// Status apakah kita sedang insert baru, atau sedang ngedit data lama?</span>
+
+    <span class="code-keyword">protected</span> <span class="code-variable">$rules</span> = [
+        <span class="code-string">'nik'</span> => <span class="code-string">'required|unique:employees,nik'</span>,
+        <span class="code-string">'name'</span> => <span class="code-string">'required|min:3'</span>,
+        <span class="code-string">'position'</span> => <span class="code-string">'required'</span>,
+    ];
+
+    <span class="code-comment">// 1. CREATE / UPDATE Data</span>
+    <span class="code-keyword">public function</span> <span class="code-function">store</span>()
+    {
+        <span class="code-comment">// Sedikit kalibrasi Rule validasi NIK ketika kondisi Edit. (Agar tak bentrok email lama)</span>
+        <span class="code-keyword">if</span> (<span class="code-variable">$this</span>->isEditMode) {
+            <span class="code-variable">$this</span>->validate([
+                <span class="code-string">'nik'</span> => <span class="code-string">'required|unique:employees,nik,'</span> . <span class="code-variable">$this</span>->employee_id,
+                <span class="code-string">'name'</span> => <span class="code-string">'required|min:3'</span>,
+                <span class="code-string">'position'</span> => <span class="code-string">'required'</span>,
+            ]);
+        } <span class="code-keyword">else</span> {
+            <span class="code-variable">$this</span>->validate();
+        }
+
+        <span class="code-comment">// Eksekusi Query menggunakan UpdateOrCreate milik Eloquent Laravel</span>
+        Employee::updateOrCreate(
+            [<span class="code-string">'id'</span> => <span class="code-variable">$this</span>->employee_id],
+            [
+                <span class="code-string">'nik'</span> => <span class="code-variable">$this</span>->nik,
+                <span class="code-string">'name'</span> => <span class="code-string">$this</span>->name,
+                <span class="code-string">'position'</span> => <span class="code-string">$this</span>->position,
+            ]
+        );
+
+        <span class="code-comment">// Berhasil! kembalikan isi form ke kondisi kosong</span>
+        <span class="code-variable">$this</span>->resetForm();
+    }
+
+    <span class="code-comment">// 2. UPDATE (Siapkan form dengan isi data lama)</span>
+    <span class="code-keyword">public function</span> <span class="code-function">edit</span>(<span class="code-variable">$id</span>)
+    {
+        <span class="code-variable">$emp</span> = Employee::findOrFail(<span class="code-variable">$id</span>);
+        <span class="code-variable">$this</span>->employee_id = <span class="code-variable">$emp</span>->id;
+        <span class="code-variable">$this</span>->nik = <span class="code-variable">$emp</span>->nik;
+        <span class="code-variable">$this</span>->name = <span class="code-variable">$emp</span>->name;
+        <span class="code-variable">$this</span>->position = <span class="code-variable">$emp</span>->position;
+        <span class="code-variable">$this</span>->isEditMode = <span class="code-keyword">true</span>;
+    }
+
+    <span class="code-comment">// 3. DELETE Data</span>
+    <span class="code-keyword">public function</span> <span class="code-function">delete</span>(<span class="code-variable">$id</span>)
+    {
+        Employee::findOrFail(<span class="code-variable">$id</span>)->delete();
+    }
+
+    <span class="code-keyword">public function</span> <span class="code-function">resetForm</span>()
+    {
+        <span class="code-variable">$this</span>->reset([<span class="code-string">'employee_id'</span>, <span class="code-string">'nik'</span>, <span class="code-string">'name'</span>, <span class="code-string">'position'</span>, <span class="code-string">'isEditMode'</span>]);
+    }
+
+    <span class="code-comment">// 4. READ (Render List)</span>
+    <span class="code-keyword">public function</span> <span class="code-function">render</span>()
+    {
+        <span class="code-keyword">return</span> view(<span class="code-string">'livewire.employee-manager'</span>, [
+            <span class="code-string">'employees'</span> => Employee::orderBy(<span class="code-string">'id'</span>, <span class="code-string">'desc'</span>)->get()
+        ])-&gt;layout('layouts.app'); <span class="code-comment">// Gunakan template dashboard di sini</span>
+    }
+}</pre>
+                </div>
+            </div>
+
+            <br/>
+
+            <h3>B. Menghubungkan Backend ke Frontend Mockup HTML (Blade View)</h3>
+            <p>Ambil template statis `employee` dari **Tahap 1**. Timpa (Replace) isinya ke dalam file <code>resources/views/livewire/employee-manager.blade.php</code>, dan bubuhkan perintah-perintah sakti Livewire seperti <code>wire:click</code>, <code>wire:model</code>, dan logika Looping Blade (<code>@foreach</code>)!</p>
+            
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span class="code-dot"></span></div>
+                    <span class="code-filename">resources/views/livewire/employee-manager.blade.php</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-comment">&lt;!-- Bungkus komponen layout utama ke dalam satu element root (DIV) khusus --&gt;</span>
+<span class="code-tag">&lt;div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8 py-8"&gt;</span>
+        
+    <span class="code-comment">&lt;!-- KOLOM KIRI: Form Tambah Karyawan --&gt;</span>
+    <span class="code-tag">&lt;div class="bg-white p-6 rounded-lg shadow border border-gray-100 md:col-span-1 h-fit"&gt;</span>
+        <span class="code-comment">&lt;!-- Judul Form Berubah Sesuai State (Reaktif) --&gt;</span>
+        <span class="code-tag">&lt;h3 class="text-lg font-bold text-gray-800 mb-4"&gt;</span>
+            {{ $isEditMode ? 'Edit Karyawan' : 'Input Karyawan Baru' }}
+        <span class="code-tag">&lt;/h3&gt;</span>
+
+        <span class="code-comment">&lt;!-- Submit form dikaitkan dengan fungsi "store" --&gt;</span>
+        <span class="code-tag">&lt;form wire:submit="store"&gt;</span>
+            <span class="code-tag">&lt;div class="mb-4"&gt;</span>
+                <span class="code-tag">&lt;label class="block text-sm font-medium text-gray-700"&gt;</span>Nama Lengkap<span class="code-tag">&lt;/label&gt;</span>
+                <span class="code-tag">&lt;input type="text" wire:model.blur="name" class="mt-1 block w-full rounded border-gray-300 shadow-sm"&gt;</span>
+                <span class="code-keyword">@error</span>('name') <span class="code-tag">&lt;span class="text-xs text-red-500"&gt;</span>{{ $message }}<span class="code-tag">&lt;/span&gt;</span> <span class="code-keyword">@enderror</span>
+            <span class="code-tag">&lt;/div&gt;</span>
+            <span class="code-tag">&lt;div class="mb-4"&gt;</span>
+                <span class="code-tag">&lt;label class="block text-sm font-medium text-gray-700"&gt;</span>Nomor Induk / NIK<span class="code-tag">&lt;/label&gt;</span>
+                <span class="code-tag">&lt;input type="text" wire:model.blur="nik" class="mt-1 block w-full rounded border-gray-300 shadow-sm"&gt;</span>
+                <span class="code-keyword">@error</span>('nik') <span class="code-tag">&lt;span class="text-xs text-red-500"&gt;</span>{{ $message }}<span class="code-tag">&lt;/span&gt;</span> <span class="code-keyword">@enderror</span>
+            <span class="code-tag">&lt;/div&gt;</span>
+            <span class="code-tag">&lt;div class="mb-4"&gt;</span>
+                <span class="code-tag">&lt;label class="block text-sm font-medium text-gray-700"&gt;</span>Jabatan<span class="code-tag">&lt;/label&gt;</span>
+                <span class="code-tag">&lt;select wire:model="position" class="mt-1 block w-full rounded border-gray-300 shadow-sm"&gt;</span>
+                    <span class="code-tag">&lt;option value=""&gt;</span>-- Pilih Jabatan --<span class="code-tag">&lt;/option&gt;</span>
+                    <span class="code-tag">&lt;option value="Staff IT"&gt;</span>Staff IT<span class="code-tag">&lt;/option&gt;</span>
+                    <span class="code-tag">&lt;option value="HRD / Personalia"&gt;</span>HRD / Personalia<span class="code-tag">&lt;/option&gt;</span>
+                    <span class="code-tag">&lt;option value="Keuangan"&gt;</span>Keuangan<span class="code-tag">&lt;/option&gt;</span>
+                <span class="code-tag">&lt;/select&gt;</span>
+                <span class="code-keyword">@error</span>('position') <span class="code-tag">&lt;span class="text-xs text-red-500"&gt;</span>{{ $message }}<span class="code-tag">&lt;/span&gt;</span> <span class="code-keyword">@enderror</span>
+            <span class="code-tag">&lt;/div&gt;</span>
+
+            <span class="code-tag">&lt;div class="flex gap-2"&gt;</span>
+                <span class="code-tag">&lt;button type="submit" class="flex-1 bg-blue-600 text-white font-bold py-2 rounded shadow"&gt;</span>Simpan<span class="code-tag">&lt;/button&gt;</span>
+                
+                <span class="code-comment">&lt;!-- Tampilkan tombol Batal HANYA saat Mode Edit menyala --&gt;</span>
+                <span class="code-keyword">@if</span>($isEditMode)
+                    <span class="code-tag">&lt;button type="button" wire:click="resetForm" class="flex-1 bg-gray-500 text-white font-bold py-2 rounded shadow"&gt;</span>Batal<span class="code-tag">&lt;/button&gt;</span>
+                <span class="code-keyword">@endif</span>
+            <span class="code-tag">&lt;/div&gt;</span>
+        <span class="code-tag">&lt;/form&gt;</span>
+    <span class="code-tag">&lt;/div&gt;</span>
+
+    <span class="code-comment">&lt;!-- KOLOM KANAN: Tabel Karyawan --&gt;</span>
+    <span class="code-tag">&lt;div class="bg-white p-6 rounded-lg shadow border border-gray-100 md:col-span-2 overflow-x-auto"&gt;</span>
+        <span class="code-tag">&lt;h3 class="text-lg font-bold text-gray-800 mb-4"&gt;</span>Daftar Karyawan<span class="code-tag">&lt;/h3&gt;</span>
+        <span class="code-tag">&lt;table class="min-w-full divide-y divide-gray-200 text-sm"&gt;</span>
+            <span class="code-tag">&lt;thead&gt;</span>
+                <span class="code-tag">&lt;tr class="bg-gray-50 text-left"&gt;</span>
+                    <span class="code-tag">&lt;th class="px-4 py-2 text-gray-500"&gt;</span>NIK<span class="code-tag">&lt;/th&gt;</span>
+                    <span class="code-tag">&lt;th class="px-4 py-2 text-gray-500"&gt;</span>Nama<span class="code-tag">&lt;/th&gt;</span>
+                    <span class="code-tag">&lt;th class="px-4 py-2 text-gray-500"&gt;</span>Jabatan<span class="code-tag">&lt;/th&gt;</span>
+                    <span class="code-tag">&lt;th class="px-4 py-2 text-gray-500"&gt;</span>Aksi<span class="code-tag">&lt;/th&gt;</span>
+                <span class="code-tag">&lt;/tr&gt;</span>
+            <span class="code-tag">&lt;/thead&gt;</span>
+            <span class="code-tag">&lt;tbody class="divide-y divide-gray-200"&gt;</span>
+                
+                <span class="code-comment">&lt;!-- Kita lakukan iterasi Database (Looping) --&gt;</span>
+                <span class="code-keyword">@forelse</span>($employees <span class="code-keyword">as</span> $item)
+                    <span class="code-tag">&lt;tr&gt;</span>
+                        <span class="code-tag">&lt;td class="px-4 py-3"&gt;</span>{{ $item-&gt;nik }}<span class="code-tag">&lt;/td&gt;</span>
+                        <span class="code-tag">&lt;td class="px-4 py-3 font-semibold"&gt;</span>{{ $item-&gt;name }}<span class="code-tag">&lt;/td&gt;</span>
+                        <span class="code-tag">&lt;td class="px-4 py-3"&gt;</span>{{ $item-&gt;position }}<span class="code-tag">&lt;/td&gt;</span>
+                        <span class="code-tag">&lt;td class="px-4 py-3"&gt;</span>
+                            <span class="code-comment">&lt;!-- Memanggil fungsi public yg ada di komponen PHP, disertai Parameter lemparan ID --&gt;</span>
+                            <span class="code-tag">&lt;button wire:click="edit({{ $item-&gt;id }})" class="text-indigo-600 hover:underline mr-2"&gt;</span>Edit<span class="code-tag">&lt;/button&gt;</span>
+                            
+                            <span class="code-comment">&lt;!-- Menggunakan bawaan Javascript confirm Dialog untuk keamanan sebelum Delete --&gt;</span>
+                            <span class="code-tag">&lt;button wire:click="delete({{ $item-&gt;id }})" wire:confirm="Yakin ingin menghapus karyawan ini?" class="text-red-600 hover:underline"&gt;</span>Hapus<span class="code-tag">&lt;/button&gt;</span>
+                        <span class="code-tag">&lt;/td&gt;</span>
+                    <span class="code-tag">&lt;/tr&gt;</span>
+                <span class="code-keyword">@empty</span>
+                    <span class="code-tag">&lt;tr&gt;</span>
+                        <span class="code-tag">&lt;td colspan="4" class="px-4 py-6 text-center text-gray-500"&gt;</span>Data Karyawan masih kosong.<span class="code-tag">&lt;/td&gt;</span>
+                    <span class="code-tag">&lt;/tr&gt;</span>
+                <span class="code-keyword">@endforelse</span>
+
+            <span class="code-tag">&lt;/tbody&gt;</span>
+        <span class="code-tag">&lt;/table&gt;</span>
+    <span class="code-tag">&lt;/div&gt;</span>
+<span class="code-tag">&lt;/div&gt;</span></pre>
+                </div>
+            </div>
+
+            <h2>📚 Analisa Mekanisme Penting Livewire:</h2>
+            <div class="alert alert-info" style="margin-top: 1rem;">
+                <ul>
+                    <li><strong>Reactive Properties (<code>$isEditMode</code>)</strong>: Perhatikan bagaimana teks Judul Form berubah otomatis (<em>"Input Karyawan Baru"</em> vs <em>"Edit Karyawan"</em>) dan memunculkan tombol Batal jika tombol edit diklik tanpa layar berkedip (`reload`). Hal ini berkat pengkondisian <code>{{ $isEditMode ? ... }}</code> di file Blade yang selalu dipantau *state* perubahannya oleh sistem Livewire.</li>
+                    <li><strong><code>wire:model</code> vs <code>wire:model.blur</code></strong>: Anda telah mengkoneksikan kotak input *Nama*, *NIK* dengan isi memori controller (<code>$nik</code>). Ketika Anda mengetik di sana, isinya diterjemahkan dan menyatu dengan *Controller* di *Backend* secara halus. Karena kita menggunakan format akhiran `.blur` untuk NIK/Nama, ini berarti inputan akan dikirim ke Backend pada saat kursor terlepas dari *input box* tersebut (untuk menghemat jaringaan internet dibandingkan `wire:model.live` konstan).</li>
+                    <li><strong>Parameter `wire:click`</strong>: Pada tombol edit dan hapus (<code>wire:click="edit({{ $item-&gt;id }})"</code>), kamu mengirim ID dari database spesifik secara parameter balik ke kelas komponen, membukitkan kemudahan sistem Data Passing dari PHP-Blade-PHP.</li>
+                    <li><strong>Konfirmasi Keamanan (<code>wire:confirm</code>)</strong>: Livewire versi 3 menyematkan fitur bawaan pemanggilan Javascript `window.confirm`. Jadi apabila tombol Hapus tak sengaja terpencet, user ditanya dulu konfirmasi konvensional sebelum <code>delete()</code> PHP tereksekusi.</li>
+                </ul>
+            </div>
+
+            <!-- ==================== RINGKASAN ==================== -->
+
+            <div class="summary-box">
+                <h3>📋 Ringkasan Tahap 3</h3>
+                <ul>
+                    <li>Anda sekarang punya aplikasi yang memiliki siklus hidup CRUD (Daftar, Baca, Ubah, Hapus) Karyawan Lengkap dan Berfungsi Nyata.</li>
+                    <li>Kita telah melihat kedahsyatan form `Single Page Application`. Form Input dan Tabel ada dalam wadah yang sama. Saat berhasil ditekan "Simpan", Tabel bergeser ter-*Refresh*, form ter-*Reset* merespons state terbaru—bagaikan menyusutkan belasan baris kode *jQuery Ajax* dan beberapa Controller standard menjadi hanya *SATU Class Livewire Component Saja*.</li>
+                </ul>
+            </div>
+
+            <div class="content-nav">
+                <a href="tahap-2-autentikasi.html" class="nav-btn">
+                    <div>
+                        <div class="nav-btn-label">Sebelumnya</div>
+                        <div class="nav-btn-title">← Tahap 2: Autentikasi</div>
+                    </div>
+                </a>
+                <a href="tahap-4-logika-payroll.html" class="nav-btn">
+                    <div>
+                        <div class="nav-btn-label">Tahap Selanjutnya</div>
+                        <div class="nav-btn-title">Tahap 4: Logika Payroll →</div>
+                    </div>
+                </a>
+            </div>
+        </main>
+    </div>
+
+    <button class="sidebar-toggle-mobile"
+        onclick="document.querySelector('.sidebar').classList.toggle('active')">📚</button>
+    <script src="../../js/app.js"></script>
+</body>
+
+</html>
