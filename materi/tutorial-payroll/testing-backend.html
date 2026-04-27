@@ -309,26 +309,62 @@ php artisan install:api</pre>
                 </div>
             </div>
 
-            <p>Perintah ini akan membuat file <code>routes/api.php</code> dan mengkonfigurasi Sanctum secara otomatis.</p>
+            <p>Perintah ini membuat file <code>routes/api.php</code>, mengkonfigurasi Sanctum, dan membuat migration untuk tabel token. Jalankan migration-nya:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-filename">Terminal</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre>php artisan migrate</pre>
+                </div>
+            </div>
 
             <h3>Langkah 2: Tambahkan <code>HasApiTokens</code> ke User Model</h3>
 
-            <p>Ini diperlukan agar kita bisa membuat token dari Tinker untuk dipakai di Postman.</p>
+            <p>Ini diperlukan agar kita bisa membuat token dari Tinker untuk dipakai di Postman. Buka <code>app/Models/User.php</code> — di Laravel 13 dengan Breeze, model User memakai <strong>PHP 8 attribute syntax</strong> (bukan <code>$fillable</code> tradisional). Tampilannya seperti ini:</p>
 
             <div class="code-block">
                 <div class="code-header">
                     <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span class="code-dot"></span></div>
-                    <span class="code-filename">app/Models/User.php</span>
+                    <span class="code-filename">app/Models/User.php — versi lengkap setelah dimodifikasi</span>
                     <button class="code-copy">Salin</button>
                 </div>
                 <div class="code-body">
-                    <pre><span class="code-keyword">use</span> Laravel\Sanctum\HasApiTokens;  <span class="code-comment">// ← tambahkan baris ini</span>
+                    <pre><span class="code-keyword">namespace</span> App\Models;
 
+<span class="code-keyword">use</span> Database\Factories\UserFactory;
+<span class="code-keyword">use</span> Illuminate\Database\Eloquent\Attributes\Fillable;
+<span class="code-keyword">use</span> Illuminate\Database\Eloquent\Attributes\Hidden;
+<span class="code-keyword">use</span> Illuminate\Database\Eloquent\Factories\HasFactory;
+<span class="code-keyword">use</span> Illuminate\Foundation\Auth\User <span class="code-keyword">as</span> Authenticatable;
+<span class="code-keyword">use</span> Illuminate\Notifications\Notifiable;
+<span class="code-keyword">use</span> Laravel\Sanctum\HasApiTokens;  <span class="code-comment">// ← tambahkan baris ini</span>
+
+#[Fillable([<span class="code-string">'name'</span>, <span class="code-string">'email'</span>, <span class="code-string">'password'</span>])]
+#[Hidden([<span class="code-string">'password'</span>, <span class="code-string">'remember_token'</span>])]
 <span class="code-keyword">class</span> <span class="code-class">User</span> <span class="code-keyword">extends</span> Authenticatable
 {
-    <span class="code-keyword">use</span> HasApiTokens, HasFactory, Notifiable;  <span class="code-comment">// ← tambahkan HasApiTokens</span>
-    <span class="code-comment">// ... sisa kode tetap sama</span>
+    <span class="code-comment">/** @use HasFactory&lt;UserFactory&gt; */</span>
+    <span class="code-keyword">use</span> HasApiTokens, HasFactory, Notifiable;  <span class="code-comment">// ← tambahkan HasApiTokens di sini</span>
+
+    <span class="code-keyword">protected function</span> <span class="code-function">casts</span>(): <span class="code-keyword">array</span>
+    {
+        <span class="code-keyword">return</span> [
+            <span class="code-string">'email_verified_at'</span> => <span class="code-string">'datetime'</span>,
+            <span class="code-string">'password'</span>          => <span class="code-string">'hashed'</span>,
+        ];
+    }
 }</pre>
+                </div>
+            </div>
+
+            <div class="alert alert-info">
+                <span class="alert-icon">💡</span>
+                <div>
+                    <h4>Laravel 13: <code>$fillable</code> diganti PHP Attribute</h4>
+                    <p>Di Laravel 13, model User bawaan memakai <code>#[Fillable([...])]</code> sebagai PHP 8 attribute — bukan property <code>protected $fillable = [...]</code> seperti yang mungkin kamu lihat di tutorial lama. Keduanya bekerja sama, hanya sintaksnya berbeda. Jangan sampai menambahkan <code>$fillable</code> property jika sudah ada attribute <code>#[Fillable]</code> karena akan terjadi duplikasi.</p>
                 </div>
             </div>
 

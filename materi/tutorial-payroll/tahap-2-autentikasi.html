@@ -179,12 +179,21 @@ php artisan migrate</pre>
             <div class="alert alert-info">
                 <span class="alert-icon">📌</span>
                 <div>
-                    <h4>Saat <code>breeze:install</code> ditanya pilihan:</h4>
+                    <h4>Saat <code>breeze:install</code> ditanya pilihan — jawab tepat ini:</h4>
                     <ul style="margin:0.5rem 0 0;">
                         <li>Stack: pilih <strong>Livewire</strong></li>
-                        <li>Dark mode: pilih sesuai selera (No untuk sederhana)</li>
+                        <li><strong>Livewire stack</strong>: pilih <strong>functional (Volt)</strong> — BUKAN "class". Pilihan ini menentukan struktur file auth yang dihasilkan!</li>
+                        <li>Dark mode: pilih <strong>No</strong> (agar lebih sederhana)</li>
                         <li>Testing: pilih <strong>PHPUnit</strong> (default)</li>
                     </ul>
+                </div>
+            </div>
+
+            <div class="alert alert-warning">
+                <span class="alert-icon">⚠️</span>
+                <div>
+                    <h4>Kenapa harus pilih <strong>functional (Volt)</strong>?</h4>
+                    <p>Pilihan "functional" menghasilkan halaman auth sebagai file <code>.blade.php</code> tunggal (Volt syntax). Pilihan "class" menghasilkan file PHP terpisah di <code>app/Livewire/</code>. Tutorial ini mengajarkan struktur <strong>functional (Volt)</strong> — jika kamu salah pilih "class", struktur foldernya akan berbeda dan langkah berikutnya tidak akan cocok.</p>
                 </div>
             </div>
 
