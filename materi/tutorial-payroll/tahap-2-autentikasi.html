@@ -192,6 +192,14 @@ php artisan migrate</pre>
 
             <p>Setelah <code>breeze:install</code>, Breeze menghasilkan banyak file secara otomatis. Ini yang paling penting untuk dipahami:</p>
 
+            <div class="alert alert-tip">
+                <span class="alert-icon">💡</span>
+                <div>
+                    <h4>Breeze Livewire Pakai Teknologi <strong>Volt</strong></h4>
+                    <p>Berbeda dari Breeze biasa yang membuat file PHP terpisah untuk setiap halaman auth, Breeze stack Livewire memakai <strong>Livewire Volt</strong> — logika PHP dan tampilan Blade digabung dalam <em>satu file</em> <code>.blade.php</code>. Itulah kenapa kamu tidak akan menemukan folder <code>app/Livewire/Auth/</code>.</p>
+                </div>
+            </div>
+
             <table class="comparison-table">
                 <tr>
                     <th>File / Folder</th>
@@ -199,23 +207,31 @@ php artisan migrate</pre>
                 </tr>
                 <tr>
                     <td><code>resources/views/layouts/app.blade.php</code></td>
-                    <td>Layout utama untuk halaman yang <strong>butuh login</strong> (dashboard, karyawan, payroll)</td>
+                    <td>Kerangka HTML utama untuk halaman yang <strong>butuh login</strong> — berisi <code>&lt;livewire:layout.navigation /&gt;</code> dan <code>{{ $slot }}</code></td>
                 </tr>
                 <tr>
                     <td><code>resources/views/layouts/guest.blade.php</code></td>
-                    <td>Layout untuk halaman <strong>tanpa login</strong> (login, register)</td>
+                    <td>Kerangka HTML untuk halaman <strong>tanpa login</strong> (login, register)</td>
                 </tr>
                 <tr>
-                    <td><code>app/Livewire/Auth/Login.php</code></td>
-                    <td>Komponen Livewire login — sudah lengkap</td>
+                    <td><code>resources/views/livewire/layout/navigation.blade.php</code></td>
+                    <td><strong>Komponen navbar</strong> — inilah tempat kita menambahkan menu Karyawan & Payroll</td>
                 </tr>
                 <tr>
-                    <td><code>app/Livewire/Auth/Register.php</code></td>
-                    <td>Komponen Livewire register — sudah lengkap</td>
+                    <td><code>resources/views/livewire/pages/auth/*.blade.php</code></td>
+                    <td>Halaman login, register, forgot-password, dst — pakai Volt (logika + tampilan dalam 1 file)</td>
+                </tr>
+                <tr>
+                    <td><code>app/Livewire/Forms/LoginForm.php</code></td>
+                    <td>Class form khusus login dengan validasi dan rate-limiting</td>
+                </tr>
+                <tr>
+                    <td><code>app/Livewire/Actions/Logout.php</code></td>
+                    <td>Action class untuk proses logout (invalidate session)</td>
                 </tr>
                 <tr>
                     <td><code>routes/auth.php</code></td>
-                    <td>Semua route login, register, logout, reset password — sudah didaftarkan</td>
+                    <td>Semua route auth menggunakan sintaks <code>Volt::route()</code> — bukan <code>Route::get()</code> biasa</td>
                 </tr>
                 <tr>
                     <td><code>resources/views/dashboard.blade.php</code></td>
@@ -226,44 +242,57 @@ php artisan migrate</pre>
             <div class="alert alert-warning">
                 <span class="alert-icon">⚠️</span>
                 <div>
-                    <h4>Jangan Hapus atau Edit Sembarangan File Auth Breeze!</h4>
-                    <p>File di <code>app/Livewire/Auth/</code> adalah komponen yang sudah diuji dan aman. Kita tidak perlu menyentuhnya. Yang akan kita kustomisasi hanya <code>layouts/app.blade.php</code> untuk menambahkan menu navigasi aplikasi payroll kita.</p>
+                    <h4>Jangan Edit File Auth Breeze!</h4>
+                    <p>File di <code>resources/views/livewire/pages/auth/</code> sudah aman dan teruji. Kita tidak perlu menyentuhnya. Yang akan kita kustomisasi hanya <code>resources/views/livewire/layout/navigation.blade.php</code> untuk menambahkan menu payroll ke navbar.</p>
                 </div>
             </div>
 
-            <h2>🎨 3. Kustomisasi Layout Utama untuk Payroll</h2>
+            <h2>🎨 3. Menambah Menu ke Navbar Payroll</h2>
 
-            <p>Layout <code>app.blade.php</code> yang dibuat Breeze adalah layout generik. Kita perlu menambahkan navigasi menu <strong>Karyawan</strong> dan <strong>Payroll</strong> ke dalamnya.</p>
+            <p>Navbar di Breeze Livewire bukan ada di <code>layouts/app.blade.php</code> — file itu hanya berisi kerangka dan memanggil <code>&lt;livewire:layout.navigation /&gt;</code>. Navigasi sebenarnya ada di file terpisah.</p>
 
-            <p>Buka <code>resources/views/layouts/app.blade.php</code>, cari bagian navigasi (biasanya ada class <code>nav</code> atau komponen <code>&lt;x-nav-link&gt;</code>), dan tambahkan link menu berikut:</p>
+            <p>Buka <strong><code>resources/views/livewire/layout/navigation.blade.php</code></strong> — cari bagian yang berisi <code>route('dashboard')</code> (link Dashboard bawaan), lalu tambahkan 3 link baru tepat di bawahnya:</p>
 
             <div class="code-block">
                 <div class="code-header">
                     <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span class="code-dot"></span></div>
-                    <span class="code-filename">resources/views/layouts/app.blade.php — bagian navigasi</span>
+                    <span class="code-filename">resources/views/livewire/layout/navigation.blade.php — bagian nav links</span>
                     <button class="code-copy">Salin</button>
                 </div>
                 <div class="code-body">
-                    <pre><span class="code-comment">&lt;!-- Tambahkan di dalam nav yang sudah ada, setelah link Dashboard --&gt;</span>
-<span class="code-tag">&lt;x-nav-link</span> <span class="code-attr">:href</span>=<span class="code-string">"route('employees.index')"</span> <span class="code-attr">:active</span>=<span class="code-string">"request()->routeIs('employees.*')"</span><span class="code-tag">&gt;</span>
+                    <pre><span class="code-comment">&lt;!-- Sudah ada bawaan Breeze (jangan dihapus): --&gt;</span>
+<span class="code-tag">&lt;x-nav-link</span> <span class="code-attr">:href</span>=<span class="code-string">"route('dashboard')"</span> <span class="code-attr">:active</span>=<span class="code-string">"request()->routeIs('dashboard')"</span> <span class="code-attr">wire:navigate</span><span class="code-tag">&gt;</span>
+    {{ __('Dashboard') }}
+<span class="code-tag">&lt;/x-nav-link&gt;</span>
+
+<span class="code-comment">&lt;!-- Tambahkan 3 baris ini tepat setelahnya: --&gt;</span>
+<span class="code-tag">&lt;x-nav-link</span> <span class="code-attr">:href</span>=<span class="code-string">"route('employees.index')"</span> <span class="code-attr">:active</span>=<span class="code-string">"request()->routeIs('employees.*')"</span> <span class="code-attr">wire:navigate</span><span class="code-tag">&gt;</span>
     Karyawan
 <span class="code-tag">&lt;/x-nav-link&gt;</span>
 
-<span class="code-tag">&lt;x-nav-link</span> <span class="code-attr">:href</span>=<span class="code-string">"route('payroll.calculator')"</span> <span class="code-attr">:active</span>=<span class="code-string">"request()->routeIs('payroll.*')"</span><span class="code-tag">&gt;</span>
+<span class="code-tag">&lt;x-nav-link</span> <span class="code-attr">:href</span>=<span class="code-string">"route('payroll.calculator')"</span> <span class="code-attr">:active</span>=<span class="code-string">"request()->routeIs('payroll.calculator')"</span> <span class="code-attr">wire:navigate</span><span class="code-tag">&gt;</span>
     Payroll
 <span class="code-tag">&lt;/x-nav-link&gt;</span>
 
-<span class="code-tag">&lt;x-nav-link</span> <span class="code-attr">:href</span>=<span class="code-string">"route('payroll.history')"</span> <span class="code-attr">:active</span>=<span class="code-string">"request()->routeIs('payroll.history')"</span><span class="code-tag">&gt;</span>
+<span class="code-tag">&lt;x-nav-link</span> <span class="code-attr">:href</span>=<span class="code-string">"route('payroll.history')"</span> <span class="code-attr">:active</span>=<span class="code-string">"request()->routeIs('payroll.history')"</span> <span class="code-attr">wire:navigate</span><span class="code-tag">&gt;</span>
     Riwayat Gaji
 <span class="code-tag">&lt;/x-nav-link&gt;</span></pre>
+                </div>
+            </div>
+
+            <div class="alert alert-warning">
+                <span class="alert-icon">⚠️</span>
+                <div>
+                    <h4>Jangan Lupa <code>wire:navigate</code>!</h4>
+                    <p>Semua <code>&lt;x-nav-link&gt;</code> bawaan Breeze sudah pakai atribut <code>wire:navigate</code>. Pastikan link yang kamu tambahkan juga pakai atribut ini — tanpanya navigasi antar halaman akan full page reload dan kehilangan keunggulan SPA Livewire.</p>
                 </div>
             </div>
 
             <div class="alert alert-tip">
                 <span class="alert-icon">🔍</span>
                 <div>
-                    <h4>Cara Cari Tempat yang Tepat di <code>app.blade.php</code></h4>
-                    <p>Cari baris yang berisi <code>route('dashboard')</code> — itu adalah link "Dashboard" bawaan Breeze. Letakkan menu Karyawan, Payroll, dan Riwayat Gaji tepat di bawahnya.</p>
+                    <h4>Ada 2 Blok Nav yang Perlu Diubah</h4>
+                    <p>Di dalam <code>navigation.blade.php</code>, ada 2 blok <code>x-nav-link</code> yang serupa: satu untuk tampilan <strong>desktop</strong> dan satu untuk tampilan <strong>mobile</strong> (biasanya ditandai class <code>responsive</code> atau berada di dalam <code>x-responsive-nav-link</code>). Tambahkan menu payroll di <em>kedua</em> blok agar tampil di HP maupun laptop.</p>
                 </div>
             </div>
 
@@ -379,11 +408,11 @@ npm run dev</pre>
 
             <div class="alert alert-info" style="margin-top: 1rem;">
                 <ol>
-                    <li><strong>User submit form login</strong> → Komponen <code>app/Livewire/Auth/Login.php</code> menangkap data via <code>wire:submit</code>.</li>
-                    <li><strong>Validasi</strong> → Email harus valid, password minimal 8 karakter.</li>
+                    <li><strong>User submit form login</strong> → Volt component <code>resources/views/livewire/pages/auth/login.blade.php</code> menangkap data via <code>wire:submit</code> dan mendelegasikan ke <code>app/Livewire/Forms/LoginForm.php</code>.</li>
+                    <li><strong>Validasi + Rate Limit</strong> → <code>LoginForm</code> memvalidasi email/password dan menerapkan throttle 5 percobaan per IP untuk mencegah brute force.</li>
                     <li><strong><code>Auth::attempt()</code></strong> → Laravel mencocokkan email ke database dan membandingkan password yang diinput dengan hash bcrypt yang tersimpan. Jika cocok, session dibuat.</li>
-                    <li><strong>Redirect</strong> → User diarahkan ke <code>/dashboard</code> (atau ke halaman yang dicoba diakses sebelumnya via <code>intended()</code>).</li>
-                    <li><strong>Middleware <code>auth</code></strong> → Setiap request ke halaman yang dilindungi, middleware ini cek apakah ada session aktif. Jika tidak ada → redirect ke <code>/login</code>.</li>
+                    <li><strong>Redirect</strong> → User diarahkan ke <code>/dashboard</code> via <code>$this->redirectIntended()</code> — atau ke halaman yang dicoba diakses sebelumnya.</li>
+                    <li><strong>Middleware <code>auth</code> + <code>verified</code></strong> → Dashboard dilindungi dua middleware: <code>auth</code> (cek login) dan <code>verified</code> (cek email sudah dikonfirmasi). Itulah kenapa kita perlu set <code>email_verified_at</code> di Seeder.</li>
                 </ol>
             </div>
 
@@ -393,8 +422,9 @@ npm run dev</pre>
                 <h3>📋 Ringkasan Tahap 2</h3>
                 <ul>
                     <li><strong>Breeze = 4 perintah</strong>: <code>composer require</code> → <code>breeze:install livewire</code> → <code>npm install</code> → <code>migrate</code>. Setelah itu auth langsung bisa dipakai.</li>
-                    <li>Breeze menghasilkan 2 layout penting: <code>layouts/app.blade.php</code> (authenticated) dan <code>layouts/guest.blade.php</code> (tamu). Semua komponen Livewire kita di tahap berikutnya akan pakai <code>layouts.app</code>.</li>
-                    <li>Lindungi seluruh route aplikasi dengan <code>Route::middleware('auth')->group(...)</code> — satu grup, semua terlindungi sekaligus.</li>
+                    <li>Breeze Livewire memakai <strong>Volt</strong> — halaman auth adalah file <code>.blade.php</code> yang berisi logika PHP sekaligus. Tidak ada folder <code>app/Livewire/Auth/</code>.</li>
+                    <li>Navbar ada di <code>resources/views/livewire/layout/navigation.blade.php</code> — bukan di <code>layouts/app.blade.php</code>. Tambahkan menu payroll di sana, pakai <code>wire:navigate</code>.</li>
+                    <li>Dashboard dilindungi <strong>dua</strong> middleware: <code>auth</code> dan <code>verified</code>. Karena itu Seeder harus set <code>email_verified_at => now()</code>.</li>
                     <li>Jalankan <strong>2 terminal</strong> sekaligus saat development: <code>php artisan serve</code> dan <code>npm run dev</code>.</li>
                 </ul>
             </div>
