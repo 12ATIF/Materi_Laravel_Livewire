@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 
 <head>
@@ -46,9 +46,11 @@
                     <li><a href="../minggu-1/pengenalan-laravel.html">Pengenalan Laravel</a></li>
                     <li><a href="../minggu-1/mvc-sederhana.html">MVC Sederhana</a></li>
                     <li><a href="../minggu-1/instalasi-laravel.html">Instalasi Laravel</a></li>
+                    <li><a href="../minggu-1/konvensi-penamaan.html">📏 Konvensi Penamaan</a></li>
                     <li><a href="../minggu-1/blade-template.html">Blade Template</a></li>
                     <li><a href="../minggu-1/pengenalan-livewire.html">Pengenalan Livewire</a></li>
                     <li><a href="../minggu-1/struktur-component.html">Struktur Component</a></li>
+                    <li><a href="../minggu-1/cara-membaca-error.html">🐛 Cara Membaca Error</a></li>
                 </ul>
             </div>
             <div class="sidebar-section">
@@ -81,6 +83,7 @@
                     <li><a href="tahap-2-autentikasi.html">Tahap 2: Autentikasi</a></li>
                     <li><a href="tahap-3-crud.html">Tahap 3: CRUD Karyawan</a></li>
                     <li><a href="tahap-4-logika-payroll.html" class="active">Tahap 4: Logika Payroll</a></li>
+                    <li><a href="testing-backend.html">🧪 Testing Backend (Postman)</a></li>
                     <li><a href="tahap-5-integrasi.html">Tahap 5: Integrasi Akhir</a></li>
                     <li><a href="tahap-6-laporan-pdf.html">Tahap 6: Laporan PDF (Bonus)</a></li>
                 </ul>
@@ -99,6 +102,16 @@
                     <span>⏱️ 50 menit</span>
                     <span>🧮 Praktik Lifecycle Hook</span>
                 </div>
+            </div>
+
+            <!-- Banner Versi -->
+            <div class="version-banner" role="note" aria-label="Versi software yang digunakan">
+                <span class="vb-icon">⚙️</span>
+                <span class="vb-label">Versi:</span>
+                <span class="vb-tag">🔥 Laravel 13.x</span>
+                <span class="vb-tag">⚡ Livewire 3.x</span>
+                <span class="vb-tag">🐘 PHP 8.3+</span>
+                <span class="vb-note">Lifecycle hook di Livewire 3: <code>mount()</code>, <code>updating()</code>, <code>updated()</code>, <code>hydrate()</code>, <code>dehydrate()</code>. Method <code>updatedNamaProperty()</code> tetap berlaku untuk perubahan property tertentu.</span>
             </div>
 
             <div class="prerequisites">
@@ -216,82 +229,217 @@ php artisan make:livewire PayrollCalculator</pre>
                     <pre><span class="code-keyword">namespace</span> App\Livewire;
 
 <span class="code-keyword">use</span> Livewire\Component;
+<span class="code-keyword">use</span> Illuminate\Validation\Rule;
 <span class="code-keyword">use</span> App\Models\Employee;
 <span class="code-keyword">use</span> App\Models\Payroll;
 
 <span class="code-keyword">class</span> <span class="code-class">PayrollCalculator</span> <span class="code-keyword">extends</span> Component
 {
-    <span class="code-comment">// Deklarasi input variable</span>
-    <span class="code-keyword">public</span> <span class="code-variable">$employee_id</span>;
-    <span class="code-keyword">public</span> <span class="code-variable">$basic_salary</span> = <span class="code-number">0</span>;
-    <span class="code-keyword">public</span> <span class="code-variable">$allowance</span> = <span class="code-number">0</span>;
-    <span class="code-keyword">public</span> <span class="code-variable">$deduction</span> = <span class="code-number">0</span>;
-    
-    <span class="code-comment">// Output Variable (read-only secara logika)</span>
-    <span class="code-keyword">public</span> <span class="code-variable">$net_salary</span> = <span class="code-number">0</span>;
+    <span class="code-comment">// Input</span>
+    <span class="code-keyword">public</span> ?<span class="code-keyword">int</span>    <span class="code-variable">$employee_id</span>  = <span class="code-keyword">null</span>;
+    <span class="code-keyword">public</span> <span class="code-keyword">int</span>     <span class="code-variable">$basic_salary</span> = <span class="code-number">0</span>;
+    <span class="code-keyword">public</span> <span class="code-keyword">int</span>     <span class="code-variable">$allowance</span>    = <span class="code-number">0</span>;
+    <span class="code-keyword">public</span> <span class="code-keyword">int</span>     <span class="code-variable">$deduction</span>    = <span class="code-number">0</span>;
+    <span class="code-keyword">public</span> <span class="code-keyword">string</span>  <span class="code-variable">$month_year</span> = <span class="code-string">''</span>;  <span class="code-comment">// user pilih sendiri: "April 2026"</span>
 
-    <span class="code-comment">// =======================================================================</span>
-    <span class="code-comment">// LIFECYCLE HOOKS SAKTI DARI LIVEWIRE</span>
-    <span class="code-comment">// =======================================================================</span>
-    <span class="code-comment">// Fungsi di bawah ini dipanggil OTOMATIS detik demi detik </span>
-    <span class="code-comment">// setiap kali user mengubah nilai di input HTML!</span>
-    <span class="code-keyword">public function</span> <span class="code-function">updated</span>(<span class="code-variable">$propertyName</span>)
+    <span class="code-comment">// Output (dihitung otomatis)</span>
+    <span class="code-keyword">public</span> <span class="code-keyword">int</span> <span class="code-variable">$net_salary</span> = <span class="code-number">0</span>;
+
+    <span class="code-keyword">public function</span> <span class="code-function">mount</span>()
     {
-        <span class="code-comment">// Lakukan Kalkulasi: THP = (Gaji + Tunjangan) - Potongan</span>
-        <span class="code-comment">// Cast ke (int) untuk memastikan matematika berjalan lancar meski valuenya string kosong.</span>
-        <span class="code-variable">$this</span>->net_salary = ((int)<span class="code-variable">$this</span>->basic_salary + (int)<span class="code-variable">$this</span>->allowance) - (int)<span class="code-variable">$this</span>->deduction;
+        <span class="code-comment">// Default bulan/tahun ke bulan ini (format Indonesia)</span>
+        <span class="code-variable">$this</span>->month_year = \Carbon\Carbon::now()-&gt;locale(<span class="code-string">'id'</span>)-&gt;isoFormat(<span class="code-string">'MMMM YYYY'</span>);
     }
 
-    <span class="code-comment">// Proses Menyimpan Data Struk ke Database MySQL</span>
+    <span class="code-comment">// Lifecycle Hook: hitung ulang THP setiap kali input angka berubah</span>
+    <span class="code-keyword">public function</span> <span class="code-function">updated</span>(<span class="code-variable">$field</span>)
+    {
+        <span class="code-keyword">if</span> (in_array(<span class="code-variable">$field</span>, [<span class="code-string">'basic_salary'</span>, <span class="code-string">'allowance'</span>, <span class="code-string">'deduction'</span>])) {
+            <span class="code-comment">// max(0, ...) mencegah THP negatif jika potongan melebihi pendapatan</span>
+            <span class="code-variable">$this</span>->net_salary = max(<span class="code-number">0</span>, (<span class="code-variable">$this</span>->basic_salary + <span class="code-variable">$this</span>->allowance) - <span class="code-variable">$this</span>->deduction);
+        }
+    }
+
     <span class="code-keyword">public function</span> <span class="code-function">savePayroll</span>()
     {
         <span class="code-variable">$this</span>->validate([
-            <span class="code-string">'employee_id'</span> => <span class="code-string">'required|exists:employees,id'</span>,
-            <span class="code-string">'basic_salary'</span> => <span class="code-string">'required|numeric|min:0'</span>,
+            <span class="code-string">'employee_id'</span>  => [
+                <span class="code-string">'required'</span>,
+                <span class="code-string">'exists:employees,id'</span>,
+                <span class="code-comment">// Cegah slip gaji duplikat: satu karyawan max 1 slip per periode</span>
+                Rule::unique(<span class="code-string">'payrolls'</span>, <span class="code-string">'employee_id'</span>)->where(<span class="code-string">'month_year'</span>, <span class="code-variable">$this</span>->month_year),
+            ],
+            <span class="code-string">'basic_salary'</span> => <span class="code-string">'required|integer|min:1'</span>,
+            <span class="code-string">'month_year'</span>   => <span class="code-string">'required|string'</span>,
+        ], [
+            <span class="code-string">'employee_id.required'</span> => <span class="code-string">'Silakan pilih karyawan terlebih dahulu.'</span>,
+            <span class="code-string">'employee_id.exists'</span>   => <span class="code-string">'Karyawan tidak ditemukan di database.'</span>,
+            <span class="code-string">'employee_id.unique'</span>   => <span class="code-string">'Karyawan ini sudah memiliki slip gaji untuk periode '</span> . <span class="code-variable">$this</span>->month_year . <span class="code-string">'.'</span>,
+            <span class="code-string">'basic_salary.required'</span> => <span class="code-string">'Gaji pokok wajib diisi.'</span>,
+            <span class="code-string">'basic_salary.min'</span>     => <span class="code-string">'Gaji pokok harus lebih dari 0.'</span>,
+            <span class="code-string">'month_year.required'</span>  => <span class="code-string">'Periode gaji wajib diisi.'</span>,
         ]);
 
         Payroll::create([
-            <span class="code-string">'employee_id'</span> => <span class="code-variable">$this</span>->employee_id,
+            <span class="code-string">'employee_id'</span>  => <span class="code-variable">$this</span>->employee_id,
             <span class="code-string">'basic_salary'</span> => <span class="code-variable">$this</span>->basic_salary,
-            <span class="code-string">'allowance'</span> => <span class="code-variable">$this</span>->allowance,
-            <span class="code-string">'deduction'</span> => <span class="code-variable">$this</span>->deduction,
-            <span class="code-string">'net_salary'</span> => <span class="code-variable">$this</span>->net_salary,
-            <span class="code-string">'month_year'</span> => date(<span class="code-string">'F Y'</span>), <span class="code-comment">// Ambil bulan & tahun hari ini</span>
+            <span class="code-string">'allowance'</span>    => <span class="code-variable">$this</span>->allowance,
+            <span class="code-string">'deduction'</span>    => <span class="code-variable">$this</span>->deduction,
+            <span class="code-string">'net_salary'</span>   => <span class="code-variable">$this</span>->net_salary,
+            <span class="code-string">'month_year'</span>   => <span class="code-variable">$this</span>->month_year,
         ]);
 
-        <span class="code-comment">// Tampilkan alert sukses dan kosongkan kalkulator</span>
-        session()->flash(<span class="code-string">'success'</span>, <span class="code-string">'Berhasil menerbitkan Slip Gaji!'</span>);
+        session()->flash(<span class="code-string">'success'</span>, <span class="code-string">'Slip gaji berhasil diterbitkan untuk '</span> . <span class="code-variable">$this</span>->month_year . <span class="code-string">'!'</span>);
         <span class="code-variable">$this</span>->reset([<span class="code-string">'employee_id'</span>, <span class="code-string">'basic_salary'</span>, <span class="code-string">'allowance'</span>, <span class="code-string">'deduction'</span>, <span class="code-string">'net_salary'</span>]);
+        <span class="code-comment">// Reset periode ke bulan sekarang — jangan panggil mount() secara manual!</span>
+        <span class="code-variable">$this</span>->month_year = \Carbon\Carbon::now()->locale(<span class="code-string">'id'</span>)->isoFormat(<span class="code-string">'MMMM YYYY'</span>);
     }
 
     <span class="code-keyword">public function</span> <span class="code-function">render</span>()
     {
         <span class="code-keyword">return</span> view(<span class="code-string">'livewire.payroll-calculator'</span>, [
-            <span class="code-comment">// Melempar list Karyawan agar bisa ditampilkan di <select> Option pilihan data form</span>
-            <span class="code-string">'employees'</span> => Employee::orderBy(<span class="code-string">'name'</span>, <span class="code-string">'asc'</span>)->get()
-        ])-&gt;layout('layouts.app');
+            <span class="code-string">'employees'</span> => Employee::orderBy(<span class="code-string">'name'</span>, <span class="code-string">'asc'</span>)->get(),
+        ])-&gt;layout(<span class="code-string">'layouts.app'</span>);
     }
 }</pre>
                 </div>
             </div>
 
+            <div class="alert alert-tip">
+                <span class="alert-icon">🛡️</span>
+                <div>
+                    <h4>Kenapa ada <code>Rule::unique</code> di validasi <code>employee_id</code>?</h4>
+                    <p>Kita ingin mencegah satu karyawan memiliki dua slip gaji untuk <strong>periode yang sama</strong>. Dengan <code>Rule::unique('payrolls', 'employee_id')->where('month_year', $this->month_year)</code>, Laravel akan cek: "Apakah kombinasi karyawan ini + periode ini sudah ada di database?" — jika sudah ada, form akan ditolak dengan pesan error sebelum data disimpan ganda.</p>
+                </div>
+            </div>
+
             <h2>📚 Kenapa <code>updated()</code> Sangat Krusial?</h2>
             <div class="alert alert-info" style="margin-top: 1rem;">
-                <p>Ingat kembali materi <em>Lifecycle Hooks</em> di Minggu ke-2. Pada PHP murni (vanilla/murni Controller Laravel reguler), untuk menghitung nilai otomatis antara form input di Front end, kamu biasanya <strong>HARUS</strong> menulis kode menggunakan <strong>Javascript (seperti DOM event listener 'onkeyup')</strong>.</p>
-                <p>Di Livewire, kamu tidak perlu campur tangan barisan Javascript! Cukup buat fungsi konvensi bernama <code>updated()</code>. Keuntungannya:</p>
-                <ol>
-                    <li>Logika bisnis (rumus matematika) tetap tersimpan aman di Backend (PHP), tidak bocor bisa diotak-atik di *Inspect Element*.</li>
-                    <li>Sistem *Binding* Livewire mereplika kesan Instan dari framework Javascript semacam Vue/ReactJS.</li>
-                </ol>
+                <p>Pada PHP murni atau Controller Laravel biasa, untuk menghitung nilai otomatis saat user mengetik, kamu <strong>harus</strong> menulis JavaScript (event listener <code>onkeyup</code>). Di Livewire, cukup fungsi <code>updated()</code> di PHP — logika bisnis tetap di backend, tidak bisa diotak-atik via Inspect Element browser.</p>
             </div>
+
+            <h2>🎨 Blade View: <code>payroll-calculator.blade.php</code></h2>
+
+            <p>Sekarang buat tampilan form-nya. Ini adalah versi "hidup" dari mockup Tahap 1 — hubungkan setiap input ke property PHP lewat <code>wire:model.live</code> agar kalkulator langsung berreaksi saat angka diketik.</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span class="code-dot"></span></div>
+                    <span class="code-filename">resources/views/livewire/payroll-calculator.blade.php</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-tag">&lt;div class="max-w-2xl mx-auto py-8 px-4"&gt;</span>
+
+    <span class="code-comment">&lt;!-- Flash sukses --&gt;</span>
+    <span class="code-keyword">@if</span>(session()-&gt;has(<span class="code-string">'success'</span>))
+        <span class="code-tag">&lt;div class="bg-green-100 border border-green-400 text-green-800 px-4 py-3 rounded mb-4"&gt;</span>
+            ✅ {{ session(<span class="code-string">'success'</span>) }}
+        <span class="code-tag">&lt;/div&gt;</span>
+    <span class="code-keyword">@endif</span>
+
+    <span class="code-tag">&lt;div class="bg-white p-6 rounded-lg shadow border border-gray-100"&gt;</span>
+        <span class="code-tag">&lt;h2 class="text-xl font-bold text-gray-800 mb-6"&gt;</span>🧮 Kalkulator Penggajian<span class="code-tag">&lt;/h2&gt;</span>
+
+        <span class="code-tag">&lt;form wire:submit="savePayroll"&gt;</span>
+
+            <span class="code-comment">&lt;!-- Pilih Karyawan --&gt;</span>
+            <span class="code-tag">&lt;div class="mb-4"&gt;</span>
+                <span class="code-tag">&lt;label class="block text-sm font-medium text-gray-700"&gt;</span>Karyawan<span class="code-tag">&lt;/label&gt;</span>
+                <span class="code-tag">&lt;select wire:model="employee_id" class="mt-1 block w-full rounded border-gray-300 shadow-sm"&gt;</span>
+                    <span class="code-tag">&lt;option value=""&gt;</span>-- Pilih Karyawan --<span class="code-tag">&lt;/option&gt;</span>
+                    <span class="code-keyword">@foreach</span>($employees <span class="code-keyword">as</span> $emp)
+                        <span class="code-tag">&lt;option value="{{ $emp-&gt;id }}"&gt;</span>{{ $emp-&gt;nik }} — {{ $emp-&gt;name }}<span class="code-tag">&lt;/option&gt;</span>
+                    <span class="code-keyword">@endforeach</span>
+                <span class="code-tag">&lt;/select&gt;</span>
+                <span class="code-keyword">@error</span>(<span class="code-string">'employee_id'</span>) <span class="code-tag">&lt;span class="text-xs text-red-500"&gt;</span>{{ $message }}<span class="code-tag">&lt;/span&gt;</span> <span class="code-keyword">@enderror</span>
+            <span class="code-tag">&lt;/div&gt;</span>
+
+            <span class="code-comment">&lt;!-- Periode Gaji (bisa diedit) --&gt;</span>
+            <span class="code-tag">&lt;div class="mb-4"&gt;</span>
+                <span class="code-tag">&lt;label class="block text-sm font-medium text-gray-700"&gt;</span>Periode Gaji<span class="code-tag">&lt;/label&gt;</span>
+                <span class="code-tag">&lt;input type="text" wire:model="month_year" class="mt-1 block w-full rounded border-gray-300 shadow-sm" placeholder="April 2026"&gt;</span>
+                <span class="code-keyword">@error</span>(<span class="code-string">'month_year'</span>) <span class="code-tag">&lt;span class="text-xs text-red-500"&gt;</span>{{ $message }}<span class="code-tag">&lt;/span&gt;</span> <span class="code-keyword">@enderror</span>
+            <span class="code-tag">&lt;/div&gt;</span>
+
+            <span class="code-comment">&lt;!-- Input Nominal — wire:model.live agar kalkulator langsung bereaksi --&gt;</span>
+            <span class="code-tag">&lt;div class="mb-4"&gt;</span>
+                <span class="code-tag">&lt;label class="block text-sm font-medium text-gray-700"&gt;</span>Gaji Pokok<span class="code-tag">&lt;/label&gt;</span>
+                <span class="code-tag">&lt;input type="number" wire:model.live="basic_salary" min="0" class="mt-1 block w-full rounded border-gray-300 shadow-sm" placeholder="0"&gt;</span>
+                <span class="code-keyword">@error</span>(<span class="code-string">'basic_salary'</span>) <span class="code-tag">&lt;span class="text-xs text-red-500"&gt;</span>{{ $message }}<span class="code-tag">&lt;/span&gt;</span> <span class="code-keyword">@enderror</span>
+            <span class="code-tag">&lt;/div&gt;</span>
+
+            <span class="code-tag">&lt;div class="mb-4"&gt;</span>
+                <span class="code-tag">&lt;label class="block text-sm font-medium text-gray-700"&gt;</span>Tunjangan<span class="code-tag">&lt;/label&gt;</span>
+                <span class="code-tag">&lt;input type="number" wire:model.live="allowance" min="0" class="mt-1 block w-full rounded border-gray-300 shadow-sm" placeholder="0"&gt;</span>
+            <span class="code-tag">&lt;/div&gt;</span>
+
+            <span class="code-tag">&lt;div class="mb-6"&gt;</span>
+                <span class="code-tag">&lt;label class="block text-sm font-medium text-gray-700"&gt;</span>Potongan (BPJS, Pajak, dll)<span class="code-tag">&lt;/label&gt;</span>
+                <span class="code-tag">&lt;input type="number" wire:model.live="deduction" min="0" class="mt-1 block w-full rounded border-gray-300 shadow-sm" placeholder="0"&gt;</span>
+            <span class="code-tag">&lt;/div&gt;</span>
+
+            <span class="code-comment">&lt;!-- Take Home Pay: berubah otomatis tanpa klik tombol apapun --&gt;</span>
+            <span class="code-tag">&lt;div class="border-t pt-4 mb-6 flex justify-between items-center"&gt;</span>
+                <span class="code-tag">&lt;div&gt;</span>
+                    <span class="code-tag">&lt;p class="text-sm text-gray-500"&gt;</span>Take Home Pay (THP)<span class="code-tag">&lt;/p&gt;</span>
+                    <span class="code-tag">&lt;p class="text-xs text-gray-400"&gt;</span>Gaji Pokok + Tunjangan - Potongan<span class="code-tag">&lt;/p&gt;</span>
+                <span class="code-tag">&lt;/div&gt;</span>
+                <span class="code-tag">&lt;div class="text-3xl font-extrabold text-blue-600"&gt;</span>
+                    Rp {{ number_format($net_salary, 0, <span class="code-string">','</span>, <span class="code-string">'.'</span>) }}
+                <span class="code-tag">&lt;/div&gt;</span>
+            <span class="code-tag">&lt;/div&gt;</span>
+
+            <span class="code-tag">&lt;button type="submit"</span>
+                <span class="code-attr">wire:loading.attr</span>=<span class="code-string">"disabled"</span>
+                <span class="code-attr">class</span>=<span class="code-string">"w-full bg-blue-600 text-white font-bold py-2 px-4 rounded hover:bg-blue-700 disabled:opacity-50"</span><span class="code-tag">&gt;</span>
+                <span class="code-tag">&lt;span wire:loading.remove&gt;</span>💾 Simpan Slip Gaji<span class="code-tag">&lt;/span&gt;</span>
+                <span class="code-tag">&lt;span wire:loading&gt;</span>Menyimpan...<span class="code-tag">&lt;/span&gt;</span>
+            <span class="code-tag">&lt;/button&gt;</span>
+
+        <span class="code-tag">&lt;/form&gt;</span>
+    <span class="code-tag">&lt;/div&gt;</span>
+<span class="code-tag">&lt;/div&gt;</span></pre>
+                </div>
+            </div>
+
+            <div class="alert alert-tip">
+                <span class="alert-icon">✨</span>
+                <div>
+                    <h4>Perhatikan <code>wire:loading</code> di Tombol Simpan</h4>
+                    <p><code>wire:loading.attr="disabled"</code> otomatis menonaktifkan tombol saat request sedang diproses — mencegah user klik dua kali dan membuat slip gaji duplikat. <code>wire:loading</code> / <code>wire:loading.remove</code> mengganti teks tombol antara "Simpan" dan "Menyimpan...". Ini UX profesional dengan nol baris JavaScript!</p>
+                </div>
+            </div>
+
+            <h2>🔗 Daftarkan Route Payroll Calculator</h2>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span class="code-dot"></span></div>
+                    <span class="code-filename">routes/web.php — tambahkan di dalam group auth</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-keyword">use</span> App\Livewire\PayrollCalculator;
+
+Route::middleware(<span class="code-string">'auth'</span>)->group(<span class="code-keyword">function</span> () {
+    <span class="code-comment">// ... route karyawan dari Tahap 3 ...</span>
+    Route::get(<span class="code-string">'/payroll'</span>, PayrollCalculator::<span class="code-keyword">class</span>)->name(<span class="code-string">'payroll.calculator'</span>);
+});</pre>
+                </div>
+            </div>
+
+            <p>Akses di browser: <code>http://localhost:8000/payroll</code></p>
 
             <!-- ==================== RINGKASAN ==================== -->
 
             <div class="summary-box">
                 <h3>📋 Ringkasan Tahap 4</h3>
                 <ul>
-                    <li>Tabel `payrolls` kita desain untuk punya sifat relasi ke satu `employee_id`.</li>
-                    <li>Kita tak perlu menulis Javascript panjang lebar untuk membuat kalkulator. <code>public function updated()</code> otomatis ditembak memicu matematika rumus PHP sederhana tiap kali kotak *input form* di-*typing* dari web.</li>
+                    <li>Tabel <code>payrolls</code> punya foreign key ke <code>employees</code> dan kolom <code>month_year</code> yang bisa diisi manual — tidak lagi hardcoded English.</li>
+                    <li><code>updated()</code> hanya menghitung ulang saat field angka berubah (bukan semua field) — lebih efisien.</li>
+                    <li><code>mount()</code> dipakai untuk nilai default <code>month_year</code> dalam bahasa Indonesia via Carbon <code>locale('id')</code>.</li>
+                    <li><code>wire:loading</code> di tombol simpan mencegah double-submit dan memberi feedback visual ke user.</li>
                 </ul>
             </div>
 
@@ -302,10 +450,10 @@ php artisan make:livewire PayrollCalculator</pre>
                         <div class="nav-btn-title">← Tahap 3: CRUD Karyawan</div>
                     </div>
                 </a>
-                <a href="tahap-5-integrasi.html" class="nav-btn">
+                <a href="testing-backend.html" class="nav-btn">
                     <div>
                         <div class="nav-btn-label">Tahap Selanjutnya</div>
-                        <div class="nav-btn-title">Tahap 5: Integrasi Akhir →</div>
+                        <div class="nav-btn-title">🧪 Testing Backend (Postman) →</div>
                     </div>
                 </a>
             </div>

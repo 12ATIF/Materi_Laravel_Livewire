@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testing Backend - Tutorial Payroll | Livewire SMK</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../../css/style.css">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="../../index.html" class="navbar-logo">
+                <svg viewBox="0 0 50 50" fill="none">
+                    <rect width="50" height="50" rx="12" fill="url(#g)" />
+                    <path d="M15 35V15L25 25L35 15V35" stroke="#fff" stroke-width="3" />
+                    <defs>
+                        <linearGradient id="g" x1="0" y1="0" x2="50" y2="50">
+                            <stop stop-color="#10B981" />
+                            <stop offset="1" stop-color="#3B82F6" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <span>Livewire SMK</span>
+            </a>
+            <ul class="navbar-menu">
+                <li><a href="../../index.html">Beranda</a></li>
+                <li><a href="../../silabus.html">Silabus</a></li>
+                <li><a href="../minggu-1/pengenalan-laravel.html" class="active">Materi</a></li>
+                <li><a href="../../demo.html">Demo</a></li>
+            </ul>
+            <button class="navbar-toggle" aria-label="Toggle menu"><span>☰</span></button>
+        </div>
+    </nav>
+
+    <div class="content-layout">
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <div class="sidebar-title">📗 Minggu 1</div>
+                <ul class="sidebar-nav">
+                    <li><a href="../minggu-1/pengenalan-laravel.html">Pengenalan Laravel</a></li>
+                    <li><a href="../minggu-1/mvc-sederhana.html">MVC Sederhana</a></li>
+                    <li><a href="../minggu-1/instalasi-laravel.html">Instalasi Laravel</a></li>
+                    <li><a href="../minggu-1/konvensi-penamaan.html">📏 Konvensi Penamaan</a></li>
+                    <li><a href="../minggu-1/blade-template.html">Blade Template</a></li>
+                    <li><a href="../minggu-1/pengenalan-livewire.html">Pengenalan Livewire</a></li>
+                    <li><a href="../minggu-1/struktur-component.html">Struktur Component</a></li>
+                    <li><a href="../minggu-1/cara-membaca-error.html">🐛 Cara Membaca Error</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-title">📘 Minggu 2</div>
+                <ul class="sidebar-nav">
+                    <li><a href="../minggu-2/wire-model.html">wire:model</a></li>
+                    <li><a href="../minggu-2/wire-click.html">wire:click</a></li>
+                    <li><a href="../minggu-2/database-eloquent.html">Database & Eloquent</a></li>
+                    <li><a href="../minggu-2/validasi.html">Validasi</a></li>
+                    <li><a href="../minggu-2/crud-sederhana.html">CRUD Sederhana</a></li>
+                    <li><a href="../minggu-2/autentikasi.html">🔐 Autentikasi</a></li>
+                    <li><a href="../minggu-2/lifecycle-events.html">🔄 Lifecycle & Events</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-title">📕 Minggu 3</div>
+                <ul class="sidebar-nav">
+                    <li><a href="../minggu-3/upload-file.html">Upload File</a></li>
+                    <li><a href="../minggu-3/pagination-search.html">Pagination & Search</a></li>
+                    <li><a href="../minggu-3/komponen-reusable.html">Komponen Reusable</a></li>
+                    <li><a href="../minggu-3/tampilan-dinamis.html">Tampilan Dinamis</a></li>
+                    <li><a href="../minggu-3/form-object.html">📋 Form Objects</a></li>
+                    <li><a href="../minggu-3/project-elibrary.html">📚 Tutorial E-Library</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-title">🚀 Project Payroll</div>
+                <ul class="sidebar-nav">
+                    <li><a href="tahap-1-frontend.html">Tahap 1: Frontend Statis</a></li>
+                    <li><a href="tahap-2-autentikasi.html">Tahap 2: Autentikasi</a></li>
+                    <li><a href="tahap-3-crud.html">Tahap 3: CRUD Karyawan</a></li>
+                    <li><a href="tahap-4-logika-payroll.html">Tahap 4: Logika Payroll</a></li>
+                    <li><a href="testing-backend.html" class="active">🧪 Testing Backend (Postman)</a></li>
+                    <li><a href="tahap-5-integrasi.html">Tahap 5: Integrasi Akhir</a></li>
+                    <li><a href="tahap-6-laporan-pdf.html">Tahap 6: Laporan PDF (Bonus)</a></li>
+                </ul>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="content-header">
+                <div class="content-breadcrumb">
+                    <a href="../../index.html">Beranda</a> / <a href="../../silabus.html">Silabus</a> / Project Payroll /
+                    Testing Backend
+                </div>
+                <h1 class="content-title">🧪 Testing Backend dengan Tinker & Postman</h1>
+                <div class="content-meta">
+                    <span>🚀 Tutorial Proyek</span>
+                    <span>⏱️ 45 menit</span>
+                    <span>🔬 Praktik Testing</span>
+                </div>
+            </div>
+
+            <!-- Banner Versi -->
+            <div class="version-banner" role="note" aria-label="Versi software yang digunakan">
+                <span class="vb-icon">⚙️</span>
+                <span class="vb-label">Versi:</span>
+                <span class="vb-tag">🔥 Laravel 13.x</span>
+                <span class="vb-tag">⚡ Livewire 3.x</span>
+                <span class="vb-tag">🐘 PHP 8.3+</span>
+                <span class="vb-tag">📬 Postman</span>
+                <span class="vb-tag">🛡️ Laravel Sanctum</span>
+                <span class="vb-note">Testing ini dilakukan <strong>setelah Tahap 4 selesai</strong> — semua model (Employee & Payroll) dan logika kalkulasi sudah ada, sehingga testing bisa end-to-end. Sanctum sudah include di Laravel 13, tidak perlu install terpisah.</span>
+            </div>
+
+            <div class="prerequisites">
+                <h3>📌 Prasyarat</h3>
+                <ul>
+                    <li>Model <code>Employee</code> + tabel <code>employees</code> sudah dibuat (Tahap 3).</li>
+                    <li>Model <code>Payroll</code> + tabel <code>payrolls</code> + logika kalkulasi sudah dibuat (Tahap 4).</li>
+                    <li>Database sudah terkoneksi dan <code>php artisan migrate</code> sudah dijalankan.</li>
+                    <li>Postman sudah terinstall — unduh gratis di <strong>postman.com/downloads</strong>.</li>
+                </ul>
+            </div>
+
+            <div class="objectives">
+                <h3>🎯 Tujuan Belajar</h3>
+                <p>Setelah menyelesaikan materi ini, kamu akan mampu:</p>
+                <ul>
+                    <li>Menguji logika Model Eloquent langsung dari terminal dengan <strong>Laravel Tinker</strong></li>
+                    <li>Membuat <strong>API endpoint</strong> sederhana menggunakan <code>routes/api.php</code></li>
+                    <li>Menguji setiap endpoint (GET, POST, PUT, DELETE) menggunakan <strong>Postman</strong></li>
+                    <li>Memahami konsep <strong>API token</strong> dengan Laravel Sanctum</li>
+                    <li>Memverifikasi respons JSON sebelum frontend dibangun</li>
+                </ul>
+            </div>
+
+            <!-- ============================================== -->
+
+            <h2>🤔 Kenapa Testing Backend Sebelum Frontend?</h2>
+
+            <p>Banyak pemula langsung membangun tampilan Livewire (frontend) tanpa memastikan logika backend sudah benar. Ini menyebabkan <strong>debugging yang membingungkan</strong> — error bisa datang dari backend, frontend, atau keduanya sekaligus.</p>
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1.5rem 0;">
+                <div style="padding:1.25rem;background:#FEE2E2;border-radius:12px;border-left:4px solid #EF4444;">
+                    <h4 style="margin:0 0 0.5rem;color:#DC2626;">❌ Tanpa Testing Backend</h4>
+                    <ul style="margin:0;padding-left:1.25rem;font-size:0.875rem;">
+                        <li>Buat Livewire, klik Simpan → tidak ada yang terjadi</li>
+                        <li>Entah salah di form, validasi, atau query?</li>
+                        <li>Debugging 3 layer sekaligus: HTML, PHP, DB</li>
+                        <li>Waktu debugging = 3× waktu coding</li>
+                    </ul>
+                </div>
+                <div style="padding:1.25rem;background:#F0FDF4;border-radius:12px;border-left:4px solid #10B981;">
+                    <h4 style="margin:0 0 0.5rem;color:#059669;">✅ Dengan Testing Backend Dulu</h4>
+                    <ul style="margin:0;padding-left:1.25rem;font-size:0.875rem;">
+                        <li>Test API → data masuk ke DB ✓</li>
+                        <li>Test validasi → error response sesuai ✓</li>
+                        <li>Saat pasang Livewire, tinggal sambungkan</li>
+                        <li>Kalau ada bug, pasti di frontend saja</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="alert alert-tip">
+                <span class="alert-icon">🏭</span>
+                <div>
+                    <h4>Ini Cara Kerja Developer Profesional</h4>
+                    <p>Di perusahaan, <strong>backend developer</strong> dan <strong>frontend developer</strong> bekerja terpisah. Backend dev membangun dan mendokumentasikan API — frontend dev memanggil API itu. Testing dengan Postman adalah cara backend dev memverifikasi pekerjaannya <em>sebelum</em> diserahkan ke tim frontend.</p>
+                </div>
+            </div>
+
+            <!-- ============================================== -->
+
+            <h2>🖥️ Bagian 1: Laravel Tinker — Test Model di Terminal</h2>
+
+            <p>Sebelum membuat API, kita bisa langsung test model Eloquent dari terminal menggunakan <strong>Tinker</strong> — PHP REPL (Read-Eval-Print Loop) bawaan Laravel. Tidak perlu browser, tidak perlu Postman dulu.</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-filename">Terminal — masuk ke Tinker</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre>php artisan tinker</pre>
+                </div>
+            </div>
+
+            <p>Setelah masuk Tinker, ketik perintah-perintah berikut satu per satu:</p>
+
+            <h3>Test 1: Create Employee</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-filename">Tinker</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-keyword">use</span> App\Models\Employee;
+
+<span class="code-comment">// Buat karyawan baru</span>
+Employee::create([
+    <span class="code-string">'nik'</span>      => <span class="code-string">'EMP-001'</span>,
+    <span class="code-string">'name'</span>     => <span class="code-string">'Budi Santoso'</span>,
+    <span class="code-string">'position'</span> => <span class="code-string">'Staff IT'</span>,
+]);
+
+<span class="code-comment">// Output yang diharapkan: objek Employee dengan id, nik, name, position, timestamps</span></pre>
+                </div>
+            </div>
+
+            <h3>Test 2: Read & Query</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-filename">Tinker</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-comment">// Ambil semua karyawan</span>
+Employee::all();
+
+<span class="code-comment">// Filter berdasarkan jabatan</span>
+Employee::where(<span class="code-string">'position'</span>, <span class="code-string">'Staff IT'</span>)->get();
+
+<span class="code-comment">// Cari berdasarkan NIK</span>
+Employee::where(<span class="code-string">'nik'</span>, <span class="code-string">'EMP-001'</span>)->first();
+
+<span class="code-comment">// Hitung total karyawan</span>
+Employee::count();</pre>
+                </div>
+            </div>
+
+            <h3>Test 3: Update & Delete</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-filename">Tinker</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-comment">// Update jabatan</span>
+Employee::where(<span class="code-string">'nik'</span>, <span class="code-string">'EMP-001'</span>)->update([<span class="code-string">'position'</span> => <span class="code-string">'Senior IT'</span>]);
+
+<span class="code-comment">// Delete karyawan</span>
+Employee::where(<span class="code-string">'nik'</span>, <span class="code-string">'EMP-001'</span>)->delete();</pre>
+                </div>
+            </div>
+
+            <h3>Test 4: Logika Kalkulasi Payroll</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-filename">Tinker — verifikasi rumus THP</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-comment">// Simulasi kalkulasi THP sebelum simpan ke DB</span>
+<span class="code-variable">$basic</span>     = <span class="code-number">5000000</span>;
+<span class="code-variable">$allowance</span> = <span class="code-number">500000</span>;
+<span class="code-variable">$deduction</span> = <span class="code-number">250000</span>;
+<span class="code-variable">$net</span>       = (<span class="code-variable">$basic</span> + <span class="code-variable">$allowance</span>) - <span class="code-variable">$deduction</span>;
+
+echo <span class="code-string">"THP: Rp "</span> . number_format(<span class="code-variable">$net</span>, <span class="code-number">0</span>, <span class="code-string">','</span>, <span class="code-string">'.'</span>);
+<span class="code-comment">// Output: THP: Rp 5.250.000</span>
+
+<span class="code-comment">// Test simpan Payroll (butuh employee yang ada)</span>
+<span class="code-keyword">use</span> App\Models\Payroll;
+<span class="code-variable">$emp</span> = Employee::first();
+Payroll::create([
+    <span class="code-string">'employee_id'</span>  => <span class="code-variable">$emp</span>->id,
+    <span class="code-string">'basic_salary'</span> => <span class="code-number">5000000</span>,
+    <span class="code-string">'allowance'</span>    => <span class="code-number">500000</span>,
+    <span class="code-string">'deduction'</span>    => <span class="code-number">250000</span>,
+    <span class="code-string">'net_salary'</span>   => <span class="code-number">5250000</span>,
+    <span class="code-string">'month_year'</span>   => <span class="code-string">'April 2026'</span>,
+]);</pre>
+                </div>
+            </div>
+
+            <div class="alert alert-tip">
+                <span class="alert-icon">💡</span>
+                <div>
+                    <h4>Tips Tinker</h4>
+                    <ul style="margin:0;">
+                        <li>Ketik <kbd>exit</kbd> untuk keluar dari Tinker</li>
+                        <li>Tekan <kbd>↑</kbd> untuk recall perintah sebelumnya</li>
+                        <li>Kalau ada error, baca pesan error — ini sama seperti debug biasa</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- ============================================== -->
+
+            <h2>📬 Bagian 2: Setup API dengan Laravel Sanctum</h2>
+
+            <p>Tinker bagus untuk testing cepat, tapi <strong>Postman</strong> lebih realistis — kita bisa test request HTTP persis seperti yang nanti akan dikirim dari aplikasi nyata. Untuk ini, kita perlu membuat <strong>API endpoint</strong> dan <strong>autentikasi token</strong>.</p>
+
+            <h3>Langkah 1: Aktifkan API di Laravel</h3>
+            <p>Laravel 13 sudah include Sanctum, tapi perlu diaktifkan dengan satu perintah:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-filename">Terminal</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-comment"># Aktifkan API routing + Sanctum (hanya perlu sekali)</span>
+php artisan install:api</pre>
+                </div>
+            </div>
+
+            <p>Perintah ini akan membuat file <code>routes/api.php</code> dan mengkonfigurasi Sanctum secara otomatis.</p>
+
+            <h3>Langkah 2: Tambahkan <code>HasApiTokens</code> ke User Model</h3>
+
+            <p>Ini diperlukan agar kita bisa membuat token dari Tinker untuk dipakai di Postman.</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span class="code-dot"></span></div>
+                    <span class="code-filename">app/Models/User.php</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-keyword">use</span> Laravel\Sanctum\HasApiTokens;  <span class="code-comment">// ← tambahkan baris ini</span>
+
+<span class="code-keyword">class</span> <span class="code-class">User</span> <span class="code-keyword">extends</span> Authenticatable
+{
+    <span class="code-keyword">use</span> HasApiTokens, HasFactory, Notifiable;  <span class="code-comment">// ← tambahkan HasApiTokens</span>
+    <span class="code-comment">// ... sisa kode tetap sama</span>
+}</pre>
+                </div>
+            </div>
+
+            <h3>Langkah 2b: Ambil Token via Tinker</h3>
+
+            <p>Login/register sudah ditangani Breeze di halaman web. Untuk Postman, cukup buat token langsung dari terminal:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-filename">Terminal — Tinker</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre>php artisan tinker
+
+<span class="code-comment">// Ambil user admin yang sudah ada</span>
+<span class="code-variable">$user</span> = App\Models\User::where(<span class="code-string">'email'</span>, <span class="code-string">'admin@payroll.test'</span>)->first();
+
+<span class="code-comment">// Buat token untuk sesi Postman</span>
+<span class="code-variable">$token</span> = <span class="code-variable">$user</span>->createToken(<span class="code-string">'postman-test'</span>)->plainTextToken;
+
+<span class="code-comment">// Tampilkan tokennya — copy nilai ini!</span>
+echo <span class="code-variable">$token</span>;</pre>
+                </div>
+            </div>
+
+            <div class="alert alert-tip">
+                <span class="alert-icon">📋</span>
+                <div>
+                    <h4>Simpan token ini di Postman Environment</h4>
+                    <p>Copy output <code>echo $token</code>, pergi ke <strong>Environments → Payroll Dev</strong>, isi variable <code>TOKEN</code> dengan nilai tersebut. Semua request Postman selanjutnya akan otomatis menggunakan token ini.</p>
+                </div>
+            </div>
+
+            <h3>Langkah 3: Buat API Controller untuk Employee</h3>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-filename">Terminal</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-comment"># Buat API controller (--api = tanpa create/edit form, --resource = semua method CRUD)</span>
+php artisan make:controller Api/EmployeeController --api
+php artisan make:controller Api/PayrollController --api</pre>
+                </div>
+            </div>
+
+            <p>Isi <code>app/Http/Controllers/Api/EmployeeController.php</code>:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span class="code-dot"></span></div>
+                    <span class="code-filename">app/Http/Controllers/Api/EmployeeController.php</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-keyword">namespace</span> App\Http\Controllers\Api;
+
+<span class="code-keyword">use</span> App\Http\Controllers\Controller;
+<span class="code-keyword">use</span> App\Models\Employee;
+<span class="code-keyword">use</span> Illuminate\Http\Request;
+
+<span class="code-keyword">class</span> <span class="code-class">EmployeeController</span> <span class="code-keyword">extends</span> Controller
+{
+    <span class="code-comment">// GET /api/employees</span>
+    <span class="code-keyword">public function</span> <span class="code-function">index</span>()
+    {
+        <span class="code-keyword">return</span> Employee::orderBy(<span class="code-string">'name'</span>)->get();
+    }
+
+    <span class="code-comment">// POST /api/employees</span>
+    <span class="code-keyword">public function</span> <span class="code-function">store</span>(Request <span class="code-variable">$request</span>)
+    {
+        <span class="code-variable">$data</span> = <span class="code-variable">$request</span>->validate([
+            <span class="code-string">'nik'</span>      => <span class="code-string">'required|unique:employees,nik'</span>,
+            <span class="code-string">'name'</span>     => <span class="code-string">'required|min:3'</span>,
+            <span class="code-string">'position'</span> => <span class="code-string">'required'</span>,
+        ]);
+
+        <span class="code-variable">$employee</span> = Employee::create(<span class="code-variable">$data</span>);
+
+        <span class="code-keyword">return</span> response()->json(<span class="code-variable">$employee</span>, <span class="code-number">201</span>);
+    }
+
+    <span class="code-comment">// GET /api/employees/{id}</span>
+    <span class="code-keyword">public function</span> <span class="code-function">show</span>(Employee <span class="code-variable">$employee</span>)
+    {
+        <span class="code-keyword">return</span> <span class="code-variable">$employee</span>;
+    }
+
+    <span class="code-comment">// PUT /api/employees/{id}</span>
+    <span class="code-keyword">public function</span> <span class="code-function">update</span>(Request <span class="code-variable">$request</span>, Employee <span class="code-variable">$employee</span>)
+    {
+        <span class="code-variable">$data</span> = <span class="code-variable">$request</span>->validate([
+            <span class="code-string">'nik'</span>      => <span class="code-string">'required|unique:employees,nik,'</span> . <span class="code-variable">$employee</span>->id,
+            <span class="code-string">'name'</span>     => <span class="code-string">'required|min:3'</span>,
+            <span class="code-string">'position'</span> => <span class="code-string">'required'</span>,
+        ]);
+
+        <span class="code-variable">$employee</span>->update(<span class="code-variable">$data</span>);
+
+        <span class="code-keyword">return</span> response()->json(<span class="code-variable">$employee</span>);
+    }
+
+    <span class="code-comment">// DELETE /api/employees/{id}</span>
+    <span class="code-keyword">public function</span> <span class="code-function">destroy</span>(Employee <span class="code-variable">$employee</span>)
+    {
+        <span class="code-variable">$employee</span>->delete();
+
+        <span class="code-keyword">return</span> response()->json([<span class="code-string">'message'</span> => <span class="code-string">'Karyawan berhasil dihapus.'</span>]);
+    }
+}</pre>
+                </div>
+            </div>
+
+            <p>Isi <code>app/Http/Controllers/Api/PayrollController.php</code>:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span class="code-dot"></span></div>
+                    <span class="code-filename">app/Http/Controllers/Api/PayrollController.php</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-keyword">namespace</span> App\Http\Controllers\Api;
+
+<span class="code-keyword">use</span> App\Http\Controllers\Controller;
+<span class="code-keyword">use</span> App\Models\Payroll;
+<span class="code-keyword">use</span> Illuminate\Http\Request;
+
+<span class="code-keyword">class</span> <span class="code-class">PayrollController</span> <span class="code-keyword">extends</span> Controller
+{
+    <span class="code-comment">// GET /api/payroll — riwayat semua slip gaji</span>
+    <span class="code-keyword">public function</span> <span class="code-function">index</span>()
+    {
+        <span class="code-keyword">return</span> Payroll::with(<span class="code-string">'employee'</span>)
+            ->orderBy(<span class="code-string">'created_at'</span>, <span class="code-string">'desc'</span>)
+            ->paginate(<span class="code-number">10</span>);
+    }
+
+    <span class="code-comment">// POST /api/payroll/calculate — hitung THP tanpa simpan</span>
+    <span class="code-keyword">public function</span> <span class="code-function">calculate</span>(Request <span class="code-variable">$request</span>)
+    {
+        <span class="code-variable">$request</span>->validate([
+            <span class="code-string">'basic_salary'</span> => <span class="code-string">'required|integer|min:1'</span>,
+            <span class="code-string">'allowance'</span>    => <span class="code-string">'nullable|integer|min:0'</span>,
+            <span class="code-string">'deduction'</span>    => <span class="code-string">'nullable|integer|min:0'</span>,
+        ]);
+
+        <span class="code-variable">$basic</span>     = (int) <span class="code-variable">$request</span>->basic_salary;
+        <span class="code-variable">$allowance</span> = (int) (<span class="code-variable">$request</span>->allowance ?? <span class="code-number">0</span>);
+        <span class="code-variable">$deduction</span> = (int) (<span class="code-variable">$request</span>->deduction ?? <span class="code-number">0</span>);
+        <span class="code-variable">$net</span>       = (<span class="code-variable">$basic</span> + <span class="code-variable">$allowance</span>) - <span class="code-variable">$deduction</span>;
+
+        <span class="code-keyword">return</span> response()->json([
+            <span class="code-string">'basic_salary'</span> => <span class="code-variable">$basic</span>,
+            <span class="code-string">'allowance'</span>    => <span class="code-variable">$allowance</span>,
+            <span class="code-string">'deduction'</span>    => <span class="code-variable">$deduction</span>,
+            <span class="code-string">'net_salary'</span>   => <span class="code-variable">$net</span>,
+            <span class="code-string">'net_formatted'</span> => <span class="code-string">'Rp '</span> . number_format(<span class="code-variable">$net</span>, <span class="code-number">0</span>, <span class="code-string">','</span>, <span class="code-string">'.'</span>),
+        ]);
+    }
+
+    <span class="code-comment">// POST /api/payroll — simpan slip gaji ke database</span>
+    <span class="code-keyword">public function</span> <span class="code-function">store</span>(Request <span class="code-variable">$request</span>)
+    {
+        <span class="code-variable">$data</span> = <span class="code-variable">$request</span>->validate([
+            <span class="code-string">'employee_id'</span>  => <span class="code-string">'required|exists:employees,id'</span>,
+            <span class="code-string">'basic_salary'</span> => <span class="code-string">'required|integer|min:1'</span>,
+            <span class="code-string">'allowance'</span>    => <span class="code-string">'nullable|integer|min:0'</span>,
+            <span class="code-string">'deduction'</span>    => <span class="code-string">'nullable|integer|min:0'</span>,
+            <span class="code-string">'month_year'</span>   => <span class="code-string">'required|string'</span>,
+        ]);
+
+        <span class="code-variable">$data</span>[<span class="code-string">'allowance'</span>]  = <span class="code-variable">$data</span>[<span class="code-string">'allowance'</span>] ?? <span class="code-number">0</span>;
+        <span class="code-variable">$data</span>[<span class="code-string">'deduction'</span>]  = <span class="code-variable">$data</span>[<span class="code-string">'deduction'</span>] ?? <span class="code-number">0</span>;
+        <span class="code-variable">$data</span>[<span class="code-string">'net_salary'</span>] = (<span class="code-variable">$data</span>[<span class="code-string">'basic_salary'</span>] + <span class="code-variable">$data</span>[<span class="code-string">'allowance'</span>]) - <span class="code-variable">$data</span>[<span class="code-string">'deduction'</span>];
+
+        <span class="code-variable">$payroll</span> = Payroll::create(<span class="code-variable">$data</span>);
+
+        <span class="code-keyword">return</span> response()->json(
+            <span class="code-variable">$payroll</span>->load(<span class="code-string">'employee'</span>),
+            <span class="code-number">201</span>
+        );
+    }
+}</pre>
+                </div>
+            </div>
+
+            <h3>Langkah 4: Daftarkan Route API</h3>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span class="code-dot"></span></div>
+                    <span class="code-filename">routes/api.php</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-keyword">use</span> App\Http\Controllers\Api\EmployeeController;
+<span class="code-keyword">use</span> App\Http\Controllers\Api\PayrollController;
+<span class="code-keyword">use</span> Illuminate\Http\Request;
+<span class="code-keyword">use</span> Illuminate\Support\Facades\Route;
+
+<span class="code-comment">// Login/register ditangani Breeze (routes/auth.php) — tidak perlu di sini.</span>
+<span class="code-comment">// Token untuk testing dibuat via Tinker (lihat Langkah 2b di atas).</span>
+
+<span class="code-comment">// Semua route butuh token Sanctum</span>
+Route::middleware(<span class="code-string">'auth:sanctum'</span>)->group(<span class="code-keyword">function</span> () {
+
+    <span class="code-comment">// Employee API</span>
+    Route::apiResource(<span class="code-string">'employees'</span>, EmployeeController::<span class="code-keyword">class</span>);
+
+    <span class="code-comment">// Payroll API</span>
+    Route::get(<span class="code-string">'/payroll'</span>, [PayrollController::<span class="code-keyword">class</span>, <span class="code-string">'index'</span>]);
+    Route::post(<span class="code-string">'/payroll/calculate'</span>, [PayrollController::<span class="code-keyword">class</span>, <span class="code-string">'calculate'</span>]);
+    Route::post(<span class="code-string">'/payroll'</span>, [PayrollController::<span class="code-keyword">class</span>, <span class="code-string">'store'</span>]);
+
+});</pre>
+                </div>
+            </div>
+
+            <div class="alert alert-info">
+                <span class="alert-icon">📋</span>
+                <div>
+                    <h4>Route yang Tersedia setelah Setup Ini:</h4>
+                    <table style="width:100%;font-size:0.85rem;border-collapse:collapse;margin-top:0.5rem;">
+                        <tr style="background:#e0f2fe;"><th style="padding:5px 8px;text-align:left;">Method</th><th style="padding:5px 8px;text-align:left;">URL</th><th style="padding:5px 8px;text-align:left;">Fungsi</th></tr>
+                        <tr style="background:#f8fafc;"><td style="padding:5px 8px;"><strong>GET</strong></td><td style="padding:5px 8px;"><code>/api/employees</code></td><td style="padding:5px 8px;">List semua karyawan</td></tr>
+                        <tr><td style="padding:5px 8px;"><strong>POST</strong></td><td style="padding:5px 8px;"><code>/api/employees</code></td><td style="padding:5px 8px;">Tambah karyawan baru</td></tr>
+                        <tr style="background:#f8fafc;"><td style="padding:5px 8px;"><strong>GET</strong></td><td style="padding:5px 8px;"><code>/api/employees/{id}</code></td><td style="padding:5px 8px;">Detail satu karyawan</td></tr>
+                        <tr><td style="padding:5px 8px;"><strong>PUT</strong></td><td style="padding:5px 8px;"><code>/api/employees/{id}</code></td><td style="padding:5px 8px;">Update karyawan</td></tr>
+                        <tr style="background:#f8fafc;"><td style="padding:5px 8px;"><strong>DELETE</strong></td><td style="padding:5px 8px;"><code>/api/employees/{id}</code></td><td style="padding:5px 8px;">Hapus karyawan</td></tr>
+                        <tr><td style="padding:5px 8px;"><strong>POST</strong></td><td style="padding:5px 8px;"><code>/api/payroll/calculate</code></td><td style="padding:5px 8px;">Hitung THP (tanpa simpan)</td></tr>
+                        <tr style="background:#f8fafc;"><td style="padding:5px 8px;"><strong>POST</strong></td><td style="padding:5px 8px;"><code>/api/payroll</code></td><td style="padding:5px 8px;">Simpan slip gaji</td></tr>
+                        <tr><td style="padding:5px 8px;"><strong>GET</strong></td><td style="padding:5px 8px;"><code>/api/payroll</code></td><td style="padding:5px 8px;">Riwayat slip gaji</td></tr>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ============================================== -->
+
+            <h2>🧪 Bagian 3: Testing dengan Postman Step-by-Step</h2>
+
+            <h3>Setup Awal Postman: Environment Variables</h3>
+            <p>Sebelum test, buat <strong>Environment</strong> di Postman agar tidak perlu ketik URL dan token berulang kali:</p>
+
+            <div class="alert alert-tip">
+                <span class="alert-icon">⚙️</span>
+                <div>
+                    <h4>Cara Buat Environment di Postman:</h4>
+                    <ol style="margin:0.5rem 0 0;">
+                        <li>Klik ikon <strong>Environments</strong> di sidebar kiri Postman</li>
+                        <li>Klik <strong>+ (Create New)</strong> → beri nama <code>Payroll Dev</code></li>
+                        <li>Tambah 2 variable:</li>
+                    </ol>
+                    <table style="margin-top:0.5rem;font-size:0.85rem;border-collapse:collapse;">
+                        <tr style="background:#e0f2fe;"><th style="padding:4px 8px;">Variable</th><th style="padding:4px 8px;">Initial Value</th></tr>
+                        <tr><td style="padding:4px 8px;"><code>BASE_URL</code></td><td style="padding:4px 8px;"><code>http://localhost:8000</code></td></tr>
+                        <tr style="background:#f8fafc;"><td style="padding:4px 8px;"><code>TOKEN</code></td><td style="padding:4px 8px;">Isi dari output <code>echo $token</code> di Tinker (Langkah 2b)</td></tr>
+                    </table>
+                    <p style="margin-top:0.5rem;font-size:0.85rem;">Setelah diisi, pilih environment <code>Payroll Dev</code> di dropdown kanan atas Postman. Semua request berikutnya otomatis pakai <code>{{BASE_URL}}</code> dan <code>{{TOKEN}}</code>.</p>
+                </div>
+            </div>
+
+            <h3>Test 1: GET Semua Karyawan</h3>
+            <table class="comparison-table">
+                <tr><th>Field</th><th>Nilai</th></tr>
+                <tr><td><strong>Method</strong></td><td><code>GET</code></td></tr>
+                <tr><td><strong>URL</strong></td><td><code>{{BASE_URL}}/api/employees</code></td></tr>
+                <tr><td><strong>Authorization</strong></td><td>Type: <code>Bearer Token</code> → Token: <code>{{TOKEN}}</code></td></tr>
+            </table>
+
+            <p><strong>Respons sukses (200):</strong></p>
+            <div class="code-block">
+                <div class="code-body">
+                    <pre>[
+    {
+        <span class="code-string">"id"</span>: <span class="code-number">1</span>,
+        <span class="code-string">"nik"</span>: <span class="code-string">"EMP-001"</span>,
+        <span class="code-string">"name"</span>: <span class="code-string">"Budi Santoso"</span>,
+        <span class="code-string">"position"</span>: <span class="code-string">"Staff IT"</span>,
+        <span class="code-string">"created_at"</span>: <span class="code-string">"2026-04-27T..."</span>
+    }
+]</pre>
+                </div>
+            </div>
+
+            <h3>Test 3: POST Tambah Karyawan Baru</h3>
+            <table class="comparison-table">
+                <tr><th>Field</th><th>Nilai</th></tr>
+                <tr><td><strong>Method</strong></td><td><code>POST</code></td></tr>
+                <tr><td><strong>URL</strong></td><td><code>{{BASE_URL}}/api/employees</code></td></tr>
+                <tr><td><strong>Authorization</strong></td><td>Bearer Token → <code>{{TOKEN}}</code></td></tr>
+                <tr><td><strong>Headers</strong></td><td><code>Accept: application/json</code><br><code>Content-Type: application/json</code></td></tr>
+                <tr><td><strong>Body (raw JSON)</strong></td><td><pre style="margin:0;">{
+  "nik": "EMP-002",
+  "name": "Siti Rahayu",
+  "position": "Keuangan"
+}</pre></td></tr>
+            </table>
+
+            <p><strong>Respons sukses (201 Created):</strong></p>
+            <div class="code-block">
+                <div class="code-body">
+                    <pre>{
+    <span class="code-string">"id"</span>: <span class="code-number">2</span>,
+    <span class="code-string">"nik"</span>: <span class="code-string">"EMP-002"</span>,
+    <span class="code-string">"name"</span>: <span class="code-string">"Siti Rahayu"</span>,
+    <span class="code-string">"position"</span>: <span class="code-string">"Keuangan"</span>,
+    <span class="code-string">"created_at"</span>: <span class="code-string">"2026-04-27T..."</span>
+}</pre>
+                </div>
+            </div>
+
+            <p><strong>Test validasi — kirim dengan NIK yang sama:</strong></p>
+            <div class="code-block">
+                <div class="code-body">
+                    <pre><span class="code-comment">// Body: NIK EMP-002 sudah ada</span>
+{ <span class="code-string">"nik"</span>: <span class="code-string">"EMP-002"</span>, <span class="code-string">"name"</span>: <span class="code-string">"Test"</span>, <span class="code-string">"position"</span>: <span class="code-string">"Staff IT"</span> }
+
+<span class="code-comment">// Respons yang diharapkan: 422 Unprocessable Entity</span>
+{
+    <span class="code-string">"message"</span>: <span class="code-string">"The nik has already been taken."</span>,
+    <span class="code-string">"errors"</span>: {
+        <span class="code-string">"nik"</span>: [<span class="code-string">"The nik has already been taken."</span>]
+    }
+}</pre>
+                </div>
+            </div>
+
+            <div class="alert alert-tip">
+                <span class="alert-icon">✅</span>
+                <div>
+                    <h4>Validasi Bekerja = Backend Siap!</h4>
+                    <p>Kalau respons 422 muncul saat NIK duplikat, artinya validasi backend sudah benar. Saat nanti Livewire diimplementasikan, validasi yang sama akan bekerja otomatis.</p>
+                </div>
+            </div>
+
+            <h3>Test 4: PUT Update Karyawan</h3>
+            <table class="comparison-table">
+                <tr><th>Field</th><th>Nilai</th></tr>
+                <tr><td><strong>Method</strong></td><td><code>PUT</code></td></tr>
+                <tr><td><strong>URL</strong></td><td><code>{{BASE_URL}}/api/employees/2</code></td></tr>
+                <tr><td><strong>Authorization</strong></td><td>Bearer Token → <code>{{TOKEN}}</code></td></tr>
+                <tr><td><strong>Body (raw JSON)</strong></td><td><pre style="margin:0;">{
+  "nik": "EMP-002",
+  "name": "Siti Rahayu Putri",
+  "position": "Senior Keuangan"
+}</pre></td></tr>
+            </table>
+
+            <h3>Test 5: DELETE Karyawan</h3>
+            <table class="comparison-table">
+                <tr><th>Field</th><th>Nilai</th></tr>
+                <tr><td><strong>Method</strong></td><td><code>DELETE</code></td></tr>
+                <tr><td><strong>URL</strong></td><td><code>{{BASE_URL}}/api/employees/2</code></td></tr>
+                <tr><td><strong>Authorization</strong></td><td>Bearer Token → <code>{{TOKEN}}</code></td></tr>
+            </table>
+
+            <p><strong>Respons sukses (200):</strong></p>
+            <div class="code-block">
+                <div class="code-body">
+                    <pre>{ <span class="code-string">"message"</span>: <span class="code-string">"Karyawan berhasil dihapus."</span> }</pre>
+                </div>
+            </div>
+
+            <h3>Test 6: POST Hitung THP (tanpa simpan ke DB)</h3>
+            <table class="comparison-table">
+                <tr><th>Field</th><th>Nilai</th></tr>
+                <tr><td><strong>Method</strong></td><td><code>POST</code></td></tr>
+                <tr><td><strong>URL</strong></td><td><code>{{BASE_URL}}/api/payroll/calculate</code></td></tr>
+                <tr><td><strong>Authorization</strong></td><td>Bearer Token → <code>{{TOKEN}}</code></td></tr>
+                <tr><td><strong>Body (raw JSON)</strong></td><td><pre style="margin:0;">{
+  "basic_salary": 5000000,
+  "allowance": 500000,
+  "deduction": 250000
+}</pre></td></tr>
+            </table>
+
+            <p><strong>Respons sukses (200):</strong></p>
+            <div class="code-block">
+                <div class="code-body">
+                    <pre>{
+    <span class="code-string">"basic_salary"</span>:  <span class="code-number">5000000</span>,
+    <span class="code-string">"allowance"</span>:    <span class="code-number">500000</span>,
+    <span class="code-string">"deduction"</span>:    <span class="code-number">250000</span>,
+    <span class="code-string">"net_salary"</span>:   <span class="code-number">5250000</span>,
+    <span class="code-string">"net_formatted"</span>: <span class="code-string">"Rp 5.250.000"</span>
+}</pre>
+                </div>
+            </div>
+
+            <h3>Test 7: POST Simpan Slip Gaji</h3>
+            <table class="comparison-table">
+                <tr><th>Field</th><th>Nilai</th></tr>
+                <tr><td><strong>Method</strong></td><td><code>POST</code></td></tr>
+                <tr><td><strong>URL</strong></td><td><code>{{BASE_URL}}/api/payroll</code></td></tr>
+                <tr><td><strong>Authorization</strong></td><td>Bearer Token → <code>{{TOKEN}}</code></td></tr>
+                <tr><td><strong>Body (raw JSON)</strong></td><td><pre style="margin:0;">{
+  "employee_id": 1,
+  "basic_salary": 5000000,
+  "allowance": 500000,
+  "deduction": 250000,
+  "month_year": "April 2026"
+}</pre></td></tr>
+            </table>
+
+            <p><strong>Respons sukses (201):</strong></p>
+            <div class="code-block">
+                <div class="code-body">
+                    <pre>{
+    <span class="code-string">"id"</span>: <span class="code-number">1</span>,
+    <span class="code-string">"employee_id"</span>:  <span class="code-number">1</span>,
+    <span class="code-string">"basic_salary"</span>: <span class="code-string">"5000000.00"</span>,
+    <span class="code-string">"allowance"</span>:    <span class="code-string">"500000.00"</span>,
+    <span class="code-string">"deduction"</span>:    <span class="code-string">"250000.00"</span>,
+    <span class="code-string">"net_salary"</span>:   <span class="code-string">"5250000.00"</span>,
+    <span class="code-string">"month_year"</span>:   <span class="code-string">"April 2026"</span>,
+    <span class="code-string">"employee"</span>: {
+        <span class="code-string">"id"</span>: <span class="code-number">1</span>, <span class="code-string">"name"</span>: <span class="code-string">"Budi Santoso"</span>, <span class="code-string">"nik"</span>: <span class="code-string">"EMP-001"</span>
+    }
+}</pre>
+                </div>
+            </div>
+
+            <!-- ============================================== -->
+
+            <h2>📋 Checklist: Semua Backend Sudah Siap?</h2>
+
+            <p>Sebelum melanjutkan ke Tahap 5 (Integrasi Akhir), pastikan semua test ini <strong>lulus</strong>:</p>
+
+            <table class="comparison-table">
+                <tr>
+                    <th>No</th>
+                    <th>Test Case</th>
+                    <th>HTTP Status yang Diharapkan</th>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>Login dengan kredensial benar</td>
+                    <td>200 + token diterima</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Login dengan password salah</td>
+                    <td>401 Unauthorized</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Akses endpoint tanpa token</td>
+                    <td>401 Unauthenticated</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>Tambah karyawan baru (data valid)</td>
+                    <td>201 Created</td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>Tambah karyawan dengan NIK duplikat</td>
+                    <td>422 Unprocessable Entity</td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td>Update karyawan yang ada</td>
+                    <td>200 OK</td>
+                </tr>
+                <tr>
+                    <td>7</td>
+                    <td>Delete karyawan yang ada</td>
+                    <td>200 OK</td>
+                </tr>
+                <tr>
+                    <td>8</td>
+                    <td>Hitung THP (calculate)</td>
+                    <td>200 + net_salary benar</td>
+                </tr>
+                <tr>
+                    <td>9</td>
+                    <td>Simpan slip gaji (employee_id valid)</td>
+                    <td>201 + data relasi employee</td>
+                </tr>
+                <tr>
+                    <td>10</td>
+                    <td>Simpan slip gaji (employee_id tidak ada)</td>
+                    <td>422 Validation Error</td>
+                </tr>
+            </table>
+
+            <div class="alert alert-tip">
+                <span class="alert-icon">💾</span>
+                <div>
+                    <h4>Simpan sebagai Postman Collection</h4>
+                    <p>Setelah semua request berhasil, simpan sebagai <strong>Collection</strong> di Postman (klik Save → masukkan ke collection "Payroll API"). Collection ini bisa di-export dan dibagikan ke teman satu tim, atau dijadikan dokumentasi API proyek.</p>
+                </div>
+            </div>
+
+            <!-- ==================== RANGKUMAN ==================== -->
+
+            <div class="summary-box">
+                <h3>📋 Rangkuman</h3>
+                <ul>
+                    <li><strong>Tinker</strong> cocok untuk test cepat model Eloquent langsung dari terminal — tanpa setup apapun.</li>
+                    <li><strong>Postman</strong> cocok untuk test HTTP request lengkap persis seperti aplikasi nyata — termasuk headers, auth, body JSON, dan status code response.</li>
+                    <li><strong>Sanctum</strong> mengamankan API dengan Bearer token. Alur: login → dapat token → pakai token di header semua request berikutnya.</li>
+                    <li>Semua logika yang sudah terbukti benar di API (validation, calculation, relationship) akan <strong>dipakai ulang</strong> oleh Livewire component di Tahap 4 — tidak perlu tulis ulang.</li>
+                    <li>API routes di <code>routes/api.php</code> bisa tetap dipertahankan sebagai endpoint untuk integrasi masa depan (misal: app mobile).</li>
+                </ul>
+            </div>
+
+            <!-- ==================== NAVIGASI ==================== -->
+
+            <div class="content-nav">
+                <a href="tahap-4-logika-payroll.html" class="nav-btn">
+                    <div>
+                        <div class="nav-btn-label">Sebelumnya</div>
+                        <div class="nav-btn-title">← Tahap 4: Logika Payroll</div>
+                    </div>
+                </a>
+                <a href="tahap-5-integrasi.html" class="nav-btn">
+                    <div>
+                        <div class="nav-btn-label">Selanjutnya</div>
+                        <div class="nav-btn-title">Tahap 5: Integrasi Akhir →</div>
+                    </div>
+                </a>
+            </div>
+        </main>
+    </div>
+
+    <button class="sidebar-toggle-mobile"
+        onclick="document.querySelector('.sidebar').classList.toggle('active')">📚</button>
+    <script src="../../js/app.js"></script>
+</body>
+
+</html>

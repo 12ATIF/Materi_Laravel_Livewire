@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 
 <head>
@@ -46,9 +46,11 @@
                     <li><a href="../minggu-1/pengenalan-laravel.html">Pengenalan Laravel</a></li>
                     <li><a href="../minggu-1/mvc-sederhana.html">MVC Sederhana</a></li>
                     <li><a href="../minggu-1/instalasi-laravel.html">Instalasi Laravel</a></li>
+                    <li><a href="../minggu-1/konvensi-penamaan.html">📏 Konvensi Penamaan</a></li>
                     <li><a href="../minggu-1/blade-template.html">Blade Template</a></li>
                     <li><a href="../minggu-1/pengenalan-livewire.html">Pengenalan Livewire</a></li>
                     <li><a href="../minggu-1/struktur-component.html">Struktur Component</a></li>
+                    <li><a href="../minggu-1/cara-membaca-error.html">🐛 Cara Membaca Error</a></li>
                 </ul>
             </div>
             <div class="sidebar-section">
@@ -81,6 +83,7 @@
                     <li><a href="tahap-2-autentikasi.html" class="active">Tahap 2: Autentikasi</a></li>
                     <li><a href="tahap-3-crud.html">Tahap 3: CRUD Karyawan</a></li>
                     <li><a href="tahap-4-logika-payroll.html">Tahap 4: Logika Payroll</a></li>
+                    <li><a href="testing-backend.html">🧪 Testing Backend (Postman)</a></li>
                     <li><a href="tahap-5-integrasi.html">Tahap 5: Integrasi Akhir</a></li>
                     <li><a href="tahap-6-laporan-pdf.html">Tahap 6: Laporan PDF (Bonus)</a></li>
                 </ul>
@@ -101,11 +104,23 @@
                 </div>
             </div>
 
+            <!-- Banner Versi -->
+            <div class="version-banner" role="note" aria-label="Versi software yang digunakan">
+                <span class="vb-icon">⚙️</span>
+                <span class="vb-label">Versi:</span>
+                <span class="vb-tag">🔥 Laravel 13.x</span>
+                <span class="vb-tag">⚡ Livewire 3.x</span>
+                <span class="vb-tag">🐘 PHP 8.3+</span>
+                <span class="vb-tag">🛡️ Laravel Breeze</span>
+                <span class="vb-note">Kita pakai <strong>Laravel Breeze stack Livewire</strong> — starter kit resmi Laravel yang menghasilkan auth (login, register, forgot password) secara otomatis berbasis Livewire. Tidak perlu rakit form login dari nol.</span>
+            </div>
+
             <div class="prerequisites">
                 <h3>📌 Prasyarat</h3>
                 <ul>
                     <li>Tampilan Frontend Statis (Tahap 1) telah selesai dibuat.</li>
-                    <li>Sudah melakukan koneksi database (konfigurasi file <code>.env</code>).</li>
+                    <li>Database sudah dibuat dan <code>.env</code> sudah dikonfigurasi (<code>DB_DATABASE</code>, <code>DB_USERNAME</code>, <code>DB_PASSWORD</code>).</li>
+                    <li>Node.js sudah terinstall (cek dengan <code>node -v</code> di terminal).</li>
                 </ul>
             </div>
 
@@ -113,32 +128,149 @@
                 <h3>🎯 Tujuan Belajar</h3>
                 <p>Setelah menyelesaikan materi tahap 2 ini, kamu akan mampu:</p>
                 <ul>
-                    <li>Memahami struktur Model dan Migrasi bawaan Laravel.</li>
-                    <li>Membuat komponen *Livewire* untuk Login secara mandiri agar paham alur datanya secara penuh.</li>
-                    <li>Membuat sistem validasi input realtime dan pengamanan *session* pengalihan halaman secara mulus.</li>
+                    <li>Menginstall dan mengkonfigurasi <strong>Laravel Breeze</strong> dengan Livewire stack.</li>
+                    <li>Memahami file-file yang dihasilkan Breeze: <strong>layout, komponen auth, dan route</strong>.</li>
+                    <li>Mengkustomisasi layout <code>app.blade.php</code> untuk navigasi aplikasi payroll.</li>
+                    <li>Melindungi halaman dengan <strong>middleware <code>auth</code></strong> agar hanya user yang login yang bisa akses.</li>
+                    <li>Membuat data admin pertama lewat <strong>Seeder</strong>.</li>
                 </ul>
             </div>
 
             <!-- ============================================== -->
             <!-- MULAI MATERI -->
 
-            <h2>🔐 1. Setup Model User & Database</h2>
+            <h2>🛡️ Apa itu Laravel Breeze?</h2>
 
-            <p>Sistem otentikasi membutuhkan tabel di database. Untungnya, Laravel sudah menyediakannya saat kita melaukan instalasi (*Tabel Users*). Pertama-tama migrasikan skema bawaan database tersebut:</p>
+            <p>Laravel Breeze adalah <strong>starter kit autentikasi resmi dari Laravel</strong>. Dengan satu perintah, Breeze langsung menghasilkan halaman login, register, lupa password, reset password, dan verifikasi email — semuanya sudah jadi dan bisa langsung dipakai.</p>
+
+            <div class="alert alert-tip">
+                <span class="alert-icon">💡</span>
+                <div>
+                    <h4>Kenapa pakai Breeze dan bukan buat sendiri?</h4>
+                    <p>Autentikasi adalah fitur yang <strong>kritis dari sisi keamanan</strong>. Breeze sudah mengikuti praktik terbaik Laravel: password di-hash dengan bcrypt, session diregenerasi saat login, CSRF protection aktif otomatis. Membuatnya sendiri dari nol berisiko terlewat satu celah keamanan. <strong>Di dunia kerja pun, developer profesional pakai Breeze atau Jetstream</strong> — bukan buat dari nol.</p>
+                </div>
+            </div>
+
+            <h2>📦 1. Instalasi Laravel Breeze</h2>
+
+            <p>Jalankan 4 perintah ini secara berurutan di terminal, di dalam folder project Laravel kamu:</p>
 
             <div class="code-block">
                 <div class="code-header">
-                    <span class="code-filename">Terminal</span>
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span class="code-dot"></span></div>
+                    <span class="code-filename">Terminal — urutan wajib diikuti</span>
                     <button class="code-copy">Salin</button>
                 </div>
                 <div class="code-body">
-                    <pre><span class="code-comment"># Jalankan perintah migrasi ini untuk membuat tabel users di database kamu</span>
+                    <pre><span class="code-comment"># 1. Download package Breeze</span>
+composer require laravel/breeze --dev
+
+<span class="code-comment"># 2. Generate semua file auth (pilih stack: livewire)</span>
+php artisan breeze:install livewire
+
+<span class="code-comment"># 3. Install dependency JavaScript (Tailwind, Vite, dll)</span>
+npm install
+
+<span class="code-comment"># 4. Buat tabel users dan semua tabel bawaan Laravel</span>
 php artisan migrate</pre>
                 </div>
             </div>
 
-            <p>Untuk mencoba login nanti, kita perlu sebuah data dummy (*Seeder*). Buka <code>database/seeders/DatabaseSeeder.php</code> dan aktifkan atau buat satu user admin:</p>
-            
+            <div class="alert alert-info">
+                <span class="alert-icon">📌</span>
+                <div>
+                    <h4>Saat <code>breeze:install</code> ditanya pilihan:</h4>
+                    <ul style="margin:0.5rem 0 0;">
+                        <li>Stack: pilih <strong>Livewire</strong></li>
+                        <li>Dark mode: pilih sesuai selera (No untuk sederhana)</li>
+                        <li>Testing: pilih <strong>PHPUnit</strong> (default)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h2>📁 2. File yang Dihasilkan Breeze</h2>
+
+            <p>Setelah <code>breeze:install</code>, Breeze menghasilkan banyak file secara otomatis. Ini yang paling penting untuk dipahami:</p>
+
+            <table class="comparison-table">
+                <tr>
+                    <th>File / Folder</th>
+                    <th>Fungsi</th>
+                </tr>
+                <tr>
+                    <td><code>resources/views/layouts/app.blade.php</code></td>
+                    <td>Layout utama untuk halaman yang <strong>butuh login</strong> (dashboard, karyawan, payroll)</td>
+                </tr>
+                <tr>
+                    <td><code>resources/views/layouts/guest.blade.php</code></td>
+                    <td>Layout untuk halaman <strong>tanpa login</strong> (login, register)</td>
+                </tr>
+                <tr>
+                    <td><code>app/Livewire/Auth/Login.php</code></td>
+                    <td>Komponen Livewire login — sudah lengkap</td>
+                </tr>
+                <tr>
+                    <td><code>app/Livewire/Auth/Register.php</code></td>
+                    <td>Komponen Livewire register — sudah lengkap</td>
+                </tr>
+                <tr>
+                    <td><code>routes/auth.php</code></td>
+                    <td>Semua route login, register, logout, reset password — sudah didaftarkan</td>
+                </tr>
+                <tr>
+                    <td><code>resources/views/dashboard.blade.php</code></td>
+                    <td>Halaman dashboard default setelah login</td>
+                </tr>
+            </table>
+
+            <div class="alert alert-warning">
+                <span class="alert-icon">⚠️</span>
+                <div>
+                    <h4>Jangan Hapus atau Edit Sembarangan File Auth Breeze!</h4>
+                    <p>File di <code>app/Livewire/Auth/</code> adalah komponen yang sudah diuji dan aman. Kita tidak perlu menyentuhnya. Yang akan kita kustomisasi hanya <code>layouts/app.blade.php</code> untuk menambahkan menu navigasi aplikasi payroll kita.</p>
+                </div>
+            </div>
+
+            <h2>🎨 3. Kustomisasi Layout Utama untuk Payroll</h2>
+
+            <p>Layout <code>app.blade.php</code> yang dibuat Breeze adalah layout generik. Kita perlu menambahkan navigasi menu <strong>Karyawan</strong> dan <strong>Payroll</strong> ke dalamnya.</p>
+
+            <p>Buka <code>resources/views/layouts/app.blade.php</code>, cari bagian navigasi (biasanya ada class <code>nav</code> atau komponen <code>&lt;x-nav-link&gt;</code>), dan tambahkan link menu berikut:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span class="code-dot"></span></div>
+                    <span class="code-filename">resources/views/layouts/app.blade.php — bagian navigasi</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-comment">&lt;!-- Tambahkan di dalam nav yang sudah ada, setelah link Dashboard --&gt;</span>
+<span class="code-tag">&lt;x-nav-link</span> <span class="code-attr">:href</span>=<span class="code-string">"route('employees.index')"</span> <span class="code-attr">:active</span>=<span class="code-string">"request()->routeIs('employees.*')"</span><span class="code-tag">&gt;</span>
+    Karyawan
+<span class="code-tag">&lt;/x-nav-link&gt;</span>
+
+<span class="code-tag">&lt;x-nav-link</span> <span class="code-attr">:href</span>=<span class="code-string">"route('payroll.calculator')"</span> <span class="code-attr">:active</span>=<span class="code-string">"request()->routeIs('payroll.*')"</span><span class="code-tag">&gt;</span>
+    Payroll
+<span class="code-tag">&lt;/x-nav-link&gt;</span>
+
+<span class="code-tag">&lt;x-nav-link</span> <span class="code-attr">:href</span>=<span class="code-string">"route('payroll.history')"</span> <span class="code-attr">:active</span>=<span class="code-string">"request()->routeIs('payroll.history')"</span><span class="code-tag">&gt;</span>
+    Riwayat Gaji
+<span class="code-tag">&lt;/x-nav-link&gt;</span></pre>
+                </div>
+            </div>
+
+            <div class="alert alert-tip">
+                <span class="alert-icon">🔍</span>
+                <div>
+                    <h4>Cara Cari Tempat yang Tepat di <code>app.blade.php</code></h4>
+                    <p>Cari baris yang berisi <code>route('dashboard')</code> — itu adalah link "Dashboard" bawaan Breeze. Letakkan menu Karyawan, Payroll, dan Riwayat Gaji tepat di bawahnya.</p>
+                </div>
+            </div>
+
+            <h2>🌱 4. Membuat Data Admin (Seeder)</h2>
+
+            <p>Agar bisa langsung login dan testing tanpa harus Register terlebih dahulu, kita buat akun admin via Seeder.</p>
+
             <div class="code-block">
                 <div class="code-header">
                     <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span class="code-dot"></span></div>
@@ -150,26 +282,25 @@ php artisan migrate</pre>
 
 <span class="code-keyword">use</span> Illuminate\Database\Seeder;
 <span class="code-keyword">use</span> App\Models\User;
+<span class="code-keyword">use</span> Illuminate\Support\Facades\Hash;
 
 <span class="code-keyword">class</span> <span class="code-class">DatabaseSeeder</span> <span class="code-keyword">extends</span> Seeder
 {
     <span class="code-keyword">public function</span> <span class="code-function">run</span>(): <span class="code-keyword">void</span>
     {
-        <span class="code-comment">// Buat satu user super admin untuk kita gunakan masuk ke Dashboard</span>
-        User::create([
-            <span class="code-string">'name'</span> => <span class="code-string">'Admin Payroll'</span>,
-            <span class="code-string">'email'</span> => <span class="code-string">'admin@payroll.test'</span>,
-            <span class="code-string">'password'</span> => bcrypt(<span class="code-string">'password'</span>), <span class="code-comment">// Password otomatis terenkripsi dan hash</span>
-        ]);
+        <span class="code-comment">// firstOrCreate: aman dijalankan berkali-kali, tidak error jika email sudah ada</span>
+        User::firstOrCreate(
+            [<span class="code-string">'email'</span> => <span class="code-string">'admin@payroll.test'</span>],
+            [
+                <span class="code-string">'name'</span>              => <span class="code-string">'Admin Payroll'</span>,
+                <span class="code-string">'password'</span>          => Hash::make(<span class="code-string">'password'</span>),
+                <span class="code-string">'email_verified_at'</span> => now(), <span class="code-comment">// ← wajib! tanpa ini admin tidak bisa login jika verifikasi email aktif</span>
+            ]
+        );
     }
 }</pre>
                 </div>
             </div>
-            <p>Lalu jalankan <code>php artisan db:seed</code> di terminal.</p>
-
-
-            <h2>⚡ 2. Implementasi Livewire Component</h2>
-            <p>Walau Laravel memiliki <em>starter kits</em> sepeerti Breeze / Jetstream, sangat penting kita memahami proses kerjanya dengan merakit logika *Login* milik kita sendiri lewat Component Livewire terbaru. Ini akan memberi kendali penuh.</p>
 
             <div class="code-block">
                 <div class="code-header">
@@ -177,121 +308,82 @@ php artisan migrate</pre>
                     <button class="code-copy">Salin</button>
                 </div>
                 <div class="code-body">
-                    <pre><span class="code-comment"># Membuat komponen login</span>
-php artisan make:livewire auth.login</pre>
+                    <pre>php artisan db:seed</pre>
                 </div>
             </div>
 
-            <h3>Logika Backend Login (Controller Livewire)</h3>
-            <p>Buka file *class* yang baru dibuat di direktori root komponen: <code>app/Livewire/Auth/Login.php</code></p>
-            
+            <h2>🔒 5. Melindungi Route dengan Middleware <code>auth</code></h2>
+
+            <p>Setelah semua halaman karyawan dan payroll dibuat di tahap selanjutnya, kita akan melindunginya agar hanya bisa diakses oleh user yang sudah login. Caranya dengan menambahkan <code>->middleware('auth')</code> di route.</p>
+
             <div class="code-block">
                 <div class="code-header">
                     <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span class="code-dot"></span></div>
-                    <span class="code-filename">app/Livewire/Auth/Login.php</span>
+                    <span class="code-filename">routes/web.php — contoh proteksi route</span>
                     <button class="code-copy">Salin</button>
                 </div>
                 <div class="code-body">
-                    <pre><span class="code-keyword">namespace</span> App\Livewire\Auth;
+                    <pre><span class="code-comment">// ✅ Route ini HANYA bisa diakses jika sudah login</span>
+Route::middleware(<span class="code-string">'auth'</span>)->group(<span class="code-keyword">function</span> () {
+    Route::get(<span class="code-string">'/karyawan'</span>, EmployeeManager::<span class="code-keyword">class</span>)->name(<span class="code-string">'employees.index'</span>);
+    Route::get(<span class="code-string">'/payroll'</span>, PayrollCalculator::<span class="code-keyword">class</span>)->name(<span class="code-string">'payroll.calculator'</span>);
+    Route::get(<span class="code-string">'/riwayat-gaji'</span>, PayrollHistory::<span class="code-keyword">class</span>)->name(<span class="code-string">'payroll.history'</span>);
+});
 
-<span class="code-keyword">use</span> Livewire\Component;
-<span class="code-keyword">use</span> Illuminate\Support\Facades\Auth;
-
-<span class="code-keyword">class</span> <span class="code-class">Login</span> <span class="code-keyword">extends</span> Component
-{
-    <span class="code-comment">// 1. Hubungkan input HTML ke Properties dengan wire:model</span>
-    <span class="code-keyword">public</span> <span class="code-variable">$email</span> = <span class="code-string">''</span>;
-    <span class="code-keyword">public</span> <span class="code-variable">$password</span> = <span class="code-string">''</span>;
-
-    <span class="code-comment">// 2. Aturan Validasi data yang harus dipenuhi form</span>
-    <span class="code-keyword">protected</span> <span class="code-variable">$rules</span> = [
-        <span class="code-string">'email'</span> => <span class="code-string">'required|email'</span>,
-        <span class="code-string">'password'</span> => <span class="code-string">'required|min:6'</span>,
-    ];
-
-    <span class="code-comment">// 3. Method diaktifkan pada tombol Submit</span>
-    <span class="code-keyword">public function</span> <span class="code-function">authenticate</span>()
-    {
-        <span class="code-comment">// Eksekusi Validasi</span>
-        <span class="code-variable">$this</span>->validate();
-
-        <span class="code-comment">// Cek apakah email dan password cocok di Database</span>
-        <span class="code-keyword">if</span> (Auth::attempt([<span class="code-string">'email'</span> => <span class="code-variable">$this</span>->email, <span class="code-string">'password'</span> => <span class="code-variable">$this</span>->password])) {
-            <span class="code-comment">// Ciptakan session sukses sehingga sistem tahu user sedang login</span>
-            session()->regenerate();
-            
-            <span class="code-comment">// Lempar pengguna ke halaman Dashboard</span>
-            <span class="code-keyword">return</span> redirect()->intended(<span class="code-string">'/dashboard'</span>);
-        }
-
-        <span class="code-comment">// Tampilkan flash error message jika password salah, tanpa me-refresh screen</span>
-        session()->flash(<span class="code-string">'error'</span>, <span class="code-string">'Email atau password salah.'</span>);
-    }
-
-    <span class="code-keyword">public function</span> <span class="code-function">render</span>()
-    {
-        <span class="code-comment">// Pastikan kita menggunakan template layout kosong untuk muka login</span>
-        <span class="code-keyword">return</span> view(<span class="code-string">'livewire.auth.login'</span>)->layout(<span class="code-string">'layouts.guest'</span>);
-    }
-}</pre>
+<span class="code-comment">// ❌ Jika belum login dan akses /karyawan → otomatis diarahkan ke /login</span></pre>
                 </div>
             </div>
 
-            <h3>Menghubungkan Layout Frontend ke Sistem</h3>
-            <p>Ambil template statis Halaman Login yang kita buat di **Tahap 1**, dan ubah agar memiliki fitur ajaib (reaktif) Livewire lewat atribut <code>wire:model</code> dan <code>wire:submit</code>.</p>
-            
+            <p>Route lengkap project ini akan ditampilkan di <strong>Tahap 5</strong> setelah semua komponen selesai dibuat.</p>
+
+            <h2>✅ 6. Verifikasi: Coba Login</h2>
+
+            <p>Setelah semua langkah di atas, jalankan development server:</p>
+
             <div class="code-block">
                 <div class="code-header">
-                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span class="code-dot"></span></div>
-                    <span class="code-filename">resources/views/livewire/auth/login.blade.php</span>
+                    <span class="code-filename">Terminal — buka 2 tab terminal sekaligus</span>
                     <button class="code-copy">Salin</button>
                 </div>
                 <div class="code-body">
-                    <pre><span class="code-tag">&lt;div class="bg-gray-100 flex items-center justify-center min-h-screen"&gt;</span>
-    <span class="code-tag">&lt;div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md"&gt;</span>
-        <span class="code-tag">&lt;div class="mb-6 text-center"&gt;</span>
-            <span class="code-tag">&lt;h2 class="text-2xl font-bold text-gray-800"&gt;</span>Payroll System<span class="code-tag">&lt;/h2&gt;</span>
-        <span class="code-tag">&lt;/div&gt;</span>
+                    <pre><span class="code-comment"># Tab 1: jalankan Laravel</span>
+php artisan serve
 
-        <span class="code-comment">&lt;!-- Flash Message Jika Auth Gagal --&gt;</span>
-        <span class="code-keyword">@if</span> (session()-&gt;has('error'))
-            <span class="code-tag">&lt;div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4"&gt;</span>
-                <span class="code-tag">&lt;span class="block sm:inline"&gt;</span>{{ session('error') }}<span class="code-tag">&lt;/span&gt;</span>
-            <span class="code-tag">&lt;/div&gt;</span>
-        <span class="code-keyword">@endif</span>
-
-        <span class="code-comment">&lt;!-- Hubungkan penekanan Tombol Submit dengan method "authenticate" di PHP --&gt;</span>
-        <span class="code-tag">&lt;form wire:submit="authenticate"&gt;</span>
-            <span class="code-tag">&lt;div class="mb-4"&gt;</span>
-                <span class="code-tag">&lt;label class="block text-sm font-medium text-gray-700"&gt;</span>Email<span class="code-tag">&lt;/label&gt;</span>
-                <span class="code-comment">&lt;!-- PENTING: wire:model.blur akan memvalidasi data sesaat kursor pengguna pindah (hilang fokus) dari kolom ini --&gt;</span>
-                <span class="code-tag">&lt;input type="email" wire:model.blur="email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500" placeholder="admin@payroll.test"&gt;</span>
-                <span class="code-comment">&lt;!-- Tampilan Error Validasi (Realtime) --&gt;</span>
-                <span class="code-keyword">@error</span>('email') <span class="code-tag">&lt;span class="text-sm text-red-600"&gt;</span>{{ $message }}<span class="code-tag">&lt;/span&gt;</span> <span class="code-keyword">@enderror</span>
-            <span class="code-tag">&lt;/div&gt;</span>
-
-            <span class="code-tag">&lt;div class="mb-6"&gt;</span>
-                <span class="code-tag">&lt;label class="block text-sm font-medium text-gray-700"&gt;</span>Password<span class="code-tag">&lt;/label&gt;</span>
-                <span class="code-tag">&lt;input type="password" wire:model.blur="password" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500" placeholder="••••••••"&gt;</span>
-                <span class="code-keyword">@error</span>('password') <span class="code-tag">&lt;span class="text-sm text-red-600"&gt;</span>{{ $message }}<span class="code-tag">&lt;/span&gt;</span> <span class="code-keyword">@enderror</span>
-            <span class="code-tag">&lt;/div&gt;</span>
-
-            <span class="code-tag">&lt;button type="submit" class="w-full bg-blue-600 text-white font-bold py-2 px-4 rounded hover:bg-blue-700"&gt;</span>
-                Masuk
-            <span class="code-tag">&lt;/button&gt;</span>
-        <span class="code-tag">&lt;/form&gt;</span>
-    <span class="code-tag">&lt;/div&gt;</span>
-<span class="code-tag">&lt;/div&gt;</span></pre>
+<span class="code-comment"># Tab 2: compile Tailwind CSS (harus tetap berjalan saat development)</span>
+npm run dev</pre>
                 </div>
             </div>
 
-            <h2>📚 Alur Proses Kerja Autentikasi Ini:</h2>
+            <p>Buka browser, akses <strong><code>http://localhost:8000/login</code></strong> dan masuk dengan:</p>
+            <ul>
+                <li>Email: <code>admin@payroll.test</code></li>
+                <li>Password: <code>password</code></li>
+            </ul>
+
+            <div class="alert alert-tip">
+                <span class="alert-icon">🎯</span>
+                <div>
+                    <h4>Halaman yang Sudah Aktif Setelah Breeze:</h4>
+                    <ul style="margin:0.5rem 0 0;">
+                        <li><code>/login</code> — form login Livewire</li>
+                        <li><code>/register</code> — form register Livewire</li>
+                        <li><code>/dashboard</code> — halaman setelah login (butuh auth)</li>
+                        <li><code>/forgot-password</code> — kirim link reset password</li>
+                        <li><code>/profile</code> — edit profil user</li>
+                    </ul>
+                    <p style="margin-top:0.5rem;">Semua ini sudah jadi tanpa menulis satu baris kode auth pun!</p>
+                </div>
+            </div>
+
+            <h2>📚 Cara Kerja Auth Breeze di Balik Layar</h2>
+
             <div class="alert alert-info" style="margin-top: 1rem;">
                 <ol>
-                    <li><strong>Form Submit:</strong> Pengguna mengklik "Masuk". Form memicu <code>wire:submit="authenticate"</code> yang akan melempar nilai ke kelas PHP.</li>
-                    <li><strong>Validasi Data:</strong> Nilai <code>$email</code> dan <code>$password</code> diolah oleh <code>$this-&gt;validate()</code>. Jika pengguna mengisi form asal-asalan, maka sistem tidak melanjutkannya, melempar kembali <em>Error Validation</em> ke dalam <code>@error('field')</code> di HTML secara kilat tanpa layar memuat (<em>loading</em>).</li>
-                    <li><strong>Auth Facade (Session):</strong> Fungsi khusus <code>Auth::attempt()</code> bawaan Laravel secara rahasia akan memeriksa database. Jika informasi sama, maka ia akan membuat sidik jari sementara (<em>session file / cookie</em>) di browser yang memberitahu seluruh aplikasi bahwa "user ini aman, beri dia jalan masuk".</li>
-                    <li><strong>Redirect:</strong> Karena sudah diyakinkan keamanannya, Livewire akan merekonstruksi ulang (<code>regenerate()</code>) memori server untuk menjaga dari peretasan sesi dan otomatis melontarkan si pengguna (*redirect*) ke <code>/dashboard</code>.</li>
+                    <li><strong>User submit form login</strong> → Komponen <code>app/Livewire/Auth/Login.php</code> menangkap data via <code>wire:submit</code>.</li>
+                    <li><strong>Validasi</strong> → Email harus valid, password minimal 8 karakter.</li>
+                    <li><strong><code>Auth::attempt()</code></strong> → Laravel mencocokkan email ke database dan membandingkan password yang diinput dengan hash bcrypt yang tersimpan. Jika cocok, session dibuat.</li>
+                    <li><strong>Redirect</strong> → User diarahkan ke <code>/dashboard</code> (atau ke halaman yang dicoba diakses sebelumnya via <code>intended()</code>).</li>
+                    <li><strong>Middleware <code>auth</code></strong> → Setiap request ke halaman yang dilindungi, middleware ini cek apakah ada session aktif. Jika tidak ada → redirect ke <code>/login</code>.</li>
                 </ol>
             </div>
 
@@ -300,9 +392,10 @@ php artisan make:livewire auth.login</pre>
             <div class="summary-box">
                 <h3>📋 Ringkasan Tahap 2</h3>
                 <ul>
-                    <li>Dalam implementasi sistem Login terintegrasi Livewire 3 terbaru, tidak diperlukan pembuatan Routing `POST` di dalam <code>web.php</code>. Karena sistem reaktif komponen Livewire merangkap tanggung jawab tersebut.</li>
-                    <li>Kami menggunakan <strong>wire:model.blur</strong>. Akhiran `.blur` berarti validasi di kelas PHP baru ditembak saat si user sudah mengetik tuntas dan mengklik tempat lain, meminimalisir lag internet.</li>
-                    <li>Fungsi rahasia Laravel: <code>Auth::attempt()</code> bertanggung jawab dari urusan pencocokan string biasa (email) dan pencocokan <em>Hash</em> acak bcrypt yang sukar ditebak untuk (password). Semua sudah ditangani di balik layar!</li>
+                    <li><strong>Breeze = 4 perintah</strong>: <code>composer require</code> → <code>breeze:install livewire</code> → <code>npm install</code> → <code>migrate</code>. Setelah itu auth langsung bisa dipakai.</li>
+                    <li>Breeze menghasilkan 2 layout penting: <code>layouts/app.blade.php</code> (authenticated) dan <code>layouts/guest.blade.php</code> (tamu). Semua komponen Livewire kita di tahap berikutnya akan pakai <code>layouts.app</code>.</li>
+                    <li>Lindungi seluruh route aplikasi dengan <code>Route::middleware('auth')->group(...)</code> — satu grup, semua terlindungi sekaligus.</li>
+                    <li>Jalankan <strong>2 terminal</strong> sekaligus saat development: <code>php artisan serve</code> dan <code>npm run dev</code>.</li>
                 </ul>
             </div>
 

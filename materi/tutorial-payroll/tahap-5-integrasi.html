@@ -1,10 +1,10 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tahap 5: Menerapkan Backend ke Frontend - Tutorial Payroll | Livewire SMK</title>
+    <title>Tahap 5: Integrasi Akhir - Tutorial Payroll | Livewire SMK</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400&display=swap"
@@ -46,9 +46,11 @@
                     <li><a href="../minggu-1/pengenalan-laravel.html">Pengenalan Laravel</a></li>
                     <li><a href="../minggu-1/mvc-sederhana.html">MVC Sederhana</a></li>
                     <li><a href="../minggu-1/instalasi-laravel.html">Instalasi Laravel</a></li>
+                    <li><a href="../minggu-1/konvensi-penamaan.html">📏 Konvensi Penamaan</a></li>
                     <li><a href="../minggu-1/blade-template.html">Blade Template</a></li>
                     <li><a href="../minggu-1/pengenalan-livewire.html">Pengenalan Livewire</a></li>
                     <li><a href="../minggu-1/struktur-component.html">Struktur Component</a></li>
+                    <li><a href="../minggu-1/cara-membaca-error.html">🐛 Cara Membaca Error</a></li>
                 </ul>
             </div>
             <div class="sidebar-section">
@@ -81,6 +83,7 @@
                     <li><a href="tahap-2-autentikasi.html">Tahap 2: Autentikasi</a></li>
                     <li><a href="tahap-3-crud.html">Tahap 3: CRUD Karyawan</a></li>
                     <li><a href="tahap-4-logika-payroll.html">Tahap 4: Logika Payroll</a></li>
+                    <li><a href="testing-backend.html">🧪 Testing Backend (Postman)</a></li>
                     <li><a href="tahap-5-integrasi.html" class="active">Tahap 5: Integrasi Akhir</a></li>
                     <li><a href="tahap-6-laporan-pdf.html">Tahap 6: Laporan PDF (Bonus)</a></li>
                 </ul>
@@ -93,12 +96,22 @@
                     <a href="../../index.html">Beranda</a> / <a href="../../silabus.html">Silabus</a> / Project Payroll /
                     Tahap 5: Integrasi Akhir
                 </div>
-                <h1 class="content-title">Tahap 5: Menerapkan Backend ke Frontend</h1>
+                <h1 class="content-title">Tahap 5: Integrasi Akhir</h1>
                 <div class="content-meta">
                     <span>🚀 Tutorial Proyek</span>
                     <span>⏱️ 40 menit</span>
                     <span>🔮 Praktik Perbandingan Code</span>
                 </div>
+            </div>
+
+            <!-- Banner Versi -->
+            <div class="version-banner" role="note" aria-label="Versi software yang digunakan">
+                <span class="vb-icon">⚙️</span>
+                <span class="vb-label">Versi:</span>
+                <span class="vb-tag">🔥 Laravel 13.x</span>
+                <span class="vb-tag">⚡ Livewire 3.x</span>
+                <span class="vb-tag">🐘 PHP 8.3+</span>
+                <span class="vb-note">Tahap ini menggabungkan view Tailwind dengan logika Livewire. Pastikan Vite dev server berjalan (<code>npm run dev</code>) saat testing.</span>
             </div>
 
             <div class="objectives">
@@ -171,56 +184,149 @@
 
             <h2>📊 2. Finalisasi Metrik Halaman Dashboard</h2>
 
-            <p>Pada file statis awal (<code>static/dashboard.blade.php</code>) kita mengisikan angka palsu (seperti "24 Orang" Karyawan). Kini mari kita terapkan perhitungan nyata. Kamu disarankan untuk merubah Dashboard bawaan Breeze lalu melemparkan kalkulasi data nyata lewat komponen Livewire.</p>
-            
+            <p>Pada file statis awal (<code>static/dashboard.blade.php</code>) kita mengisikan angka palsu. Sekarang kita ganti dengan data nyata dari database menggunakan <strong>Livewire component khusus Dashboard</strong>.</p>
+
+            <h3>Langkah 1 — Buat Komponen Dashboard</h3>
             <div class="code-block">
                 <div class="code-header">
-                    <span class="code-filename">Mengekstrak data Realtime di Dashboard Component Anda</span>
+                    <span class="code-filename">Terminal</span>
+                    <button class="code-copy">Salin</button>
                 </div>
                 <div class="code-body">
-                    <pre><span class="code-comment">// Query PHP yang disisipkan:</span>
-<span class="code-keyword">public function</span> <span class="code-function">render</span>() {
-    <span class="code-keyword">return</span> view(<span class="code-string">'livewire.dashboard'</span>, [
-        <span class="code-string">'total_employee'</span> => \App\Models\Employee::count(), 
-        <span class="code-string">'total_payroll_month'</span> => \App\Models\Payroll::whereMonth(<span class="code-string">'created_at'</span>, date(<span class="code-string">'m'</span>))-&gt;sum(<span class="code-string">'net_salary'</span>)
-    ]);
+                    <pre>php artisan make:livewire Dashboard</pre>
+                </div>
+            </div>
+
+            <h3>Langkah 2 — Isi Logika di <code>app/Livewire/Dashboard.php</code></h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span class="code-dot"></span></div>
+                    <span class="code-filename">app/Livewire/Dashboard.php</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-keyword">namespace</span> App\Livewire;
+
+<span class="code-keyword">use</span> Livewire\Component;
+<span class="code-keyword">use</span> App\Models\Employee;
+<span class="code-keyword">use</span> App\Models\Payroll;
+
+<span class="code-keyword">class</span> <span class="code-class">Dashboard</span> <span class="code-keyword">extends</span> Component
+{
+    <span class="code-keyword">public function</span> <span class="code-function">render</span>()
+    {
+        <span class="code-comment">// Gunakan kolom month_year (bukan created_at) agar filter periode konsisten</span>
+        <span class="code-variable">$periodeBulanIni</span> = \Carbon\Carbon::now()->locale(<span class="code-string">'id'</span>)->isoFormat(<span class="code-string">'MMMM YYYY'</span>);
+
+        <span class="code-keyword">return</span> view(<span class="code-string">'livewire.dashboard'</span>, [
+            <span class="code-string">'total_employee'</span>      => Employee::count(),
+            <span class="code-string">'total_payroll_month'</span> => Payroll::where(<span class="code-string">'month_year'</span>, <span class="code-variable">$periodeBulanIni</span>)->sum(<span class="code-string">'net_salary'</span>),
+        ])-&gt;layout(<span class="code-string">'layouts.app'</span>);
+    }
 }</pre>
                 </div>
             </div>
 
+            <h3>Langkah 3 — Ubah tampilan di <code>resources/views/livewire/dashboard.blade.php</code></h3>
             <div class="code-block">
                 <div class="code-header">
-                    <span class="code-filename">Merubah tag HTML di resources/views/livewire/dashboard.blade.php</span>
+                    <span class="code-filename">resources/views/livewire/dashboard.blade.php — bagian card angka</span>
+                    <button class="code-copy">Salin</button>
                 </div>
                 <div class="code-body">
-                    <pre><span class="code-comment">&lt;!-- Angka Palsu Terdahulu --&gt;</span>
-<span class="code-tag">&lt;p class="text-3xl font-bold text-gray-800"&gt;</span>24 Orang<span class="code-tag">&lt;/p&gt;</span>
-
-<span class="code-comment">&lt;!-- Menjadi Dinamis (Terkoneksi Backend) --&gt;</span>
+                    <pre><span class="code-comment">&lt;!-- Angka palsu (dari mockup Tahap 1) diganti dinamis: --&gt;</span>
 <span class="code-tag">&lt;p class="text-3xl font-bold text-gray-800"&gt;</span>{{ $total_employee }} Orang<span class="code-tag">&lt;/p&gt;</span>
 
-<span class="code-comment">&lt;!-- Menampilkan Agregat Keuangan Bulan Ini --&gt;</span>
-<span class="code-tag">&lt;p class="text-3xl font-bold text-gray-800"&gt;</span>Rp {{ number_format($total_payroll_month, 0, ',', '.') }}<span class="code-tag">&lt;/p&gt;</span></pre>
+<span class="code-tag">&lt;p class="text-3xl font-bold text-gray-800"&gt;</span>Rp {{ number_format($total_payroll_month, 0, <span class="code-string">','</span>, <span class="code-string">'.'</span>) }}<span class="code-tag">&lt;/p&gt;</span></pre>
                 </div>
             </div>
 
+
+            <h2>🔗 3. File <code>routes/web.php</code> Lengkap Project Payroll</h2>
+
+            <p>Ini adalah isi <code>routes/web.php</code> final setelah semua komponen selesai dibuat (Tahap 2–4). Pastikan semua <code>use</code> statement ada di atas file:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span class="code-dot"></span></div>
+                    <span class="code-filename">routes/web.php — versi final</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-keyword">use</span> Illuminate\Support\Facades\Route;
+<span class="code-keyword">use</span> App\Livewire\Dashboard;
+<span class="code-keyword">use</span> App\Livewire\EmployeeManager;
+<span class="code-keyword">use</span> App\Livewire\PayrollCalculator;
+<span class="code-keyword">use</span> App\Livewire\PayrollHistory;
+<span class="code-keyword">use</span> App\Models\Payroll;
+<span class="code-keyword">use</span> Barryvdh\DomPDF\Facade\Pdf;
+
+<span class="code-comment">// Halaman utama → redirect ke dashboard jika sudah login</span>
+Route::get(<span class="code-string">'/'</span>, <span class="code-keyword">function</span> () {
+    <span class="code-keyword">return</span> redirect()->route(<span class="code-string">'dashboard'</span>);
+});
+
+<span class="code-comment">// Route auth bawaan Breeze (login, register, logout, dll)</span>
+require __DIR__ . <span class="code-string">'/auth.php'</span>;
+
+<span class="code-comment">// Route yang butuh login</span>
+Route::middleware(<span class="code-string">'auth'</span>)->group(<span class="code-keyword">function</span> () {
+
+    <span class="code-comment">// Dashboard — menggunakan Livewire component agar data real-time</span>
+    Route::get(<span class="code-string">'/dashboard'</span>, Dashboard::<span class="code-keyword">class</span>)-&gt;name(<span class="code-string">'dashboard'</span>);
+
+    <span class="code-comment">// Karyawan</span>
+    Route::get(<span class="code-string">'/karyawan'</span>, EmployeeManager::<span class="code-keyword">class</span>)-&gt;name(<span class="code-string">'employees.index'</span>);
+
+    <span class="code-comment">// Payroll</span>
+    Route::get(<span class="code-string">'/payroll'</span>, PayrollCalculator::<span class="code-keyword">class</span>)-&gt;name(<span class="code-string">'payroll.calculator'</span>);
+    Route::get(<span class="code-string">'/riwayat-gaji'</span>, PayrollHistory::<span class="code-keyword">class</span>)-&gt;name(<span class="code-string">'payroll.history'</span>);
+
+    <span class="code-comment">// Cetak PDF slip gaji (Tahap 6)</span>
+    Route::get(<span class="code-string">'/cetak-slip/{id}'</span>, <span class="code-keyword">function</span> (<span class="code-variable">$id</span>) {
+        <span class="code-variable">$payroll</span> = Payroll::with(<span class="code-string">'employee'</span>)->findOrFail(<span class="code-variable">$id</span>);
+        <span class="code-variable">$pdf</span> = Pdf::loadView(<span class="code-string">'pdf.slip-gaji'</span>, [<span class="code-string">'data'</span> => <span class="code-variable">$payroll</span>]);
+        <span class="code-keyword">return</span> <span class="code-variable">$pdf</span>->stream(<span class="code-string">'Slip_Gaji_'</span> . <span class="code-variable">$payroll</span>->employee->nik . <span class="code-string">'.pdf'</span>);
+    })-&gt;name(<span class="code-string">'payroll.cetak'</span>);
+
+});</pre>
+                </div>
+            </div>
+
+            <div class="alert alert-tip">
+                <span class="alert-icon">🗂️</span>
+                <div>
+                    <h4>Ringkasan URL Aplikasi Payroll</h4>
+                    <table style="width:100%;font-size:0.875rem;border-collapse:collapse;">
+                        <tr style="background:#f3f4f6;"><th style="padding:6px 10px;text-align:left;">URL</th><th style="padding:6px 10px;text-align:left;">Halaman</th><th style="padding:6px 10px;text-align:left;">Akses</th></tr>
+                        <tr><td style="padding:6px 10px;"><code>/login</code></td><td style="padding:6px 10px;">Form Login</td><td style="padding:6px 10px;">Publik (Breeze)</td></tr>
+                        <tr style="background:#f9fafb;"><td style="padding:6px 10px;"><code>/register</code></td><td style="padding:6px 10px;">Form Register</td><td style="padding:6px 10px;">Publik (Breeze)</td></tr>
+                        <tr><td style="padding:6px 10px;"><code>/dashboard</code></td><td style="padding:6px 10px;">Dashboard</td><td style="padding:6px 10px;">Auth</td></tr>
+                        <tr style="background:#f9fafb;"><td style="padding:6px 10px;"><code>/karyawan</code></td><td style="padding:6px 10px;">CRUD Karyawan</td><td style="padding:6px 10px;">Auth</td></tr>
+                        <tr><td style="padding:6px 10px;"><code>/payroll</code></td><td style="padding:6px 10px;">Kalkulator Gaji</td><td style="padding:6px 10px;">Auth</td></tr>
+                        <tr style="background:#f9fafb;"><td style="padding:6px 10px;"><code>/riwayat-gaji</code></td><td style="padding:6px 10px;">Riwayat Slip Gaji</td><td style="padding:6px 10px;">Auth</td></tr>
+                        <tr><td style="padding:6px 10px;"><code>/cetak-slip/{id}</code></td><td style="padding:6px 10px;">Download PDF</td><td style="padding:6px 10px;">Auth</td></tr>
+                    </table>
+                </div>
+            </div>
 
             <!-- ==================== RINGKASAN ==================== -->
 
             <div class="summary-box">
-                <h3>🎉 KESIMPULAN TUTORIAL PAYROLL</h3>
+                <h3>🎉 Kesimpulan Tutorial Payroll</h3>
                 <ul>
-                    <li>Selamat! Anda telah me-<em>refactoring</em> desain sistem UI statis menjadi Aplikasi Penggajian dengan tumpukan teknologi modern: <strong>TALL Stack</strong> (Tailwind, Alpine.JS, Laravel, Livewire).</li>
-                    <li>Sistem Data Binding Livewire merupakakan metode tercanggih untuk para dominasi pengembang PHP dalam bersaing dengan teknologi Front-End berat seperti React JS yang membutuhkan instalasi berbelit-belit.</li>
-                    <li>Aplikasi ini adalah tapak mula (<em>steopping stone</em>). Pada dunia kerja kalian dapat memolesnya lebih jauh, menyisipkan Login <em>Role/Multi-auth</em>, Modul Cetak PDF (*menggunakan facade DOMPDF*), dan masih banyak lagi kemungkinan lainnya!</li>
+                    <li>Kamu telah membangun aplikasi payroll nyata dengan <strong>TALL Stack</strong> (Tailwind, Alpine.js, Laravel 13, Livewire 3) — teknologi yang dipakai di industri.</li>
+                    <li>Breeze mengurus seluruh auth (login, register, logout) tanpa menulis satu baris kode auth pun. Kamu fokus ke bisnis logic.</li>
+                    <li>Satu file <code>web.php</code> dengan satu <code>Route::middleware('auth')->group()</code> cukup melindungi semua halaman sekaligus.</li>
+                    <li>Ini baru permulaan — bisa dikembangkan lebih jauh: role/permission, export Excel, notifikasi email slip gaji, dll.</li>
                 </ul>
             </div>
 
             <div class="content-nav">
-                <a href="tahap-4-logika-payroll.html" class="nav-btn">
+                <a href="testing-backend.html" class="nav-btn">
                     <div>
                         <div class="nav-btn-label">Sebelumnya</div>
-                        <div class="nav-btn-title">← Tahap 4: Logika Payroll</div>
+                        <div class="nav-btn-title">← 🧪 Testing Backend (Postman)</div>
                     </div>
                 </a>
                 <a href="tahap-6-laporan-pdf.html" class="nav-btn">

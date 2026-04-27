@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 
 <head>
@@ -46,9 +46,11 @@
                     <li><a href="../minggu-1/pengenalan-laravel.html">Pengenalan Laravel</a></li>
                     <li><a href="../minggu-1/mvc-sederhana.html">MVC Sederhana</a></li>
                     <li><a href="../minggu-1/instalasi-laravel.html">Instalasi Laravel</a></li>
+                    <li><a href="../minggu-1/konvensi-penamaan.html">📏 Konvensi Penamaan</a></li>
                     <li><a href="../minggu-1/blade-template.html">Blade Template</a></li>
                     <li><a href="../minggu-1/pengenalan-livewire.html">Pengenalan Livewire</a></li>
                     <li><a href="../minggu-1/struktur-component.html">Struktur Component</a></li>
+                    <li><a href="../minggu-1/cara-membaca-error.html">🐛 Cara Membaca Error</a></li>
                 </ul>
             </div>
             <div class="sidebar-section">
@@ -81,6 +83,7 @@
                     <li><a href="tahap-2-autentikasi.html">Tahap 2: Autentikasi</a></li>
                     <li><a href="tahap-3-crud.html">Tahap 3: CRUD Karyawan</a></li>
                     <li><a href="tahap-4-logika-payroll.html">Tahap 4: Logika Payroll</a></li>
+                    <li><a href="testing-backend.html">🧪 Testing Backend (Postman)</a></li>
                     <li><a href="tahap-5-integrasi.html">Tahap 5: Integrasi Akhir</a></li>
                     <li><a href="tahap-6-laporan-pdf.html">Tahap 6: Laporan PDF (Bonus)</a></li>
                 </ul>
@@ -101,12 +104,23 @@
                 </div>
             </div>
 
+            <!-- Banner Versi -->
+            <div class="version-banner" role="note" aria-label="Versi software yang digunakan">
+                <span class="vb-icon">⚙️</span>
+                <span class="vb-label">Versi:</span>
+                <span class="vb-tag">🔥 Laravel 13.x</span>
+                <span class="vb-tag">⚡ Livewire 3.x</span>
+                <span class="vb-tag">🐘 PHP 8.3+</span>
+                <span class="vb-tag">🎨 Tailwind CSS 3</span>
+                <span class="vb-note">Tahap ini fokus desain UI statis. Pastikan Tailwind CSS sudah ter-setup via Vite (default Laravel 11 + Breeze).</span>
+            </div>
+
             <div class="prerequisites">
                 <h3>📌 Prasyarat</h3>
                 <ul>
                     <li>Konsep <strong>HTML Dasar & Tailwind CSS</strong></li>
                     <li>Memahami letak file <code>resources/views</code> dalam folder project laravel.</li>
-                    <li>Jalankan <code>npm run dev</code> untuk melihat perubahan Tailwind CSS secara real-time.</li>
+                    <li>Node.js sudah terinstall di komputer (cek: <code>node -v</code>). Tailwind akan dikompilasi di <strong>Tahap 2</strong> — untuk tahap ini kita fokus dulu ke struktur Blade-nya.</li>
                 </ul>
             </div>
 
@@ -122,6 +136,70 @@
 
             <!-- ============================================== -->
             <!-- MULAI MATERI -->
+
+            <h2>🛠️ Persiapan: Buat Project Laravel Baru</h2>
+
+            <p>Sebelum menulis satu baris tampilan pun, project Laravel-nya harus ada dulu. Buka terminal, arahkan ke folder web server kamu (contoh: <code>C:\laragon\www</code> untuk Laragon atau <code>C:\xampp\htdocs</code> untuk XAMPP), lalu jalankan perintah berikut:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span class="code-dot"></span></div>
+                    <span class="code-filename">Terminal — Buat Project Laravel Baru</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-comment"># Buat project Laravel baru bernama "payroll-app"</span>
+laravel new payroll-app
+
+<span class="code-comment"># Masuk ke folder project</span>
+cd payroll-app</pre>
+                </div>
+            </div>
+
+            <div class="alert alert-info">
+                <span class="alert-icon">📌</span>
+                <div>
+                    <h4>Belum punya installer Laravel?</h4>
+                    <p>Jalankan sekali saja: <code>composer global require laravel/installer</code> — setelah itu perintah <code>laravel new</code> bisa dipakai kapan saja.</p>
+                </div>
+            </div>
+
+            <p>Selanjutnya, konfigurasi koneksi database. Buka file <code>.env</code> di root folder project dan sesuaikan tiga baris ini:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span class="code-dot"></span></div>
+                    <span class="code-filename">.env</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre>DB_DATABASE=payroll_db
+DB_USERNAME=root
+DB_PASSWORD=</pre>
+                </div>
+            </div>
+
+            <div class="alert alert-tip">
+                <span class="alert-icon">💡</span>
+                <div>
+                    <h4>Buat database-nya dulu!</h4>
+                    <p>Buka phpMyAdmin (via <code>http://localhost/phpmyadmin</code>), klik <strong>New</strong>, beri nama <code>payroll_db</code>, lalu klik <strong>Create</strong>. Tanpa ini, migration akan error.</p>
+                </div>
+            </div>
+
+            <p>Terakhir, jalankan server development Laravel agar kita bisa langsung melihat hasilnya di browser:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-filename">Terminal</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre>php artisan serve</pre>
+                </div>
+            </div>
+
+            <p>Sekarang project sudah siap. Buka browser dan akses <code>http://localhost:8000</code> — kamu akan melihat halaman welcome Laravel. <strong>Lanjut ke pembuatan tampilan!</strong></p>
 
             <h2>🎨 Tahap 1: Tampilan Statis (Mockup Frontend)</h2>
 

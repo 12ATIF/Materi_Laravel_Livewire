@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 
 <head>
@@ -46,9 +46,11 @@
                     <li><a href="../minggu-1/pengenalan-laravel.html">Pengenalan Laravel</a></li>
                     <li><a href="../minggu-1/mvc-sederhana.html">MVC Sederhana</a></li>
                     <li><a href="../minggu-1/instalasi-laravel.html">Instalasi Laravel</a></li>
+                    <li><a href="../minggu-1/konvensi-penamaan.html">📏 Konvensi Penamaan</a></li>
                     <li><a href="../minggu-1/blade-template.html">Blade Template</a></li>
                     <li><a href="../minggu-1/pengenalan-livewire.html">Pengenalan Livewire</a></li>
                     <li><a href="../minggu-1/struktur-component.html">Struktur Component</a></li>
+                    <li><a href="../minggu-1/cara-membaca-error.html">🐛 Cara Membaca Error</a></li>
                 </ul>
             </div>
             <div class="sidebar-section">
@@ -81,6 +83,7 @@
                     <li><a href="tahap-2-autentikasi.html">Tahap 2: Autentikasi</a></li>
                     <li><a href="tahap-3-crud.html">Tahap 3: CRUD Karyawan</a></li>
                     <li><a href="tahap-4-logika-payroll.html">Tahap 4: Logika Payroll</a></li>
+                    <li><a href="testing-backend.html">🧪 Testing Backend (Postman)</a></li>
                     <li><a href="tahap-5-integrasi.html">Tahap 5: Integrasi Akhir</a></li>
                     <li><a href="tahap-6-laporan-pdf.html" class="active">Tahap 6: Laporan PDF (Bonus)</a></li>
                 </ul>
@@ -101,6 +104,17 @@
                 </div>
             </div>
 
+            <!-- Banner Versi -->
+            <div class="version-banner" role="note" aria-label="Versi software yang digunakan">
+                <span class="vb-icon">⚙️</span>
+                <span class="vb-label">Versi:</span>
+                <span class="vb-tag">🔥 Laravel 13.x</span>
+                <span class="vb-tag">⚡ Livewire 3.x</span>
+                <span class="vb-tag">🐘 PHP 8.3+</span>
+                <span class="vb-tag">📄 barryvdh/laravel-dompdf ^3.0</span>
+                <span class="vb-note">Pakai package <code>barryvdh/laravel-dompdf</code> untuk export PDF. Pastikan ekstensi PHP <code>gd</code> dan <code>mbstring</code> aktif di Laragon.</span>
+            </div>
+
             <div class="objectives">
                 <h3>🎯 Tujuan Belajar</h3>
                 <p>Bagian ini adalah persembahan khusus untuk merubah aplikasi Anda menjadi standar Dunia Industri:</p>
@@ -114,17 +128,34 @@
             <!-- ============================================== -->
             <!-- MULAI MATERI -->
 
+            <h2>🔧 0. Aktifkan Extension PHP yang Diperlukan (Laragon)</h2>
+
+            <p>DOMPDF membutuhkan extension PHP <code>gd</code> dan <code>mbstring</code>. Di Laragon, keduanya biasanya sudah aktif, tapi jika ada error saat generate PDF, ikuti langkah berikut:</p>
+
+            <div class="alert alert-tip">
+                <span class="alert-icon">⚙️</span>
+                <div>
+                    <h4>Cara Aktifkan Extension di Laragon:</h4>
+                    <ol style="margin:0.5rem 0 0;">
+                        <li>Klik kanan ikon Laragon di taskbar → <strong>PHP → php.ini</strong></li>
+                        <li>Cari baris <code>;extension=gd</code> → hapus titik koma di depannya → jadi <code>extension=gd</code></li>
+                        <li>Cari baris <code>;extension=mbstring</code> → hapus titik koma → jadi <code>extension=mbstring</code></li>
+                        <li>Simpan file, lalu <strong>restart Laragon</strong> (klik kanan → Reload)</li>
+                    </ol>
+                </div>
+            </div>
+
             <h2>📦 1. Instalasi Library DOMPDF</h2>
 
-            <p>Sistem *core* Laravel tidak memiliki fitur *convert* PDF bawaan pabrik. Kita perlu mengunduh salah satu Pustaka (*Library*) terpopuler sedunia yang sering dipakai dev-dev handal, yakni <strong>barryvdh/laravel-dompdf</strong>.</p>
-            
+            <p>Laravel tidak punya fitur export PDF bawaan. Kita pakai package populer <strong>barryvdh/laravel-dompdf</strong>:</p>
+
             <div class="code-block">
                 <div class="code-header">
                     <span class="code-filename">Terminal</span>
                     <button class="code-copy">Salin</button>
                 </div>
                 <div class="code-body">
-                    <pre><span class="code-comment"># Unduh package melalui composer</span>
+                    <pre><span class="code-comment"># Unduh package via Composer</span>
 composer require barryvdh/laravel-dompdf</pre>
                 </div>
             </div>
@@ -163,26 +194,75 @@ php artisan make:livewire PayrollHistory</pre>
     <span class="code-keyword">public function</span> <span class="code-function">render</span>()
     {
         <span class="code-keyword">return</span> view(<span class="code-string">'livewire.payroll-history'</span>, [
-            <span class="code-comment">// Inner join relationship `employee` otomatis</span>
-            <span class="code-string">'payrolls'</span> => Payroll::with(<span class="code-string">'employee'</span>)->orderBy(<span class="code-string">'created_at'</span>, <span class="code-string">'desc'</span>)->paginate(<span class="code-number">10</span>)
-        ]);
+            <span class="code-string">'payrolls'</span> => Payroll::with(<span class="code-string">'employee'</span>)->orderBy(<span class="code-string">'created_at'</span>, <span class="code-string">'desc'</span>)->paginate(<span class="code-number">10</span>),
+        ])-&gt;layout(<span class="code-string">'layouts.app'</span>); <span class="code-comment">// ← wajib! tanpa ini halaman tampil tanpa navbar</span>
     }
 }</pre>
                 </div>
             </div>
 
-            <p>Jangan lupa mendesain *Blade View*-nya dengan struktur tabel Tailwind seperti pada Tahap 1. Namun, yang terpenting, tambahkan tautan (`&lt;a href="..."&gt;`) menuju Route Cetak PDF pada kolom Aksinya, seperti ini:</p>
+            <p>Sekarang buat tampilan lengkap tabel riwayat gajinya. Ini adalah view <strong>penuh</strong> yang langsung bisa dipakai:</p>
+
             <div class="code-block">
                 <div class="code-header">
-                    <span class="code-filename">Potongan Tabel di payroll-history.blade.php</span>
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span class="code-dot"></span></div>
+                    <span class="code-filename">resources/views/livewire/payroll-history.blade.php</span>
+                    <button class="code-copy">Salin</button>
                 </div>
                 <div class="code-body">
-                    <pre><span class="code-tag">&lt;td&gt;</span>
-    <span class="code-comment">&lt;!-- Target URL: /cetak-slip/ID_PAYROLL --&gt;</span>
-    <span class="code-tag">&lt;a href="/cetak-slip/{{ $item->id }}" target="_blank" class="text-blue-500 hover:underline"&gt;</span>
-      🖨️ Cetak Slip PDF
-    <span class="code-tag">&lt;/a&gt;</span>
-<span class="code-tag">&lt;/td&gt;</span></pre>
+                    <pre><span class="code-tag">&lt;div class="max-w-7xl mx-auto py-8 px-4"&gt;</span>
+
+    <span class="code-tag">&lt;h2 class="text-xl font-bold text-gray-800 mb-6"&gt;</span>🧾 Riwayat Slip Gaji<span class="code-tag">&lt;/h2&gt;</span>
+
+    <span class="code-tag">&lt;div class="bg-white rounded-lg shadow border border-gray-100 overflow-x-auto"&gt;</span>
+        <span class="code-tag">&lt;table class="min-w-full divide-y divide-gray-200 text-sm"&gt;</span>
+            <span class="code-tag">&lt;thead&gt;</span>
+                <span class="code-tag">&lt;tr class="bg-gray-50 text-left"&gt;</span>
+                    <span class="code-tag">&lt;th class="px-4 py-3 text-gray-500 font-medium"&gt;</span>Karyawan<span class="code-tag">&lt;/th&gt;</span>
+                    <span class="code-tag">&lt;th class="px-4 py-3 text-gray-500 font-medium"&gt;</span>Periode<span class="code-tag">&lt;/th&gt;</span>
+                    <span class="code-tag">&lt;th class="px-4 py-3 text-gray-500 font-medium"&gt;</span>Gaji Pokok<span class="code-tag">&lt;/th&gt;</span>
+                    <span class="code-tag">&lt;th class="px-4 py-3 text-gray-500 font-medium"&gt;</span>Tunjangan<span class="code-tag">&lt;/th&gt;</span>
+                    <span class="code-tag">&lt;th class="px-4 py-3 text-gray-500 font-medium"&gt;</span>Potongan<span class="code-tag">&lt;/th&gt;</span>
+                    <span class="code-tag">&lt;th class="px-4 py-3 text-gray-500 font-medium"&gt;</span>THP<span class="code-tag">&lt;/th&gt;</span>
+                    <span class="code-tag">&lt;th class="px-4 py-3 text-gray-500 font-medium"&gt;</span>Aksi<span class="code-tag">&lt;/th&gt;</span>
+                <span class="code-tag">&lt;/tr&gt;</span>
+            <span class="code-tag">&lt;/thead&gt;</span>
+            <span class="code-tag">&lt;tbody class="divide-y divide-gray-200"&gt;</span>
+
+                <span class="code-keyword">@forelse</span>($payrolls <span class="code-keyword">as</span> $item)
+                    <span class="code-tag">&lt;tr class="hover:bg-gray-50"&gt;</span>
+                        <span class="code-tag">&lt;td class="px-4 py-3 font-semibold"&gt;</span>
+                            {{ $item-&gt;employee-&gt;name }}<span class="code-tag">&lt;br&gt;</span>
+                            <span class="code-tag">&lt;span class="text-xs text-gray-400"&gt;</span>{{ $item-&gt;employee-&gt;nik }}<span class="code-tag">&lt;/span&gt;</span>
+                        <span class="code-tag">&lt;/td&gt;</span>
+                        <span class="code-tag">&lt;td class="px-4 py-3"&gt;</span>{{ $item-&gt;month_year }}<span class="code-tag">&lt;/td&gt;</span>
+                        <span class="code-tag">&lt;td class="px-4 py-3"&gt;</span>Rp {{ number_format($item-&gt;basic_salary, 0, <span class="code-string">','</span>, <span class="code-string">'.'</span>) }}<span class="code-tag">&lt;/td&gt;</span>
+                        <span class="code-tag">&lt;td class="px-4 py-3 text-green-600"&gt;</span>+Rp {{ number_format($item-&gt;allowance, 0, <span class="code-string">','</span>, <span class="code-string">'.'</span>) }}<span class="code-tag">&lt;/td&gt;</span>
+                        <span class="code-tag">&lt;td class="px-4 py-3 text-red-500"&gt;</span>-Rp {{ number_format($item-&gt;deduction, 0, <span class="code-string">','</span>, <span class="code-string">'.'</span>) }}<span class="code-tag">&lt;/td&gt;</span>
+                        <span class="code-tag">&lt;td class="px-4 py-3 font-bold text-blue-600"&gt;</span>Rp {{ number_format($item-&gt;net_salary, 0, <span class="code-string">','</span>, <span class="code-string">'.'</span>) }}<span class="code-tag">&lt;/td&gt;</span>
+                        <span class="code-tag">&lt;td class="px-4 py-3"&gt;</span>
+                            <span class="code-tag">&lt;a href="{{ route('payroll.cetak', $item-&gt;id) }}" target="_blank"</span>
+                               <span class="code-attr">class</span>=<span class="code-string">"text-blue-500 hover:underline text-sm"</span><span class="code-tag">&gt;</span>🖨️ Cetak PDF<span class="code-tag">&lt;/a&gt;</span>
+                        <span class="code-tag">&lt;/td&gt;</span>
+                    <span class="code-tag">&lt;/tr&gt;</span>
+                <span class="code-keyword">@empty</span>
+                    <span class="code-tag">&lt;tr&gt;</span>
+                        <span class="code-tag">&lt;td colspan="7" class="px-4 py-8 text-center text-gray-400"&gt;</span>
+                            Belum ada data penggajian.
+                        <span class="code-tag">&lt;/td&gt;</span>
+                    <span class="code-tag">&lt;/tr&gt;</span>
+                <span class="code-keyword">@endforelse</span>
+
+            <span class="code-tag">&lt;/tbody&gt;</span>
+        <span class="code-tag">&lt;/table&gt;</span>
+    <span class="code-tag">&lt;/div&gt;</span>
+
+    <span class="code-comment">&lt;!-- Pagination otomatis dari WithPagination --&gt;</span>
+    <span class="code-tag">&lt;div class="mt-4"&gt;</span>
+        {{ $payrolls-&gt;links() }}
+    <span class="code-tag">&lt;/div&gt;</span>
+
+<span class="code-tag">&lt;/div&gt;</span></pre>
                 </div>
             </div>
 
