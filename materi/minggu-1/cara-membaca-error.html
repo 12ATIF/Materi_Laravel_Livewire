@@ -1,0 +1,872 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cara Membaca Error - Minggu 1 | Livewire SMK</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../../css/style.css">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="../../index.html" class="navbar-logo">
+                <svg viewBox="0 0 50 50" fill="none">
+                    <rect width="50" height="50" rx="12" fill="url(#g)" />
+                    <path d="M15 35V15L25 25L35 15V35" stroke="#fff" stroke-width="3" />
+                    <defs>
+                        <linearGradient id="g" x1="0" y1="0" x2="50" y2="50">
+                            <stop stop-color="#10B981" />
+                            <stop offset="1" stop-color="#3B82F6" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <span>Livewire SMK</span>
+            </a>
+            <ul class="navbar-menu">
+                <li><a href="../../index.html">Beranda</a></li>
+                <li><a href="../../silabus.html">Silabus</a></li>
+                <li><a href="pengenalan-laravel.html" class="active">Materi</a></li>
+                <li><a href="../../demo.html">Demo</a></li>
+            </ul>
+            <button class="navbar-toggle" aria-label="Toggle menu"><span>☰</span></button>
+        </div>
+    </nav>
+
+    <div class="content-layout">
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <div class="sidebar-title">📗 Minggu 1</div>
+                <ul class="sidebar-nav">
+                    <li><a href="pengenalan-laravel.html">Pengenalan Laravel</a></li>
+                    <li><a href="mvc-sederhana.html">MVC Sederhana</a></li>
+                    <li><a href="instalasi-laravel.html">Instalasi Laravel</a></li>
+                    <li><a href="konvensi-penamaan.html">📏 Konvensi Penamaan</a></li>
+                    <li><a href="konvensi-penamaan.html">📏 Konvensi Penamaan</a></li>
+                    <li><a href="blade-template.html">Blade Template</a></li>
+                    <li><a href="pengenalan-livewire.html">Pengenalan Livewire</a></li>
+                    <li><a href="struktur-component.html">Struktur Component</a></li>
+                    <li><a href="cara-membaca-error.html" class="active">🐛 Cara Membaca Error</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-title">📘 Minggu 2</div>
+                <ul class="sidebar-nav">
+                    <li><a href="../minggu-2/wire-model.html">wire:model</a></li>
+                    <li><a href="../minggu-2/wire-click.html">wire:click</a></li>
+                    <li><a href="../minggu-2/database-eloquent.html">Database & Eloquent</a></li>
+                    <li><a href="../minggu-2/validasi.html">Validasi</a></li>
+                    <li><a href="../minggu-2/crud-sederhana.html">CRUD Sederhana</a></li>
+                    <li><a href="../minggu-2/autentikasi.html">🔐 Autentikasi</a></li>
+                    <li><a href="../minggu-2/lifecycle-events.html">🔄 Lifecycle & Events</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-title">📕 Minggu 3</div>
+                <ul class="sidebar-nav">
+                    <li><a href="../minggu-3/upload-file.html">Upload File</a></li>
+                    <li><a href="../minggu-3/pagination-search.html">Pagination & Search</a></li>
+                    <li><a href="../minggu-3/komponen-reusable.html">Komponen Reusable</a></li>
+                    <li><a href="../minggu-3/tampilan-dinamis.html">Tampilan Dinamis</a></li>
+                    <li><a href="../minggu-3/form-object.html">📋 Form Objects</a></li>
+                    <li><a href="../minggu-3/project-elibrary.html">📚 Tutorial E-Library</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-title">🚀 Project Payroll</div>
+                <ul class="sidebar-nav">
+                    <li><a href="../tutorial-payroll/tahap-1-frontend.html">Tahap 1: Frontend Statis</a></li>
+                    <li><a href="../tutorial-payroll/tahap-2-autentikasi.html">Tahap 2: Autentikasi</a></li>
+                    <li><a href="../tutorial-payroll/tahap-3-crud.html">Tahap 3: CRUD Karyawan</a></li>
+                    <li><a href="../tutorial-payroll/tahap-4-logika-payroll.html">Tahap 4: Logika Payroll</a></li>
+                    <li><a href="../tutorial-payroll/tahap-5-integrasi.html">Tahap 5: Integrasi Akhir</a></li>
+                    <li><a href="../tutorial-payroll/tahap-6-laporan-pdf.html">Tahap 6: Laporan PDF (Bonus)</a></li>
+                </ul>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="content-header">
+                <div class="content-breadcrumb">
+                    <a href="../../index.html">Beranda</a> / <a href="../../silabus.html">Silabus</a> / Minggu 1 /
+                    Cara Membaca Error
+                </div>
+                <h1 class="content-title">1.7 🐛 Cara Membaca Error (Skill Wajib Programmer)</h1>
+                <div class="content-meta">
+                    <span>📗 Minggu 1</span>
+                    <span>⏱️ 35 menit</span>
+                    <span>🛠️ Skill Praktis</span>
+                </div>
+            </div>
+
+            <!-- Banner Versi -->
+            <div class="version-banner" role="note" aria-label="Versi software yang digunakan">
+                <span class="vb-icon">⚙️</span>
+                <span class="vb-label">Versi:</span>
+                <span class="vb-tag">🔥 Laravel 11.x</span>
+                <span class="vb-tag">⚡ Livewire 3.x</span>
+                <span class="vb-tag">🐘 PHP 8.2+</span>
+                <span class="vb-note">Format halaman error berbeda antar versi Laravel, tapi <strong>cara membacanya sama</strong> — fokus di pesan utama, file, dan baris error.</span>
+            </div>
+
+            <!-- Syarat Utama: APP_DEBUG -->
+            <div class="alert alert-warning">
+                <span class="alert-icon">🚨</span>
+                <div>
+                    <h4>Cek Ini Dulu Sebelum Mulai: <code>APP_DEBUG=true</code></h4>
+                    <p>Laravel punya dua mode tampilan error. Kalau kamu tidak bisa melihat detail error (cuma layar putih atau tulisan "Server Error"), kemungkinan besar setting ini yang salah.</p>
+                    <p>Buka file <code>.env</code> di root project, pastikan:</p>
+                    <div class="code-block" style="margin:0.75rem 0 0.5rem;">
+                        <div class="code-body">
+                            <pre><span style="color:#34D399;">APP_DEBUG=true</span>   <span style="color:#6B7280;"># ← harus true saat development/belajar</span>
+APP_ENV=local    <span style="color:#6B7280;"># ← bukan "production"</span></pre>
+                        </div>
+                    </div>
+                    <p style="margin-bottom:0;font-size:0.85rem;color:#92400E;">Setelah ubah <code>.env</code>, jalankan <code>php artisan config:clear</code> di terminal agar perubahan terbaca. Di production (server online), <strong>wajib</strong> ganti ke <code>APP_DEBUG=false</code> agar kode internal tidak bocor ke publik.</p>
+                </div>
+            </div>
+
+            <!-- Pengantar Guru -->
+            <div class="alert alert-tip">
+                <span class="alert-icon">👨‍🏫</span>
+                <div>
+                    <h4>Pesan dari Guru</h4>
+                    <p>Pemula sering panik saat lihat layar merah penuh tulisan aneh. <strong>Itu wajar.</strong> Tapi
+                        rahasianya: <strong>error itu teman, bukan musuh</strong>. Error memberitahumu persis di mana
+                        masalahnya. Programmer profesional tidak <em>menghindari</em> error — mereka <em>membacanya</em>.
+                        Setelah materi ini, kamu akan punya skill yang membuat 80% bug bisa kamu pecahkan sendiri tanpa
+                        nanya ke siapa pun.</p>
+                </div>
+            </div>
+
+            <!-- Tujuan Belajar -->
+            <div class="objectives">
+                <h3>🎯 Tujuan Belajar</h3>
+                <p>Setelah menyelesaikan materi ini, kamu akan mampu:</p>
+                <ul>
+                    <li>Membaca <strong>anatomi halaman error Laravel</strong> (Ignition / Whoops)</li>
+                    <li>Memahami <strong>stack trace</strong> dan menemukan baris kode yang bermasalah</li>
+                    <li>Mengenali <strong>6 jenis error paling umum</strong> dan cara mengatasinya</li>
+                    <li>Menggunakan <strong>tools debug</strong>: <code>dd()</code>, <code>dump()</code>, dan
+                        <code>Log</code></li>
+                    <li>Mencari solusi error dengan <strong>Google secara efektif</strong></li>
+                    <li>Membaca error <strong>khusus Livewire</strong> di console browser</li>
+                </ul>
+            </div>
+
+            <!-- ==================== KONTEN ==================== -->
+
+            <h2>🤔 Kenapa Programmer Pemula Takut Error?</h2>
+
+            <p>Saat baru belajar, layar merah penuh tulisan teknis bisa terlihat menakutkan. Tapi sebenarnya:</p>
+
+            <div class="alert alert-info">
+                <span class="alert-icon">💡</span>
+                <div>
+                    <h4>Analogi: Dokter & Pasien</h4>
+                    <p>Bayangkan kamu ke dokter karena sakit. Dokter <strong>tidak akan marah</strong> kalau kamu
+                        sakit — itu tugasnya. Dokter akan <strong>baca gejala</strong>, lalu kasih obat. Begitu juga
+                        dengan error: itu <strong>"gejala"</strong> kode kamu. Tugasmu adalah <strong>baca
+                            gejalanya</strong>, baru kasih "obat" (perbaiki kode).</p>
+                </div>
+            </div>
+
+            <h3>Mindset yang Harus Dimiliki</h3>
+
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem;margin:1.5rem 0;">
+                <div style="padding:1.25rem;background:#FEE2E2;border-radius:12px;border-left:4px solid #EF4444;">
+                    <h4 style="margin:0 0 0.5rem;color:#DC2626;">❌ Mindset Salah</h4>
+                    <ul style="margin:0;padding-left:1.25rem;">
+                        <li>"Aduh error lagi, gue payah!"</li>
+                        <li>Langsung tutup browser, panik</li>
+                        <li>Asal copy-paste kode dari Stack Overflow</li>
+                        <li>Tanya ke teman tanpa baca pesan error</li>
+                    </ul>
+                </div>
+                <div style="padding:1.25rem;background:#F0FDF4;border-radius:12px;border-left:4px solid #10B981;">
+                    <h4 style="margin:0 0 0.5rem;color:#059669;">✅ Mindset Benar</h4>
+                    <ul style="margin:0;padding-left:1.25rem;">
+                        <li>"Oke, ada gejala. Apa yang error katakan?"</li>
+                        <li>Baca pelan-pelan dari atas</li>
+                        <li>Catat: pesan utama, file, baris</li>
+                        <li>Coba pahami dulu, baru cari solusi</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- ==================== -->
+
+            <h2>📋 Anatomi Halaman Error Laravel</h2>
+
+            <p>Saat Laravel kena error, akan muncul halaman seperti ini (versi simplifikasi):</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">Halaman Error Laravel (Ignition)</span>
+                </div>
+                <div class="code-body">
+                    <pre><span style="color:#F87171;font-weight:600;">SQLSTATE[42S02]: Base table or view not found:
+1146 Table 'db_library.bukus' doesn't exist</span>          ← 1. Pesan utama
+
+<span style="color:#FBBF24;">at app/Livewire/BookList.php:34</span>             ← 2. File & baris
+
+<span style="color:#9CA3AF;">30 |     public function render()
+31 |     {
+32 |         return view('livewire.book-list', [</span>
+<span style="color:#FCA5A5;background:#7F1D1D;">33 |             'books' => Book::all(),</span>           ← 3. Baris yang error
+<span style="color:#9CA3AF;">34 |         ]);
+35 |     }</span>
+
+<span style="color:#60A5FA;">Stack Trace:</span>                                  ← 4. Jejak pemanggilan
+1. Illuminate\Database\Connection::statement()
+2. Book::all() called from BookList.php:33
+3. BookList::render() called from Livewire/...
+...</pre>
+                </div>
+            </div>
+
+            <h3>4 Bagian Penting yang HARUS Dibaca</h3>
+
+            <table class="comparison-table">
+                <tr>
+                    <th>No</th>
+                    <th>Bagian</th>
+                    <th>Apa yang Dicari?</th>
+                </tr>
+                <tr>
+                    <td><strong>1</strong></td>
+                    <td><strong>Pesan Utama</strong></td>
+                    <td>Apa <em>jenis</em> error-nya? (Database? Syntax? File tidak ada?)</td>
+                </tr>
+                <tr>
+                    <td><strong>2</strong></td>
+                    <td><strong>File & Baris</strong></td>
+                    <td>Di file mana dan baris berapa error terjadi</td>
+                </tr>
+                <tr>
+                    <td><strong>3</strong></td>
+                    <td><strong>Baris Highlight</strong></td>
+                    <td>Kode persis yang menyebabkan error</td>
+                </tr>
+                <tr>
+                    <td><strong>4</strong></td>
+                    <td><strong>Stack Trace</strong></td>
+                    <td>Urutan fungsi yang dipanggil sebelum error</td>
+                </tr>
+            </table>
+
+            <div class="alert alert-warning">
+                <span class="alert-icon">⚠️</span>
+                <div>
+                    <h4>Tips Pertama yang WAJIB</h4>
+                    <p><strong>Baca pesan utamanya dulu!</strong> Banyak pemula langsung scroll ke stack trace, padahal
+                        90% jawabannya ada di kalimat pertama. Latihlah dirimu untuk baca dari atas, pelan-pelan.</p>
+                </div>
+            </div>
+
+            <!-- ==================== -->
+
+            <h2>🔍 Membaca Stack Trace</h2>
+
+            <p><strong>Stack trace</strong> = riwayat fungsi yang saling memanggil sampai akhirnya kena error. Bacanya
+                <strong>dari atas ke bawah</strong>, tapi yang paling penting adalah <strong>baris pertama yang
+                    menunjuk ke kode-mu</strong> (bukan kode framework Laravel/Livewire).</p>
+
+            <div class="alert alert-tip">
+                <span class="alert-icon">🏛️</span>
+                <div>
+                    <h4>Analogi: Petunjuk Polisi</h4>
+                    <p>Stack trace itu seperti polisi yang merunut kasus: <em>"Sebelum kejadian X, ada apa? Sebelum
+                            itu lagi, ada apa?"</em>. Tugasmu adalah cari titik <strong>pertama kali kode
+                            kamu</strong> muncul di rangkaian itu. Itulah TKP yang sebenarnya.</p>
+                </div>
+            </div>
+
+            <h3>Contoh Membaca Stack Trace</h3>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span
+                            class="code-dot"></span></div>
+                    <span class="code-filename">stack-trace-example.txt</span>
+                </div>
+                <div class="code-body">
+                    <pre><span style="color:#9CA3AF;">vendor/laravel/framework/src/Illuminate/Database/Connection.php:712</span>  ← framework
+<span style="color:#9CA3AF;">vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php:1234</span> ← framework
+<span style="color:#9CA3AF;">vendor/laravel/framework/src/Illuminate/Database/Eloquent/Builder.php:567</span> ← framework
+<span style="color:#34D399;font-weight:600;">app/Livewire/BookList.php:33  ← INILAH KODEMU! Mulai cari di sini.</span>
+<span style="color:#9CA3AF;">vendor/livewire/livewire/src/...</span>                  ← framework</pre>
+                </div>
+            </div>
+
+            <p><strong>Aturan emas:</strong> Abaikan baris yang berisi <code>vendor/</code>. Cari baris pertama yang
+                berisi <code>app/</code> — itulah kode kamu yang harus diperbaiki.</p>
+
+            <!-- ==================== -->
+
+            <h2>🚨 5 Error Paling Umum & Cara Bacanya</h2>
+
+            <h3>1. Class Not Found</h3>
+
+            <div class="code-block">
+                <div class="code-body">
+                    <pre><span style="color:#F87171;">Error: Class "App\Models\Buku" not found</span></pre>
+                </div>
+            </div>
+
+            <p><strong>Artinya:</strong> Laravel tidak bisa menemukan class yang kamu panggil.</p>
+
+            <p><strong>Penyebab umum:</strong></p>
+            <ul>
+                <li>Salah ketik nama class (misal: <code>Buku</code> vs <code>buku</code>)</li>
+                <li>Lupa <code>use App\Models\Buku;</code> di atas file</li>
+                <li>File class belum dibuat / typo nama file</li>
+                <li>Setelah pindah file, lupa jalankan <code>composer dump-autoload</code></li>
+            </ul>
+
+            <p><strong>Solusi cepat:</strong></p>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-filename">terminal</span>
+                </div>
+                <div class="code-body">
+                    <pre>composer dump-autoload</pre>
+                </div>
+            </div>
+
+            <h3>2. Undefined Variable</h3>
+
+            <div class="code-block">
+                <div class="code-body">
+                    <pre><span style="color:#F87171;">ErrorException: Undefined variable $books</span></pre>
+                </div>
+            </div>
+
+            <p><strong>Artinya:</strong> Kamu pakai variabel <code>$books</code> di view, tapi tidak pernah
+                dikirim dari controller/component.</p>
+
+            <p><strong>Solusi:</strong> Cek apakah variabel sudah di-passing:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-filename">app/Livewire/BookList.php</span>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-keyword">public function</span> <span class="code-function">render</span>()
+{
+    <span class="code-keyword">return</span> view(<span class="code-string">'livewire.book-list'</span>, [
+        <span class="code-string">'books'</span> =&gt; Book::all(),  <span class="code-comment">// ← pastikan key 'books' ada di sini</span>
+    ]);
+}</pre>
+                </div>
+            </div>
+
+            <h3>3. Method Not Found / BadMethodCallException</h3>
+
+            <div class="code-block">
+                <div class="code-body">
+                    <pre><span style="color:#F87171;">BadMethodCallException: Call to undefined method
+App\Livewire\BookList::saveBuku()</span></pre>
+                </div>
+            </div>
+
+            <p><strong>Artinya:</strong> Di Blade kamu pakai <code>wire:click="saveBuku"</code>, tapi method
+                <code>saveBuku()</code> tidak ada di class component.</p>
+
+            <p><strong>Cek:</strong></p>
+            <ul>
+                <li>Apakah method-nya <code>public function</code>? (private/protected tidak bisa dipanggil dari Blade)</li>
+                <li>Apakah ejaan-nya sama persis? <code>saveBuku</code> ≠ <code>savebuku</code> ≠ <code>save_buku</code></li>
+                <li>Apakah method ada di file yang benar?</li>
+            </ul>
+
+            <h3>4. Database Error (Table Not Found)</h3>
+
+            <div class="code-block">
+                <div class="code-body">
+                    <pre><span style="color:#F87171;">SQLSTATE[42S02]: Base table or view not found:
+1146 Table 'db_perpus.bukus' doesn't exist</span></pre>
+                </div>
+            </div>
+
+            <p><strong>Artinya:</strong> Tabel <code>bukus</code> belum dibuat di database.</p>
+
+            <p><strong>Solusi:</strong></p>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-filename">terminal</span>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-comment"># Pastikan migration sudah dijalankan</span>
+php artisan migrate
+
+<span class="code-comment"># Kalau sudah pernah migrate tapi mau ulang dari nol:</span>
+php artisan migrate:fresh</pre>
+                </div>
+            </div>
+
+            <div class="alert alert-warning">
+                <span class="alert-icon">⚠️</span>
+                <div>
+                    <h4>Hati-hati <code>migrate:fresh</code></h4>
+                    <p>Perintah ini <strong>menghapus semua data</strong> dan membuat ulang tabel. Jangan dipakai di
+                        database production!</p>
+                </div>
+            </div>
+
+            <h3>5. Syntax Error / ParseError</h3>
+
+            <div class="code-block">
+                <div class="code-body">
+                    <pre><span style="color:#F87171;">ParseError: syntax error, unexpected token "}"
+in app/Livewire/BookList.php on line 42</span></pre>
+                </div>
+            </div>
+
+            <p><strong>Artinya:</strong> Ada salah ketik di kode PHP — biasanya kurang atau kelebihan
+                <code>{</code>, <code>}</code>, <code>;</code>, atau <code>"</code>.</p>
+
+            <p><strong>Tips menemukannya:</strong></p>
+            <ul>
+                <li>Buka file yang disebut, pergi ke baris yang disebut <strong>dan beberapa baris sebelumnya</strong></li>
+                <li>Pakai editor (VS Code) — biasanya kasih warning warna sebelum error</li>
+                <li>Cek <strong>kurung kurawal</strong> apakah seimbang (jumlah <code>{</code> = jumlah <code>}</code>)</li>
+                <li>Pastikan setiap statement diakhiri <code>;</code></li>
+            </ul>
+
+            <h3>6. Error 419 — Page Expired</h3>
+
+            <div class="code-block">
+                <div class="code-body">
+                    <pre><span style="color:#F87171;">419 | PAGE EXPIRED</span></pre>
+                </div>
+            </div>
+
+            <p><strong>Artinya:</strong> Session/CSRF token sudah kadaluwarsa. Ini sangat sering muncul di form Livewire setelah tab browser dibiarkan idle beberapa menit.</p>
+
+            <p><strong>Bukan berarti kodenya salah!</strong> Ini fitur keamanan Laravel (CSRF protection).</p>
+
+            <p><strong>Solusi:</strong></p>
+            <ul>
+                <li>Refresh halaman (<kbd>F5</kbd>), lalu isi ulang form dan submit</li>
+                <li>Kalau sering terjadi: cek <code>SESSION_LIFETIME</code> di <code>.env</code> (defaultnya 120 menit)</li>
+                <li>Pastikan layout Blade kamu punya <code>@livewireScripts</code> — Livewire sudah handle CSRF otomatis asal tag ini ada</li>
+            </ul>
+
+            <!-- ==================== -->
+
+            <h2>🔄 Solusi "Misterius": Clear Cache</h2>
+
+            <p>Kadang kamu sudah betulkan kode, tapi error masih muncul. Atau sebaliknya — kode salah tapi tidak ada error. Itu biasanya karena Laravel menyimpan <strong>cache</strong> dari konfigurasi/view/route lama.</p>
+
+            <div class="alert alert-tip">
+                <span class="alert-icon">💊</span>
+                <div>
+                    <h4>"Obat Mujarab" Laravel</h4>
+                    <p>Sebelum panik, coba jalankan perintah ini dulu di terminal:</p>
+                </div>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span class="code-dot"></span></div>
+                    <span class="code-filename">terminal (di folder project)</span>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-comment"># Hapus semua cache sekaligus (paling praktis)</span>
+php artisan optimize:clear
+
+<span class="code-comment"># Atau satu per satu kalau mau spesifik:</span>
+php artisan config:clear   <span class="code-comment"># cache konfigurasi .env</span>
+php artisan view:clear     <span class="code-comment"># cache tampilan Blade</span>
+php artisan route:clear    <span class="code-comment"># cache routing</span>
+php artisan cache:clear    <span class="code-comment"># cache aplikasi</span></pre>
+                </div>
+            </div>
+
+            <table class="comparison-table">
+                <tr>
+                    <th>Situasi</th>
+                    <th>Cache yang Diclear</th>
+                </tr>
+                <tr>
+                    <td>Ubah <code>.env</code> tapi tidak terbaca</td>
+                    <td><code>config:clear</code></td>
+                </tr>
+                <tr>
+                    <td>Ubah Blade tapi tampilan tidak berubah</td>
+                    <td><code>view:clear</code></td>
+                </tr>
+                <tr>
+                    <td>Tambah route baru tapi 404</td>
+                    <td><code>route:clear</code></td>
+                </tr>
+                <tr>
+                    <td>Tidak tahu masalahnya apa</td>
+                    <td><code>optimize:clear</code> (hapus semua)</td>
+                </tr>
+            </table>
+
+            <!-- ==================== -->
+
+            <h2>🛠️ Tools Debug Wajib: dd, dump, Log</h2>
+
+            <p>Kadang error tidak langsung muncul, tapi <strong>data yang dihasilkan kode salah</strong>. Saat itulah
+                kamu butuh <em>"melihat"</em> isi variabel saat program berjalan.</p>
+
+            <h3>1. <code>dd()</code> — Dump and Die</h3>
+
+            <p>Fungsi paling sering dipakai. Kepanjangannya: <strong>"Dump and Die"</strong> — tampilkan isi
+                variabel, lalu hentikan program.</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-filename">app/Livewire/BookList.php</span>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-keyword">public function</span> <span class="code-function">simpan</span>()
+{
+    <span class="code-variable">$books</span> = Book::all();
+
+    <span class="code-function">dd</span>(<span class="code-variable">$books</span>);  <span class="code-comment">// ← lihat isinya, lalu STOP</span>
+
+    <span class="code-comment">// kode di bawah ini TIDAK akan jalan</span>
+    <span class="code-keyword">return</span> redirect()-&gt;route(<span class="code-string">'home'</span>);
+}</pre>
+                </div>
+            </div>
+
+            <h3>2. <code>dump()</code> — Dump Tanpa Berhenti</h3>
+
+            <p>Sama seperti <code>dd()</code>, tapi <strong>program tetap lanjut</strong>. Berguna kalau kamu mau
+                lihat beberapa variabel dalam alur yang sama.</p>
+
+            <div class="code-block">
+                <div class="code-body">
+                    <pre><span class="code-function">dump</span>(<span class="code-variable">$user</span>);    <span class="code-comment">// tampilkan, lanjut</span>
+<span class="code-function">dump</span>(<span class="code-variable">$buku</span>);    <span class="code-comment">// tampilkan, lanjut</span>
+<span class="code-function">dump</span>(<span class="code-variable">$total</span>);   <span class="code-comment">// tampilkan, lanjut</span></pre>
+                </div>
+            </div>
+
+            <h3>3. <code>Log::info()</code> — Tulis ke File Log</h3>
+
+            <p>Untuk debug yang lebih serius (terutama di Livewire yang request-nya bolak-balik), pakai Log. Pesan
+                akan ditulis ke file <code>storage/logs/laravel.log</code>.</p>
+
+            <div class="code-block">
+                <div class="code-body">
+                    <pre><span class="code-keyword">use</span> Illuminate\Support\Facades\Log;
+
+Log::<span class="code-function">info</span>(<span class="code-string">'User klik tombol simpan'</span>, [
+    <span class="code-string">'user_id'</span> =&gt; auth()-&gt;id(),
+    <span class="code-string">'data'</span> =&gt; <span class="code-variable">$this</span>-&gt;form,
+]);</pre>
+                </div>
+            </div>
+
+            <p>Lalu di terminal:</p>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-filename">terminal (di folder project)</span>
+                </div>
+                <div class="code-body">
+                    <pre>php artisan pail
+<span class="code-comment"># atau, cara lama:</span>
+tail -f storage/logs/laravel.log</pre>
+                </div>
+            </div>
+
+            <table class="comparison-table">
+                <tr>
+                    <th>Tool</th>
+                    <th>Kapan Pakai?</th>
+                    <th>Output di mana?</th>
+                </tr>
+                <tr>
+                    <td><code>dd()</code></td>
+                    <td>Cek nilai sekali, hentikan eksekusi</td>
+                    <td>Browser</td>
+                </tr>
+                <tr>
+                    <td><code>dump()</code></td>
+                    <td>Cek beberapa nilai, lanjutkan eksekusi</td>
+                    <td>Browser</td>
+                </tr>
+                <tr>
+                    <td><code>Log::info()</code></td>
+                    <td>Debug Livewire / proses background</td>
+                    <td>File <code>storage/logs/laravel.log</code></td>
+                </tr>
+            </table>
+
+            <!-- ==================== -->
+
+            <h2>⚡ Membaca Error Khusus Livewire</h2>
+
+            <p>Livewire punya tempat error yang <strong>berbeda</strong> dari Laravel biasa, karena banyak hal terjadi
+                via JavaScript (di browser). Kamu harus cek <strong>2 tempat</strong>:</p>
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1.5rem 0;">
+                <div style="padding:1.25rem;background:#EFF6FF;border-radius:12px;border-left:4px solid #3B82F6;">
+                    <h4 style="margin:0 0 0.5rem;color:#2563EB;">🌐 Browser DevTools (F12)</h4>
+                    <ul style="margin:0;padding-left:1.25rem;">
+                        <li>Tab <strong>Console</strong> — error JavaScript & Livewire</li>
+                        <li>Tab <strong>Network</strong> — lihat request <code>livewire/update</code></li>
+                    </ul>
+                </div>
+                <div style="padding:1.25rem;background:#F0FDF4;border-radius:12px;border-left:4px solid #10B981;">
+                    <h4 style="margin:0 0 0.5rem;color:#059669;">🖥️ Layar Browser</h4>
+                    <ul style="margin:0;padding-left:1.25rem;">
+                        <li>Halaman error Laravel (Ignition)</li>
+                        <li>Untuk error PHP di sisi server</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>Cara Buka Console Browser</h3>
+
+            <ol>
+                <li>Tekan <kbd>F12</kbd> di Chrome / Firefox / Edge</li>
+                <li>Pilih tab <strong>Console</strong></li>
+                <li>Lihat tulisan merah di sana saat klik tombol Livewire</li>
+            </ol>
+
+            <h3>Error Livewire yang Sering Muncul</h3>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-filename">Console Browser</span>
+                </div>
+                <div class="code-body">
+                    <pre><span style="color:#F87171;">[Livewire] Component not found: BookList</span>
+<span style="color:#FBBF24;">→ Lupa @livewireScripts di layout</span>
+
+<span style="color:#F87171;">[Livewire] Property [$bukuTitle] not found on component</span>
+<span style="color:#FBBF24;">→ Property belum dideklarasi di class component</span>
+
+<span style="color:#F87171;">[Livewire] Method [hapus] not found on component</span>
+<span style="color:#FBBF24;">→ Method belum ada / typo / bukan public</span></pre>
+                </div>
+            </div>
+
+            <h3>Menampilkan Error Validasi di Blade: <code>@error</code></h3>
+
+            <p>Ini bukan error yang bikin layar merah, tapi <strong>pesan error validasi</strong> yang ditampilkan ke user. Pemula sering bingung kenapa validasi sudah jalan tapi pesan tidak muncul di form.</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span class="code-dot"></span></div>
+                    <span class="code-filename">resources/views/livewire/form-buku.blade.php</span>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-tag">&lt;input</span> <span class="code-attr">type</span>=<span class="code-string">"text"</span> <span class="code-attr">wire:model</span>=<span class="code-string">"judul"</span><span class="code-tag">&gt;</span>
+
+<span style="color:#34D399;">@error('judul')</span>
+    <span class="code-tag">&lt;p</span> <span class="code-attr">class</span>=<span class="code-string">"text-red-500 text-sm"</span><span class="code-tag">&gt;</span>{{ $message }}<span class="code-tag">&lt;/p&gt;</span>
+<span style="color:#34D399;">@enderror</span></pre>
+                </div>
+            </div>
+
+            <div class="alert alert-info">
+                <span class="alert-icon">📌</span>
+                <div>
+                    <p><strong><code>@error('nama_field')</code></strong> akan menampilkan <code>$message</code> berisi pesan validasi untuk field tersebut. Kalau tidak ada error untuk field itu, blok ini otomatis disembunyikan. Detail cara pakai validasi dibahas di materi <a href="../minggu-2/validasi.html">Validasi →</a></p>
+                </div>
+            </div>
+
+            <!-- ==================== -->
+
+            <h2>🔎 Cara Google Error dengan Efektif</h2>
+
+            <p>80% error yang kamu hadapi <strong>sudah pernah dialami orang lain</strong>. Skill mencari di Google
+                adalah skill yang membedakan programmer pemula dengan menengah.</p>
+
+            <h3>Rumus Search yang Benar</h3>
+
+            <div class="alert alert-info">
+                <span class="alert-icon">🎯</span>
+                <div>
+                    <h4>Format: <code>[framework] [versi] [pesan error inti]</code></h4>
+                    <p>Contoh:</p>
+                    <ul style="margin-top:0.5rem;">
+                        <li>✅ <code>laravel 11 sqlstate 42s02 table not found</code></li>
+                        <li>✅ <code>livewire 3 component not found</code></li>
+                        <li>✅ <code>laravel class not found after rename</code></li>
+                        <li>❌ <code>laravel error gimana cara fix</code> (terlalu umum)</li>
+                        <li>❌ <code>kenapa kode saya tidak jalan</code> (mustahil dijawab)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>Tips Tambahan Saat Search</h3>
+
+            <ul>
+                <li><strong>Hapus bagian unik</strong> dari error sebelum di-search. Misal nama file/path
+                    spesifik project — itu cuma muncul di komputermu, hasil search akan kosong.</li>
+                <li><strong>Tambahkan <code>site:stackoverflow.com</code></strong> untuk cari hanya di
+                    Stack Overflow.</li>
+                <li><strong>Cari di GitHub Issues</strong> repo Laravel/Livewire — banyak bug-versi yang dibahas
+                    maintainer langsung.</li>
+                <li><strong>Cek tanggal jawaban!</strong> Jawaban tahun 2018 mungkin tidak relevan untuk Laravel 11.</li>
+            </ul>
+
+            <!-- ==================== -->
+
+            <h2>🧰 Cheat Sheet Workflow Debug</h2>
+
+            <p>Saat kena error, ikuti urutan ini secara berurutan:</p>
+
+            <div class="diagram-flow">
+                <div class="flow-item">1. 📖 Baca<br><small>Pesan utama</small></div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-item">2. 📍 Lokasi<br><small>File & baris</small></div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-item highlight">3. 🔬 Inspeksi<br><small>dd() / dump()</small></div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-item">4. 🤔 Hipotesis<br><small>Apa kemungkinan?</small></div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-item">5. 🔎 Search<br><small>Google / Docs</small></div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-item highlight">6. ✅ Fix<br><small>Coba & test</small></div>
+            </div>
+
+            <!-- ==================== LATIHAN ==================== -->
+
+            <h2>🎯 Latihan: Baca Error Berikut</h2>
+
+            <p>Coba kerjakan latihan ini sebelum lihat jawaban — ini melatih otakmu mengenali pola error.</p>
+
+            <div class="exercise-section">
+                <div class="exercise-level basic">
+                    <h4>🟢 Latihan 1 — Identifikasi</h4>
+                    <p>Error berikut bilang apa? Apa kira-kira penyebabnya?</p>
+                    <div class="code-block">
+                        <div class="code-body">
+                            <pre><span style="color:#F87171;">Class "App\Livewire\BookListed" not found
+at app/Providers/AppServiceProvider.php:18</span></pre>
+                        </div>
+                    </div>
+                    <p><strong>Pertanyaan:</strong></p>
+                    <ol>
+                        <li>Class apa yang tidak ditemukan?</li>
+                        <li>Di file mana error terjadi?</li>
+                        <li>Apa kemungkinan penyebabnya?</li>
+                    </ol>
+                    <details class="answer-box">
+                        <summary>💡 Lihat Kunci Jawaban</summary>
+                        <ol>
+                            <li>Class <strong><code>App\Livewire\BookListed</code></strong> tidak ditemukan.</li>
+                            <li>Error terjadi di <code>app/Providers/AppServiceProvider.php</code> baris 18 (tempat class itu didaftarkan).</li>
+                            <li>Kemungkinan penyebab: (a) nama file component adalah <code>BookList.php</code> tapi dipanggil <code>BookListed</code> — typo, (b) file component belum dibuat sama sekali, (c) file sudah ada tapi di folder yang salah. <strong>Solusi:</strong> cek isi <code>AppServiceProvider.php</code> baris 18, pastikan nama class dan nama file sama persis (case-sensitive).</li>
+                        </ol>
+                    </details>
+                </div>
+
+                <div class="exercise-level intermediate">
+                    <h4>🟡 Latihan 2 — Diagnosa</h4>
+                    <p>Berikut error di console browser saat klik tombol di Livewire:</p>
+                    <div class="code-block">
+                        <div class="code-body">
+                            <pre><span style="color:#F87171;">Livewire: Method [simpanBuku] not found on
+component: [book-form]</span></pre>
+                        </div>
+                    </div>
+                    <p><strong>Tugas:</strong> Sebutkan <strong>3 kemungkinan penyebab</strong> dan cara mengeceknya.</p>
+                    <details class="answer-box">
+                        <summary>💡 Lihat Kunci Jawaban</summary>
+                        <ol>
+                            <li><strong>Method belum ada</strong> — Buka <code>app/Livewire/BookForm.php</code>, cari apakah ada <code>public function simpanBuku()</code>.</li>
+                            <li><strong>Typo nama method</strong> — Mungkin di Blade ditulis <code>wire:click="simpanBuku"</code> tapi di PHP ditulis <code>simpanBuку</code> (huruf besar/kecil berbeda) atau <code>saveBuku</code>. PHP case-sensitive untuk nama method.</li>
+                            <li><strong>Method tidak <code>public</code></strong> — Livewire hanya bisa memanggil method yang berstatus <code>public</code>. Kalau <code>private function simpanBuku()</code> atau <code>protected</code>, tidak bisa dipanggil dari Blade.</li>
+                        </ol>
+                    </details>
+                </div>
+
+                <div class="exercise-level challenge">
+                    <h4>🟣 Latihan 3 — Skenario Nyata</h4>
+                    <p>Kamu sedang membuat form Tambah Buku. Setelah klik <strong>Simpan</strong>:</p>
+                    <ul>
+                        <li>Tidak ada pesan error di layar</li>
+                        <li>Tapi data tidak masuk ke database</li>
+                        <li>Halaman cuma refresh, kembali ke form kosong</li>
+                    </ul>
+                    <p><strong>Tugas:</strong></p>
+                    <ol>
+                        <li>Tools debug apa yang akan kamu pakai? (<code>dd</code>, <code>dump</code>, atau
+                            <code>Log</code>?)</li>
+                        <li>Di tahap mana saja kamu akan pasang debug? (sebelum simpan? sesudah simpan?)</li>
+                        <li>Apa yang akan kamu lihat untuk memastikan data benar-benar masuk?</li>
+                    </ol>
+                    <details class="answer-box">
+                        <summary>💡 Lihat Kunci Jawaban</summary>
+                        <ol>
+                            <li><strong>Tools:</strong> Pakai <code>dd()</code> untuk menghentikan eksekusi dan melihat nilai variabel di titik tertentu. Karena tidak ada error, kita perlu "mengintip" data saat program berjalan.</li>
+                            <li><strong>Titik debug:</strong>
+                                <ul style="margin-top:0.5rem;">
+                                    <li>Di awal method <code>simpan()</code>: <code>dd($this->judul, $this->pengarang)</code> — apakah data dari form sudah terbaca?</li>
+                                    <li>Setelah <code>Book::create([...])</code>: <code>dd('berhasil disimpan')</code> — apakah baris save dieksekusi?</li>
+                                </ul>
+                            </li>
+                            <li><strong>Verifikasi:</strong> Cek langsung di database via phpMyAdmin / Laragon DB, apakah baris baru muncul. Atau pakai <code>dd(Book::latest()->first())</code> setelah create untuk lihat data terakhir yang tersimpan.</li>
+                        </ol>
+                        <p style="margin-top:0.75rem;color:#6B7280;font-size:0.85rem;"><strong>Penyebab paling umum di skenario ini:</strong> property <code>wire:model</code> tidak cocok dengan nama property di class, atau ada validasi yang gagal tanpa menampilkan pesan error.</p>
+                    </details>
+                </div>
+            </div>
+
+            <!-- ==================== RANGKUMAN ==================== -->
+
+            <h2>📝 Rangkuman</h2>
+
+            <div class="summary-box">
+                <ul>
+                    <li><strong>Error itu teman</strong> — mereka memberitahu di mana masalahnya, bukan menghakimi.</li>
+                    <li>4 bagian halaman error: <strong>pesan, file & baris, kode highlight, stack trace</strong>.</li>
+                    <li>Di stack trace, abaikan <code>vendor/</code> — fokus ke <code>app/</code>.</li>
+                    <li>Pastikan <code>APP_DEBUG=true</code> di <code>.env</code> agar detail error terlihat saat belajar.</li>
+                    <li>6 error umum: <em>Class not found, Undefined variable, Method not found, Table not found, Syntax error, 419 Page Expired</em>.</li>
+                    <li>Error tidak muncul walaupun kode sudah benar? Jalankan <code>php artisan optimize:clear</code>.</li>
+                    <li>Tools debug: <code>dd()</code> (lihat & stop), <code>dump()</code> (lihat & lanjut),
+                        <code>Log::info()</code> (catat ke file).</li>
+                    <li>Livewire = cek 2 tempat: <strong>halaman browser</strong> & <strong>Console DevTools (F12)</strong>.</li>
+                    <li>Google dengan format: <code>[framework] [versi] [pesan inti error]</code>.</li>
+                </ul>
+            </div>
+
+            <!-- ==================== NAVIGASI ==================== -->
+
+            <div class="content-nav">
+                <a href="struktur-component.html" class="nav-btn">
+                    <div>
+                        <div class="nav-btn-label">Sebelumnya</div>
+                        <div class="nav-btn-title">← Struktur Component</div>
+                    </div>
+                </a>
+                <a href="../minggu-2/wire-model.html" class="nav-btn">
+                    <div>
+                        <div class="nav-btn-label">Selanjutnya</div>
+                        <div class="nav-btn-title">wire:model →</div>
+                    </div>
+                </a>
+            </div>
+        </main>
+    </div>
+
+    <footer class="footer">
+        <p>© 2025 Belajar Laravel Livewire SMK · Kurikulum 3 Minggu</p>
+    </footer>
+
+    <button class="sidebar-toggle-mobile"
+        onclick="document.querySelector('.sidebar').classList.toggle('active')">📚</button>
+    <script src="../../js/app.js"></script>
+</body>
+
+</html>

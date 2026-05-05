@@ -439,9 +439,103 @@ php artisan make:livewire EmployeeManager</pre>
                 </ul>
             </div>
 
+            <!-- ==================== LAYOUT APP ==================== -->
+
+            <h2>🗂️ 3. File Layout Induk: <code>layouts/app.blade.php</code></h2>
+
+            <p>Perhatikan baris terakhir di fungsi <code>render()</code>: <code>->layout('layouts.app')</code>. Ini memerintahkan Livewire untuk membungkus tampilan komponen ke dalam file <strong>layout induk</strong> yang sudah dibuat secara otomatis oleh Breeze. Kamu <strong>tidak perlu membuat file ini</strong> — Breeze sudah membuatnya saat Tahap 2.</p>
+
+            <p>Ini adalah isi <code>resources/views/layouts/app.blade.php</code> yang dihasilkan Breeze — pelajari bagian pentingnya:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span class="code-dot"></span></div>
+                    <span class="code-filename">resources/views/layouts/app.blade.php (auto-generated Breeze, JANGAN diedit)</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-tag">&lt;!DOCTYPE html&gt;</span>
+<span class="code-tag">&lt;html lang="{{ str_replace('_', '-', app()-&gt;getLocale()) }}"&gt;</span>
+<span class="code-tag">&lt;head&gt;</span>
+    <span class="code-tag">&lt;meta charset="utf-8"&gt;</span>
+    <span class="code-tag">&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;</span>
+    <span class="code-tag">&lt;title&gt;</span>{{ config('app.name', 'Laravel') }}<span class="code-tag">&lt;/title&gt;</span>
+    <span class="code-comment">&lt;!-- Vite mengkompilasi Tailwind CSS dan JS --&gt;</span>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+<span class="code-tag">&lt;/head&gt;</span>
+<span class="code-tag">&lt;body class="font-sans antialiased"&gt;</span>
+    <span class="code-tag">&lt;div class="min-h-screen bg-gray-100"&gt;</span>
+
+        <span class="code-comment">&lt;!-- Navbar yang sudah kita isi link-nya di Tahap 2 --&gt;</span>
+        <span class="code-tag">&lt;livewire:layout.navigation /&gt;</span>
+
+        <span class="code-comment">&lt;!-- Konten Halaman: INILAH tempat view komponen Livewire kita masuk! --&gt;</span>
+        <span class="code-tag">&lt;main&gt;</span>
+            {{ $slot }}
+        <span class="code-tag">&lt;/main&gt;</span>
+
+    <span class="code-tag">&lt;/div&gt;</span>
+<span class="code-tag">&lt;/body&gt;</span>
+<span class="code-tag">&lt;/html&gt;</span></pre>
+                </div>
+            </div>
+
+            <div class="alert alert-info">
+                <span class="alert-icon">💡</span>
+                <div>
+                    <h4>Cara kerja <code>{{ $slot }}</code></h4>
+                    <p>Variabel <code>{{ $slot }}</code> adalah <em>lubang ajaib</em>. Ketika komponen <code>EmployeeManager</code> memanggil <code>->layout('layouts.app')</code>, Livewire secara otomatis mengambil seluruh isi file <code>employee-manager.blade.php</code> dan <strong>memasukkannya ke posisi <code>{{ $slot }}</code></strong> tersebut. Hasilnya: navbar dari Breeze + konten halaman karyawan = satu halaman utuh!</p>
+                </div>
+            </div>
+
+            <div class="alert alert-warning">
+                <span class="alert-icon">⚠️</span>
+                <div>
+                    <h4>Jebakan Umum: Error "Route [payroll.calculator] not defined"</h4>
+                    <p>Di Tahap 2, kamu menambahkan <strong>3 link navigasi</strong> ke navbar — termasuk link Payroll dan Riwayat Gaji. Masalahnya: route untuk kedua link itu (<code>payroll.calculator</code> dan <code>payroll.history</code>) <strong>belum terdefinisi</strong> sampai Tahap 4 dan Tahap 5!</p>
+                    <p style="margin-top:0.5rem;">Saat navbar dirender (di setiap halaman, termasuk <code>/karyawan</code>), Laravel akan memanggil <code>route('payroll.calculator')</code> dan langsung melempar error <strong>500</strong>.</p>
+                    <p style="margin-top:0.5rem;"><strong>Solusi:</strong> Buka kembali <code>resources/views/livewire/layout/navigation.blade.php</code> dan bungkus dua link payroll dengan pengecekan route:</p>
+                </div>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span class="code-dot"></span></div>
+                    <span class="code-filename">resources/views/livewire/layout/navigation.blade.php — perbaikan aman</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-comment">&lt;!-- Link ini sudah aman: route employees.index sudah ada di Tahap 3 --&gt;</span>
+<span class="code-tag">&lt;x-nav-link</span> <span class="code-attr">:href</span>=<span class="code-string">"route('employees.index')"</span> <span class="code-attr">:active</span>=<span class="code-string">"request()->routeIs('employees.*')"</span> <span class="code-attr">wire:navigate</span><span class="code-tag">&gt;</span>
+    Karyawan
+<span class="code-tag">&lt;/x-nav-link&gt;</span>
+
+<span class="code-comment">&lt;!-- @if(Route::has()) mencegah error jika route belum terdefinisi --&gt;</span>
+<span class="code-keyword">@if</span>(Route::has(<span class="code-string">'payroll.calculator'</span>))
+    <span class="code-tag">&lt;x-nav-link</span> <span class="code-attr">:href</span>=<span class="code-string">"route('payroll.calculator')"</span> <span class="code-attr">:active</span>=<span class="code-string">"request()->routeIs('payroll.calculator')"</span> <span class="code-attr">wire:navigate</span><span class="code-tag">&gt;</span>
+        Payroll
+    <span class="code-tag">&lt;/x-nav-link&gt;</span>
+<span class="code-keyword">@endif</span>
+
+<span class="code-keyword">@if</span>(Route::has(<span class="code-string">'payroll.history'</span>))
+    <span class="code-tag">&lt;x-nav-link</span> <span class="code-attr">:href</span>=<span class="code-string">"route('payroll.history')"</span> <span class="code-attr">:active</span>=<span class="code-string">"request()->routeIs('payroll.history')"</span> <span class="code-attr">wire:navigate</span><span class="code-tag">&gt;</span>
+        Riwayat Gaji
+    <span class="code-tag">&lt;/x-nav-link&gt;</span>
+<span class="code-keyword">@endif</span></pre>
+                </div>
+            </div>
+
+            <div class="alert alert-tip">
+                <span class="alert-icon">✨</span>
+                <div>
+                    <h4>Cara Kerja <code>Route::has()</code></h4>
+                    <p><code>@if(Route::has('payroll.calculator'))</code> mengecek apakah route bernama tersebut sudah terdaftar <em>sebelum</em> mencoba memanggilnya. Link payroll otomatis muncul di navbar begitu routenya didefinisikan di Tahap 4 — tanpa perlu balik mengedit file navigation lagi.</p>
+                </div>
+            </div>
+
             <!-- ==================== ROUTE ==================== -->
 
-            <h2>🔗 Daftarkan Route Halaman Karyawan</h2>
+            <h2>🔗 4. Daftarkan Route Halaman Karyawan</h2>
 
             <p>Setelah komponen selesai dibuat, daftarkan route-nya di <code>routes/web.php</code> agar bisa diakses dari browser:</p>
 
@@ -456,7 +550,7 @@ php artisan make:livewire EmployeeManager</pre>
 
 Route::middleware(<span class="code-string">'auth'</span>)->group(<span class="code-keyword">function</span> () {
     Route::get(<span class="code-string">'/karyawan'</span>, EmployeeManager::<span class="code-keyword">class</span>)->name(<span class="code-string">'employees.index'</span>);
-    <span class="code-comment">// ... route lain akan ditambahkan di tahap berikutnya</span>
+    <span class="code-comment">// ... route payroll akan ditambahkan di tahap berikutnya</span>
 });</pre>
                 </div>
             </div>

@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Konvensi Penamaan - Minggu 1 | Livewire SMK</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../../css/style.css">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="../../index.html" class="navbar-logo">
+                <svg viewBox="0 0 50 50" fill="none">
+                    <rect width="50" height="50" rx="12" fill="url(#g)" />
+                    <path d="M15 35V15L25 25L35 15V35" stroke="#fff" stroke-width="3" />
+                    <defs>
+                        <linearGradient id="g" x1="0" y1="0" x2="50" y2="50">
+                            <stop stop-color="#10B981" />
+                            <stop offset="1" stop-color="#3B82F6" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <span>Livewire SMK</span>
+            </a>
+            <ul class="navbar-menu">
+                <li><a href="../../index.html">Beranda</a></li>
+                <li><a href="../../silabus.html">Silabus</a></li>
+                <li><a href="pengenalan-laravel.html" class="active">Materi</a></li>
+                <li><a href="../../demo.html">Demo</a></li>
+            </ul>
+            <button class="navbar-toggle" aria-label="Toggle menu"><span>☰</span></button>
+        </div>
+    </nav>
+
+    <div class="content-layout">
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <div class="sidebar-title">📗 Minggu 1</div>
+                <ul class="sidebar-nav">
+                    <li><a href="pengenalan-laravel.html">Pengenalan Laravel</a></li>
+                    <li><a href="mvc-sederhana.html">MVC Sederhana</a></li>
+                    <li><a href="instalasi-laravel.html">Instalasi Laravel</a></li>
+                    <li><a href="konvensi-penamaan.html" class="active">📏 Konvensi Penamaan</a></li>
+                    <li><a href="blade-template.html">Blade Template</a></li>
+                    <li><a href="pengenalan-livewire.html">Pengenalan Livewire</a></li>
+                    <li><a href="struktur-component.html">Struktur Component</a></li>
+                    <li><a href="cara-membaca-error.html">🐛 Cara Membaca Error</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-title">📘 Minggu 2</div>
+                <ul class="sidebar-nav">
+                    <li><a href="../minggu-2/wire-model.html">wire:model</a></li>
+                    <li><a href="../minggu-2/wire-click.html">wire:click</a></li>
+                    <li><a href="../minggu-2/database-eloquent.html">Database & Eloquent</a></li>
+                    <li><a href="../minggu-2/validasi.html">Validasi</a></li>
+                    <li><a href="../minggu-2/crud-sederhana.html">CRUD Sederhana</a></li>
+                    <li><a href="../minggu-2/autentikasi.html">🔐 Autentikasi</a></li>
+                    <li><a href="../minggu-2/lifecycle-events.html">🔄 Lifecycle & Events</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-title">📕 Minggu 3</div>
+                <ul class="sidebar-nav">
+                    <li><a href="../minggu-3/upload-file.html">Upload File</a></li>
+                    <li><a href="../minggu-3/pagination-search.html">Pagination & Search</a></li>
+                    <li><a href="../minggu-3/komponen-reusable.html">Komponen Reusable</a></li>
+                    <li><a href="../minggu-3/tampilan-dinamis.html">Tampilan Dinamis</a></li>
+                    <li><a href="../minggu-3/form-object.html">📋 Form Objects</a></li>
+                    <li><a href="../minggu-3/project-elibrary.html">📚 Tutorial E-Library</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-title">🚀 Project Payroll</div>
+                <ul class="sidebar-nav">
+                    <li><a href="../tutorial-payroll/tahap-1-frontend.html">Tahap 1: Frontend Statis</a></li>
+                    <li><a href="../tutorial-payroll/tahap-2-autentikasi.html">Tahap 2: Autentikasi</a></li>
+                    <li><a href="../tutorial-payroll/tahap-3-crud.html">Tahap 3: CRUD Karyawan</a></li>
+                    <li><a href="../tutorial-payroll/tahap-4-logika-payroll.html">Tahap 4: Logika Payroll</a></li>
+                    <li><a href="../tutorial-payroll/tahap-5-integrasi.html">Tahap 5: Integrasi Akhir</a></li>
+                    <li><a href="../tutorial-payroll/tahap-6-laporan-pdf.html">Tahap 6: Laporan PDF (Bonus)</a></li>
+                </ul>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="content-header">
+                <div class="content-breadcrumb">
+                    <a href="../../index.html">Beranda</a> / <a href="../../silabus.html">Silabus</a> / Minggu 1 /
+                    Konvensi Penamaan
+                </div>
+                <h1 class="content-title">1.4 📏 Konvensi Penamaan Laravel</h1>
+                <div class="content-meta">
+                    <span>📗 Minggu 1</span>
+                    <span>⏱️ 30 menit</span>
+                    <span>📖 Teori + Praktik</span>
+                </div>
+            </div>
+
+            <!-- Banner Versi -->
+            <div class="version-banner" role="note" aria-label="Versi software yang digunakan">
+                <span class="vb-icon">⚙️</span>
+                <span class="vb-label">Versi:</span>
+                <span class="vb-tag">🔥 Laravel 11.x</span>
+                <span class="vb-tag">⚡ Livewire 3.x</span>
+                <span class="vb-tag">🐘 PHP 8.2+</span>
+                <span class="vb-note">Konvensi ini berlaku sama di semua versi Laravel modern. Mengikutinya adalah syarat agar fitur autoloading, route model binding, dan Eloquent bekerja otomatis.</span>
+            </div>
+
+            <!-- Pesan Guru -->
+            <div class="alert alert-tip">
+                <span class="alert-icon">👨‍🏫</span>
+                <div>
+                    <h4>Kenapa Materi Ini Penting Banget?</h4>
+                    <p>Dari pengalaman mengajar, <strong>50% pertanyaan pemula</strong> bisa dijawab dengan satu kalimat:
+                        <em>"Nama file/class/tabel kamu tidak sesuai konvensi Laravel."</em> Laravel itu "magic" — banyak
+                        hal bekerja otomatis, <strong>tapi hanya kalau kamu mengikuti aturan penamaannya</strong>. Satu
+                        huruf besar yang salah bisa bikin fitur tidak jalan. Hafalkan tabel di halaman ini.</p>
+                </div>
+            </div>
+
+            <!-- Tujuan Belajar -->
+            <div class="objectives">
+                <h3>🎯 Tujuan Belajar</h3>
+                <p>Setelah menyelesaikan materi ini, kamu akan mampu:</p>
+                <ul>
+                    <li>Memahami pola <strong>PascalCase, camelCase, snake_case, kebab-case</strong> dan kapan
+                        memakainya di Laravel</li>
+                    <li>Menyebutkan konvensi nama untuk <strong>Model, Migration, Controller, View, Route</strong></li>
+                    <li>Memahami hubungan otomatis antara nama <strong>Model ↔ Tabel database</strong></li>
+                    <li>Menerapkan konvensi penamaan <strong>Livewire Component</strong></li>
+                    <li>Menghindari bug kelas-kelas "nama salah" yang sering menjebak pemula</li>
+                </ul>
+            </div>
+
+            <!-- ==================== KONTEN ==================== -->
+
+            <h2>📐 4 Format Penulisan Nama</h2>
+
+            <p>Sebelum masuk ke aturan Laravel, kenali dulu 4 format penulisan yang sering dipakai:</p>
+
+            <table class="comparison-table">
+                <tr>
+                    <th>Format</th>
+                    <th>Contoh</th>
+                    <th>Ciri Khas</th>
+                </tr>
+                <tr>
+                    <td><strong>PascalCase</strong></td>
+                    <td><code>BookController</code>, <code>UserProfile</code></td>
+                    <td>Setiap kata diawali huruf BESAR, tanpa pemisah</td>
+                </tr>
+                <tr>
+                    <td><strong>camelCase</strong></td>
+                    <td><code>bookTitle</code>, <code>getUserData</code></td>
+                    <td>Kata pertama huruf kecil, kata berikutnya huruf BESAR</td>
+                </tr>
+                <tr>
+                    <td><strong>snake_case</strong></td>
+                    <td><code>book_title</code>, <code>created_at</code></td>
+                    <td>Semua huruf kecil, kata dipisah <strong>underscore</strong> _</td>
+                </tr>
+                <tr>
+                    <td><strong>kebab-case</strong></td>
+                    <td><code>book-list</code>, <code>user-profile</code></td>
+                    <td>Semua huruf kecil, kata dipisah <strong>tanda minus</strong> -</td>
+                </tr>
+            </table>
+
+            <div class="alert alert-info">
+                <span class="alert-icon">💡</span>
+                <div>
+                    <h4>Cara Menghafal</h4>
+                    <ul style="margin:0;">
+                        <li><strong>PascalCase</strong> = untuk nama Class (PHP)</li>
+                        <li><strong>camelCase</strong> = untuk nama variable dan method di PHP</li>
+                        <li><strong>snake_case</strong> = untuk database (kolom, tabel), nama file migration</li>
+                        <li><strong>kebab-case</strong> = untuk URL dan nama Livewire di Blade</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- ==================== -->
+
+            <h2>🏛️ Konvensi Lengkap Laravel</h2>
+
+            <h3>1. Model Eloquent</h3>
+
+            <table class="comparison-table">
+                <tr>
+                    <th>Yang Dibuat</th>
+                    <th>Format</th>
+                    <th>Contoh</th>
+                </tr>
+                <tr>
+                    <td>Nama Class Model</td>
+                    <td>PascalCase, <strong>Singular</strong></td>
+                    <td><code>Book</code>, <code>User</code>, <code>BookCategory</code></td>
+                </tr>
+                <tr>
+                    <td>Nama File Model</td>
+                    <td>PascalCase + <code>.php</code></td>
+                    <td><code>Book.php</code>, <code>BookCategory.php</code></td>
+                </tr>
+                <tr>
+                    <td>Nama Tabel Database (otomatis)</td>
+                    <td>snake_case, <strong>Plural</strong></td>
+                    <td><code>books</code>, <code>users</code>, <code>book_categories</code></td>
+                </tr>
+            </table>
+
+            <div class="alert alert-warning">
+                <span class="alert-icon">🔁</span>
+                <div>
+                    <h4>Hubungan Otomatis: Model ↔ Tabel</h4>
+                    <p>Laravel secara otomatis mengubah nama Model ke nama tabel. Kamu <strong>tidak perlu</strong>
+                        menulis nama tabel di Model selama mengikuti konvensi.</p>
+                </div>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span class="code-dot"></span></div>
+                    <span class="code-filename">Konversi otomatis Laravel</span>
+                </div>
+                <div class="code-body">
+                    <pre><span style="color:#34D399;">Book</span>         → tabel: <span style="color:#FBBF24;">books</span>
+<span style="color:#34D399;">User</span>         → tabel: <span style="color:#FBBF24;">users</span>
+<span style="color:#34D399;">BookCategory</span> → tabel: <span style="color:#FBBF24;">book_categories</span>
+<span style="color:#34D399;">StockItem</span>   → tabel: <span style="color:#FBBF24;">stock_items</span>
+
+<span style="color:#9CA3AF;">// Kalau tidak ikut konvensi, harus tulis manual di Model:</span>
+<span class="code-keyword">class</span> <span style="color:#34D399;">Buku</span> <span class="code-keyword">extends</span> Model {
+    <span class="code-keyword">protected</span> <span class="code-variable">$table</span> = <span class="code-string">'books'</span>; <span style="color:#9CA3AF;">// ← terpaksa tulis manual</span>
+}</pre>
+                </div>
+            </div>
+
+            <div class="alert alert-warning">
+                <span class="alert-icon">⚠️</span>
+                <div>
+                    <h4>Hindari Nama Model Berbahasa Indonesia</h4>
+                    <p>Model bernama <code>Buku</code> akan mencari tabel <code>bukus</code> (bukan <code>bukus</code>
+                        yang valid). Model bernama <code>Karyawan</code> akan mencari <code>karyawans</code>. Laravel
+                        pluralize dalam bahasa Inggris. <strong>Rekomendasi: gunakan nama bahasa Inggris untuk Model</strong>
+                        (<code>Book</code>, <code>Employee</code>) agar aturan plural bekerja dengan benar.</p>
+                </div>
+            </div>
+
+            <h3>2. Migration</h3>
+
+            <table class="comparison-table">
+                <tr>
+                    <th>Yang Dibuat</th>
+                    <th>Format</th>
+                    <th>Contoh</th>
+                </tr>
+                <tr>
+                    <td>Nama File Migration</td>
+                    <td><code>timestamp_action_table.php</code> (snake_case)</td>
+                    <td><code>2024_01_01_000000_create_books_table.php</code></td>
+                </tr>
+                <tr>
+                    <td>Nama Kolom Tabel</td>
+                    <td>snake_case</td>
+                    <td><code>book_title</code>, <code>published_at</code>, <code>author_id</code></td>
+                </tr>
+                <tr>
+                    <td>Kolom Foreign Key</td>
+                    <td><code>nama_model_id</code> (snake_case)</td>
+                    <td><code>user_id</code>, <code>category_id</code>, <code>book_id</code></td>
+                </tr>
+            </table>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-filename">terminal</span>
+                </div>
+                <div class="code-body">
+                    <pre><span style="color:#9CA3AF;"># Artisan akan beri nama file yang benar secara otomatis</span>
+php artisan make:migration create_books_table
+php artisan make:migration add_cover_to_books_table</pre>
+                </div>
+            </div>
+
+            <h3>3. Controller</h3>
+
+            <table class="comparison-table">
+                <tr>
+                    <th>Yang Dibuat</th>
+                    <th>Format</th>
+                    <th>Contoh</th>
+                </tr>
+                <tr>
+                    <td>Nama Class Controller</td>
+                    <td>PascalCase + <code>Controller</code></td>
+                    <td><code>BookController</code>, <code>UserController</code></td>
+                </tr>
+                <tr>
+                    <td>Nama File</td>
+                    <td>PascalCase + <code>Controller.php</code></td>
+                    <td><code>BookController.php</code></td>
+                </tr>
+                <tr>
+                    <td>Nama Method CRUD</td>
+                    <td>camelCase (ikut konvensi RESTful)</td>
+                    <td><code>index</code>, <code>create</code>, <code>store</code>, <code>show</code>, <code>edit</code>, <code>update</code>, <code>destroy</code></td>
+                </tr>
+            </table>
+
+            <h3>4. View (Blade)</h3>
+
+            <table class="comparison-table">
+                <tr>
+                    <th>Yang Dibuat</th>
+                    <th>Format</th>
+                    <th>Contoh</th>
+                </tr>
+                <tr>
+                    <td>Nama File View</td>
+                    <td>kebab-case atau snake_case + <code>.blade.php</code></td>
+                    <td><code>book-list.blade.php</code>, <code>create-book.blade.php</code></td>
+                </tr>
+                <tr>
+                    <td>Folder View</td>
+                    <td>kebab-case atau snake_case, plural</td>
+                    <td><code>books/</code>, <code>user-profiles/</code></td>
+                </tr>
+                <tr>
+                    <td>Memanggil view di PHP</td>
+                    <td>dot notation untuk folder</td>
+                    <td><code>view('books.book-list')</code></td>
+                </tr>
+            </table>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-filename">app/Http/Controllers/BookController.php</span>
+                </div>
+                <div class="code-body">
+                    <pre><span style="color:#9CA3AF;">// File ada di: resources/views/books/book-list.blade.php</span>
+<span class="code-keyword">return</span> view(<span class="code-string">'books.book-list'</span>); <span style="color:#9CA3AF;">// ← titik = pemisah folder</span></pre>
+                </div>
+            </div>
+
+            <h3>5. Route</h3>
+
+            <table class="comparison-table">
+                <tr>
+                    <th>Yang Dibuat</th>
+                    <th>Format</th>
+                    <th>Contoh</th>
+                </tr>
+                <tr>
+                    <td>URL path</td>
+                    <td>kebab-case, plural untuk resource</td>
+                    <td><code>/books</code>, <code>/book-categories</code>, <code>/user-profiles</code></td>
+                </tr>
+                <tr>
+                    <td>Nama route (<code>->name()</code>)</td>
+                    <td>dot notation + snake_case</td>
+                    <td><code>books.index</code>, <code>books.create</code>, <code>books.store</code></td>
+                </tr>
+            </table>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-filename">routes/web.php</span>
+                </div>
+                <div class="code-body">
+                    <pre>Route::<span class="code-function">get</span>(<span class="code-string">'/books'</span>, [BookController::<span class="code-keyword">class</span>, <span class="code-string">'index'</span>])-&gt;<span class="code-function">name</span>(<span class="code-string">'books.index'</span>);
+Route::<span class="code-function">get</span>(<span class="code-string">'/books/create'</span>, [BookController::<span class="code-keyword">class</span>, <span class="code-string">'create'</span>])-&gt;<span class="code-function">name</span>(<span class="code-string">'books.create'</span>);
+
+<span style="color:#9CA3AF;">// Cara akses nama route di Blade:</span>
+<span class="code-tag">&lt;a</span> <span class="code-attr">href</span>=<span class="code-string">"{{ route('books.index') }}"</span><span class="code-tag">&gt;</span>Daftar Buku<span class="code-tag">&lt;/a&gt;</span></pre>
+                </div>
+            </div>
+
+            <!-- ==================== LIVEWIRE ==================== -->
+
+            <h2>⚡ Konvensi Khusus Livewire</h2>
+
+            <p>Livewire punya konvensi sendiri. Ini yang paling sering bikin bingung karena satu component punya
+                <strong>3 nama berbeda</strong> untuk 3 tujuan berbeda.</p>
+
+            <table class="comparison-table">
+                <tr>
+                    <th>Konteks</th>
+                    <th>Format</th>
+                    <th>Contoh untuk component "BookList"</th>
+                </tr>
+                <tr>
+                    <td>Nama Class PHP</td>
+                    <td>PascalCase</td>
+                    <td><code>BookList</code></td>
+                </tr>
+                <tr>
+                    <td>Nama File PHP</td>
+                    <td>PascalCase + <code>.php</code></td>
+                    <td><code>app/Livewire/BookList.php</code></td>
+                </tr>
+                <tr>
+                    <td>Nama File Blade</td>
+                    <td>kebab-case + <code>.blade.php</code></td>
+                    <td><code>resources/views/livewire/book-list.blade.php</code></td>
+                </tr>
+                <tr>
+                    <td>Tag di Blade (dipanggil)</td>
+                    <td><code>&lt;livewire:kebab-case /&gt;</code></td>
+                    <td><code>&lt;livewire:book-list /&gt;</code></td>
+                </tr>
+            </table>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span class="code-dot"></span></div>
+                    <span class="code-filename">terminal — buat Livewire component</span>
+                </div>
+                <div class="code-body">
+                    <pre>php artisan make:livewire BookList</pre>
+                </div>
+            </div>
+
+            <p>Perintah di atas otomatis membuat <strong>2 file</strong>:</p>
+
+            <div class="code-block">
+                <div class="code-body">
+                    <pre><span style="color:#34D399;">app/Livewire/BookList.php</span>              ← class PHP (PascalCase)
+<span style="color:#34D399;">resources/views/livewire/book-list.blade.php</span>  ← view Blade (kebab-case)</pre>
+                </div>
+            </div>
+
+            <div class="alert alert-warning">
+                <span class="alert-icon">🚨</span>
+                <div>
+                    <h4>Jangan Buat File Manual!</h4>
+                    <p>Selalu gunakan <code>php artisan make:livewire NamaComponent</code>. Kalau buat file manual,
+                        sangat mudah salah nama. Artisan yang tahu persis format yang benar untuk kedua file sekaligus.</p>
+                </div>
+            </div>
+
+            <h3>Konvensi Nama Livewire Untuk Kasus Nested</h3>
+
+            <div class="code-block">
+                <div class="code-body">
+                    <pre>php artisan make:livewire Admin/BookManager</pre>
+                </div>
+            </div>
+            <div class="code-block">
+                <div class="code-body">
+                    <pre><span style="color:#34D399;">app/Livewire/Admin/BookManager.php</span>
+<span style="color:#34D399;">resources/views/livewire/admin/book-manager.blade.php</span>
+
+<span style="color:#9CA3AF;">// Dipanggil di Blade dengan:</span>
+<span class="code-tag">&lt;livewire:admin.book-manager /&gt;</span>   <span style="color:#9CA3AF;">← titik untuk subfolder</span></pre>
+                </div>
+            </div>
+
+            <!-- ==================== PROPERTY & METHOD ==================== -->
+
+            <h2>🔧 Konvensi Property & Method di PHP</h2>
+
+            <table class="comparison-table">
+                <tr>
+                    <th>Yang Dibuat</th>
+                    <th>Format</th>
+                    <th>Contoh</th>
+                </tr>
+                <tr>
+                    <td>Nama property (variabel di class)</td>
+                    <td>camelCase</td>
+                    <td><code>$bookTitle</code>, <code>$isModalOpen</code>, <code>$selectedId</code></td>
+                </tr>
+                <tr>
+                    <td>Nama method</td>
+                    <td>camelCase</td>
+                    <td><code>saveBook()</code>, <code>openModal()</code>, <code>deleteItem()</code></td>
+                </tr>
+                <tr>
+                    <td>Nama konstanta</td>
+                    <td>SCREAMING_SNAKE_CASE</td>
+                    <td><code>MAX_UPLOAD_SIZE</code>, <code>DEFAULT_ROLE</code></td>
+                </tr>
+            </table>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-filename">app/Livewire/BookForm.php</span>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-keyword">class</span> <span style="color:#34D399;">BookForm</span> <span class="code-keyword">extends</span> Component   <span style="color:#9CA3AF;">← PascalCase (nama class)</span>
+{
+    <span class="code-keyword">public</span> <span class="code-variable">$bookTitle</span> = <span class="code-string">''</span>;       <span style="color:#9CA3AF;">← camelCase (property)</span>
+    <span class="code-keyword">public</span> <span class="code-variable">$authorName</span> = <span class="code-string">''</span>;
+    <span class="code-keyword">public</span> <span class="code-variable">$isModalOpen</span> = <span class="code-keyword">false</span>;
+
+    <span class="code-keyword">public function</span> <span style="color:#60A5FA;">saveBook</span>()    <span style="color:#9CA3AF;">← camelCase (method)</span>
+    {
+        Book::create([
+            <span class="code-string">'book_title'</span> =&gt; <span class="code-variable">$this</span>-&gt;bookTitle,  <span style="color:#9CA3AF;">← snake_case (kolom DB)</span>
+            <span class="code-string">'author_name'</span> =&gt; <span class="code-variable">$this</span>-&gt;authorName,
+        ]);
+    }
+}</pre>
+                </div>
+            </div>
+
+            <!-- ==================== TABEL RINGKASAN ==================== -->
+
+            <h2>📋 Tabel Ringkasan Lengkap</h2>
+
+            <p>Cetak atau simpan tabel ini — ini adalah referensi cepat yang akan sering kamu lihat:</p>
+
+            <table class="comparison-table">
+                <tr>
+                    <th>Komponen Laravel</th>
+                    <th>Format Nama</th>
+                    <th>Contoh</th>
+                </tr>
+                <tr>
+                    <td>Model class</td>
+                    <td>PascalCase, Singular</td>
+                    <td><code>Book</code>, <code>UserProfile</code></td>
+                </tr>
+                <tr>
+                    <td>Tabel database (otomatis)</td>
+                    <td>snake_case, Plural</td>
+                    <td><code>books</code>, <code>user_profiles</code></td>
+                </tr>
+                <tr>
+                    <td>Kolom database</td>
+                    <td>snake_case</td>
+                    <td><code>book_title</code>, <code>created_at</code></td>
+                </tr>
+                <tr>
+                    <td>Foreign key</td>
+                    <td>snake_case + <code>_id</code></td>
+                    <td><code>user_id</code>, <code>category_id</code></td>
+                </tr>
+                <tr>
+                    <td>Controller class</td>
+                    <td>PascalCase + <code>Controller</code></td>
+                    <td><code>BookController</code></td>
+                </tr>
+                <tr>
+                    <td>Livewire class</td>
+                    <td>PascalCase</td>
+                    <td><code>BookList</code>, <code>CreateBook</code></td>
+                </tr>
+                <tr>
+                    <td>Livewire blade file</td>
+                    <td>kebab-case</td>
+                    <td><code>book-list.blade.php</code></td>
+                </tr>
+                <tr>
+                    <td>Livewire tag di Blade</td>
+                    <td><code>&lt;livewire:kebab-case /&gt;</code></td>
+                    <td><code>&lt;livewire:book-list /&gt;</code></td>
+                </tr>
+                <tr>
+                    <td>View file</td>
+                    <td>kebab-case + <code>.blade.php</code></td>
+                    <td><code>book-list.blade.php</code></td>
+                </tr>
+                <tr>
+                    <td>URL path</td>
+                    <td>kebab-case, Plural</td>
+                    <td><code>/books</code>, <code>/book-categories</code></td>
+                </tr>
+                <tr>
+                    <td>Nama route</td>
+                    <td>dot notation</td>
+                    <td><code>books.index</code>, <code>books.store</code></td>
+                </tr>
+                <tr>
+                    <td>Property class (PHP)</td>
+                    <td>camelCase</td>
+                    <td><code>$bookTitle</code>, <code>$isOpen</code></td>
+                </tr>
+                <tr>
+                    <td>Method class (PHP)</td>
+                    <td>camelCase</td>
+                    <td><code>saveBook()</code>, <code>deleteItem()</code></td>
+                </tr>
+                <tr>
+                    <td>wire:model binding</td>
+                    <td>camelCase (cocok dengan property)</td>
+                    <td><code>wire:model="bookTitle"</code></td>
+                </tr>
+            </table>
+
+            <!-- ==================== KESALAHAN UMUM ==================== -->
+
+            <h2>🐛 Kesalahan Penamaan yang Sering Terjadi</h2>
+
+            <div class="common-mistakes">
+                <div class="mistake-item">
+                    <div class="mistake-wrong">
+                        <span class="mistake-label">❌ Salah</span>
+                        <code>Model: Buku → Laravel cari tabel "bukus"</code>
+                    </div>
+                    <div class="mistake-right">
+                        <span class="mistake-label">✅ Benar</span>
+                        <code>Model: Book → Laravel cari tabel "books"</code>
+                    </div>
+                </div>
+                <div class="mistake-item">
+                    <div class="mistake-wrong">
+                        <span class="mistake-label">❌ Salah</span>
+                        <code>Livewire class: bookList → tidak valid (bukan PascalCase)</code>
+                    </div>
+                    <div class="mistake-right">
+                        <span class="mistake-label">✅ Benar</span>
+                        <code>Livewire class: BookList → valid</code>
+                    </div>
+                </div>
+                <div class="mistake-item">
+                    <div class="mistake-wrong">
+                        <span class="mistake-label">❌ Salah</span>
+                        <code>&lt;livewire:BookList /&gt; → tidak bekerja</code>
+                    </div>
+                    <div class="mistake-right">
+                        <span class="mistake-label">✅ Benar</span>
+                        <code>&lt;livewire:book-list /&gt; → bekerja</code>
+                    </div>
+                </div>
+                <div class="mistake-item">
+                    <div class="mistake-wrong">
+                        <span class="mistake-label">❌ Salah</span>
+                        <code>Kolom DB: bookTitle → tidak sesuai konvensi</code>
+                    </div>
+                    <div class="mistake-right">
+                        <span class="mistake-label">✅ Benar</span>
+                        <code>Kolom DB: book_title → snake_case</code>
+                    </div>
+                </div>
+                <div class="mistake-item">
+                    <div class="mistake-wrong">
+                        <span class="mistake-label">❌ Salah</span>
+                        <code>wire:model="book_title" (snake) tapi property $bookTitle (camel)</code>
+                    </div>
+                    <div class="mistake-right">
+                        <span class="mistake-label">✅ Benar</span>
+                        <code>wire:model="bookTitle" cocok dengan $bookTitle</code>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== LATIHAN ==================== -->
+
+            <h2>🎯 Latihan: Tebak Nama yang Benar</h2>
+
+            <div class="exercise-section">
+                <div class="exercise-level basic">
+                    <h4>🟢 Latihan 1 — Model ke Tabel</h4>
+                    <p>Laravel akan mencari tabel apa untuk Model-Model berikut?</p>
+                    <ol>
+                        <li>Model <code>Employee</code></li>
+                        <li>Model <code>BookCategory</code></li>
+                        <li>Model <code>SalarySlip</code></li>
+                    </ol>
+                    <details class="answer-box">
+                        <summary>💡 Lihat Kunci Jawaban</summary>
+                        <ol>
+                            <li><code>Employee</code> → tabel <strong><code>employees</code></strong></li>
+                            <li><code>BookCategory</code> → tabel <strong><code>book_categories</code></strong> (PascalCase → snake_case + plural)</li>
+                            <li><code>SalarySlip</code> → tabel <strong><code>salary_slips</code></strong></li>
+                        </ol>
+                    </details>
+                </div>
+
+                <div class="exercise-level intermediate">
+                    <h4>🟡 Latihan 2 — Livewire Naming</h4>
+                    <p>Kamu menjalankan perintah: <code>php artisan make:livewire EmployeeTable</code></p>
+                    <p>Sebutkan:</p>
+                    <ol>
+                        <li>Path file PHP yang dibuat</li>
+                        <li>Path file Blade yang dibuat</li>
+                        <li>Tag yang dipakai untuk memanggilnya di Blade</li>
+                    </ol>
+                    <details class="answer-box">
+                        <summary>💡 Lihat Kunci Jawaban</summary>
+                        <ol>
+                            <li><code>app/Livewire/<strong>EmployeeTable.php</strong></code></li>
+                            <li><code>resources/views/livewire/<strong>employee-table.blade.php</strong></code></li>
+                            <li><code>&lt;livewire:<strong>employee-table</strong> /&gt;</code></li>
+                        </ol>
+                    </details>
+                </div>
+
+                <div class="exercise-level challenge">
+                    <h4>🟣 Latihan 3 — Temukan Kesalahan</h4>
+                    <p>Kode berikut punya 4 kesalahan konvensi. Temukan semuanya!</p>
+                    <div class="code-block">
+                        <div class="code-body">
+                            <pre><span style="color:#9CA3AF;">// Migration</span>
+Schema::create(<span class="code-string">'Book'</span>, function (Blueprint $table) {      <span style="color:#F87171;">← ??</span>
+    $table->string(<span class="code-string">'bookTitle'</span>);                           <span style="color:#F87171;">← ??</span>
+});
+
+<span style="color:#9CA3AF;">// Livewire Blade</span>
+<span class="code-tag">&lt;livewire:BookList /&gt;</span>                                  <span style="color:#F87171;">← ??</span>
+
+<span style="color:#9CA3AF;">// wire:model</span>
+<span class="code-tag">&lt;input</span> <span class="code-attr">wire:model</span>=<span class="code-string">"book_title"</span><span class="code-tag">&gt;</span>  <span style="color:#9CA3AF;">// property: $bookTitle</span>  <span style="color:#F87171;">← ??</span></pre>
+                        </div>
+                    </div>
+                    <details class="answer-box">
+                        <summary>💡 Lihat Kunci Jawaban</summary>
+                        <ol>
+                            <li><code>'Book'</code> → seharusnya <code>'books'</code> (nama tabel: snake_case, plural)</li>
+                            <li><code>'bookTitle'</code> → seharusnya <code>'book_title'</code> (nama kolom: snake_case)</li>
+                            <li><code>&lt;livewire:BookList /&gt;</code> → seharusnya <code>&lt;livewire:book-list /&gt;</code> (tag Livewire: kebab-case)</li>
+                            <li><code>wire:model="book_title"</code> → seharusnya <code>wire:model="bookTitle"</code> (harus cocok dengan nama property di class yang pakai camelCase)</li>
+                        </ol>
+                    </details>
+                </div>
+            </div>
+
+            <!-- ==================== RANGKUMAN ==================== -->
+
+            <h2>📝 Rangkuman</h2>
+
+            <div class="summary-box">
+                <ul>
+                    <li>Laravel bekerja "magic" karena bergantung pada konvensi — ikuti atau fitur tidak akan jalan otomatis.</li>
+                    <li>Model <strong>PascalCase Singular</strong> → tabel <strong>snake_case Plural</strong> (otomatis).</li>
+                    <li>Hindari nama Model bahasa Indonesia — plural-nya tidak bisa ditebak oleh Laravel.</li>
+                    <li>Livewire punya <strong>3 nama</strong>: class (<code>BookList</code>), file blade (<code>book-list.blade.php</code>), tag (<code>&lt;livewire:book-list /&gt;</code>).</li>
+                    <li>Kolom database → <strong>snake_case</strong>. Property PHP → <strong>camelCase</strong>. Keduanya harus konsisten di <code>wire:model</code>.</li>
+                    <li>Pakai <code>php artisan make:livewire</code> — jangan buat file manual.</li>
+                </ul>
+            </div>
+
+            <!-- ==================== NAVIGASI ==================== -->
+
+            <div class="content-nav">
+                <a href="instalasi-laravel.html" class="nav-btn">
+                    <div>
+                        <div class="nav-btn-label">Sebelumnya</div>
+                        <div class="nav-btn-title">← Instalasi Laravel</div>
+                    </div>
+                </a>
+                <a href="blade-template.html" class="nav-btn">
+                    <div>
+                        <div class="nav-btn-label">Selanjutnya</div>
+                        <div class="nav-btn-title">Blade Template →</div>
+                    </div>
+                </a>
+            </div>
+        </main>
+    </div>
+
+    <button class="sidebar-toggle-mobile"
+        onclick="document.querySelector('.sidebar').classList.toggle('active')">📚</button>
+    <script src="../../js/app.js"></script>
+</body>
+
+</html>

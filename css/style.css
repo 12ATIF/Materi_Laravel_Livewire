@@ -700,6 +700,68 @@ a:hover {
   gap: 0.5rem;
 }
 
+/* Version Banner */
+.version-banner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 1.5rem 0 2rem;
+  padding: 0.875rem 1.25rem;
+  background: linear-gradient(
+    135deg,
+    rgba(59, 130, 246, 0.08) 0%,
+    rgba(16, 185, 129, 0.08) 100%
+  );
+  border: 1px solid rgba(59, 130, 246, 0.25);
+  border-left: 4px solid #3b82f6;
+  border-radius: 10px;
+  font-size: 0.875rem;
+  color: #1f2937;
+}
+
+.version-banner .vb-icon {
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.version-banner .vb-label {
+  font-weight: 600;
+  color: #1e40af;
+  margin-right: 0.25rem;
+}
+
+.version-banner .vb-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.2rem 0.6rem;
+  background: #fff;
+  border: 1px solid #d1d5db;
+  border-radius: 999px;
+  font-family: "Fira Code", monospace;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.version-banner .vb-note {
+  flex-basis: 100%;
+  margin-top: 0.25rem;
+  font-size: 0.78rem;
+  color: #6b7280;
+}
+
+@media (max-width: 600px) {
+  .version-banner {
+    padding: 0.75rem 1rem;
+    gap: 0.5rem;
+  }
+  .version-banner .vb-tag {
+    font-size: 0.72rem;
+  }
+}
+
 /* Learning Objectives */
 .objectives {
   background: linear-gradient(
@@ -1720,6 +1782,68 @@ a:hover {
 
 .exercise-level.challenge h4 {
   color: #7c3aed;
+}
+
+/* Answer Box (details/summary toggle) */
+.answer-box {
+  margin-top: 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.answer-box summary {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1rem;
+  background: #f9fafb;
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: #374151;
+  cursor: pointer;
+  user-select: none;
+  list-style: none;
+  border-radius: 8px;
+  transition: background 0.15s;
+}
+
+.answer-box summary::-webkit-details-marker {
+  display: none;
+}
+
+.answer-box summary::before {
+  content: "▶";
+  font-size: 0.65rem;
+  color: #6b7280;
+  transition: transform 0.2s;
+}
+
+.answer-box[open] summary {
+  border-radius: 8px 8px 0 0;
+  background: #eff6ff;
+  color: #1d4ed8;
+  border-bottom: 1px solid #d1d5db;
+}
+
+.answer-box[open] summary::before {
+  transform: rotate(90deg);
+  color: #1d4ed8;
+}
+
+.answer-box summary:hover {
+  background: #eff6ff;
+}
+
+.answer-box > *:not(summary) {
+  padding: 1rem 1.25rem;
+  background: #fff;
+  font-size: 0.9rem;
+}
+
+.answer-box > ol,
+.answer-box > ul {
+  padding-left: 2.25rem;
 }
 
 /* Common Mistakes */

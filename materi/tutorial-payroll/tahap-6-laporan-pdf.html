@@ -160,113 +160,21 @@ composer require barryvdh/laravel-dompdf</pre>
                 </div>
             </div>
 
-            <h2>🧾 2. Komponen Riwayat (Histori) Penggajian</h2>
-            <p>Seusai meng-input form di materi tahap 4, perusahaan pasti butuh halaman daftar riwayat Slip. Mari kita buat komponen kilat untuk <strong>Tabel Histori Gaji</strong>.</p>
-            
-            <div class="code-block">
-                <div class="code-header">
-                    <span class="code-filename">Terminal</span>
-                    <button class="code-copy">Salin</button>
-                </div>
-                <div class="code-body">
-                    <pre><span class="code-comment"># Bikin Komponen Baru</span>
-php artisan make:livewire PayrollHistory</pre>
-                </div>
-            </div>
-
-            <div class="code-block">
-                <div class="code-header">
-                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span class="code-dot"></span></div>
-                    <span class="code-filename">app/Livewire/PayrollHistory.php</span>
-                    <button class="code-copy">Salin</button>
-                </div>
-                <div class="code-body">
-                    <pre><span class="code-keyword">namespace</span> App\Livewire;
-
-<span class="code-keyword">use</span> Livewire\Component;
-<span class="code-keyword">use</span> Livewire\WithPagination;
-<span class="code-keyword">use</span> App\Models\Payroll;
-
-<span class="code-keyword">class</span> <span class="code-class">PayrollHistory</span> <span class="code-keyword">extends</span> Component
-{
-    <span class="code-keyword">use</span> WithPagination;
-
-    <span class="code-keyword">public function</span> <span class="code-function">render</span>()
-    {
-        <span class="code-keyword">return</span> view(<span class="code-string">'livewire.payroll-history'</span>, [
-            <span class="code-string">'payrolls'</span> => Payroll::with(<span class="code-string">'employee'</span>)->orderBy(<span class="code-string">'created_at'</span>, <span class="code-string">'desc'</span>)->paginate(<span class="code-number">10</span>),
-        ])-&gt;layout(<span class="code-string">'layouts.app'</span>); <span class="code-comment">// ← wajib! tanpa ini halaman tampil tanpa navbar</span>
-    }
-}</pre>
+            <div class="alert alert-tip">
+                <span class="alert-icon">✅</span>
+                <div>
+                    <h4>Komponen <code>PayrollHistory</code> sudah dibuat di Tahap 5!</h4>
+                    <p>Kamu tidak perlu membuat ulang. Di Tahap 5, kita sudah membuat komponen <code>app/Livewire/PayrollHistory.php</code> beserta view <code>payroll-history.blade.php</code> dengan fitur filter periode dan pagination.</p>
+                    <p style="margin-top:0.5rem;">Yang perlu dilakukan di Tahap 6 ini <strong>hanya 2 hal</strong>:</p>
+                    <ol style="margin:0.5rem 0 0;">
+                        <li>Install DOMPDF (sudah dilakukan di Section 1 atas)</li>
+                        <li>Buat file <code>resources/views/pdf/slip-gaji.blade.php</code> + tambahkan route cetak ke <code>routes/web.php</code></li>
+                    </ol>
+                    <p style="margin-top:0.5rem;">Setelah route <code>payroll.cetak</code> terdefinisi, tombol "🖨️ Cetak PDF" di halaman Riwayat Gaji akan otomatis muncul!</p>
                 </div>
             </div>
 
-            <p>Sekarang buat tampilan lengkap tabel riwayat gajinya. Ini adalah view <strong>penuh</strong> yang langsung bisa dipakai:</p>
-
-            <div class="code-block">
-                <div class="code-header">
-                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span class="code-dot"></span></div>
-                    <span class="code-filename">resources/views/livewire/payroll-history.blade.php</span>
-                    <button class="code-copy">Salin</button>
-                </div>
-                <div class="code-body">
-                    <pre><span class="code-tag">&lt;div class="max-w-7xl mx-auto py-8 px-4"&gt;</span>
-
-    <span class="code-tag">&lt;h2 class="text-xl font-bold text-gray-800 mb-6"&gt;</span>🧾 Riwayat Slip Gaji<span class="code-tag">&lt;/h2&gt;</span>
-
-    <span class="code-tag">&lt;div class="bg-white rounded-lg shadow border border-gray-100 overflow-x-auto"&gt;</span>
-        <span class="code-tag">&lt;table class="min-w-full divide-y divide-gray-200 text-sm"&gt;</span>
-            <span class="code-tag">&lt;thead&gt;</span>
-                <span class="code-tag">&lt;tr class="bg-gray-50 text-left"&gt;</span>
-                    <span class="code-tag">&lt;th class="px-4 py-3 text-gray-500 font-medium"&gt;</span>Karyawan<span class="code-tag">&lt;/th&gt;</span>
-                    <span class="code-tag">&lt;th class="px-4 py-3 text-gray-500 font-medium"&gt;</span>Periode<span class="code-tag">&lt;/th&gt;</span>
-                    <span class="code-tag">&lt;th class="px-4 py-3 text-gray-500 font-medium"&gt;</span>Gaji Pokok<span class="code-tag">&lt;/th&gt;</span>
-                    <span class="code-tag">&lt;th class="px-4 py-3 text-gray-500 font-medium"&gt;</span>Tunjangan<span class="code-tag">&lt;/th&gt;</span>
-                    <span class="code-tag">&lt;th class="px-4 py-3 text-gray-500 font-medium"&gt;</span>Potongan<span class="code-tag">&lt;/th&gt;</span>
-                    <span class="code-tag">&lt;th class="px-4 py-3 text-gray-500 font-medium"&gt;</span>THP<span class="code-tag">&lt;/th&gt;</span>
-                    <span class="code-tag">&lt;th class="px-4 py-3 text-gray-500 font-medium"&gt;</span>Aksi<span class="code-tag">&lt;/th&gt;</span>
-                <span class="code-tag">&lt;/tr&gt;</span>
-            <span class="code-tag">&lt;/thead&gt;</span>
-            <span class="code-tag">&lt;tbody class="divide-y divide-gray-200"&gt;</span>
-
-                <span class="code-keyword">@forelse</span>($payrolls <span class="code-keyword">as</span> $item)
-                    <span class="code-tag">&lt;tr class="hover:bg-gray-50"&gt;</span>
-                        <span class="code-tag">&lt;td class="px-4 py-3 font-semibold"&gt;</span>
-                            {{ $item-&gt;employee-&gt;name }}<span class="code-tag">&lt;br&gt;</span>
-                            <span class="code-tag">&lt;span class="text-xs text-gray-400"&gt;</span>{{ $item-&gt;employee-&gt;nik }}<span class="code-tag">&lt;/span&gt;</span>
-                        <span class="code-tag">&lt;/td&gt;</span>
-                        <span class="code-tag">&lt;td class="px-4 py-3"&gt;</span>{{ $item-&gt;month_year }}<span class="code-tag">&lt;/td&gt;</span>
-                        <span class="code-tag">&lt;td class="px-4 py-3"&gt;</span>Rp {{ number_format($item-&gt;basic_salary, 0, <span class="code-string">','</span>, <span class="code-string">'.'</span>) }}<span class="code-tag">&lt;/td&gt;</span>
-                        <span class="code-tag">&lt;td class="px-4 py-3 text-green-600"&gt;</span>+Rp {{ number_format($item-&gt;allowance, 0, <span class="code-string">','</span>, <span class="code-string">'.'</span>) }}<span class="code-tag">&lt;/td&gt;</span>
-                        <span class="code-tag">&lt;td class="px-4 py-3 text-red-500"&gt;</span>-Rp {{ number_format($item-&gt;deduction, 0, <span class="code-string">','</span>, <span class="code-string">'.'</span>) }}<span class="code-tag">&lt;/td&gt;</span>
-                        <span class="code-tag">&lt;td class="px-4 py-3 font-bold text-blue-600"&gt;</span>Rp {{ number_format($item-&gt;net_salary, 0, <span class="code-string">','</span>, <span class="code-string">'.'</span>) }}<span class="code-tag">&lt;/td&gt;</span>
-                        <span class="code-tag">&lt;td class="px-4 py-3"&gt;</span>
-                            <span class="code-tag">&lt;a href="{{ route('payroll.cetak', $item-&gt;id) }}" target="_blank"</span>
-                               <span class="code-attr">class</span>=<span class="code-string">"text-blue-500 hover:underline text-sm"</span><span class="code-tag">&gt;</span>🖨️ Cetak PDF<span class="code-tag">&lt;/a&gt;</span>
-                        <span class="code-tag">&lt;/td&gt;</span>
-                    <span class="code-tag">&lt;/tr&gt;</span>
-                <span class="code-keyword">@empty</span>
-                    <span class="code-tag">&lt;tr&gt;</span>
-                        <span class="code-tag">&lt;td colspan="7" class="px-4 py-8 text-center text-gray-400"&gt;</span>
-                            Belum ada data penggajian.
-                        <span class="code-tag">&lt;/td&gt;</span>
-                    <span class="code-tag">&lt;/tr&gt;</span>
-                <span class="code-keyword">@endforelse</span>
-
-            <span class="code-tag">&lt;/tbody&gt;</span>
-        <span class="code-tag">&lt;/table&gt;</span>
-    <span class="code-tag">&lt;/div&gt;</span>
-
-    <span class="code-comment">&lt;!-- Pagination otomatis dari WithPagination --&gt;</span>
-    <span class="code-tag">&lt;div class="mt-4"&gt;</span>
-        {{ $payrolls-&gt;links() }}
-    <span class="code-tag">&lt;/div&gt;</span>
-
-<span class="code-tag">&lt;/div&gt;</span></pre>
-                </div>
-            </div>
-
-            <h2>🖨️ 3. Mendesain Layout Kertas PDF</h2>
+            <h2>🖨️ 2. Mendesain Layout Kertas PDF</h2>
             <div class="alert alert-warning" style="margin-top: 1rem;">
                 <h3>⚠️ Perhatian! PDF tidak suka Tailwind Modern!</h3>
                 <p>Engine `dompdf` adalah konverter berbasis HTML4 dan CSS lama konvensional. Ia <strong>AKAN BERANTAKAN</strong> jika dipaksa menelan class buatan modern seperti `flex`, `grid`, dsb dari Tailwind. Oleh sebab itu kita harus menggunakan <strong>CSS Table Kuno (Vanilla HTML & Inline CSS)</strong> untuk menjamin presisi posisi garis dan teks di dalam PDF.</p>
@@ -347,34 +255,43 @@ php artisan make:livewire PayrollHistory</pre>
                 </div>
             </div>
 
-            <h2>🔗 4. Mendaftarkan Route Mesin Pembuat PDF</h2>
-            <p>Terakhir, hubungkan semuanya ke dalam alur router agar *Request* dari tombol Cetak tadi diterjemahkan oleh DOMPDF.</p>
-            <p>Buka <code>routes/web.php</code> dan tambahkan baris berikut:</p>
+            <h2>🔗 3. Daftarkan Route Cetak PDF ke <code>routes/web.php</code></h2>
+
+            <div class="alert alert-warning">
+                <span class="alert-icon">⚠️</span>
+                <div>
+                    <h4>Ini TAMBAHAN ke web.php yang sudah ada dari Tahap 5 — bukan file baru!</h4>
+                    <p>Buka <code>routes/web.php</code> yang sudah kita isi di Tahap 5. Tambahkan 2 baris <code>use</code> di paling atas file, dan 1 route cetak di dalam <code>Route::middleware('auth')->group()</code> yang sudah ada. <strong>Jangan timpa seluruh file!</strong></p>
+                </div>
+            </div>
 
             <div class="code-block">
                 <div class="code-header">
                     <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span class="code-dot"></span></div>
-                    <span class="code-filename">routes/web.php</span>
+                    <span class="code-filename">routes/web.php — tambahkan use + 1 route di dalam group auth</span>
                     <button class="code-copy">Salin</button>
                 </div>
                 <div class="code-body">
-                    <pre><span class="code-comment">// Sisipkan class PDF</span>
-<span class="code-keyword">use</span> Barryvdh\DomPDF\Facade\Pdf;
+                    <pre><span class="code-comment">// Tambahkan 2 baris ini di bagian atas file (setelah use yang sudah ada)</span>
 <span class="code-keyword">use</span> App\Models\Payroll;
+<span class="code-keyword">use</span> Barryvdh\DomPDF\Facade\Pdf;
 
-<span class="code-comment">// ... rute lain milikmu ...</span>
+<span class="code-comment">// ... (semua route dari Tahap 5 tetap ada) ...</span>
 
-<span class="code-comment">// Rute untuk mencetak Slip Gaji spesifik</span>
+<span class="code-comment">// Tambahkan route ini DI DALAM Route::middleware('auth')->group(function () { ...</span>
 Route::get(<span class="code-string">'/cetak-slip/{id}'</span>, <span class="code-keyword">function</span> (<span class="code-variable">$id</span>) {
-    <span class="code-comment">// 1. Cari data payroll bersangkutan</span>
     <span class="code-variable">$payroll</span> = Payroll::with(<span class="code-string">'employee'</span>)->findOrFail(<span class="code-variable">$id</span>);
-
-    <span class="code-comment">// 2. Ambil HTML Blade tadi (slip-gaji.blade.php) lalu lemparkan Datanya</span>
     <span class="code-variable">$pdf</span> = Pdf::loadView(<span class="code-string">'pdf.slip-gaji'</span>, [<span class="code-string">'data'</span> => <span class="code-variable">$payroll</span>]);
-
-    <span class="code-comment">// 3. Download atau tampilkan PDF secara langsung pada Tab baru di-browser (.stream)</span>
     <span class="code-keyword">return</span> <span class="code-variable">$pdf</span>->stream(<span class="code-string">'Slip_Gaji_'</span> . <span class="code-variable">$payroll</span>->employee->nik . <span class="code-string">'.pdf'</span>);
-})-&gt;middleware([<span class="code-string">'auth'</span>]); <span class="code-comment">// Pastikan rute dilindungi wajib login!</span></pre>
+})-&gt;name(<span class="code-string">'payroll.cetak'</span>); <span class="code-comment">// ← name() WAJIB ada! blade memanggil route('payroll.cetak', id)</span></pre>
+                </div>
+            </div>
+
+            <div class="alert alert-tip">
+                <span class="alert-icon">🔗</span>
+                <div>
+                    <h4>Kenapa <code>->name('payroll.cetak')</code> tidak boleh dihilangkan?</h4>
+                    <p>File <code>payroll-history.blade.php</code> (Tahap 5) memanggil <code>route('payroll.cetak', $p->id)</code> untuk membangun URL tombol Cetak. Tanpa nama route ini, Laravel akan throw <em>RouteNotFoundException</em> dan seluruh halaman Riwayat Gaji crash.</p>
                 </div>
             </div>
 

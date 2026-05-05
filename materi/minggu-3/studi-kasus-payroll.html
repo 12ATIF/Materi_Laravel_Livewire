@@ -80,6 +80,31 @@
     <div class="content-layout">
         <aside class="sidebar">
             <div class="sidebar-section">
+                <div class="sidebar-title">📗 Minggu 1</div>
+                <ul class="sidebar-nav">
+                    <li><a href="../minggu-1/pengenalan-laravel.html">Pengenalan Laravel</a></li>
+                    <li><a href="../minggu-1/mvc-sederhana.html">MVC Sederhana</a></li>
+                    <li><a href="../minggu-1/instalasi-laravel.html">Instalasi Laravel</a></li>
+                    <li><a href="../minggu-1/konvensi-penamaan.html">📏 Konvensi Penamaan</a></li>
+                    <li><a href="../minggu-1/blade-template.html">Blade Template</a></li>
+                    <li><a href="../minggu-1/pengenalan-livewire.html">Pengenalan Livewire</a></li>
+                    <li><a href="../minggu-1/struktur-component.html">Struktur Component</a></li>
+                    <li><a href="../minggu-1/cara-membaca-error.html">🐛 Cara Membaca Error</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-title">📘 Minggu 2</div>
+                <ul class="sidebar-nav">
+                    <li><a href="../minggu-2/wire-model.html">wire:model</a></li>
+                    <li><a href="../minggu-2/wire-click.html">wire:click</a></li>
+                    <li><a href="../minggu-2/database-eloquent.html">Database & Eloquent</a></li>
+                    <li><a href="../minggu-2/validasi.html">Validasi</a></li>
+                    <li><a href="../minggu-2/crud-sederhana.html">CRUD Sederhana</a></li>
+                    <li><a href="../minggu-2/autentikasi.html">🔐 Autentikasi</a></li>
+                    <li><a href="../minggu-2/lifecycle-events.html">🔄 Lifecycle & Events</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-section">
                 <div class="sidebar-title">📕 Minggu 3</div>
                 <ul class="sidebar-nav">
                     <li><a href="upload-file.html">Upload File</a></li>
@@ -115,6 +140,17 @@
                     <span>⏱️ 200 menit</span>
                     <span>👨‍💻 Mega Project SMK Terarah</span>
                 </div>
+            </div>
+
+            <!-- Banner Versi -->
+            <div class="version-banner" role="note" aria-label="Versi software yang digunakan">
+                <span class="vb-icon">⚙️</span>
+                <span class="vb-label">Versi:</span>
+                <span class="vb-tag">🔥 Laravel 11.x</span>
+                <span class="vb-tag">⚡ Livewire 3.x</span>
+                <span class="vb-tag">🐘 PHP 8.2+</span>
+                <span class="vb-tag">📄 dompdf / barryvdh-laravel-dompdf</span>
+                <span class="vb-note">Project ini integrasikan package eksternal (dompdf untuk export PDF). Versi package terbaru biasanya kompatibel dengan Laravel 11.</span>
             </div>
 
             <div class="summary-box">
@@ -312,7 +348,8 @@ class Payroll extends Model {
 
     public function render() {
         $db = Employee::latest();
-        if($this-&gt;search) $db-&gt;where('name', 'like', "%{$this-&gt;search}%");
+        // Wajib di-assign ulang! where() mengembalikan instance baru, tidak mengubah $db
+        if($this-&gt;search) $db = $db-&gt;where('name', 'like', "%{$this-&gt;search}%");
 
         return view('livewire.employee-manager', ['employees' =&gt; $db-&gt;get()])-&gt;layout('layouts.app');
     }
@@ -420,7 +457,8 @@ class Payroll extends Model {
 
     public function render() {
         $db = Payroll::with('employee')-&gt;latest();
-        if ($this-&gt;filterStatus) $db-&gt;where('status', $this-&gt;filterStatus);
+        // Wajib di-assign ulang! where() mengembalikan instance baru, tidak mengubah $db
+        if ($this-&gt;filterStatus) $db = $db-&gt;where('status', $this-&gt;filterStatus);
 
         return view('livewire.payroll-history', ['payrolls' =&gt; $db-&gt;get()])-&gt;layout('layouts.app');
     }

@@ -121,6 +121,7 @@
                     <li>Mengkaji ulang (*Review*) perbandingan drastis antara kode HTML statis (Tahap 1) dengan kode Blade + Livewire dinamis terbaru (Tahap 2-4).</li>
                     <li>Memahami kedahsyatan `wire:model` dalam menyambung input form dengan PHP secara tanpa kelim (*seamless*).</li>
                     <li>Mengganti metrik dummy di Dashboard menjadi nilai Query Eloquent asli.</li>
+                    <li>Melengkapi komponen terakhir yang belum dibuat: <strong>Riwayat Slip Gaji (PayrollHistory)</strong>.</li>
                 </ul>
             </div>
 
@@ -270,7 +271,164 @@
             </div>
 
 
-            <h2>🔗 3. File <code>routes/web.php</code> Lengkap Project Payroll</h2>
+            <h2>📄 3. Membuat Komponen Riwayat Gaji (PayrollHistory)</h2>
+
+            <p>Ini adalah komponen yang <strong>paling sering dilupakan</strong> tapi wajib ada: halaman yang menampilkan seluruh slip gaji yang sudah diterbitkan. Tanpa halaman ini, link "Riwayat Gaji" di navbar dan tombol Cetak PDF di Tahap 6 tidak akan bisa diakses.</p>
+
+            <h3>Langkah 1 — Buat Komponen PayrollHistory</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-filename">Terminal</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre>php artisan make:livewire PayrollHistory</pre>
+                </div>
+            </div>
+
+            <h3>Langkah 2 — Isi <code>app/Livewire/PayrollHistory.php</code></h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span class="code-dot"></span></div>
+                    <span class="code-filename">app/Livewire/PayrollHistory.php</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-keyword">namespace</span> App\Livewire;
+
+<span class="code-keyword">use</span> Livewire\Component;
+<span class="code-keyword">use</span> Livewire\WithPagination;
+<span class="code-keyword">use</span> App\Models\Payroll;
+
+<span class="code-keyword">class</span> <span class="code-class">PayrollHistory</span> <span class="code-keyword">extends</span> Component
+{
+    <span class="code-keyword">use</span> WithPagination;
+
+    <span class="code-keyword">public</span> <span class="code-keyword">string</span> <span class="code-variable">$filterPeriod</span> = <span class="code-string">''</span>;
+
+    <span class="code-comment">// Reset ke halaman 1 setiap kali dropdown filter berubah</span>
+    <span class="code-keyword">public function</span> <span class="code-function">updatingFilterPeriod</span>(): <span class="code-keyword">void</span>
+    {
+        <span class="code-variable">$this</span>->resetPage();
+    }
+
+    <span class="code-keyword">public function</span> <span class="code-function">render</span>()
+    {
+        <span class="code-variable">$query</span> = Payroll::with(<span class="code-string">'employee'</span>)->orderBy(<span class="code-string">'created_at'</span>, <span class="code-string">'desc'</span>);
+
+        <span class="code-comment">// $query HARUS di-assign ulang — where() mengembalikan instance baru</span>
+        <span class="code-keyword">if</span> (<span class="code-variable">$this</span>->filterPeriod) {
+            <span class="code-variable">$query</span> = <span class="code-variable">$query</span>->where(<span class="code-string">'month_year'</span>, <span class="code-variable">$this</span>->filterPeriod);
+        }
+
+        <span class="code-keyword">return</span> view(<span class="code-string">'livewire.payroll-history'</span>, [
+            <span class="code-string">'payrolls'</span> => <span class="code-variable">$query</span>->paginate(<span class="code-number">10</span>),
+            <span class="code-string">'periods'</span>  => Payroll::select(<span class="code-string">'month_year'</span>)
+                            ->distinct()
+                            ->orderBy(<span class="code-string">'month_year'</span>, <span class="code-string">'desc'</span>)
+                            ->pluck(<span class="code-string">'month_year'</span>),
+        ])-&gt;layout(<span class="code-string">'layouts.app'</span>);
+    }
+}</pre>
+                </div>
+            </div>
+
+            <div class="alert alert-warning">
+                <span class="alert-icon">⚠️</span>
+                <div>
+                    <h4>Jebakan Query Builder yang Sering Error!</h4>
+                    <p>Perhatikan baris <code>$query = $query->where(...)</code> — ada assignment <code>=</code>-nya. Ini <strong>wajib</strong>! Method <code>where()</code> <strong>tidak mengubah</strong> object lama, tapi <strong>mengembalikan instance baru</strong>. Jika hanya ditulis <code>$query->where(...)</code> tanpa assignment, filter tidak akan pernah aktif dan semua data akan tetap ditampilkan — bug yang sulit dilacak karena tidak ada pesan error.</p>
+                </div>
+            </div>
+
+            <h3>Langkah 3 — Isi <code>resources/views/livewire/payroll-history.blade.php</code></h3>
+            <p>File ini dibuat otomatis tapi kosong. Salin seluruh kode berikut ke dalamnya:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span class="code-dot"></span><span class="code-dot"></span><span class="code-dot"></span></div>
+                    <span class="code-filename">resources/views/livewire/payroll-history.blade.php — isi lengkap</span>
+                    <button class="code-copy">Salin</button>
+                </div>
+                <div class="code-body">
+                    <pre><span class="code-tag">&lt;div class="max-w-5xl mx-auto py-8 px-4"&gt;</span>
+
+    <span class="code-comment">&lt;!-- Flash Message --&gt;</span>
+    <span class="code-keyword">@if</span>(session()-&gt;has(<span class="code-string">'success'</span>))
+        <span class="code-tag">&lt;div class="bg-green-100 border border-green-400 text-green-800 px-4 py-3 rounded mb-4"&gt;</span>
+            ✅ {{ session(<span class="code-string">'success'</span>) }}
+        <span class="code-tag">&lt;/div&gt;</span>
+    <span class="code-keyword">@endif</span>
+
+    <span class="code-tag">&lt;div class="flex items-center justify-between mb-6"&gt;</span>
+        <span class="code-tag">&lt;h2 class="text-xl font-bold text-gray-800"&gt;</span>📄 Riwayat Slip Gaji<span class="code-tag">&lt;/h2&gt;</span>
+
+        <span class="code-comment">&lt;!-- Dropdown filter periode — wire:model.live agar langsung reaktif --&gt;</span>
+        <span class="code-tag">&lt;select wire:model.live="filterPeriod" class="rounded border-gray-300 shadow-sm text-sm"&gt;</span>
+            <span class="code-tag">&lt;option value=""&gt;</span>Semua Periode<span class="code-tag">&lt;/option&gt;</span>
+            <span class="code-keyword">@foreach</span>($periods <span class="code-keyword">as</span> $period)
+                <span class="code-tag">&lt;option value="{{ $period }}"&gt;</span>{{ $period }}<span class="code-tag">&lt;/option&gt;</span>
+            <span class="code-keyword">@endforeach</span>
+        <span class="code-tag">&lt;/select&gt;</span>
+    <span class="code-tag">&lt;/div&gt;</span>
+
+    <span class="code-tag">&lt;div class="bg-white rounded-lg shadow border border-gray-100 overflow-x-auto"&gt;</span>
+        <span class="code-tag">&lt;table class="min-w-full divide-y divide-gray-200 text-sm"&gt;</span>
+            <span class="code-tag">&lt;thead&gt;</span>
+                <span class="code-tag">&lt;tr class="bg-gray-50 text-left"&gt;</span>
+                    <span class="code-tag">&lt;th class="px-4 py-3 text-gray-500"&gt;</span>Karyawan<span class="code-tag">&lt;/th&gt;</span>
+                    <span class="code-tag">&lt;th class="px-4 py-3 text-gray-500"&gt;</span>Periode<span class="code-tag">&lt;/th&gt;</span>
+                    <span class="code-tag">&lt;th class="px-4 py-3 text-gray-500"&gt;</span>Gaji Pokok<span class="code-tag">&lt;/th&gt;</span>
+                    <span class="code-tag">&lt;th class="px-4 py-3 text-gray-500"&gt;</span>Tunjangan<span class="code-tag">&lt;/th&gt;</span>
+                    <span class="code-tag">&lt;th class="px-4 py-3 text-gray-500"&gt;</span>Potongan<span class="code-tag">&lt;/th&gt;</span>
+                    <span class="code-tag">&lt;th class="px-4 py-3 font-semibold text-gray-700"&gt;</span>Take Home Pay<span class="code-tag">&lt;/th&gt;</span>
+                    <span class="code-tag">&lt;th class="px-4 py-3 text-gray-500"&gt;</span>Aksi<span class="code-tag">&lt;/th&gt;</span>
+                <span class="code-tag">&lt;/tr&gt;</span>
+            <span class="code-tag">&lt;/thead&gt;</span>
+            <span class="code-tag">&lt;tbody class="divide-y divide-gray-200"&gt;</span>
+
+                <span class="code-keyword">@forelse</span>($payrolls <span class="code-keyword">as</span> $p)
+                    <span class="code-tag">&lt;tr&gt;</span>
+                        <span class="code-tag">&lt;td class="px-4 py-3 font-semibold"&gt;</span>{{ $p-&gt;employee-&gt;name }}<span class="code-tag">&lt;/td&gt;</span>
+                        <span class="code-tag">&lt;td class="px-4 py-3"&gt;</span>{{ $p-&gt;month_year }}<span class="code-tag">&lt;/td&gt;</span>
+                        <span class="code-tag">&lt;td class="px-4 py-3"&gt;</span>Rp {{ number_format($p-&gt;basic_salary, 0, <span class="code-string">','</span>, <span class="code-string">'.'</span>) }}<span class="code-tag">&lt;/td&gt;</span>
+                        <span class="code-tag">&lt;td class="px-4 py-3 text-green-600"&gt;</span>+Rp {{ number_format($p-&gt;allowance, 0, <span class="code-string">','</span>, <span class="code-string">'.'</span>) }}<span class="code-tag">&lt;/td&gt;</span>
+                        <span class="code-tag">&lt;td class="px-4 py-3 text-red-600"&gt;</span>-Rp {{ number_format($p-&gt;deduction, 0, <span class="code-string">','</span>, <span class="code-string">'.'</span>) }}<span class="code-tag">&lt;/td&gt;</span>
+                        <span class="code-tag">&lt;td class="px-4 py-3 font-bold text-blue-700"&gt;</span>Rp {{ number_format($p-&gt;net_salary, 0, <span class="code-string">','</span>, <span class="code-string">'.'</span>) }}<span class="code-tag">&lt;/td&gt;</span>
+                        <span class="code-tag">&lt;td class="px-4 py-3"&gt;</span>
+                            <span class="code-comment">&lt;!-- Guard: tombol cetak hanya muncul setelah route payroll.cetak didefinisikan di Tahap 6 --&gt;</span>
+                            <span class="code-keyword">@if</span>(Route::has(<span class="code-string">'payroll.cetak'</span>))
+                                <span class="code-tag">&lt;a href="{{ route('payroll.cetak', $p-&gt;id) }}" target="_blank"
+                                   class="text-indigo-600 hover:underline text-xs font-medium"&gt;</span>🖨️ Cetak PDF<span class="code-tag">&lt;/a&gt;</span>
+                            <span class="code-keyword">@else</span>
+                                <span class="code-tag">&lt;span class="text-xs text-gray-400"&gt;</span>PDF (selesaikan Tahap 6)<span class="code-tag">&lt;/span&gt;</span>
+                            <span class="code-keyword">@endif</span>
+                        <span class="code-tag">&lt;/td&gt;</span>
+                    <span class="code-tag">&lt;/tr&gt;</span>
+                <span class="code-keyword">@empty</span>
+                    <span class="code-tag">&lt;tr&gt;</span>
+                        <span class="code-tag">&lt;td colspan="7" class="px-4 py-8 text-center text-gray-500"&gt;</span>
+                            Belum ada riwayat slip gaji. Silakan input di halaman
+                            <span class="code-tag">&lt;a href="{{ route('payroll.calculator') }}" wire:navigate class="text-blue-600 underline"&gt;</span>Kalkulator Payroll<span class="code-tag">&lt;/a&gt;</span>.
+                        <span class="code-tag">&lt;/td&gt;</span>
+                    <span class="code-tag">&lt;/tr&gt;</span>
+                <span class="code-keyword">@endforelse</span>
+
+            <span class="code-tag">&lt;/tbody&gt;</span>
+        <span class="code-tag">&lt;/table&gt;</span>
+    <span class="code-tag">&lt;/div&gt;</span>
+
+    <span class="code-comment">&lt;!-- Pagination: $payrolls->links() bekerja karena kita pakai paginate(10) di PHP --&gt;</span>
+    <span class="code-tag">&lt;div class="mt-4"&gt;</span>
+        {{ $payrolls-&gt;links() }}
+    <span class="code-tag">&lt;/div&gt;</span>
+
+<span class="code-tag">&lt;/div&gt;</span></pre>
+                </div>
+            </div>
+
+
+            <h2>🔗 4. File <code>routes/web.php</code> Lengkap Project Payroll</h2>
 
             <div class="alert alert-warning">
                 <span class="alert-icon">⚠️</span>
@@ -294,8 +452,6 @@
 <span class="code-keyword">use</span> App\Livewire\EmployeeManager;
 <span class="code-keyword">use</span> App\Livewire\PayrollCalculator;
 <span class="code-keyword">use</span> App\Livewire\PayrollHistory;
-<span class="code-keyword">use</span> App\Models\Payroll;
-<span class="code-keyword">use</span> Barryvdh\DomPDF\Facade\Pdf;
 
 <span class="code-comment">// Halaman utama → redirect ke dashboard jika sudah login</span>
 Route::get(<span class="code-string">'/'</span>, <span class="code-keyword">function</span> () {
@@ -308,11 +464,11 @@ require __DIR__ . <span class="code-string">'/auth.php'</span>;
 <span class="code-comment">// Route yang butuh login</span>
 Route::middleware(<span class="code-string">'auth'</span>)->group(<span class="code-keyword">function</span> () {
 
-    <span class="code-comment">// Dashboard: middleware 'verified' wajib ada karena Breeze default memakainya</span>
+    <span class="code-comment">// Dashboard</span>
     Route::get(<span class="code-string">'/dashboard'</span>, Dashboard::<span class="code-keyword">class</span>)-&gt;middleware(<span class="code-string">'verified'</span>)-&gt;name(<span class="code-string">'dashboard'</span>);
 
-    <span class="code-comment">// Profile bawaan Breeze — jangan dihapus!</span>
-    Route::view(<span class="code-string">'profile'</span>, <span class="code-string">'profile'</span>)-&gt;name(<span class="code-string">'profile'</span>);
+    <span class="code-comment">// CATATAN: Profile sudah dihandle Breeze lewat Volt di routes/auth.php
+    // Jangan tambahkan Route::view('profile','profile') — akan error 404!</span>
 
     <span class="code-comment">// Karyawan</span>
     Route::get(<span class="code-string">'/karyawan'</span>, EmployeeManager::<span class="code-keyword">class</span>)-&gt;name(<span class="code-string">'employees.index'</span>);
@@ -321,12 +477,8 @@ Route::middleware(<span class="code-string">'auth'</span>)->group(<span class="c
     Route::get(<span class="code-string">'/payroll'</span>, PayrollCalculator::<span class="code-keyword">class</span>)-&gt;name(<span class="code-string">'payroll.calculator'</span>);
     Route::get(<span class="code-string">'/riwayat-gaji'</span>, PayrollHistory::<span class="code-keyword">class</span>)-&gt;name(<span class="code-string">'payroll.history'</span>);
 
-    <span class="code-comment">// Cetak PDF slip gaji (Tahap 6)</span>
-    Route::get(<span class="code-string">'/cetak-slip/{id}'</span>, <span class="code-keyword">function</span> (<span class="code-variable">$id</span>) {
-        <span class="code-variable">$payroll</span> = Payroll::with(<span class="code-string">'employee'</span>)->findOrFail(<span class="code-variable">$id</span>);
-        <span class="code-variable">$pdf</span> = Pdf::loadView(<span class="code-string">'pdf.slip-gaji'</span>, [<span class="code-string">'data'</span> => <span class="code-variable">$payroll</span>]);
-        <span class="code-keyword">return</span> <span class="code-variable">$pdf</span>->stream(<span class="code-string">'Slip_Gaji_'</span> . <span class="code-variable">$payroll</span>->employee->nik . <span class="code-string">'.pdf'</span>);
-    })-&gt;name(<span class="code-string">'payroll.cetak'</span>);
+    <span class="code-comment">// Route PDF akan ditambahkan di TAHAP 6 setelah DOMPDF diinstall
+    // (use Barryvdh\DomPDF\Facade\Pdf harus ada dulu, kalau belum diinstall = crash!)</span>
 
 });</pre>
                 </div>
